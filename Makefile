@@ -6,7 +6,7 @@
 #    By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/10/31 11:47:31 by anpollan         ###   ########.fr        #
+#    Updated: 2025/10/31 17:21:17 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MLX				= $(MLX_DIR)libmlx42.a
 MLX_REPO		= https://github.com/codam-coding-college/MLX42.git
 
 # C-files
-C_FILES			= main.c test.c
+C_FILES			= main.c window_management.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 
