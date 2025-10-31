@@ -1,3 +1,11 @@
+# Project specific
+mlx42/
+miniRT
+compile_commands.json
+
+# Cache
+*.cache/
+
 # Prerequisites
 *.d
 
