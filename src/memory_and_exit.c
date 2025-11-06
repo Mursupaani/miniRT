@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memory_and_exit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/06 17:26:11 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/06 17:58:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int ac, char **av)
+void	free_app_memory(t_app *app)
 {
-	if (ac != 2)
-	{
-		printf("Please pass a .rt file as an argument.\n");
-		return (1);
-	}
-	t_app *app = initialize_app();
-	printf("%d\n", floats_are_equal(0.00001, 0.00002));
-	printf("%d\n", floats_are_equal(0.00001, 0.00000));
-	printf("%d\n", floats_are_equal(0.00001, 0.000015));
-	printf("%d\n", floats_are_equal(0.00001, 0.0001));
-	(void)app;
-	(void)av;
-	return (0);
+	if (!app)
+		return ;
+	if (app->img)
+		mlx_delete_image(app->mlx, app->img);
+	if (app->mlx)
+		mlx_terminate(app->mlx);
+}
+
+void	free_memory_and_exit(t_app *app)
+{
+	free_app_memory(app);
+	exit(EXIT_SUCCESS);
+}
+
+void	free_memory_and_error_exit(t_app *app)
+{
+	ft_fprintf(STDERR_FILENO, "Error\n");
+	free_memory_and_exit(app);
 }

@@ -6,7 +6,7 @@
 #    By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/10/31 17:58:36 by anpollan         ###   ########.fr        #
+#    Updated: 2025/11/06 17:54:05 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ MLX_DIR			= ./mlx42/
 MLX				= $(MLX_DIR)libmlx42.a
 
 # C-files
-C_FILES			= main.c parsing.c window_management.c initialize.c
+C_FILES			= main.c parsing.c window_management.c initialize.c \
+				  math_utils.c memory_and_exit.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 
@@ -70,4 +71,8 @@ fclean: clean
 frclean: fclean
 	rm -rf $(MLX_DIR) compile_commands.json
 
-phony: all clean fclean frclean
+re: fclean $(NAME)
+
+fre: frclean $(NAME)
+
+phony: all clean fclean frclean re fre

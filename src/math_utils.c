@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/06 17:26:11 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/06 17:18:27 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/06 17:24:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int ac, char **av)
+bool	floats_are_equal(float a, float b)
 {
-	if (ac != 2)
-	{
-		printf("Please pass a .rt file as an argument.\n");
-		return (1);
-	}
-	t_app *app = initialize_app();
-	printf("%d\n", floats_are_equal(0.00001, 0.00002));
-	printf("%d\n", floats_are_equal(0.00001, 0.00000));
-	printf("%d\n", floats_are_equal(0.00001, 0.000015));
-	printf("%d\n", floats_are_equal(0.00001, 0.0001));
-	(void)app;
-	(void)av;
-	return (0);
+	return (fabs(a - b) < EPSILON);
 }
