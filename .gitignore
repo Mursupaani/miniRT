@@ -2,6 +2,7 @@
 mlx42/
 miniRT
 compile_commands.json
+minilibx/
 
 # Cache
 *.cache/

@@ -23,7 +23,20 @@
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+typedef struct s_vector3
+{
+	float	x;
+	float	y;
+	float	z;
+}	t_vector3;
+
+typedef struct s_app
+{
+	int		monitor_width;
+	int		monitor_height;
+	mlx_t	*mlx;
+}	t_app;
+
+t_app	*initialize_app(void);
 
 #endif
