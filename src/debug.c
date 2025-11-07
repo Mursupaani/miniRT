@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/07 18:24:19 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:30:28 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,4 @@ void	projectile(t_app *app)
 			mlx_put_pixel(app->img, proj->p->x, proj->p->y, 0xFF0000FF);
 	}
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
-	mlx_loop(app->mlx);
-	(void)app;
 }
