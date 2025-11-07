@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/06 17:26:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:27:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 int	main(int ac, char **av)
 {
+	t_app	*app;
+
 	if (ac != 2)
 	{
 		printf("Please pass a .rt file as an argument.\n");
 		return (1);
 	}
-	t_app *app = initialize_app();
-	printf("%d\n", floats_are_equal(0.00001, 0.00002));
-	printf("%d\n", floats_are_equal(0.00001, 0.00000));
-	printf("%d\n", floats_are_equal(0.00001, 0.000015));
-	printf("%d\n", floats_are_equal(0.00001, 0.0001));
-	(void)app;
+	app = initialize_app();
+	projectile(app);
+	mlx_loop(app->mlx);
 	(void)av;
 	return (0);
 }
