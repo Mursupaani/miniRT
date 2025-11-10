@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 void	print_tuple(t_tuple *tuple)

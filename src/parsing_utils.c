@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 16:11:24 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/10 15:12:30 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/10 15:24:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int ac, char **av)
+void	skip_whitespace(char **str)
 {
-	t_app	*app;
-
-	if (ac != 2)
-		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	app = initialize_app();
-	parse_rt_file(av, app);
-	projectile(app);
-	mlx_loop(app->mlx);
-	free_app_memory(app);
-	return (0);
+	while (ft_isspace(**str))
+		(*str)++;
 }

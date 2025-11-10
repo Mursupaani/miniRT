@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/07 18:30:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:35:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_app	*initialize_app(void)
 		return (NULL);
 	app->mlx = mlx_init(1, 1, "miniRT", true);
 	if (!app->mlx)
-		free_memory_and_error_exit(app);
+		exit_and_free_memory(ERROR_MLX_INIT, app);
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
 	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
 	app->img = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
 	if (!app->img)
-		free_memory_and_error_exit(app);
+		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	return (app);
 }

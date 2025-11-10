@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/07 18:27:52 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/10 16:23:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 # include "MLX42/MLX42_Int.h"
 
 // FIXME: Find best value for epsilon! 0.00001 doesn't work like in guide
+
+# ifndef THREADS
+#  define THREADS 1
+# endif
+
 # ifndef EPSILON
 #  define EPSILON 1e-4f
 # endif
@@ -37,6 +42,22 @@ typedef struct s_tuple
 }	t_tuple;
 typedef t_tuple	t_vector;
 typedef t_tuple	t_point;
+
+typedef struct s_color_255
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
+}	t_color_255;
+
+typedef struct s_color_1
+{
+	float	r;
+	float	g;
+	float	b;
+	float	a;
+}	t_color_1;
 
 //FIXME: Testing
 typedef struct s_proj
@@ -52,12 +73,74 @@ typedef struct s_env
 }	t_env;
 //FIXME: Testing
 
+typedef enum s_exit_value
+{
+	SUCCESS,
+	ERROR_NO_INPUT_FILE,
+	ERROR_MLX_INIT,
+	ERROR_MLX_IMG_INIT,
+	ERROR_INVALID_FILE_TYPE,
+	ERROR_OPEN,
+	ERROR_SCENE,
+	ERROR_PARSING,
+	
+}	t_exit_value;
+
+typedef enum s_object_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_object_type;
+
+typedef struct s_ambient_light
+{
+	float			brightness;
+	t_color_1		*color_1;
+	t_color_255		*color_255;
+}	t_ambient_light;
+
+typedef struct s_point_light
+{
+	float			brightness;
+	t_point			*center;
+	t_color_1		*color_1;
+	t_color_255		*color_255;
+}	t_point_light;
+
+typedef struct s_camera
+{
+	t_point		*view_point;
+	t_vector	*orientation;
+	float		fov;
+}	t_camera;
+
+typedef struct s_object
+{
+	t_object_type	type;
+	t_point			*center;
+	t_vector		*normal;
+	float			diameter;
+	float			height;
+	t_color_1		*color_1;
+	t_color_255		*color_255;
+}	t_object;
+
+typedef struct s_scene
+{
+	t_camera		*camera;
+	t_ambient_light	*ambient_light;
+	t_point_light	*light;
+	t_object		*objects[];
+}	t_scene;
+
 typedef struct s_app
 {
 	int			monitor_width;
 	int			monitor_height;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_scene		*scene;
 }	t_app;
 
 // Debug
@@ -68,10 +151,13 @@ void		projectile(t_app *app);
 // App initialize and management:
 t_app		*initialize_app(void);
 
+// Parsing:
+void	parse_rt_file(char **av, t_app *app);
+void	skip_whitespace(char **str);
+
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
-void		free_memory_and_exit(t_app *app);
-void		free_memory_and_error_exit(t_app *app);
+void		exit_and_free_memory(int exit_code, t_app *app);
 
 // Tuples (vectors, points):
 t_tuple		*new_tuple(float x, float y, float z, float w);

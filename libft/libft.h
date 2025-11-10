@@ -6,7 +6,7 @@
 /*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:33:26 by magebreh          #+#    #+#             */
-/*   Updated: 2025/09/25 16:31:37 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:17:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,7 @@ char	**ft_split_arena(char const *s, char c, t_arena *arena);
 char	*ft_substr_arena(
 			char const *s, unsigned int start, size_t len, t_arena *arena);
 char	*ft_strjoin_arena(char const *s1, char const *s2, t_arena *arena);
+
+int		ft_isspace(char c);
 
 #endif
