@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 16:23:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:46:10 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,21 @@
 # include <string.h>
 # include <stdio.h>
 # include "libft.h"
+# include <pthread.h>
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
 // FIXME: Find best value for epsilon! 0.00001 doesn't work like in guide
 
 # ifndef THREADS
-#  define THREADS 1
+#  define THREADS 4
 # endif
 
 # ifndef EPSILON
 #  define EPSILON 1e-4f
 # endif
+
+typedef struct s_thread_data t_thread_data;
 
 typedef struct s_tuple
 {
@@ -83,6 +86,7 @@ typedef enum s_exit_value
 	ERROR_OPEN,
 	ERROR_SCENE,
 	ERROR_PARSING,
+	ERROR_THREADS,
 	
 }	t_exit_value;
 
@@ -136,12 +140,35 @@ typedef struct s_scene
 
 typedef struct s_app
 {
-	int			monitor_width;
-	int			monitor_height;
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_scene		*scene;
+	int				monitor_width;
+	int				monitor_height;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_scene			*scene;
+	t_thread_data	*threads;
 }	t_app;
+
+/**
+ * @struct s_thread_data
+ * @brief Holds all persistent data and state for the application.
+ *
+ * Contains:
+ * - int id: the threads id
+ * - int start_row: the row where the thread starts starts rendering
+ * - int end_row: thread stops rendering at this row
+ * - t_app *app: acces to data the thread might need
+ *
+ * @see launch_render()
+ */
+typedef struct s_thread_data
+{
+	int			id;
+	int			start_row;
+	int			end_row;
+	t_app		*app;
+	pthread_t	thread_handle;
+}	t_thread_data;
+
 
 // Debug
 void		print_tuple(t_tuple *tuple);
@@ -185,5 +212,10 @@ bool		floats_are_equal(float a, float b);
 
 // Rendering utils
 bool		pixel_fits_image(float x, float y, t_app *app);
+
+// Render_routine.c
+void		*render_routine(void *arg);
+void		launch_render(t_app *app);
+void		join_threads(t_thread_data *thread_data, int thread_count);
 
 #endif

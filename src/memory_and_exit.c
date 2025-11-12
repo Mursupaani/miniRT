@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_and_exit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 15:42:07 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:23:39 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	free_app_memory(t_app *app)
 	}
 	if (app->scene)
 		free_scene(app->scene);
+	if (app->threads)
+		free(app->threads);
 	free(app);
 }
 
@@ -82,6 +84,8 @@ void	exit_and_free_memory(int exit_code, t_app *app)
 		ft_fprintf(STDERR_FILENO, "Error\nCan't create scene\n");
 	else if (exit_code == ERROR_PARSING)
 		ft_fprintf(STDERR_FILENO, "Error\nFailed to parse file contents\n");
+	else if (exit_code == ERROR_THREADS)
+		ft_fprintf(STDERR_FILENO, "Error\nThread creation failed\n");
 	else if (exit_code != 0)
 		ft_fprintf(STDERR_FILENO, "Error\n");
 	if (app)
