@@ -17,3 +17,15 @@ void	skip_whitespace(char **str)
 	while (ft_isspace(**str))
 		(*str)++;
 }
+
+bool	filetype_is_valid(char *filename)
+{
+	int	strlen;
+
+	if (!filename)
+		return (false);
+	strlen = ft_strlen(filename);
+	if (strlen >= 4 && ft_strncmp(".rt", &filename[strlen - 3], 3) == 0)
+		return (true);
+	return (false);
+}

@@ -153,6 +153,7 @@ t_app		*initialize_app(void);
 
 // Parsing:
 void	parse_rt_file(char **av, t_app *app);
+bool	filetype_is_valid(char *filename);
 void	skip_whitespace(char **str);
 
 // Memory handling and exit:

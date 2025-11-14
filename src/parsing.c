@@ -12,13 +12,26 @@
 
 #include "minirt.h"
 
+static void	parse_line_segment(char *line, t_app *app)
+{
+
+}
+
 static void	parse_line(char *line, t_app *app)
 {
 	char	**split;
+	int		i;
 
 	split = ft_split(line, ' ');
 	if (!split)
 		return ;
+	i = -1;
+	while (split[++i])
+		parse_line_segment(split[i], app);
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split[i]);
 	(void)app;
 }
 
@@ -35,18 +48,6 @@ static void	parse_rt_file_lines(int fd, t_app *app)
 		free(line);
 		line = get_next_line(fd);
 	}
-}
-
-static bool	filetype_is_valid(char *filename)
-{
-	int	strlen;
-
-	if (!filename)
-		return (false);
-	strlen = ft_strlen(filename);
-	if (strlen >= 4 && ft_strncmp(".rt", &filename[strlen - 3], 3) == 0)
-		return (true);
-	return (false);
 }
 
 void	parse_rt_file(char **av, t_app *app)
