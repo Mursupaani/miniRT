@@ -6,13 +6,13 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:04:18 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/18 16:04:30 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:57:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	matrices_are_equal(float m1[4][4], float m2[4][4], int w, int h)
+bool	matrices_are_equal(float (*m1)[4], float (*m2)[4])
 {
 	int	i;
 	int	j;
@@ -20,13 +20,14 @@ bool	matrices_are_equal(float m1[4][4], float m2[4][4], int w, int h)
 	if (!m1 || !m2)
 		return (false);
 	i = 0;
-	while (i < h)
+	while (i < 4)
 	{
 		j = 0;
-		while (j < w)
+		while (j < 4)
 		{
 			if (!floats_are_equal(m1[i][j], m2[i][j]))
 				return (false);
+			printf("%.0f\n", m1[i][j]);
 			j++;
 		}
 		i++;

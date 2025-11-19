@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 15:42:07 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:33:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	free_scene_objects(t_object *objects[])
 
 void	free_scene(t_scene *scene)
 {
-
 	if (!scene)
 		return ;
 	if (scene->ambient_light)
