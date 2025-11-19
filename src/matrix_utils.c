@@ -6,13 +6,13 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:04:18 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/19 13:57:34 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:43:07 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	matrices_are_equal(float (*m1)[4], float (*m2)[4])
+bool	matrix4s_are_equal(float (*m1)[4], float (*m2)[4])
 {
 	int	i;
 	int	j;

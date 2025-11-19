@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/19 14:24:13 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:48:53 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,12 @@ typedef struct s_app
 	t_scene		*scene;
 }	t_app;
 
+// Tests
+void		test_tuples(void);
+
 // Debug
 void		print_tuple(t_tuple *tuple);
+void		print_matrix4(float (*matrix)[4]);
 t_proj		*tick(t_env *env, t_proj *proj);
 void		projectile(t_app *app);
 
@@ -179,10 +183,11 @@ float		vector_dot_product(t_vector *a, t_vector *b);
 t_vector	*vector_cross_product(t_vector *a, t_vector *b);
 
 // Matrix utils:
-bool	matrix_4s_are_equal(float (*m1)[4], float (*m2)[4]);
+bool	matrix4s_are_equal(float (*m1)[4], float (*m2)[4]);
 
 // Matrix math:
-float	(*multiply_matrix_4s(float m1[4][4], float m2[4][4]))[4];
+float	(*multiply_matrix4s(float m1[4][4], float m2[4][4]))[4];
+t_tuple	*multiply_matrix4_and_tuple(float (*matrix)[4] , t_tuple *tuple);
 
 // Tuple utils:
 bool		tuples_are_equal(t_tuple *a, t_tuple *b);
