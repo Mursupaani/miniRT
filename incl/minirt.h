@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 16:23:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:04:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,9 @@ float		vector_magnitude(t_tuple *vector);
 t_vector	*vector_normalize(t_vector *vector);
 float		vector_dot_product(t_vector *a, t_vector *b);
 t_vector	*vector_cross_product(t_vector *a, t_vector *b);
+
+// Matrix utils:
+bool	matrices_are_equal(float m1[4][4], float m2[4][4], int w, int h);
 
 // Tuple utils:
 bool		tuples_are_equal(t_tuple *a, t_tuple *b);

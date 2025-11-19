@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   matrix_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 16:11:24 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/18 16:04:18 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/18 16:04:30 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int ac, char **av)
+bool	matrices_are_equal(float m1[4][4], float m2[4][4], int w, int h)
 {
-	t_app	*app;
+	int	i;
+	int	j;
 
-	if (ac != 2)
-		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	app = initialize_app();
-	// parse_rt_file(av, app);
-	// projectile(app);
-	// mlx_loop(app->mlx);
-	// free_app_memory(app);
-	return (0);
-	(void)app;
-	(void)av;
+	if (!m1 || !m2)
+		return (false);
+	i = 0;
+	while (i < h)
+	{
+		j = 0;
+		while (j < w)
+		{
+			if (!floats_are_equal(m1[i][j], m2[i][j]))
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
 }

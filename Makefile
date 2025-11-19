@@ -35,7 +35,7 @@ MLX				= $(MLX_DIR)libmlx42.a
 C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  math_utils.c memory_and_exit.c tuple.c tuple_math.c\
 				  tuple_utils.c vector_math.c rendering_utils.c\
-				  parsing_utils.c\
+				  parsing_utils.c matrix_utils.c \
 				  debug.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

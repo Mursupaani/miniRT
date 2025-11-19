@@ -12,10 +12,10 @@
 
 #include "minirt.h"
 
-static void	parse_line_segment(char *line, t_app *app)
-{
-
-}
+// static void	parse_line_segment(char *line, t_app *app)
+// {
+//
+// }
 
 static void	parse_line(char *line, t_app *app)
 {
@@ -27,7 +27,8 @@ static void	parse_line(char *line, t_app *app)
 		return ;
 	i = -1;
 	while (split[++i])
-		parse_line_segment(split[i], app);
+		printf("%d\n", i);
+		// parse_line_segment(split[i], app);
 	i = -1;
 	while (split[++i])
 		free(split[i]);
