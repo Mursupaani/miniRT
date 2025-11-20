@@ -45,7 +45,7 @@ void	print_matrix4(float (*matrix)[4])
 	int i = 0;
 
 	printf("--------------------\n");
-	printf("MATRIX 4:\n");
+	printf("MATRIX [4][4]:\n");
 	while (i < 4)
 	{
 		int j = 0;

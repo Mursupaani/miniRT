@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:46:19 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/19 15:10:03 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:25:01 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static float	get_row_column_product(
 	return (result);
 }
 
-float	(*multiply_matrix4s(float m1[4][4], float m2[4][4]))[4]
+float	(*matrix4_multiply(float m1[4][4], float m2[4][4]))[4]
 {
 	float	(*result)[4];
 	int		i;
@@ -61,7 +61,7 @@ float	(*multiply_matrix4s(float m1[4][4], float m2[4][4]))[4]
 	return (result);
 }
 
-t_tuple	*multiply_matrix4_and_tuple(float (*matrix)[4] , t_tuple *tuple)
+t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4] , t_tuple *tuple)
 {
 	t_tuple	*result;
 	

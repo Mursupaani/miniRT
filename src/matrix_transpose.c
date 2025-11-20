@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   matrix_transpose.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 12:00:15 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/20 16:07:02 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/20 16:24:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int ac, char **av)
+float	(*matrix4_transpose(float (*matrix)[4]))[4]
 {
-	t_app	*app;
+	float	(*result)[4];
+	int		i;
+	int		j;
 
-	if (ac != 2)
-		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	test_tuples();
-	test_matrices();
-	// app = initialize_app();
-	// float m1[4][4] = {{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}};
-	// print_matrix4(m1);
-	// parse_rt_file(av, app);
-	// projectile(app);
-	// mlx_loop(app->mlx);
-	// free_app_memory(app);
-	return (0);
-	//FIXME: remove this
-	(void)app;
-	(void)av;
+	if (!matrix)
+		return (NULL);
+	result = (float (*)[4])malloc(sizeof(float) * 16);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			result[j][i] = matrix[i][j];
+			j++;
+		}
+		i++;
+	}
+	return (result);
 }

@@ -6,7 +6,7 @@
 #    By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/11/19 15:48:25 by anpollan         ###   ########.fr        #
+#    Updated: 2025/11/20 16:22:34 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  math_utils.c memory_and_exit.c tuple.c tuple_math.c\
 				  tuple_utils.c vector_math.c rendering_utils.c\
 				  parsing_utils.c matrix_utils.c matrix_multiplication.c\
-				  debug.c tests.c
+				  matrix_transpose.c \
+				  debug.c test_tuples.c test_matrices.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 
