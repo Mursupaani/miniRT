@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/07 18:30:28 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:01:07 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ void	print_tuple(t_tuple *tuple)
 	{
 		printf("w:\t\t%f\n", tuple->w);
 		printf("Magnitude:\tN/A\n");
+	}
+	printf("--------------------\n");
+}
+
+void	print_matrix4(float (*matrix)[4])
+{
+	int i = 0;
+
+	printf("--------------------\n");
+	printf("MATRIX [4][4]:\n");
+	while (i < 4)
+	{
+		int j = 0;
+		while (j < 4)
+		{
+			printf("%.5f", matrix[i][j]);
+			if (j < 3)
+				printf(",\t");
+			j++;
+		}
+		printf("\n");
+		i++;
 	}
 	printf("--------------------\n");
 }
