@@ -15,9 +15,9 @@
 static float	get_matrix_row_tuple_product(float m_row[4], t_tuple *tuple)
 {
 	return (m_row[0] * tuple->x
-			+ m_row[1] * tuple->y
-			+ m_row[2] * tuple->z
-			+ m_row[3] * tuple->w);
+		+ m_row[1] * tuple->y
+		+ m_row[2] * tuple->z
+		+ m_row[3] * tuple->w);
 }
 
 static float	get_row_column_product(
@@ -61,10 +61,10 @@ float	(*matrix4_multiply(float m1[4][4], float m2[4][4]))[4]
 	return (result);
 }
 
-t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4] , t_tuple *tuple)
+t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4], t_tuple *tuple)
 {
 	t_tuple	*result;
-	
+
 	if (!matrix || !tuple)
 		return (NULL);
 	result = (t_tuple *)malloc(sizeof(t_tuple));

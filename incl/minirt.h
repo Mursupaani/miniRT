@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 16:18:10 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/20 19:04:47 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <math.h>
 # include <fcntl.h>
+# include <float.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -149,6 +150,8 @@ void		test_matrices(void);
 
 // Debug
 void		print_tuple(t_tuple *tuple);
+void		print_matrix2(float (*matrix)[2]);
+void		print_matrix3(float (*matrix)[3]);
 void		print_matrix4(float (*matrix)[4]);
 t_proj		*tick(t_env *env, t_proj *proj);
 void		projectile(t_app *app);
@@ -190,6 +193,18 @@ bool	matrix4s_are_equal(float (*m1)[4], float (*m2)[4]);
 float	(*matrix4_multiply(float m1[4][4], float m2[4][4]))[4];
 t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4] , t_tuple *tuple);
 float	(*matrix4_transpose(float (*matrix)[4]))[4];
+float	(*matrix4_invert(float (*matrix)[4]))[4];
+
+// Matrix determinants, submatrices, minors and cofactors:
+float	matrix2_determinant(float matrix[2][2]);
+float	matrix3_determinant(float matrix[3][3]);
+float	matrix4_determinant(float matrix[4][4]);
+float	(*matrix3_submatrix(float matrix[3][3], int row, int column))[2];
+float	(*matrix4_submatrix(float matrix[4][4], int row, int column))[3];
+float	matrix3_minor(float (*matrix)[3], int row, int column);
+float	matrix4_minor(float (*matrix)[4], int row, int column);
+float	matrix3_cofactor(float (*matrix)[3], int row, int column);
+float	matrix4_cofactor(float (*matrix)[4], int row, int column);
 
 // Tuple utils:
 bool		tuples_are_equal(t_tuple *a, t_tuple *b);
