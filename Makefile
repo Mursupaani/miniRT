@@ -21,11 +21,12 @@ MLX				= $(MLX_DIR)libmlx42.a
 
 # C-files
 C_FILES			= main.c parsing.c window_management.c initialize.c \
-				  math_utils.c memory_and_exit.c tuple.c tuple_math.c\
-				  tuple_utils.c vector_math.c rendering_utils.c\
-				  parsing_utils.c \
-				  render_routine.c \
-				  debug.c
+				  math_utils.c memory_and_exit.c tuple.c tuple_math.c \
+				  tuple_utils.c vector_math.c rendering_utils.c \
+				  parsing_utils.c matrix_utils.c matrix_multiplication.c \
+				  matrix_transpose.c matrix_determinant.c submatrices.c \
+				  matrix_minor_and_cofactor.c matrix_inversion.c \
+				  debug.c test_tuples.c test_matrices.c render_routine.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 

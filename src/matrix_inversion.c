@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   matrix_inversion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 15:12:30 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 15:24:15 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/20 18:53:32 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/20 19:07:36 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	skip_whitespace(char **str)
+float	(*matrix4_invert(float (*matrix)[4]))[4]
 {
-	while (ft_isspace(**str))
-		(*str)++;
-}
+	float	(*invert)[4];
+	int		i;
+	int		j;
+	float	determinant;
 
-bool	filetype_is_valid(char *filename)
-{
-	int	strlen;
-
-	if (!filename)
-		return (false);
-	strlen = ft_strlen(filename);
-	if (strlen >= 4 && ft_strncmp(".rt", &filename[strlen - 3], 3) == 0)
-		return (true);
-	return (false);
+	if (!matrix)
+		return (NULL);
+	determinant = matrix4_determinant(matrix);
+	if (determinant == 0)
+		return (NULL);
+	invert = malloc(sizeof(float) * 16);
+	if (!invert)
+		return (NULL);
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+			invert[j][i] = matrix4_cofactor(matrix, i, j) / determinant;
+	}
+	return (invert);
 }

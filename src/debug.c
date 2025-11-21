@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/12 16:43:08 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/20 19:13:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,99 @@ void	print_tuple(t_tuple *tuple)
 		printf("VECTOR: (%.2f, %.2f, %.2f)\n", tuple->x, tuple->y, tuple->z);
 	else
 		printf("POINT: (%.2f, %.2f, %.2f)\n", tuple->x, tuple->y, tuple->z);
-	printf("x:\t\t%f\n", tuple->x);
-	printf("y:\t\t%f\n", tuple->y);
-	printf("z:\t\t%f\n", tuple->z);
+	printf("x:\t\t");
+	if (tuple->x >= 0)
+		printf(" ");
+	printf("%f\n", tuple->x);
+	printf("y:\t\t");
+	if (tuple->y >= 0)
+		printf(" ");
+	printf("%f\n", tuple->y);
+	printf("z:\t\t");
+	if (tuple->z >= 0)
+		printf(" ");
+	printf("%f\n", tuple->z);
 	if (tuple->w == 0)
 	{
-		printf("w:\t\t%f\n", tuple->w);
-		printf("Magnitude:\t%f\n", vector_magnitude(tuple));
+		printf("w:\t\t");
+		printf(" %f\n", tuple->w);
+		printf("Magnitude:\t %f\n", vector_magnitude(tuple));
 	}
 	else
 	{
-		printf("w:\t\t%f\n", tuple->w);
+		if (tuple->z > 0)
+			printf(" ");
+		printf("w:\t\t");
+		printf("%f\n", tuple->w);
 		printf("Magnitude:\tN/A\n");
+	}
+	printf("--------------------\n");
+}
+
+void	print_matrix4(float (*matrix)[4])
+{
+	int i = 0;
+
+	printf("--------------------\n");
+	printf("MATRIX [4][4]:\n");
+	while (i < 4)
+	{
+		int j = 0;
+		while (j < 4)
+		{
+			if (matrix[i][j] >= 0)
+				printf(" ");
+			printf("%.5f", matrix[i][j]);
+			if (j < 3)
+				printf(",\t");
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("--------------------\n");
+}
+
+void	print_matrix2(float (*matrix)[2])
+{
+	int i = 0;
+
+	printf("--------------------\n");
+	printf("MATRIX [2][2]:\n");
+	while (i < 2)
+	{
+		int j = 0;
+		while (j < 2)
+		{
+			printf("%.5f", matrix[i][j]);
+			if (j < 1)
+				printf(",\t");
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("--------------------\n");
+}
+
+void	print_matrix3(float (*matrix)[3])
+{
+	int i = 0;
+
+	printf("--------------------\n");
+	printf("MATRIX [3][3]:\n");
+	while (i < 3)
+	{
+		int j = 0;
+		while (j < 3)
+		{
+			printf("%.5f", matrix[i][j]);
+			if (j < 2)
+				printf(",\t");
+			j++;
+		}
+		printf("\n");
+		i++;
 	}
 	printf("--------------------\n");
 }

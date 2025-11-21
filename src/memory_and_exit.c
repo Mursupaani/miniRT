@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/12 16:23:39 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/19 14:33:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	free_scene_objects(t_object *objects[])
 
 void	free_scene(t_scene *scene)
 {
-
 	if (!scene)
 		return ;
 	if (scene->ambient_light)

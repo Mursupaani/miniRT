@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   matrix_transpose.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 15:12:30 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 15:24:15 by anpollan         ###   ########.fr       */
+/*   Created: 2025/11/20 16:07:02 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/20 16:24:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	skip_whitespace(char **str)
+float	(*matrix4_transpose(float (*matrix)[4]))[4]
 {
-	while (ft_isspace(**str))
-		(*str)++;
-}
+	float	(*result)[4];
+	int		i;
+	int		j;
 
-bool	filetype_is_valid(char *filename)
-{
-	int	strlen;
-
-	if (!filename)
-		return (false);
-	strlen = ft_strlen(filename);
-	if (strlen >= 4 && ft_strncmp(".rt", &filename[strlen - 3], 3) == 0)
-		return (true);
-	return (false);
+	if (!matrix)
+		return (NULL);
+	result = (float (*)[4])malloc(sizeof(float) * 16);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			result[j][i] = matrix[i][j];
+			j++;
+		}
+		i++;
+	}
+	return (result);
 }
