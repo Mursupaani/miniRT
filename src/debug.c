@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 19:13:59 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:57:02 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	projectile(t_app *app)
 		proj = tick(env, proj);
 		print_tuple(proj->p);
 		if (pixel_fits_image(proj->p->x, proj->p->y, app))
-			mlx_put_pixel(app->img, proj->p->x, proj->p->y, 0xFF0000FF);
+			mlx_put_pixel(app->img, proj->p->x, proj->p->y, 0xC27E79);
 	}
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
 }
