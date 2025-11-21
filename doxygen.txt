@@ -1,0 +1,93 @@
+# For files
+/**
+ * @file YourFileName.h
+ * @brief A brief, one-line description of what this file does.
+ *
+ * Mainly just maybe use the two above, but if you think there is need for
+ * a more verbose description of what this file and it's contents do
+ * provide it here.
+ *
+ * Exposes:
+ * - function_one()
+ * - function_two()
+ * - another_function()
+ *
+ * In case of main.c which usually contains only main().
+ * Defines:
+ * - main()
+ *
+ * @section file_commands Common File-Level Commands
+ * A list of common "commands" you would use for Doxygen, but for our purposes I think
+ * @file, @brief, and Exposes list is sufficient.
+ *
+ * - @file: Marks the comment as a file header (should be first).
+ * - @brief: A short summary.
+ * - @author: The author's name.
+ * - @version: The file's version.
+ * - @date: The date of the last significant update.
+ * - @copyright: Copyright information.
+ * - @mainpage: Makes this the main page of the documentation (use in one file only).
+ * - @see: Refer to another file, function, or documentation.
+ * - @note: Add a special note.
+ * - @warning: Add a warning.
+ * - @defgroup: Group related items (files, functions, etc.) together.
+ */
+
+# For Functions
+ /**
+ * This comment is intended for functions, to be inserted above them.
+ * I think we will only need to use:
+ *	- @brief one line description of the Function
+ *	- @param list the parameters the function takes
+ *	- @return what is the return value of the function
+ *	- @note if there are some special considerations for use of the function
+ *
+ * @brief A short, one-line description of what this function does.
+ *
+ * A more detailed description of the function's behavior, algorithms used,
+ * preconditions (what must be true before calling), postconditions
+ * (what will be true after calling), and any side effects.
+ *
+ * @param [in] input_param      Description of an input parameter. Specify its purpose,
+ * valid range, and units (if any).
+ * @param [out] output_param    Description of an output parameter (e.g., a buffer
+ * to be filled, a pointer to a result).
+ * @param [in,out] io_param     Description of a parameter that is read from and
+ * written to.
+ *
+ * @return Description of the return value (e.g., 'true' on success, 'false' on
+ * failure, or the calculated value).
+ * For void functions, you can state 'None.' or omit the @return tag.
+ *
+ * @note A special note about usage, performance, or non-obvious behavior.
+ * @warning Describe any potential dangers, common errors, or exceptions.
+ * @see related_function()
+ *
+ * @section func_commands Common Function-Level Commands
+ * A reference for common Doxygen commands used at the function level:
+ * - @brief: Short summary.
+ * - @param [in/out/in,out] name: Describes a function parameter.
+ * - @return (or @returns): Describes the return value.
+ * - @tparam: Describes a template parameter (for C++).
+ * - @pre: Describes a precondition that must be met.
+ * - @post: Describes a postcondition that will be true after execution.
+ * - @exception (or @throw): Describes an exception that may be thrown.
+ * - @see: Refers to related documentation or code.
+ * - @note: Adds a special note.
+ * - @warning: Adds a warning.
+ * - @deprecated: Marks the function as deprecated.
+ */
+
+ # Structs
+/**
+ * @struct s_app_state
+ * @brief Holds all persistent data and state for the application.
+ *
+ * Provide more details here if needed
+ *
+ * @note This struct is typically forward-declared in header files and
+ * typedef'd to `t_app` for convenience.
+ *
+ * @see initialize_app()
+ * @see free_app_memory()
+ */
