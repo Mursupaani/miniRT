@@ -38,7 +38,7 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  parsing_utils.c matrix_utils.c matrix_multiplication.c \
 				  matrix_transpose.c matrix_determinant.c submatrices.c \
 				  matrix_minor_and_cofactor.c matrix_inversion.c \
-				  transformation.c rotations.c \
+				  transformation.c rotations.c render_routine.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
