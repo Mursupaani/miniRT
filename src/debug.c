@@ -24,31 +24,31 @@ void	print_tuple(t_tuple *tuple)
 		printf("VECTOR: (%.2f, %.2f, %.2f)\n", tuple->x, tuple->y, tuple->z);
 	else
 		printf("POINT: (%.2f, %.2f, %.2f)\n", tuple->x, tuple->y, tuple->z);
-	printf("x:\t\t");
+	printf(" x:\t\t");
 	if (tuple->x >= 0)
 		printf(" ");
 	printf("%f\n", tuple->x);
-	printf("y:\t\t");
+	printf(" y:\t\t");
 	if (tuple->y >= 0)
 		printf(" ");
 	printf("%f\n", tuple->y);
-	printf("z:\t\t");
+	printf(" z:\t\t");
 	if (tuple->z >= 0)
 		printf(" ");
 	printf("%f\n", tuple->z);
 	if (tuple->w == 0)
 	{
-		printf("w:\t\t");
-		printf(" %f\n", tuple->w);
-		printf("Magnitude:\t %f\n", vector_magnitude(tuple));
+		printf(" w:\t\t");
+		printf("%f\n", tuple->w);
+		printf(" Magnitude:\t %f\n", vector_magnitude(tuple));
 	}
 	else
 	{
+		printf(" w:\t\t");
 		if (tuple->z > 0)
 			printf(" ");
-		printf("w:\t\t");
 		printf("%f\n", tuple->w);
-		printf("Magnitude:\tN/A\n");
+		printf(" Magnitude:\tN/A\n");
 	}
 	printf("--------------------\n");
 }

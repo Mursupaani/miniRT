@@ -56,3 +56,25 @@ float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4]
 	scalar[3][3] = 1;
 	return (scalar);
 }
+
+float	(*new_shearing_matrix4(t_shear *shear))[4]
+{
+	float	(*shearing)[4];
+
+	if (!shear)
+		return (NULL);
+	shearing = ft_calloc(1, sizeof(float) * 16);
+	if (!shearing)
+		return (NULL);
+	shearing[0][0] = 1;
+	shearing[0][1] = shear->xy;
+	shearing[0][2] = shear->xz;
+	shearing[1][0] = shear->yx;
+	shearing[1][1] = 1;
+	shearing[1][2] = shear->yz;
+	shearing[2][0] = shear->zx;
+	shearing[2][1] = shear->zy;
+	shearing[2][2] = 1;
+	shearing[3][3] = 1;
+	return (shearing);
+}
