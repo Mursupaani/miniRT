@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 12:00:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:12:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	test_tuples();
-	test_matrices();
+	// test_tuples();
+	// test_matrices();
+	test_transformation();
 	// app = initialize_app();
 	// float m1[4][4] = {{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}};
 	// print_matrix4(m1);

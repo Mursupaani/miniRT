@@ -1,0 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   transformation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/24 10:51:29 by anpollan          #+#    #+#             */
+/*   Updated: 2025/11/24 12:18:33 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+float	(*new_translation_matrix4(float scale_x, float scale_y, float scale_z))[4]
+{
+	float	(*translation)[4];
+	int		i;
+	int		j;
+
+	translation = ft_calloc(1, sizeof(float) * 16);
+	if (!translation)
+		return (NULL);
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			if (i == j)
+				translation[i][j] = 1;
+			else if (j == 3)
+			{
+				if (i == 0)
+					translation[i][j] = scale_x;
+				else if (i == 1)
+					translation[i][j] = scale_y;
+				else if (i == 2)
+					translation[i][j] = scale_z;
+			}
+		}
+	}
+	return (translation);
+}
+
+float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4]
+{
+	float	(*scalar)[4];
+
+	scalar	= ft_calloc(1, sizeof(float) * 16);
+	if (!scalar)
+		return (NULL);
+	scalar[0][0] = scale_x;
+	scalar[1][1] = scale_y;
+	scalar[2][2] = scale_z;
+	scalar[3][3] = 1;
+	return (scalar);
+}
