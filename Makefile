@@ -48,8 +48,11 @@ OBJ_DIR			= ./obj/
 OBJS			= $(addprefix $(OBJ_DIR), $(C_FILES:%.c=%.o))
 
 # Build flags
-C_FLAGS			= -Wall -Wextra -Werror -g
+C_FLAGS			= -Wall -Wextra -Werror -g -DTHREADS=$(THREADS)
 MLX_FLAGS		= -lglfw -ldl -lpthread -lm
+
+# Threads
+THREADS			= $(shell nproc 2>/dev/null || echo 4)
 
 all: $(NAME)
 
