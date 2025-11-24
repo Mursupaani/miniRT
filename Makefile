@@ -52,7 +52,7 @@ C_FLAGS			= -Wall -Wextra -Werror -g -DTHREADS=$(THREADS)
 MLX_FLAGS		= -lglfw -ldl -lpthread -lm
 
 # Threads
-THREADS			= $(shell nproc 2>/dev/null || echo 4)
+THREADS			= $(shell nproc 2>/dev/null || sysctl -n hw.physicalcpu || echo 4)
 
 all: $(NAME)
 
