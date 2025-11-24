@@ -12,24 +12,19 @@
 
 #include "minirt.h"
 
-float	(*matrix4_transpose(float (*matrix)[4]))[4]
+t_matrix4	matrix4_transpose(t_matrix4 matrix)
 {
-	float	(*result)[4];
+	t_matrix4	result;
 	int		i;
 	int		j;
 
-	if (!matrix)
-		return (NULL);
-	result = (float (*)[4])malloc(sizeof(float) * 16);
-	if (!result)
-		return (NULL);
 	i = 0;
 	while (i < 4)
 	{
 		j = 0;
 		while (j < 4)
 		{
-			result[j][i] = matrix[i][j];
+			result.data[j][i] = matrix.data[i][j];
 			j++;
 		}
 		i++;
