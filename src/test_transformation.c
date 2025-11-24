@@ -293,6 +293,156 @@ And full_quarter * p = point(-1, 0, 0)\n");
 	free(transform);
 }
 
+static void	test12(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 12:\n");
+	printf("Scenario: A shearing transformation moves x in proportion to y\n\
+Given transform ← shearing(1, 0, 0, 0, 0, 0)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(5, 3, 4)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.xy = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
+static void	test13(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 13:\n");
+	printf("Scenario: A shearing transformation moves x in proportion to z\n\
+Given transform ← shearing(0, 1, 0, 0, 0, 0)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(6, 3, 4)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.xz = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
+static void	test14(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 14:\n");
+	printf("Scenario: A shearing transformation moves y in proportion to x\n\
+Given transform ← shearing(0, 0, 1, 0, 0, 0)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(2, 5, 4)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.yx = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
+static void	test15(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 15:\n");
+	printf("Scenario: A shearing transformation moves y in proportion to z\n\
+Given transform ← shearing(0, 0, 0, 1, 0, 0)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(2, 7, 4)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.yz = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
+static void	test16(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 16:\n");
+	printf("Scenario: A shearing transformation moves z in proportion to x\n\
+Given transform ← shearing(0, 0, 0, 0, 1, 0)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(2, 3, 6)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.zx = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
+static void	test17(void)
+{
+	t_vector	*point;
+	t_point		*result;
+	t_shear		shear;
+	float		(*transform)[4];
+
+	printf("TEST 17:\n");
+	printf("Scenario: A shearing transformation moves z in proportion to y\n\
+Given transform ← shearing(0, 0, 0, 0, 0, 1)\n\
+And p ← point(2, 3, 4)\n\
+Then transform * p = point(2, 3, 7)\n");
+	ft_bzero(&shear, sizeof(t_shear));
+	shear.zy = 1;
+	point = new_point(2, 3, 4);
+	print_tuple(point);
+	transform = new_shearing_matrix4(&shear);
+	print_matrix4(transform);
+	result = matrix4_and_tuple_multiply(transform, point);
+	print_tuple(result);
+	free(point);
+	free(transform);
+	free(result);
+}
+
 void	test_transformation(void)
 {
 	printf("\n");
@@ -319,6 +469,18 @@ void	test_transformation(void)
 	test10();
 	printf("_____________________________________________\n");
 	test11();
+	printf("_____________________________________________\n");
+	test12();
+	printf("_____________________________________________\n");
+	test13();
+	printf("_____________________________________________\n");
+	test14();
+	printf("_____________________________________________\n");
+	test15();
+	printf("_____________________________________________\n");
+	test16();
+	printf("_____________________________________________\n");
+	test17();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING MATRICES FINISHED --------\n");
 	printf("\n");

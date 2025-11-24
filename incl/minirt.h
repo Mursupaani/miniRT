@@ -47,6 +47,16 @@ typedef struct s_tuple
 typedef t_tuple	t_vector;
 typedef t_tuple	t_point;
 
+typedef struct s_shear
+{
+	float	xy;
+	float	xz;
+	float	yx;
+	float	yz;
+	float	zx;
+	float	zy;
+}	t_shear;
+
 typedef struct s_color_255
 {
 	unsigned char	r;
@@ -207,6 +217,7 @@ float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4];
 float	(*new_x_rotation_matrix4(float radians))[4];
 float	(*new_y_rotation_matrix4(float radians))[4];
 float	(*new_z_rotation_matrix4(float radians))[4];
+float	(*new_shearing_matrix4(t_shear* shear))[4];
 
 // Tuple math:
 t_tuple		*tuple_sum(t_tuple *a, t_tuple *b);
