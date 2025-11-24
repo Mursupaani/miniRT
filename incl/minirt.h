@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 19:04:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:39:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_thread_data
 // Tests
 void		test_tuples(void);
 void		test_matrices(void);
+void		test_transformation(void);
 
 // Debug
 void		print_tuple(t_tuple *tuple);
@@ -198,6 +199,14 @@ void		exit_and_free_memory(int exit_code, t_app *app);
 t_tuple		*new_tuple(float x, float y, float z, float w);
 t_vector	*new_vector(float x, float y, float z);
 t_point		*new_point(float x, float y, float z);
+
+// Transformation matrices
+float	(*new_translation_matrix4(
+			float scale_x, float scale_y, float scale_z))[4];
+float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4];
+float	(*new_x_rotation_matrix4(float radians))[4];
+float	(*new_y_rotation_matrix4(float radians))[4];
+float	(*new_z_rotation_matrix4(float radians))[4];
 
 // Tuple math:
 t_tuple		*tuple_sum(t_tuple *a, t_tuple *b);
