@@ -6,12 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:37:36 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 12:06:00 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 18:23:31 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 static void	test1(void)
 {
@@ -24,8 +23,8 @@ static void	test1(void)
 Given a1 ← tuple(3, -2, 5, 1)\n \
 And a2 ← tuple(-2, 3, 1, 0)\n \
 Then a1 + a2 = tuple(1, 1, 6, 1)\n");
-	tuple1 = init_vector(3, -2, 5);
-	tuple2 = init_point(-2, 3, 1);
+	tuple1 = init_point(3, -2, 5);
+	tuple2 = init_vector(-2, 3, 1);
 	tuple3 = tuple_sum(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -63,7 +62,7 @@ Given p1 ← point(3, 2, 1)\n\
 And p2 ← point(5, 6, 7)\n\
 Then p1 - p2 = vector(-2, -4, -6)\n");
 	tuple1 = init_point(3, 2, 1);
-	tuple2 = init_vector(5, 6, 7);
+	tuple2 = init_point(5, 6, 7);
 	tuple3 = tuple_subtract(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -112,7 +111,7 @@ static void	test6(void)
 	printf("TEST 6:\n");
 	printf("Scenario: Multiplying a tuple by a fraction\n\
 Given a ← tuple(1, -2, 3, -4)\n\
-Then a * 0.5 = tuple(0.5, -1, 1.5, -2)");
+Then a * 0.5 = tuple(0.5, -1, 1.5, -2)\n");
 	tuple1 = init_tuple(1, -2, 3, -4);
 	tuple2 = tuple_scale_multiply(tuple1, 0.5);
 	print_tuple(tuple1);
@@ -127,7 +126,7 @@ static void	test7(void)
 	printf("TEST 7:\n");
 	printf("Scenario: Dividing a tuple by a scalar\n\
 Given a ← tuple(1, -2, 3, -4)\n\
-Then a / 2 = tuple(0.5, -1, 1.5, -2)");
+Then a / 2 = tuple(0.5, -1, 1.5, -2)\n");
 	tuple1 = init_tuple(1, -2, 3, -4);
 	tuple2 = tuple_scale_divide(tuple1, 2);
 	print_tuple(tuple1);

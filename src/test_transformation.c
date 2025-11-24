@@ -1,10 +1,11 @@
+
 #include "minirt.h"
 
 static void	test1(void)
 {
 	t_point	point;
 	t_point	result;
-	float	(*transform)[4];
+	t_matrix4	(transform);
 
 	printf("TEST 1:\n");
 	printf("Scenario: Multiplying by a translation matrix\n\
@@ -13,19 +14,18 @@ And p ← point(-3, 4, 5)\n\
 Then transform * p = point(2, 1, 7)\n");
 	point = init_point(-3, 4, 5);
 	print_tuple(point);
-	transform = new_translation_matrix4(5, -3, 2);
+	transform = init_translation_matrix4(5, -3, 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test2(void)
 {
 	t_point	point;
 	t_point	result;
-	float	(*transform)[4];
-	float	(*invert)[4];
+	t_matrix4	(transform);
+	t_matrix4	(invert);
 
 	printf("TEST 2:\n");
 	printf("Scenario: Multiplying by the inverse of a translation matrix\n\
@@ -35,20 +35,18 @@ And p ← point(-3, 4, 5)\n\
 Then inv * p = point(-8, 7, 3)\n");
 	point = init_point(-3, 4, 5);
 	print_tuple(point);
-	transform = new_translation_matrix4(5, -3, 2);
+	transform = init_translation_matrix4(5, -3, 2);
 	print_matrix4(transform);
 	invert = matrix4_invert(transform);
-	result = matrix4_and_tuple_multiply(invert, &point);
+	result = matrix4_and_tuple_multiply(invert, point);
 	print_tuple(result);
-	free(transform);
-	free(invert);
 }
 
 static void	test3(void)
 {
 	t_point	vector;
 	t_point	result;
-	float	(*transform)[4];
+	t_matrix4	(transform);
 
 	printf("TEST 3:\n");
 	printf("Scenario: Translation does not affect vectors\n\
@@ -57,18 +55,17 @@ And v ← vector(-3, 4, 5)\n\
 Then transform * v = v\n");
 	vector = init_vector(5, -3, 2);
 	print_tuple(vector);
-	transform = new_translation_matrix4(-3, 4, 5);
+	transform = init_translation_matrix4(-3, 4, 5);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &vector);
+	result = matrix4_and_tuple_multiply(transform, vector);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test4(void)
 {
 	t_point	point;
 	t_point	result;
-	float	(*transform)[4];
+	t_matrix4	(transform);
 
 	printf("TEST 4:\n");
 	printf("Scenario: A scaling matrix applied to a point\n\
@@ -77,18 +74,17 @@ And p ← point(-4, 6, 8)\n\
 Then transform * p = point(-8, 18, 32)\n");
 	point = init_point(-4, 6, 8);
 	print_tuple(point);
-	transform = new_scaling_matrix4(2, 3, 4);
+	transform = init_scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test5(void)
 {
 	t_vector	vector;
 	t_point		result;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 5:\n");
 	printf("Scenario: A scaling matrix applied to a vector\n\
@@ -97,19 +93,18 @@ And v ← vector(-4, 6, 8)\n\
 Then transform * v = vector(-8, 18, 32)\n");
 	vector = init_vector(-4, 6, 8);
 	print_tuple(vector);
-	transform = new_scaling_matrix4(2, 3, 4);
+	transform = init_scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &vector);
+	result = matrix4_and_tuple_multiply(transform, vector);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test6(void)
 {
 	t_vector	vector;
 	t_point		result;
-	float		(*transform)[4];
-	float		(*inverse)[4];
+	t_matrix4		(transform);
+	t_matrix4		(inverse);
 
 	printf("TEST 6:\n");
 	printf("Scenario: Multiplying by the inverse of a scaling matrix\n\
@@ -119,21 +114,19 @@ And v ← vector(-4, 6, 8)\n\
 Then inv * v = vector(-2, 2, 2)\n");
 	vector = init_vector(-4, 6, 8);
 	print_tuple(vector);
-	transform = new_scaling_matrix4(2, 3, 4);
+	transform = init_scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
 	inverse = matrix4_invert(transform);
 	print_matrix4(inverse);
-	result = matrix4_and_tuple_multiply(inverse, &vector);
+	result = matrix4_and_tuple_multiply(inverse, vector);
 	print_tuple(result);
-	free(transform);
-	free(inverse);
 }
 
 static void	test7(void)
 {
 	t_vector	point;
 	t_point		result;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 7:\n");
 	printf("Scenario: Reflection is scaling by a negative value\n\
@@ -142,18 +135,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(-2, 3, 4)\n");
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = new_scaling_matrix4(-1, 1, 1);
+	transform = init_scaling_matrix4(-1, 1, 1);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test8(void)
 {
 	t_vector	point;
 	t_point		result;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 8:\n");
 	printf("Scenario: Rotating a point around the x axis\n\
@@ -164,24 +156,22 @@ Then half_quarter * p = point(0, √2/2, √2/2)\n\
 And full_quarter * p = point(0, 0, 1)\n");
 	point = init_point(0, 1, 0);
 	print_tuple(point);
-	transform = x_rotation_matrix(M_PI / 4);
+	transform = init_x_rotation_matrix(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
-	transform = x_rotation_matrix(M_PI / 2);
+	transform = init_x_rotation_matrix(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test9(void)
 {
 	t_vector	point;
 	t_point		result;
-	float		(*transform)[4];
-	float		(*inverse)[4];
+	t_matrix4		(transform);
+	t_matrix4		(inverse);
 
 	printf("TEST 9:\n");
 	printf("Scenario: The inverse of an x-rotation rotates in the opposite direction\n\
@@ -191,14 +181,12 @@ And inv ← inverse(half_quarter)\n\
 Then inv * p = point(0, √2/2, -√2/2)\n");
 	point = init_point(0, 1, 0);
 	print_tuple(point);
-	transform = x_rotation_matrix(M_PI / 4);
+	transform = init_x_rotation_matrix(M_PI / 4);
 	print_matrix4(transform);
 	inverse = matrix4_invert(transform);
 	print_matrix4(inverse);
-	result = matrix4_and_tuple_multiply(inverse, &point);
+	result = matrix4_and_tuple_multiply(inverse, point);
 	print_tuple(result);
-	free(transform);
-	free(inverse);
 }
 
 
@@ -206,7 +194,7 @@ static void	test10(void)
 {
 	t_vector	point;
 	t_point		result;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 10:\n");
 	printf("Scenario: Rotating a point around the y axis\n\
@@ -217,23 +205,21 @@ Then half_quarter * p = point(√2/2, 0, √2/2)\n\
 And full_quarter * p = point(1, 0, 0)\n");
 	point = init_point(0, 0, 1);
 	print_tuple(point);
-	transform = y_rotation_matrix4(M_PI / 4);
+	transform = init_y_rotation_matrix4(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
-	transform = y_rotation_matrix4(M_PI / 2);
+	transform = init_y_rotation_matrix4(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test11(void)
 {
 	t_vector	point;
 	t_point		result;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 11:\n");
 	printf("Scenario: Rotating a point around the z axis\n\
@@ -244,16 +230,14 @@ Then half_quarter * p = point(-√2/2, √2/2, 0)\n\
 And full_quarter * p = point(-1, 0, 0)\n");
 	point = init_point(0, 1, 0);
 	print_tuple(point);
-	transform = z_rotation_matrix4(M_PI / 4);
+	transform = init_z_rotation_matrix4(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
-	transform = z_rotation_matrix4(M_PI / 2);
+	transform = init_z_rotation_matrix4(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test12(void)
@@ -261,7 +245,7 @@ static void	test12(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 12:\n");
 	printf("Scenario: A shearing transformation moves x in proportion to y\n\
@@ -272,11 +256,10 @@ Then transform * p = point(5, 3, 4)\n");
 	shear.xy = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test13(void)
@@ -284,7 +267,7 @@ static void	test13(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 13:\n");
 	printf("Scenario: A shearing transformation moves x in proportion to z\n\
@@ -295,11 +278,10 @@ Then transform * p = point(6, 3, 4)\n");
 	shear.xz = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test14(void)
@@ -307,7 +289,7 @@ static void	test14(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 14:\n");
 	printf("Scenario: A shearing transformation moves y in proportion to x\n\
@@ -318,11 +300,10 @@ Then transform * p = point(2, 5, 4)\n");
 	shear.yx = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test15(void)
@@ -330,7 +311,7 @@ static void	test15(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4		(transform);
 
 	printf("TEST 15:\n");
 	printf("Scenario: A shearing transformation moves y in proportion to z\n\
@@ -341,11 +322,10 @@ Then transform * p = point(2, 7, 4)\n");
 	shear.yz = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test16(void)
@@ -353,7 +333,7 @@ static void	test16(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4	(transform);
 
 	printf("TEST 16:\n");
 	printf("Scenario: A shearing transformation moves z in proportion to x\n\
@@ -364,11 +344,10 @@ Then transform * p = point(2, 3, 6)\n");
 	shear.zx = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 static void	test17(void)
@@ -376,7 +355,7 @@ static void	test17(void)
 	t_vector	point;
 	t_point		result;
 	t_shear		shear;
-	float		(*transform)[4];
+	t_matrix4	transform;
 
 	printf("TEST 17:\n");
 	printf("Scenario: A shearing transformation moves z in proportion to y\n\
@@ -387,11 +366,10 @@ Then transform * p = point(2, 3, 7)\n");
 	shear.zy = 1;
 	point = init_point(2, 3, 4);
 	print_tuple(point);
-	transform = shearing_matrix4(&shear);
+	transform = init_shearing_matrix4(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, &point);
+	result = matrix4_and_tuple_multiply(transform, point);
 	print_tuple(result);
-	free(transform);
 }
 
 void	test_transformation(void)

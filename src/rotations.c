@@ -6,56 +6,50 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 12:18:16 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/24 12:39:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:40:28 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-float	(*x_rotation_matrix(float radians))[4]
+t_matrix4	init_x_rotation_matrix(float radians)
 {
-	float	(*rotation)[4];
+	t_matrix4	rotation;
 
-	rotation = ft_calloc(1, sizeof(float) * 16);
-	if (!rotation)
-		return (NULL);
-	rotation[0][0] = 1;
-	rotation[1][1] = cosf(radians);
-	rotation[1][2] = -sinf(radians);
-	rotation[2][1] = sinf(radians);
-	rotation[2][2] = cosf(radians);
-	rotation[3][3] = 1;
+	ft_bzero(&rotation, sizeof(rotation));
+	rotation.data[0][0] = 1;
+	rotation.data[1][1] = cosf(radians);
+	rotation.data[1][2] = -sinf(radians);
+	rotation.data[2][1] = sinf(radians);
+	rotation.data[2][2] = cosf(radians);
+	rotation.data[3][3] = 1;
 	return (rotation);
 }
 
-float	(*y_rotation_matrix4(float radians))[4]
+t_matrix4	init_y_rotation_matrix4(float radians)
 {
-	float	(*rotation)[4];
+	t_matrix4	rotation;
 
-	rotation = ft_calloc(1, sizeof(float) * 16);
-	if (!rotation)
-		return (NULL);
-	rotation[0][0] = cosf(radians);
-	rotation[0][2] = sinf(radians);
-	rotation[1][1] = 1;
-	rotation[2][0] = -sinf(radians);
-	rotation[2][2] = cosf(radians);
-	rotation[3][3] = 1;
+	ft_bzero(&rotation, sizeof(rotation));
+	rotation.data[0][0] = cosf(radians);
+	rotation.data[0][2] = sinf(radians);
+	rotation.data[1][1] = 1;
+	rotation.data[2][0] = -sinf(radians);
+	rotation.data[2][2] = cosf(radians);
+	rotation.data[3][3] = 1;
 	return (rotation);
 }
 
-float	(*z_rotation_matrix4(float radians))[4]
+t_matrix4	init_z_rotation_matrix4(float radians)
 {
-	float	(*rotation)[4];
+	t_matrix4	rotation;
 
-	rotation = ft_calloc(1, sizeof(float) * 16);
-	if (!rotation)
-		return (NULL);
-	rotation[0][0] = cosf(radians);
-	rotation[0][1] = -sinf(radians);
-	rotation[1][0] = sinf(radians);
-	rotation[1][1] = cosf(radians);
-	rotation[2][2] = 1;
-	rotation[3][3] = 1;
+	ft_bzero(&rotation, sizeof(rotation));
+	rotation.data[0][0] = cosf(radians);
+	rotation.data[0][1] = -sinf(radians);
+	rotation.data[1][0] = sinf(radians);
+	rotation.data[1][1] = cosf(radians);
+	rotation.data[2][2] = 1;
+	rotation.data[3][3] = 1;
 	return (rotation);
 }

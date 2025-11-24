@@ -6,21 +6,19 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 10:51:29 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/24 12:18:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 18:07:32 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-float	(*new_translation_matrix4(float scale_x, float scale_y, float scale_z))[4]
+t_matrix4	init_translation_matrix4(float scale_x, float scale_y, float scale_z)
 {
-	float	(*translation)[4];
+	t_matrix4	translation;
 	int		i;
 	int		j;
 
-	translation = ft_calloc(1, sizeof(float) * 16);
-	if (!translation)
-		return (NULL);
+	ft_bzero(&translation, sizeof(translation));
 	i = -1;
 	while (++i < 4)
 	{
@@ -28,53 +26,47 @@ float	(*new_translation_matrix4(float scale_x, float scale_y, float scale_z))[4]
 		while (++j < 4)
 		{
 			if (i == j)
-				translation[i][j] = 1;
+				translation.data[i][j] = 1;
 			else if (j == 3)
 			{
 				if (i == 0)
-					translation[i][j] = scale_x;
+					translation.data[i][j] = scale_x;
 				else if (i == 1)
-					translation[i][j] = scale_y;
+					translation.data[i][j] = scale_y;
 				else if (i == 2)
-					translation[i][j] = scale_z;
+					translation.data[i][j] = scale_z;
 			}
 		}
 	}
 	return (translation);
 }
 
-float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4]
+t_matrix4	init_scaling_matrix4(float scale_x, float scale_y, float scale_z)
 {
-	float	(*scalar)[4];
+	t_matrix4	scalar;
 
-	scalar	= ft_calloc(1, sizeof(float) * 16);
-	if (!scalar)
-		return (NULL);
-	scalar[0][0] = scale_x;
-	scalar[1][1] = scale_y;
-	scalar[2][2] = scale_z;
-	scalar[3][3] = 1;
+	ft_bzero(&scalar, sizeof(scalar));
+	scalar.data[0][0] = scale_x;
+	scalar.data[1][1] = scale_y;
+	scalar.data[2][2] = scale_z;
+	scalar.data[3][3] = 1;
 	return (scalar);
 }
 
-float	(*shearing_matrix4(t_shear *shear))[4]
+t_matrix4	init_shearing_matrix4(t_shear shear)
 {
-	float	(*shearing)[4];
+	t_matrix4	shearing;
 
-	if (!shear)
-		return (NULL);
-	shearing = ft_calloc(1, sizeof(float) * 16);
-	if (!shearing)
-		return (NULL);
-	shearing[0][0] = 1;
-	shearing[0][1] = shear->xy;
-	shearing[0][2] = shear->xz;
-	shearing[1][0] = shear->yx;
-	shearing[1][1] = 1;
-	shearing[1][2] = shear->yz;
-	shearing[2][0] = shear->zx;
-	shearing[2][1] = shear->zy;
-	shearing[2][2] = 1;
-	shearing[3][3] = 1;
+	ft_bzero(&shearing, sizeof(shearing));
+	shearing.data[0][0] = 1;
+	shearing.data[0][1] = shear.xy;
+	shearing.data[0][2] = shear.xz;
+	shearing.data[1][0] = shear.yx;
+	shearing.data[1][1] = 1;
+	shearing.data[1][2] = shear.yz;
+	shearing.data[2][0] = shear.zx;
+	shearing.data[2][1] = shear.zy;
+	shearing.data[2][2] = 1;
+	shearing.data[3][3] = 1;
 	return (shearing);
 }

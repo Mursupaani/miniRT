@@ -12,24 +12,24 @@
 
 #include "minirt.h"
 
-	float	identity[4][4];
-	float	m1[4][4];
-	float	m2[4][4];
-	float	m3[4][4];
-	float	m4[4][4];
-	float	m5[4][4];
-	float	m6[4][4];
-	float	m7[4][4];
-	float	m8[4][4];
-	float	m9[4][4];
-	float	m10[4][4];
-	float	m11[4][4];
-	float	m12[4][4];
-	float	m13[4][4];
-	float	m2by2[2][2];
-	float	m3by3[3][3];
-	float	m3by3_2[3][3];
-	float	m3by3_3[3][3];
+	t_matrix4	identity;
+	t_matrix4	m1;
+	t_matrix4	m2;
+	t_matrix4	m3;
+	t_matrix4	m4;
+	t_matrix4	m5;
+	t_matrix4	m6;
+	t_matrix4	m7;
+	t_matrix4	m8;
+	t_matrix4	m9;
+	t_matrix4	m10;
+	t_matrix4	m11;
+	t_matrix4	m12;
+	t_matrix4	m13;
+	t_matrix2	m2by2;
+	t_matrix3	m3by3;
+	t_matrix3	m3by3_2;
+	t_matrix3	m3by3_3;
 
 static void	init_matrices(void);
 
@@ -75,7 +75,7 @@ Then A != B\n");
 
 static void	test3(void)
 {
-	float (*result)[4];
+	t_matrix4 result;
 
 	printf("TEST 3:\n");
 	printf("Scenario: Multiplying two matrices\n\
@@ -98,7 +98,6 @@ Then A * B is the following 4x4 matrix:\n\
 	print_matrix4(m3);
 	result = matrix4_multiply(m1, m4);
 	print_matrix4(result);
-	free(result);
 }
 
 static void	test4(void)
@@ -116,7 +115,7 @@ Given the following matrix A:\n\
 And b ← tuple(1, 2, 3, 1)\n\
 Then A * b = tuple(18, 24, 33, 1)\n");
 	tuple = init_tuple(1, 2, 3, 1);
-	result = matrix4_and_tuple_multiply(m5, &tuple);
+	result = matrix4_and_tuple_multiply(m5, tuple);
 	print_matrix4(m1);
 	print_tuple(tuple);
 	print_tuple(result);
@@ -124,7 +123,7 @@ Then A * b = tuple(18, 24, 33, 1)\n");
 
 static void	test5(void)
 {
-	float (*result)[4];
+	t_matrix4 result;
 
 	printf("TEST 5:\n");
 	printf("Scenario: Multiplying a matrix by the identity matrix\n\
@@ -141,12 +140,11 @@ Then identity_matrix * a = a\n");
 	print_matrix4(identity);
 	result = matrix4_multiply(m1, identity);
 	print_matrix4(result);
-	free(result);
 }
 
 static void	test6(void)
 {
-	float (*result)[4];
+	t_matrix4 result;
 
 	printf("TEST 6:\n");
 	printf("Scenario: Transposing a matrix\n\
@@ -163,7 +161,6 @@ Then transpose(A) is the following matrix:\n\
 	print_matrix4(m6);
 	result = matrix4_transpose(m6);
 	print_matrix4(result);
-	free(result);
 }
 
 static void	test7(void)
@@ -180,7 +177,7 @@ Then determinant(A) = 17\n");
 
 static void	test8(void)
 {
-	float (*result)[2];
+	t_matrix2 result;
 
 	printf("TEST 8:\n");
 	printf("Scenario: A submatrix of a 3x3 matrix is a 2x2 matrix\n\
@@ -194,12 +191,11 @@ Then submatrix(A, 0, 2) is the following 2x2 matrix:\n\
 	print_matrix3(m3by3);
 	result = matrix3_submatrix(m3by3, 0, 2);
 	print_matrix2(result);
-	free(result);
 }
 
 static void	test9(void)
 {
-	float (*result)[3];
+	t_matrix3 result;
 
 	printf("TEST 9:\n");
 	printf("Scenario: A submatrix of a 4x4 matrix is a 3x3 matrix\n\
@@ -215,7 +211,6 @@ Then submatrix(A, 2, 1) is the following 3x3 matrix:\n\
 	print_matrix4(m7);
 	result = matrix4_submatrix(m7, 2, 1);
 	print_matrix3(result);
-	free(result);
 }
 
 static void	test10(void)
@@ -280,7 +275,7 @@ And determinant(A) = -4071\n");
 
 static void	test13(void)
 {
-	float	(*invert)[4];
+	t_matrix4	invert;
 
 	printf("TEST 13:\n");
 	printf("Scenario: Calculating the inverse of a matrix\n\
@@ -303,12 +298,11 @@ And B is the following 4x4 matrix:\n\
 	print_matrix4(m9);
 	invert = matrix4_invert(m9);
 	print_matrix4(invert);
-	free(invert);
 }
 
 static void	test14(void)
 {
-	float	(*invert)[4];
+	t_matrix4	invert;
 
 	printf("TEST 14:\n");
 	printf("Scenario: Calculating the inverse of another matrix\n\
@@ -336,18 +330,16 @@ Then inverse(A) is the following 4x4 matrix:\n\
 	print_matrix4(m10);
 	invert = matrix4_invert(m10);
 	print_matrix4(invert);
-	free(invert);
 	print_matrix4(m11);
 	invert = matrix4_invert(m11);
 	print_matrix4(invert);
-	free(invert);
 }
 
 static void	test15(void)
 {
-	float	(*multiply)[4];
-	float	(*invert)[4];
-	float	(*result)[4];
+	t_matrix4	multiply;
+	t_matrix4	invert;
+	t_matrix4	result;
 
 	printf("TEST 15:\n");
 	printf("Scenario: Multiplying a product by its inverse\n\
@@ -374,9 +366,6 @@ Then C * inverse(B) = A\n");
 	result = matrix4_multiply(multiply, invert);
 	printf("Final result:\n");
 	print_matrix4(result);
-	free(multiply);
-	free(invert);
-	free(result);
 }
 
 void	test_matrices(void)
@@ -421,282 +410,282 @@ void	test_matrices(void)
 
 static void	init_matrices(void)
 {
-	identity[0][0] = 1;
-	identity[0][1] = 0;
-	identity[0][2] = 0;
-	identity[0][3] = 0;
-	identity[1][0] = 0;
-	identity[1][1] = 1;
-	identity[1][2] = 0;
-	identity[1][3] = 0;
-	identity[2][0] = 0;
-	identity[2][1] = 0;
-	identity[2][2] = 1;
-	identity[2][3] = 0;
-	identity[3][0] = 0;
-	identity[3][1] = 0;
-	identity[3][2] = 0;
-	identity[3][3] = 1;
+	identity.data[0][0] = 1;
+	identity.data[0][1] = 0;
+	identity.data[0][2] = 0;
+	identity.data[0][3] = 0;
+	identity.data[1][0] = 0;
+	identity.data[1][1] = 1;
+	identity.data[1][2] = 0;
+	identity.data[1][3] = 0;
+	identity.data[2][0] = 0;
+	identity.data[2][1] = 0;
+	identity.data[2][2] = 1;
+	identity.data[2][3] = 0;
+	identity.data[3][0] = 0;
+	identity.data[3][1] = 0;
+	identity.data[3][2] = 0;
+	identity.data[3][3] = 1;
 
-	m1[0][0] = 1;
-	m1[0][1] = 2;
-	m1[0][2] = 3;
-	m1[0][3] = 4;
-	m1[1][0] = 5;
-	m1[1][1] = 6;
-	m1[1][2] = 7;
-	m1[1][3] = 8;
-	m1[2][0] = 9;
-	m1[2][1] = 8;
-	m1[2][2] = 7;
-	m1[2][3] = 6;
-	m1[3][0] = 5;
-	m1[3][1] = 4;
-	m1[3][2] = 3;
-	m1[3][3] = 2;
+	m1.data[0][0] = 1;
+	m1.data[0][1] = 2;
+	m1.data[0][2] = 3;
+	m1.data[0][3] = 4;
+	m1.data[1][0] = 5;
+	m1.data[1][1] = 6;
+	m1.data[1][2] = 7;
+	m1.data[1][3] = 8;
+	m1.data[2][0] = 9;
+	m1.data[2][1] = 8;
+	m1.data[2][2] = 7;
+	m1.data[2][3] = 6;
+	m1.data[3][0] = 5;
+	m1.data[3][1] = 4;
+	m1.data[3][2] = 3;
+	m1.data[3][3] = 2;
 
-	m2[0][0] = 1;
-	m2[0][1] = 2;
-	m2[0][2] = 3;
-	m2[0][3] = 4;
-	m2[1][0] = 5;
-	m2[1][1] = 6;
-	m2[1][2] = 7;
-	m2[1][3] = 8;
-	m2[2][0] = 9;
-	m2[2][1] = 8;
-	m2[2][2] = 7;
-	m2[2][3] = 6;
-	m2[3][0] = 5;
-	m2[3][1] = 4;
-	m2[3][2] = 3;
-	m2[3][3] = 2;
+	m2.data[0][0] = 1;
+	m2.data[0][1] = 2;
+	m2.data[0][2] = 3;
+	m2.data[0][3] = 4;
+	m2.data[1][0] = 5;
+	m2.data[1][1] = 6;
+	m2.data[1][2] = 7;
+	m2.data[1][3] = 8;
+	m2.data[2][0] = 9;
+	m2.data[2][1] = 8;
+	m2.data[2][2] = 7;
+	m2.data[2][3] = 6;
+	m2.data[3][0] = 5;
+	m2.data[3][1] = 4;
+	m2.data[3][2] = 3;
+	m2.data[3][3] = 2;
 
-	m3[0][0] = 2;
-	m3[0][1] = 3;
-	m3[0][2] = 4;
-	m3[0][3] = 5;
-	m3[1][0] = 6;
-	m3[1][1] = 7;
-	m3[1][2] = 8;
-	m3[1][3] = 9;
-	m3[2][0] = 8;
-	m3[2][1] = 7;
-	m3[2][2] = 6;
-	m3[2][3] = 5;
-	m3[3][0] = 4;
-	m3[3][1] = 3;
-	m3[3][2] = 2;
-	m3[3][3] = 1;
+	m3.data[0][0] = 2;
+	m3.data[0][1] = 3;
+	m3.data[0][2] = 4;
+	m3.data[0][3] = 5;
+	m3.data[1][0] = 6;
+	m3.data[1][1] = 7;
+	m3.data[1][2] = 8;
+	m3.data[1][3] = 9;
+	m3.data[2][0] = 8;
+	m3.data[2][1] = 7;
+	m3.data[2][2] = 6;
+	m3.data[2][3] = 5;
+	m3.data[3][0] = 4;
+	m3.data[3][1] = 3;
+	m3.data[3][2] = 2;
+	m3.data[3][3] = 1;
 
-	m4[0][0] = -2;
-	m4[0][1] = 1;
-	m4[0][2] = 2;
-	m4[0][3] = 3;
-	m4[1][0] = 3;
-	m4[1][1] = 2;
-	m4[1][2] = 1;
-	m4[1][3] = -1;
-	m4[2][0] = 4;
-	m4[2][1] = 3;
-	m4[2][2] = 6;
-	m4[2][3] = 5;
-	m4[3][0] = 1;
-	m4[3][1] = 2;
-	m4[3][2] = 7;
-	m4[3][3] = 8;
+	m4.data[0][0] = -2;
+	m4.data[0][1] = 1;
+	m4.data[0][2] = 2;
+	m4.data[0][3] = 3;
+	m4.data[1][0] = 3;
+	m4.data[1][1] = 2;
+	m4.data[1][2] = 1;
+	m4.data[1][3] = -1;
+	m4.data[2][0] = 4;
+	m4.data[2][1] = 3;
+	m4.data[2][2] = 6;
+	m4.data[2][3] = 5;
+	m4.data[3][0] = 1;
+	m4.data[3][1] = 2;
+	m4.data[3][2] = 7;
+	m4.data[3][3] = 8;
 
-	m5[0][0] = 1;
-	m5[0][1] = 2;
-	m5[0][2] = 3;
-	m5[0][3] = 4;
-	m5[1][0] = 2;
-	m5[1][1] = 4;
-	m5[1][2] = 4;
-	m5[1][3] = 2;
-	m5[2][0] = 8;
-	m5[2][1] = 6;
-	m5[2][2] = 4;
-	m5[2][3] = 1;
-	m5[3][0] = 0;
-	m5[3][1] = 0;
-	m5[3][2] = 0;
-	m5[3][3] = 1;
+	m5.data[0][0] = 1;
+	m5.data[0][1] = 2;
+	m5.data[0][2] = 3;
+	m5.data[0][3] = 4;
+	m5.data[1][0] = 2;
+	m5.data[1][1] = 4;
+	m5.data[1][2] = 4;
+	m5.data[1][3] = 2;
+	m5.data[2][0] = 8;
+	m5.data[2][1] = 6;
+	m5.data[2][2] = 4;
+	m5.data[2][3] = 1;
+	m5.data[3][0] = 0;
+	m5.data[3][1] = 0;
+	m5.data[3][2] = 0;
+	m5.data[3][3] = 1;
 
-	m6[0][0] = 0;
-	m6[0][1] = 9;
-	m6[0][2] = 3;
-	m6[0][3] = 0;
-	m6[1][0] = 9;
-	m6[1][1] = 8;
-	m6[1][2] = 0;
-	m6[1][3] = 8;
-	m6[2][0] = 1;
-	m6[2][1] = 8;
-	m6[2][2] = 5;
-	m6[2][3] = 3;
-	m6[3][0] = 0;
-	m6[3][1] = 0;
-	m6[3][2] = 5;
-	m6[3][3] = 8;
+	m6.data[0][0] = 0;
+	m6.data[0][1] = 9;
+	m6.data[0][2] = 3;
+	m6.data[0][3] = 0;
+	m6.data[1][0] = 9;
+	m6.data[1][1] = 8;
+	m6.data[1][2] = 0;
+	m6.data[1][3] = 8;
+	m6.data[2][0] = 1;
+	m6.data[2][1] = 8;
+	m6.data[2][2] = 5;
+	m6.data[2][3] = 3;
+	m6.data[3][0] = 0;
+	m6.data[3][1] = 0;
+	m6.data[3][2] = 5;
+	m6.data[3][3] = 8;
 
-	m7[0][0] = -6;
-	m7[0][1] = 1;
-	m7[0][2] = 1;
-	m7[0][3] = 6;
-	m7[1][0] = -8;
-	m7[1][1] = 5;
-	m7[1][2] = 8;
-	m7[1][3] = 6;
-	m7[2][0] = -1;
-	m7[2][1] = 0;
-	m7[2][2] = 8;
-	m7[2][3] = 2;
-	m7[3][0] = -7;
-	m7[3][1] = 1;
-	m7[3][2] = -1;
-	m7[3][3] = 1;
+	m7.data[0][0] = -6;
+	m7.data[0][1] = 1;
+	m7.data[0][2] = 1;
+	m7.data[0][3] = 6;
+	m7.data[1][0] = -8;
+	m7.data[1][1] = 5;
+	m7.data[1][2] = 8;
+	m7.data[1][3] = 6;
+	m7.data[2][0] = -1;
+	m7.data[2][1] = 0;
+	m7.data[2][2] = 8;
+	m7.data[2][3] = 2;
+	m7.data[3][0] = -7;
+	m7.data[3][1] = 1;
+	m7.data[3][2] = -1;
+	m7.data[3][3] = 1;
 
-	m8[0][0] = -2;
-	m8[0][1] = -8;
-	m8[0][2] = 3;
-	m8[0][3] = 5;
-	m8[1][0] = -3;
-	m8[1][1] = 1;
-	m8[1][2] = 7;
-	m8[1][3] = 3;
-	m8[2][0] = 1;
-	m8[2][1] = 2;
-	m8[2][2] = -9;
-	m8[2][3] = 6;
-	m8[3][0] = -6;
-	m8[3][1] = 7;
-	m8[3][2] = 7;
-	m8[3][3] = -9;
+	m8.data[0][0] = -2;
+	m8.data[0][1] = -8;
+	m8.data[0][2] = 3;
+	m8.data[0][3] = 5;
+	m8.data[1][0] = -3;
+	m8.data[1][1] = 1;
+	m8.data[1][2] = 7;
+	m8.data[1][3] = 3;
+	m8.data[2][0] = 1;
+	m8.data[2][1] = 2;
+	m8.data[2][2] = -9;
+	m8.data[2][3] = 6;
+	m8.data[3][0] = -6;
+	m8.data[3][1] = 7;
+	m8.data[3][2] = 7;
+	m8.data[3][3] = -9;
 
-	m9[0][0] = -5;
-	m9[0][1] = 2;
-	m9[0][2] = 6;
-	m9[0][3] = -8;
-	m9[1][0] = 1;
-	m9[1][1] = -5;
-	m9[1][2] = 1;
-	m9[1][3] = 8;
-	m9[2][0] = 7;
-	m9[2][1] = 7;
-	m9[2][2] = -6;
-	m9[2][3] = -7;
-	m9[3][0] = 1;
-	m9[3][1] = -3;
-	m9[3][2] = 7;
-	m9[3][3] = 4;
+	m9.data[0][0] = -5;
+	m9.data[0][1] = 2;
+	m9.data[0][2] = 6;
+	m9.data[0][3] = -8;
+	m9.data[1][0] = 1;
+	m9.data[1][1] = -5;
+	m9.data[1][2] = 1;
+	m9.data[1][3] = 8;
+	m9.data[2][0] = 7;
+	m9.data[2][1] = 7;
+	m9.data[2][2] = -6;
+	m9.data[2][3] = -7;
+	m9.data[3][0] = 1;
+	m9.data[3][1] = -3;
+	m9.data[3][2] = 7;
+	m9.data[3][3] = 4;
 
-	m10[0][0] = 8;
-	m10[0][1] = -5;
-	m10[0][2] = 9;
-	m10[0][3] = 2;
-	m10[1][0] = 7;
-	m10[1][1] = 5;
-	m10[1][2] = 6;
-	m10[1][3] = 1;
-	m10[2][0] = -6;
-	m10[2][1] = 0;
-	m10[2][2] = 9;
-	m10[2][3] = 6;
-	m10[3][0] = -3;
-	m10[3][1] = 0;
-	m10[3][2] = -9;
-	m10[3][3] = -4;
+	m10.data[0][0] = 8;
+	m10.data[0][1] = -5;
+	m10.data[0][2] = 9;
+	m10.data[0][3] = 2;
+	m10.data[1][0] = 7;
+	m10.data[1][1] = 5;
+	m10.data[1][2] = 6;
+	m10.data[1][3] = 1;
+	m10.data[2][0] = -6;
+	m10.data[2][1] = 0;
+	m10.data[2][2] = 9;
+	m10.data[2][3] = 6;
+	m10.data[3][0] = -3;
+	m10.data[3][1] = 0;
+	m10.data[3][2] = -9;
+	m10.data[3][3] = -4;
 
-	m11[0][0] = 9;
-	m11[0][1] = 3;
-	m11[0][2] = 0;
-	m11[0][3] = 9;
-	m11[1][0] = -5;
-	m11[1][1] = -2;
-	m11[1][2] = -6;
-	m11[1][3] = -3;
-	m11[2][0] = -4;
-	m11[2][1] = 9;
-	m11[2][2] = 6;
-	m11[2][3] = 4;
-	m11[3][0] = -7;
-	m11[3][1] = 6;
-	m11[3][2] = 6;
-	m11[3][3] = 2;
+	m11.data[0][0] = 9;
+	m11.data[0][1] = 3;
+	m11.data[0][2] = 0;
+	m11.data[0][3] = 9;
+	m11.data[1][0] = -5;
+	m11.data[1][1] = -2;
+	m11.data[1][2] = -6;
+	m11.data[1][3] = -3;
+	m11.data[2][0] = -4;
+	m11.data[2][1] = 9;
+	m11.data[2][2] = 6;
+	m11.data[2][3] = 4;
+	m11.data[3][0] = -7;
+	m11.data[3][1] = 6;
+	m11.data[3][2] = 6;
+	m11.data[3][3] = 2;
 
-	m12[0][0] = 3;
-	m12[0][1] = -9;
-	m12[0][2] = 7;
-	m12[0][3] = 3;
-	m12[1][0] = 3;
-	m12[1][1] = -8;
-	m12[1][2] = 2;
-	m12[1][3] = -9;
-	m12[2][0] = -4;
-	m12[2][1] = 4;
-	m12[2][2] = 4;
-	m12[2][3] = 1;
-	m12[3][0] = -6;
-	m12[3][1] = 5;
-	m12[3][2] = -1;
-	m12[3][3] = 1;
+	m12.data[0][0] = 3;
+	m12.data[0][1] = -9;
+	m12.data[0][2] = 7;
+	m12.data[0][3] = 3;
+	m12.data[1][0] = 3;
+	m12.data[1][1] = -8;
+	m12.data[1][2] = 2;
+	m12.data[1][3] = -9;
+	m12.data[2][0] = -4;
+	m12.data[2][1] = 4;
+	m12.data[2][2] = 4;
+	m12.data[2][3] = 1;
+	m12.data[3][0] = -6;
+	m12.data[3][1] = 5;
+	m12.data[3][2] = -1;
+	m12.data[3][3] = 1;
 
-	m13[0][0] = 8;
-	m13[0][1] = 2;
-	m13[0][2] = 2;
-	m13[0][3] = 2;
-	m13[1][0] = 3;
-	m13[1][1] = -1;
-	m13[1][2] = 7;
-	m13[1][3] = 0;
-	m13[2][0] = 7;
-	m13[2][1] = 0;
-	m13[2][2] = 5;
-	m13[2][3] = 4;
-	m13[3][0] = 6;
-	m13[3][1] = -2;
-	m13[3][2] = 0;
-	m13[3][3] = 5;
+	m13.data[0][0] = 8;
+	m13.data[0][1] = 2;
+	m13.data[0][2] = 2;
+	m13.data[0][3] = 2;
+	m13.data[1][0] = 3;
+	m13.data[1][1] = -1;
+	m13.data[1][2] = 7;
+	m13.data[1][3] = 0;
+	m13.data[2][0] = 7;
+	m13.data[2][1] = 0;
+	m13.data[2][2] = 5;
+	m13.data[2][3] = 4;
+	m13.data[3][0] = 6;
+	m13.data[3][1] = -2;
+	m13.data[3][2] = 0;
+	m13.data[3][3] = 5;
 
-	m2by2[0][0] = 1;
-	m2by2[0][1] = 5;
+	m2by2.data[0][0] = 1;
+	m2by2.data[0][1] = 5;
 
-	m2by2[0][0] = 1;
-	m2by2[0][1] = 5;
+	m2by2.data[0][0] = 1;
+	m2by2.data[0][1] = 5;
 
-	m2by2[0][0] = 1;
-	m2by2[0][1] = 5;
-	m2by2[1][0] = -3;
-	m2by2[1][1] = 2;
+	m2by2.data[0][0] = 1;
+	m2by2.data[0][1] = 5;
+	m2by2.data[1][0] = -3;
+	m2by2.data[1][1] = 2;
 
-	m3by3[0][0] = 1;
-	m3by3[0][1] = 5;
-	m3by3[0][2] = 0;
-	m3by3[1][0] = -3;
-	m3by3[1][1] = 2;
-	m3by3[1][2] = 7;
-	m3by3[2][0] = 0;
-	m3by3[2][1] = 6;
-	m3by3[2][2] = -3;
+	m3by3.data[0][0] = 1;
+	m3by3.data[0][1] = 5;
+	m3by3.data[0][2] = 0;
+	m3by3.data[1][0] = -3;
+	m3by3.data[1][1] = 2;
+	m3by3.data[1][2] = 7;
+	m3by3.data[2][0] = 0;
+	m3by3.data[2][1] = 6;
+	m3by3.data[2][2] = -3;
 
-	m3by3_2[0][0] = 3;
-	m3by3_2[0][1] = 5;
-	m3by3_2[0][2] = 0;
-	m3by3_2[1][0] = 2;
-	m3by3_2[1][1] = -1;
-	m3by3_2[1][2] = -7;
-	m3by3_2[2][0] = 6;
-	m3by3_2[2][1] = -1;
-	m3by3_2[2][2] = 5;
+	m3by3_2.data[0][0] = 3;
+	m3by3_2.data[0][1] = 5;
+	m3by3_2.data[0][2] = 0;
+	m3by3_2.data[1][0] = 2;
+	m3by3_2.data[1][1] = -1;
+	m3by3_2.data[1][2] = -7;
+	m3by3_2.data[2][0] = 6;
+	m3by3_2.data[2][1] = -1;
+	m3by3_2.data[2][2] = 5;
 
-	m3by3_3[0][0] = 1;
-	m3by3_3[0][1] = 2;
-	m3by3_3[0][2] = 6;
-	m3by3_3[1][0] = -5;
-	m3by3_3[1][1] = 8;
-	m3by3_3[1][2] = -4;
-	m3by3_3[2][0] = 2;
-	m3by3_3[2][1] = 6;
-	m3by3_3[2][2] = 4;
+	m3by3_3.data[0][0] = 1;
+	m3by3_3.data[0][1] = 2;
+	m3by3_3.data[0][2] = 6;
+	m3by3_3.data[1][0] = -5;
+	m3by3_3.data[1][1] = 8;
+	m3by3_3.data[1][2] = -4;
+	m3by3_3.data[2][0] = 2;
+	m3by3_3.data[2][1] = 6;
+	m3by3_3.data[2][2] = 4;
 }
