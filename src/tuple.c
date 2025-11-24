@@ -12,26 +12,24 @@
 
 #include "minirt.h"
 
-t_tuple	*new_tuple(float x, float y, float z, float w)
+t_tuple	init_tuple(float x, float y, float z, float w)
 {
-	t_tuple	*tuple;
+	t_tuple	tuple;
 
-	tuple = (t_tuple *)malloc(sizeof(t_tuple));
-	if (!tuple)
-		return (NULL);
-	tuple->x = x;
-	tuple->y = y;
-	tuple->z = z;
-	tuple->w = w;
+	ft_bzero(&tuple, sizeof(t_tuple));
+	tuple.x = x;
+	tuple.y = y;
+	tuple.z = z;
+	tuple.w = w;
 	return (tuple);
 }
 
-t_vector	*new_vector(float x, float y, float z)
+t_vector	init_vector(float x, float y, float z)
 {
-	return (new_tuple(x, y, z, 0));
+	return (init_tuple(x, y, z, 0));
 }
 
-t_point	*new_point(float x, float y, float z)
+t_point	init_point(float x, float y, float z)
 {
-	return (new_tuple(x, y, z, 1));
+	return (init_tuple(x, y, z, 1));
 }

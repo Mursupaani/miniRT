@@ -6,14 +6,14 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 17:01:44 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 17:38:46 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/24 18:09:39 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static void	store_submatrix2_values(
-			float matrix[3][3], float result[2][2], int row, int column)
+			t_matrix3 matrix, t_matrix2 *result, int row, int column)
 {
 	int		i;
 	int		j;
@@ -32,33 +32,29 @@ static void	store_submatrix2_values(
 		{
 			if (j == column)
 				continue ;
-			result[k][l] = matrix[i][j];
+			result->data[k][l] = matrix.data[i][j];
 			l++;
 		}
 		k++;
 	}
 }
 
-float	(*matrix3_submatrix(float matrix[3][3], int row, int column))[2]
+t_matrix2	matrix3_submatrix(t_matrix3 matrix, int row, int column)
 {
-	float	(*result)[2];
+	t_matrix2	result;
 
-	if (!matrix)
-		return (NULL);
+	ft_bzero(&result, sizeof(result));
 	if (row > 2 || row < 0 || column > 2 || column < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Dimensions are outside of 3x3 matrix.");
-		return (NULL);
+		return (result);
 	}
-	result = malloc(sizeof(float) * 4);
-	if (!result)
-		return (NULL);
-	store_submatrix2_values(matrix, result, row, column);
+	store_submatrix2_values(matrix, &result, row, column);
 	return (result);
 }
 
 static void	store_submatrix3_values(
-			float matrix[4][4], float result[3][3], int row, int column)
+			t_matrix4 matrix, t_matrix3 *result, int row, int column)
 {
 	int		i;
 	int		j;
@@ -77,27 +73,23 @@ static void	store_submatrix3_values(
 		{
 			if (j == column)
 				continue ;
-			result[k][l] = matrix[i][j];
+			result->data[k][l] = matrix.data[i][j];
 			l++;
 		}
 		k++;
 	}
 }
 
-float	(*matrix4_submatrix(float matrix[4][4], int row, int column))[3]
+t_matrix3	matrix4_submatrix(t_matrix4 matrix, int row, int column)
 {
-	float	(*result)[3];
+	t_matrix3	result;
 
-	if (!matrix)
-		return (NULL);
+	ft_bzero(&result, sizeof(result));
 	if (row > 3 || row < 0 || column > 3 || column < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Dimensions are outside of 4x4 matrix.");
-		return (NULL);
+		return (result);
 	}
-	result = malloc(sizeof(float) * 9);
-	if (!result)
-		return (NULL);
-	store_submatrix3_values(matrix, result, row, column);
+	store_submatrix3_values(matrix, &result, row, column);
 	return (result);
 }

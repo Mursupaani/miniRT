@@ -12,20 +12,18 @@
 
 #include "minirt.h"
 
-bool	matrix4s_are_equal(float (*m1)[4], float (*m2)[4])
+bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2)
 {
 	int	i;
 	int	j;
 
-	if (!m1 || !m2)
-		return (false);
 	i = 0;
 	while (i < 4)
 	{
 		j = 0;
 		while (j < 4)
 		{
-			if (!floats_are_equal(m1[i][j], m2[i][j]))
+			if (!floats_are_equal(m1.data[i][j], m2.data[i][j]))
 				return (false);
 			j++;
 		}
