@@ -57,7 +57,7 @@ float	(*new_scaling_matrix4(float scale_x, float scale_y, float scale_z))[4]
 	return (scalar);
 }
 
-float	(*new_shearing_matrix4(t_shear *shear))[4]
+float	(*shearing_matrix4(t_shear *shear))[4]
 {
 	float	(*shearing)[4];
 

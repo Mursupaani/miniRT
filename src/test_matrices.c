@@ -103,8 +103,8 @@ Then A * B is the following 4x4 matrix:\n\
 
 static void	test4(void)
 {
-	t_tuple	*tuple;
-	t_tuple	*result;
+	t_tuple	tuple;
+	t_tuple	result;
 
 	printf("TEST 4:\n");
 	printf("Scenario: A matrix multiplied by a tuple\n\
@@ -115,13 +115,11 @@ Given the following matrix A:\n\
 | 0 | 0 | 0 | 1 |\n\
 And b ← tuple(1, 2, 3, 1)\n\
 Then A * b = tuple(18, 24, 33, 1)\n");
-	tuple = new_tuple(1, 2, 3, 1);
-	result = matrix4_and_tuple_multiply(m5, tuple);
+	tuple = init_tuple(1, 2, 3, 1);
+	result = matrix4_and_tuple_multiply(m5, &tuple);
 	print_matrix4(m1);
 	print_tuple(tuple);
 	print_tuple(result);
-	free(tuple);
-	free(result);
 }
 
 static void	test5(void)

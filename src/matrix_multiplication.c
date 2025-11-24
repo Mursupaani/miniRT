@@ -61,18 +61,16 @@ float	(*matrix4_multiply(float m1[4][4], float m2[4][4]))[4]
 	return (result);
 }
 
-t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4], t_tuple *tuple)
+t_tuple	matrix4_and_tuple_multiply(float (*matrix)[4], t_tuple *tuple)
 {
-	t_tuple	*result;
+	t_tuple	result;
 
-	if (!matrix || !tuple)
-		return (NULL);
-	result = (t_tuple *)malloc(sizeof(t_tuple));
-	if (!result)
-		return (NULL);
-	result->x = get_matrix_row_tuple_product(matrix[0], tuple);
-	result->y = get_matrix_row_tuple_product(matrix[1], tuple);
-	result->z = get_matrix_row_tuple_product(matrix[2], tuple);
-	result->w = get_matrix_row_tuple_product(matrix[3], tuple);
+	ft_bzero(&result, sizeof(t_tuple));
+	if (!matrix)
+		return (result);
+	result.x = get_matrix_row_tuple_product(matrix[0], tuple);
+	result.y = get_matrix_row_tuple_product(matrix[1], tuple);
+	result.z = get_matrix_row_tuple_product(matrix[2], tuple);
+	result.w = get_matrix_row_tuple_product(matrix[3], tuple);
 	return (result);
 }

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-float	(*new_x_rotation_matrix4(float radians))[4]
+float	(*x_rotation_matrix(float radians))[4]
 {
 	float	(*rotation)[4];
 
@@ -28,7 +28,7 @@ float	(*new_x_rotation_matrix4(float radians))[4]
 	return (rotation);
 }
 
-float	(*new_y_rotation_matrix4(float radians))[4]
+float	(*y_rotation_matrix4(float radians))[4]
 {
 	float	(*rotation)[4];
 
@@ -44,7 +44,7 @@ float	(*new_y_rotation_matrix4(float radians))[4]
 	return (rotation);
 }
 
-float	(*new_z_rotation_matrix4(float radians))[4]
+float	(*z_rotation_matrix4(float radians))[4]
 {
 	float	(*rotation)[4];
 
