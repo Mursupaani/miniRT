@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/24 16:20:51 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/25 10:22:32 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ typedef struct s_tuple
 typedef t_tuple	t_vector;
 typedef t_tuple	t_point;
 
+typedef struct s_matrix2
+{
+	float	data[2][2];
+}	t_matrix2;
+
+typedef struct s_matrix3
+{
+	float	data[3][3];
+}	t_matrix3;
+
+typedef struct s_matrix4
+{
+	float	data[4][4];
+}	t_matrix4;
+
+typedef struct s_shear
+{
+	float	xy;
+	float	xz;
+	float	yx;
+	float	yz;
+	float	zx;
+	float	zy;
+}	t_shear;
+
 typedef struct s_color_255
 {
 	unsigned char	r;
@@ -66,14 +91,14 @@ typedef struct s_color_1
 //FIXME: Testing
 typedef struct s_proj
 {
-	t_point		*p;
-	t_vector	*v;
+	t_point		p;
+	t_vector	v;
 }	t_proj;
 
 typedef struct s_env
 {
-	t_vector	*g;
-	t_vector	*w;
+	t_vector	g;
+	t_vector	w;
 }	t_env;
 //FIXME: Testing
 
@@ -203,13 +228,17 @@ typedef struct	s_intersection
 // Tests
 void		test_tuples(void);
 void		test_matrices(void);
+void		test_transformation(void);
 
 // Debug
-void		print_tuple(t_tuple *tuple);
-void		print_matrix2(float (*matrix)[2]);
-void		print_matrix3(float (*matrix)[3]);
-void		print_matrix4(float (*matrix)[4]);
-t_proj		*tick(t_env *env, t_proj *proj);
+void		print_tuple(t_tuple tuple);
+// void		print_matrix2(float (*matrix)[2]);
+void		print_matrix2(t_matrix2 matrix);
+// void		print_matrix3(float (*matrix)[3]);
+void		print_matrix3(t_matrix3 matrix);
+// void		print_matrix4(float (*matrix)[4]);
+void		print_matrix4(t_matrix4 matrix);
+t_proj		tick(t_env env, t_proj proj);
 void		projectile(t_app *app);
 
 // App initialize and management:
@@ -225,45 +254,54 @@ void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 
 // Tuples (vectors, points):
-t_tuple		*new_tuple(float x, float y, float z, float w);
-t_vector	*new_vector(float x, float y, float z);
-t_point		*new_point(float x, float y, float z);
+t_tuple		init_tuple(float x, float y, float z, float w);
+t_vector	init_vector(float x, float y, float z);
+t_point		init_point(float x, float y, float z);
+
+// Transformation matrices
+t_matrix4	init_translation_matrix4(
+			float scale_x, float scale_y, float scale_z);
+t_matrix4	init_scaling_matrix4(float scale_x, float scale_y, float scale_z);
+t_matrix4	init_x_rotation_matrix(float radians);
+t_matrix4	init_y_rotation_matrix4(float radians);
+t_matrix4	init_z_rotation_matrix4(float radians);
+t_matrix4	init_shearing_matrix4(t_shear shear);
 
 // Tuple math:
-t_tuple		*tuple_sum(t_tuple *a, t_tuple *b);
-t_tuple		*tuple_subtract(t_tuple *a, t_tuple *b);
-t_tuple		*tuple_scale_multiply(t_tuple *tuple, float scalar);
-t_tuple		*tuple_scale_divide(t_tuple *tuple, float divider);
-t_tuple		*tuple_negate(t_tuple *tuple);
+t_tuple		tuple_sum(t_tuple a, t_tuple b);
+t_tuple		tuple_subtract(t_tuple a, t_tuple b);
+t_tuple		tuple_scale_multiply(t_tuple tuple, float scalar);
+t_tuple		tuple_scale_divide(t_tuple tuple, float divider);
+t_tuple		tuple_negate(t_tuple tuple);
 
 // Vector math:
-float		vector_magnitude(t_tuple *vector);
-t_vector	*vector_normalize(t_vector *vector);
-float		vector_dot_product(t_vector *a, t_vector *b);
-t_vector	*vector_cross_product(t_vector *a, t_vector *b);
+float		vector_magnitude(t_tuple vector);
+t_vector	vector_normalize(t_vector vector);
+float		vector_dot_product(t_vector a, t_vector b);
+t_vector	vector_cross_product(t_vector a, t_vector b);
 
 // Matrix utils:
-bool	matrix4s_are_equal(float (*m1)[4], float (*m2)[4]);
+bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
 
 // Matrix math:
-float	(*matrix4_multiply(float m1[4][4], float m2[4][4]))[4];
-t_tuple	*matrix4_and_tuple_multiply(float (*matrix)[4] , t_tuple *tuple);
-float	(*matrix4_transpose(float (*matrix)[4]))[4];
-float	(*matrix4_invert(float (*matrix)[4]))[4];
+t_matrix4	matrix4_multiply(t_matrix4 m1, t_matrix4 m2);
+t_tuple	matrix4_and_tuple_multiply(t_matrix4 matrix, t_tuple tuple);
+t_matrix4	matrix4_transpose(t_matrix4 matrix);
+t_matrix4	matrix4_invert(t_matrix4 matrix);
 
 // Matrix determinants, submatrices, minors and cofactors:
-float	matrix2_determinant(float matrix[2][2]);
-float	matrix3_determinant(float matrix[3][3]);
-float	matrix4_determinant(float matrix[4][4]);
-float	(*matrix3_submatrix(float matrix[3][3], int row, int column))[2];
-float	(*matrix4_submatrix(float matrix[4][4], int row, int column))[3];
-float	matrix3_minor(float (*matrix)[3], int row, int column);
-float	matrix4_minor(float (*matrix)[4], int row, int column);
-float	matrix3_cofactor(float (*matrix)[3], int row, int column);
-float	matrix4_cofactor(float (*matrix)[4], int row, int column);
+float	matrix2_determinant(t_matrix2 matrix);
+float	matrix3_determinant(t_matrix3 matrix);
+float	matrix4_determinant(t_matrix4 matrix);
+t_matrix2	matrix3_submatrix(t_matrix3 matrix, int row, int column);
+t_matrix3	matrix4_submatrix(t_matrix4 matrix, int row, int column);
+float	matrix3_minor(t_matrix3 matrix, int row, int column);
+float	matrix4_minor(t_matrix4 matrix, int row, int column);
+float	matrix3_cofactor(t_matrix3 matrix, int row, int column);
+float	matrix4_cofactor(t_matrix4 matrix, int row, int column);
 
 // Tuple utils:
-bool		tuples_are_equal(t_tuple *a, t_tuple *b);
+bool	tuples_are_equal(t_tuple a, t_tuple b);
 
 // Math utils:
 bool		floats_are_equal(float a, float b);

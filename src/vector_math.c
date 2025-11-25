@@ -12,57 +12,49 @@
 
 #include "minirt.h"
 
-float	vector_magnitude(t_vector *vector)
+float	vector_magnitude(t_vector vector)
 {
-	if (!vector)
-		return (-1);
-	return (sqrtf(vector->x * vector->x
-			+ vector->y * vector->y
-			+ vector->z * vector->z
-			+ vector->w * vector->w));
+	return (sqrtf(vector.x * vector.x
+			+ vector.y * vector.y
+			+ vector.z * vector.z
+			+ vector.w * vector.w));
 }
 
-t_vector	*vector_normalize(t_vector *vector)
+t_vector	vector_normalize(t_vector vector)
 {
 	float	magnitude;
 
-	if (!vector)
-		return (NULL);
-	if (vector->w != 0)
+	if (vector.w != 0)
 	{
 		printf("Can't normalize a point\n");
-		return (NULL);
+		return (init_vector(0, 0, 0));
 	}
 	magnitude = vector_magnitude(vector);
-	return (new_vector(vector->x / magnitude,
-			vector->y / magnitude,
-			vector->z / magnitude));
+	return (init_vector(vector.x / magnitude,
+			vector.y / magnitude,
+			vector.z / magnitude));
 }
 
-float	vector_dot_product(t_vector *a, t_vector *b)
+float	vector_dot_product(t_vector a, t_vector b)
 {
-	if (!a || !b)
-		return (0);
-	if (a->w != 0 || b->w != 0)
+	if (a.w != 0 || b.w != 0)
 	{
 		printf("Can't execute dot product if both args are not vectors\n");
 		return (0);
 	}
-	return (a->x * b->x
-		+ a->y * b->y
-		+ a->z * b->z);
+	return (a.x * b.x
+		+ a.y * b.y
+		+ a.z * b.z);
 }
 
-t_vector	*vector_cross_product(t_vector *a, t_vector *b)
+t_vector	vector_cross_product(t_vector a, t_vector b)
 {
-	if (!a || !b)
-		return (NULL);
-	if (a->w != 0 || b->w != 0)
+	if (a.w != 0 || b.w != 0)
 	{
 		printf("Can't execute cross product if both args are not vectors\n");
-		return (NULL);
+		return (init_vector(0, 0, 0));
 	}
-	return (new_vector(a->y * b->z - a->z * b->y,
-			a->z * b->x - a->x * b->z,
-			a->x * b->y - a->y * b->x));
+	return (init_vector(a.y * b.z - a.z * b.y,
+			a.z * b.x - a.x * b.z,
+			a.x * b.y - a.y * b.x));
 }

@@ -27,7 +27,9 @@ static void	parse_line(char *line, t_app *app)
 		return ;
 	i = -1;
 	while (split[++i])
-		printf("%d\n", i);
+	{
+		// printf("%d\n", i);
+	}
 		// parse_line_segment(split[i], app);
 	i = -1;
 	while (split[++i])

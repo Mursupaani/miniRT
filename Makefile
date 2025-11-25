@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
+#    Updated: 2025/11/24 12:26:26 by anpollan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # Binary file
 NAME			= miniRT
 
@@ -26,7 +38,8 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  parsing_utils.c matrix_utils.c matrix_multiplication.c \
 				  matrix_transpose.c matrix_determinant.c submatrices.c \
 				  matrix_minor_and_cofactor.c matrix_inversion.c \
-				  debug.c test_tuples.c test_matrices.c render_routine.c
+				  transformation.c rotations.c render_routine.c \
+				  debug.c test_tuples.c test_matrices.c test_transformation.c
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 
@@ -39,7 +52,7 @@ C_FLAGS			= -Wall -Wextra -Werror -g -DTHREADS=$(THREADS)
 MLX_FLAGS		= -lglfw -ldl -lpthread -lm
 
 # Threads
-THREADS			= $(shell nproc 2>/dev/null || echo 4)
+THREADS			= $(shell nproc 2>/dev/null || sysctl -n hw.physicalcpu || echo 4)
 
 all: $(NAME)
 

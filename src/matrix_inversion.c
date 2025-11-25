@@ -12,27 +12,23 @@
 
 #include "minirt.h"
 
-float	(*matrix4_invert(float (*matrix)[4]))[4]
+t_matrix4	matrix4_invert(t_matrix4 matrix)
 {
-	float	(*invert)[4];
+	t_matrix4	invert;
 	int		i;
 	int		j;
 	float	determinant;
 
-	if (!matrix)
-		return (NULL);
+	ft_bzero(&invert, sizeof(invert));
 	determinant = matrix4_determinant(matrix);
 	if (determinant == 0)
-		return (NULL);
-	invert = malloc(sizeof(float) * 16);
-	if (!invert)
-		return (NULL);
+		return (invert);
 	i = -1;
 	while (++i < 4)
 	{
 		j = -1;
 		while (++j < 4)
-			invert[j][i] = matrix4_cofactor(matrix, i, j) / determinant;
+			invert.data[j][i] = matrix4_cofactor(matrix, i, j) / determinant;
 	}
 	return (invert);
 }
