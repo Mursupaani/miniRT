@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/21 14:57:08 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/24 16:20:51 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ typedef struct s_app
 }	t_app;
 
 /**
- * @struct s_thread_data
+ * @struct t_thread_data
  * @brief Holds all persistent data and state for the application.
  *
  * Contains:
@@ -169,6 +169,36 @@ typedef struct s_thread_data
 	t_app		*app;
 	pthread_t	thread_handle;
 }	t_thread_data;
+
+/**
+ * @struct t_ray
+ * @brief holds origin and direction of ray
+ * 
+ * Contains:
+ * - t_point origin: start point of ray
+ * - t_vector direction: direction of the ray
+ */
+typedef struct	s_ray
+{
+	t_point 	origin;
+	t_vector	direction;
+}	t_ray;
+
+/**
+ * @struct t_intersection
+ * @brief linked list to hold hits, e.g. entering and exiting a sphere
+ * 
+ * Contains:
+ * - float t: multiplier to calculate the distance travelled, where along the vector did the hit occur
+ * - t_object object: the object that the ray hit
+ * - t_intersection *next: address of the next hit
+ */
+typedef struct	s_intersection
+{
+	float			t;
+	t_object		*object;
+	t_intersection	*next;
+}	t_intersection;
 
 // Tests
 void		test_tuples(void);
@@ -245,5 +275,12 @@ bool		pixel_fits_image(float x, float y, t_app *app);
 void		*render_routine(void *arg);
 void		launch_render(t_app *app);
 void		join_threads(t_thread_data *thread_data, int thread_count);
+
+// Intersections:
+t_intersection	*new_intersection(float t, t_object *object);
+t_intersection	*hit(t_intersection *xs);
+void			intersection_add_back(t_intersection **lst, 
+				t_intersection *new);
+void			free_intersections(t_intersection *lst);
 
 #endif
