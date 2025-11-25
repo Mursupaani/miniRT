@@ -67,6 +67,8 @@ void	free_intersections(t_intersection *lst)
 	while (lst)
 	{
 		next = lst->next;
+		// HOX! this probably can't be in the prod version
+		//free(lst->object);
 		free(lst);
 		lst = next;
 	}

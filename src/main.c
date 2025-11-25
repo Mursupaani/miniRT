@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/25 10:23:57 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/25 14:44:02 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	test_tuples();
+	test_rays();
+	// test_tuples();
 	// test_matrices();
 	// test_transformation();
 	// app = initialize_app();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:04:18 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/20 12:02:01 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:05:18 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,19 @@ bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2)
 		i++;
 	}
 	return (true);
+}
+
+t_matrix4	matrix4_identity(void)
+{
+	t_matrix4	matrix;
+	int			i;
+
+	ft_bzero(&matrix, sizeof(t_matrix4));
+	i = 0;
+	while (i < 4)
+	{
+		matrix.data[i][i] = 1.0f;
+		i++;
+	}
+	return (matrix);
 }

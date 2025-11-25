@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/19 14:33:38 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:41:56 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	free_scene_objects(t_object *objects[])
 	i = -1;
 	while (objects[++i])
 	{
-		free(objects[i]->center);
-		free(objects[i]->normal);
 		free(objects[i]->color_1);
 		free(objects[i]->color_255);
 	}

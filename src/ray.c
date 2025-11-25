@@ -17,7 +17,7 @@ t_point	ray_position(t_ray ray, float t)
 	return (tuple_sum(ray.origin, distance));
 }
 
-t_ray	transform(t_ray ray, float matrix[4][4])
+t_ray	transform_ray(t_ray ray, t_matrix4 matrix)
 {
 	t_ray	new_ray;
 

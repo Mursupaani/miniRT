@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/25 10:22:32 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:33:27 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,14 @@ typedef struct s_camera
 typedef struct s_object
 {
 	t_object_type	type;
-	t_point			*center;
-	t_vector		*normal;
+	t_point			center;
+	t_vector		normal;
 	float			diameter;
 	float			height;
 	t_color_1		*color_1;
 	t_color_255		*color_255;
+	t_matrix4		transform;
+	t_matrix4		inverse_transform;
 }	t_object;
 
 typedef struct s_scene
@@ -220,15 +222,16 @@ typedef struct	s_ray
  */
 typedef struct	s_intersection
 {
-	float			t;
-	t_object		*object;
-	t_intersection	*next;
+	float					t;
+	t_object				*object;
+	struct s_intersection	*next;
 }	t_intersection;
 
 // Tests
 void		test_tuples(void);
 void		test_matrices(void);
 void		test_transformation(void);
+void		test_rays(void);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -281,11 +284,12 @@ float		vector_dot_product(t_vector a, t_vector b);
 t_vector	vector_cross_product(t_vector a, t_vector b);
 
 // Matrix utils:
-bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
+bool		matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
+t_matrix4	matrix4_identity(void);
 
 // Matrix math:
 t_matrix4	matrix4_multiply(t_matrix4 m1, t_matrix4 m2);
-t_tuple	matrix4_and_tuple_multiply(t_matrix4 matrix, t_tuple tuple);
+t_tuple		matrix4_and_tuple_multiply(t_matrix4 matrix, t_tuple tuple);
 t_matrix4	matrix4_transpose(t_matrix4 matrix);
 t_matrix4	matrix4_invert(t_matrix4 matrix);
 
@@ -320,5 +324,14 @@ t_intersection	*hit(t_intersection *xs);
 void			intersection_add_back(t_intersection **lst, 
 				t_intersection *new);
 void			free_intersections(t_intersection *lst);
+t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+
+// Rays:
+t_ray		new_ray(t_point origin, t_vector direction);
+t_point		ray_position(t_ray ray, float t);
+t_ray		transform_ray(t_ray ray, t_matrix4 matrix);
+
+// Objects:
+t_object	*sphere_new(void);
 
 #endif
