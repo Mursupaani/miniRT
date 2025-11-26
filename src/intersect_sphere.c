@@ -19,15 +19,15 @@ t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)
 	t_intersection	*xs;
 
 	xs = NULL;
-	inv_matrix = matrix4_invert(sphere->transform);
-	local_ray = transform_ray(ray, inv_matrix);
+	inv_matrix = sphere->inverse_transform;
+	local_ray = ray_transform(ray, inv_matrix);
 	calculate_coefs(local_ray, &abc[0], &abc[1], &abc[2]);
 	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (disc < 0)
 		return (NULL);
-	intersection_add_back(&xs, new_intersection((-abc[1] - sqrtf(disc))
+	intersection_add_back(&xs, intersection_new((-abc[1] - sqrtf(disc))
 							/ (2 * abc[0]), sphere));
-	intersection_add_back(&xs, new_intersection((-abc[1] + sqrtf(disc))
+	intersection_add_back(&xs, intersection_new((-abc[1] + sqrtf(disc))
 							/ (2 * abc[0]), sphere));
 	return (xs);
 }

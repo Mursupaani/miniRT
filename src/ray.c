@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_ray	new_ray(t_point origin, t_vector direction)
+t_ray	ray_new(t_point origin, t_vector direction)
 {
 	t_ray	ray;
 
@@ -17,7 +17,7 @@ t_point	ray_position(t_ray ray, float t)
 	return (tuple_sum(ray.origin, distance));
 }
 
-t_ray	transform_ray(t_ray ray, t_matrix4 matrix)
+t_ray	ray_transform(t_ray ray, t_matrix4 matrix)
 {
 	t_ray	new_ray;
 

@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_intersection	*new_intersection(float t, t_object *object)
+t_intersection	*intersection_new(float t, t_object *object)
 {
 	t_intersection	*new_node;
 
@@ -13,7 +13,7 @@ t_intersection	*new_intersection(float t, t_object *object)
 	return (new_node);
 }
 
-t_intersection	*hit(t_intersection *xs)
+t_intersection	*intersection_hit(t_intersection *xs)
 {
 	t_intersection	*closest;
 	t_intersection	*current;
@@ -32,7 +32,7 @@ t_intersection	*hit(t_intersection *xs)
 	return (closest);
 }
 
-static t_intersection	*lstlast_xs(t_intersection *lst)
+static t_intersection	*intersection_lstlast_xs(t_intersection *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -53,12 +53,12 @@ void	intersection_add_back(t_intersection **lst, t_intersection *new)
 		*lst = new;
 		return ;
 	}
-	last = lstlast_xs(*lst);
+	last = intersection_lstlast_xs(*lst);
 	if (last)
 		last->next = new;
 }
 
-void	free_intersections(t_intersection *lst)
+void	intersection_free(t_intersection *lst)
 {
 	t_intersection	*next;
 

@@ -1,5 +1,13 @@
 #include "minirt.h"
 
+void	set_transform(t_object *object, t_matrix4 transform)
+{
+	if (!object)
+		return ;
+	object->transform = transform;
+	object->inverse_transform = matrix4_invert(transform);
+}
+
 t_object	*sphere_new(void)
 {
 	t_object	*sphere;
