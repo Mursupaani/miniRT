@@ -34,16 +34,37 @@ static int	init_threads(t_app *app)
 	return (0);
 }
 
+static void	render_pixel(t_app *app, int x, int y)
+{
+	uint32_t	color;
+
+	// TODO
+	// t_ray *ray = ray_for_pixel(app->scene->camera, x, y);
+	// color = color_at_pixel(app->scene, ray);
+	// free_ray(ray);
+	color = 0xFFFFFFFF;
+	if (pixel_fits_image(x, y, app))
+		mlx_put_pixel(app->img, x, y, color);
+}
+
 void	*render_routine(void *arg)
 {
-	t_thread_data	*td;
- 	//t_app		*app;
+	t_thread_data	*thread_data;
+ 	int				x;
+	int				y;
 
- 	td = (t_thread_data *)arg;
- 	//app = td->app;
- 	// TODO The actual routine, now just prints to show threads are working
- 	printf("Thread %d: Processing rows from %d to %d.\n",
- 		td->id, td->start_row, td->end_row);
+ 	thread_data = (t_thread_data *)arg;
+ 	y = thread_data->start_row;
+ 	while (y < thread_data->end_row)
+	{
+		x = 0;
+		while (x < thread_data->app->monitor_width)
+		{
+			render_pixel(thread_data->app, x, y);
+			x++;
+		}
+		y++;
+	}
  	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/24 18:12:36 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/11/26 10:47:08 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,14 @@ typedef struct s_camera
 typedef struct s_object
 {
 	t_object_type	type;
-	t_point			*center;
-	t_vector		*normal;
+	t_point			center;
+	t_vector		normal;
 	float			diameter;
 	float			height;
 	t_color_1		*color_1;
 	t_color_255		*color_255;
+	t_matrix4		transform;
+	t_matrix4		inverse_transform;
 }	t_object;
 
 typedef struct s_scene
@@ -175,7 +177,7 @@ typedef struct s_app
 }	t_app;
 
 /**
- * @struct s_thread_data
+ * @struct t_thread_data
  * @brief Holds all persistent data and state for the application.
  *
  * Contains:
@@ -195,10 +197,42 @@ typedef struct s_thread_data
 	pthread_t	thread_handle;
 }	t_thread_data;
 
+/**
+ * @struct t_ray
+ * @brief holds origin and direction of ray
+ * 
+ * Contains:
+ * - t_point origin: start point of ray
+ * - t_vector direction: direction of the ray
+ */
+typedef struct	s_ray
+{
+	t_point 	origin;
+	t_vector	direction;
+}	t_ray;
+
+/**
+ * @struct t_intersection
+ * @brief linked list to hold hits, e.g. entering and exiting a sphere
+ * 
+ * Contains:
+ * - float t: multiplier to calculate the distance travelled, where along the vector did the hit occur
+ * - t_object object: the object that the ray hit
+ * - t_intersection *next: address of the next hit
+ */
+typedef struct	s_intersection
+{
+	float					t;
+	t_object				*object;
+	struct s_intersection	*next;
+}	t_intersection;
+
 // Tests
 void		test_tuples(void);
 void		test_matrices(void);
 void		test_transformation(void);
+void		test_rays(void);
+void		render_chapter_5_scene(void);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -251,11 +285,12 @@ float		vector_dot_product(t_vector a, t_vector b);
 t_vector	vector_cross_product(t_vector a, t_vector b);
 
 // Matrix utils:
-bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
+bool		matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
+t_matrix4	matrix4_identity(void);
 
 // Matrix math:
 t_matrix4	matrix4_multiply(t_matrix4 m1, t_matrix4 m2);
-t_tuple	matrix4_and_tuple_multiply(t_matrix4 matrix, t_tuple tuple);
+t_tuple		matrix4_and_tuple_multiply(t_matrix4 matrix, t_tuple tuple);
 t_matrix4	matrix4_transpose(t_matrix4 matrix);
 t_matrix4	matrix4_invert(t_matrix4 matrix);
 
@@ -283,5 +318,22 @@ bool		pixel_fits_image(float x, float y, t_app *app);
 void		*render_routine(void *arg);
 void		launch_render(t_app *app);
 void		join_threads(t_thread_data *thread_data, int thread_count);
+
+// Intersections:
+t_intersection	*intersection_new(float t, t_object *object);
+t_intersection	*intersection_hit(t_intersection *xs);
+void			intersection_add_back(t_intersection **lst, 
+				t_intersection *new);
+void			intersection_free(t_intersection *lst);
+t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+
+// Rays:
+t_ray		ray_new(t_point origin, t_vector direction);
+t_point		ray_position(t_ray ray, float t);
+t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
+
+// Objects:
+t_object	*sphere_new(void);
+void		set_transform(t_object *object, t_matrix4 transform);
 
 #endif
