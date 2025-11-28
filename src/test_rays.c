@@ -1,3 +1,4 @@
+#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static void	free_object(t_object *object)
@@ -210,7 +211,7 @@ void	test_rays(void)
 
 // Pipe the output to some output file and use some .ppm viewer to see the image
 // E.g. ./miniRT > output.ppm
-void	render_chapter_5_scene(void)
+void	render_chapter_5_scene(t_app *app)
 {
 	t_point	ray_origin = init_point(0, 0, -5);
 	float	wall_z = 10;
@@ -235,8 +236,17 @@ void	render_chapter_5_scene(void)
 			t_intersection	*xs = intersect_sphere(shape, ray);
 			t_intersection	*hit = intersection_hit(xs);
 			if (hit != NULL)
+			{
+				if (pixel_fits_image(x, y, app))
+					mlx_put_pixel(app->img, x, y, 0xFF0000FF);
 				printf("255 0 0 ");
+			}
 			else
+			{
+				if (pixel_fits_image(x, y, app))
+					mlx_put_pixel(app->img, x, y, 0);
+
+			}
 				printf("0 0 0 ");
 			intersection_free(xs);
 		}

@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/11/25 15:32:17 by juhana           ###   ########.fr        #
+#    Updated: 2025/11/28 20:58:03 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,10 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  matrix_transpose.c matrix_determinant.c submatrices.c \
 				  matrix_minor_and_cofactor.c matrix_inversion.c \
 				  transformation.c rotations.c render_routine.c \
-				  debug.c test_tuples.c test_matrices.c test_transformation.c test_rays.c \
-				  intersect_sphere.c intersection.c ray.c objects.c
+				  intersect_sphere.c intersection.c ray.c objects.c \
+				  debug.c test_tuples.c test_matrices.c test_transformation.c \
+				  test_rays.c test.c \
+
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/26 10:47:08 by juhana           ###   ########.fr       */
+/*   Updated: 2025/11/28 21:04:32 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,11 +228,12 @@ typedef struct	s_intersection
 }	t_intersection;
 
 // Tests
+void		run_tests();
 void		test_tuples(void);
 void		test_matrices(void);
 void		test_transformation(void);
 void		test_rays(void);
-void		render_chapter_5_scene(void);
+void		render_chapter_5_scene(t_app *app);
 
 // Debug
 void		print_tuple(t_tuple tuple);
