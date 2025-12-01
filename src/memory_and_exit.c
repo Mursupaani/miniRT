@@ -19,11 +19,11 @@ void	free_scene_objects(t_object *objects[])
 	if (!objects)
 		return ;
 	i = -1;
-	while (objects[++i])
-	{
-		free(objects[i]->color_1);
-		free(objects[i]->color_255);
-	}
+	// while (objects[++i])
+	// {
+		// free(objects[i]->color_1);
+		// free(objects[i]->color_255);
+	// }
 	free(objects[i]);
 }
 

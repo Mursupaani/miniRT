@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/26 10:47:45 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/01 17:12:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,14 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	// test_rays();
-	render_chapter_5_scene();
-	// test_tuples();
-	// test_matrices();
-	// test_transformation();
+	run_tests();
 	// app = initialize_app();
 	// parse_rt_file(av, app);
 	// launch_render(app);
-	// projectile(app);
+	// render_chapter_5_scene(app);
+	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	// free_app_memory(app);
-	// app = initialize_app();
-	// float m1[4][4] = {{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}};
-	// print_matrix4(m1);
-	// parse_rt_file(av, app);
-	// projectile(app);
-	// mlx_loop(app->mlx);
 	// free_app_memory(app);
 	return (0);
 	//FIXME: remove this
