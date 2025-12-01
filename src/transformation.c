@@ -12,11 +12,12 @@
 
 #include "minirt.h"
 
-t_matrix4	init_translation_matrix4(float scale_x, float scale_y, float scale_z)
+t_matrix4	init_translation_matrix4(
+	float scale_x, float scale_y, float scale_z)
 {
 	t_matrix4	translation;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	ft_bzero(&translation, sizeof(translation));
 	i = -1;

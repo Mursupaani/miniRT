@@ -5,10 +5,6 @@ static void	free_object(t_object *object)
 {
 	if (!object)
 		return ;
-	if (object->color_1)
-		free(object->color_1);
-	if (object->color_255)
-		free(object->color_255);
 	free(object);
 	object = NULL;
 }
@@ -43,7 +39,7 @@ void	test_rays(void)
 	
 	// Print intersections with sphere
 	t_ray	ray = ray_new(init_point(0, 0, -5), init_vector(0, 0, 1));
-	t_object	*sphere = sphere_new();
+	t_object	*sphere = sphere_new(init_point(0, 0, 0), 1, init_color_255(255, 255, 255, 255));
 	t_intersection	*xs = intersect_sphere(sphere, ray);
 	t_intersection	*xs_head = xs;
 	printf("--- Intersections ---\n");
@@ -220,7 +216,7 @@ void	render_chapter_5_scene(t_app *app)
 	float	pixel_size = wall_size / canvas_pixels;
 	float	half = wall_size / 2;
 
-	t_object	*shape = sphere_new();
+	t_object	*shape = sphere_new(init_point(0, 0, 0), 1, init_color_255(0, 255, 0, 255));
 
 	printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
 
@@ -238,7 +234,7 @@ void	render_chapter_5_scene(t_app *app)
 			if (hit != NULL)
 			{
 				if (pixel_fits_image(x, y, app))
-					mlx_put_pixel(app->img, x, y, 0xFF0000FF);
+					mlx_put_pixel(app->img, x, y, shape->color_255.rgba);
 				printf("255 0 0 ");
 			}
 			else

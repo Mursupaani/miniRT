@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/28 21:10:03 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/01 17:12:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	run_tests();
-	app = initialize_app();
+	// app = initialize_app();
 	// parse_rt_file(av, app);
 	// launch_render(app);
-	render_chapter_5_scene(app);
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
-	mlx_loop(app->mlx);
+	// render_chapter_5_scene(app);
+	// mlx_image_to_window(app->mlx, app->img, 0, 0);
+	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	free_app_memory(app);
+	// free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;

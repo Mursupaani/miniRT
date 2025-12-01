@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/28 21:04:32 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/01 18:44:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_color_255
 	unsigned char	g;
 	unsigned char	b;
 	unsigned char	a;
+	int				rgba;
 }	t_color_255;
 
 typedef struct s_color_1
@@ -149,11 +150,10 @@ typedef struct s_object
 {
 	t_object_type	type;
 	t_point			center;
-	t_vector		normal;
 	float			diameter;
 	float			height;
-	t_color_1		*color_1;
-	t_color_255		*color_255;
+	t_color_1		color_1;
+	t_color_255		color_255;
 	t_matrix4		transform;
 	t_matrix4		inverse_transform;
 }	t_object;
@@ -234,6 +234,7 @@ void		test_matrices(void);
 void		test_transformation(void);
 void		test_rays(void);
 void		render_chapter_5_scene(t_app *app);
+void		test_normal(void);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -332,9 +333,16 @@ t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
 t_ray		ray_new(t_point origin, t_vector direction);
 t_point		ray_position(t_ray ray, float t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
+t_vector	reflect(t_vector in, t_vector normal);
 
 // Objects:
-t_object	*sphere_new(void);
+t_object	*sphere_new(t_point center, float diameter, t_color_255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
+t_color_255	init_color_255(
+		unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+t_color_1	color_1_from_color255(t_color_255 color_255);
+
+// Normal
+t_vector	normal_at(t_object obj, t_point point);
 
 #endif

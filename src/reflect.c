@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/28 20:55:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/01 17:11:51 by anpollan         ###   ########.fr       */
+/*   Created: 2025/12/01 18:37:01 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/01 18:51:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	run_tests()
+t_vector	reflect(t_vector in, t_vector normal)
 {
-	// test_tuples();
-	// test_matrices();
-	// projectile(app);
-	// test_transformation();
-	// test_rays();
-	// render_chapter_5_scene();
-	test_normal();
+	float	scale;
+
+	scale = 2 * vector_dot_product(in, normal);
+	return (tuple_subtract(in, tuple_scale_multiply(normal, scale)));
 }
