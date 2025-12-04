@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_matrix4	init_translation_matrix4(
+t_matrix4	translation_matrix4(
 	float scale_x, float scale_y, float scale_z)
 {
 	t_matrix4	translation;
@@ -42,7 +42,7 @@ t_matrix4	init_translation_matrix4(
 	return (translation);
 }
 
-t_matrix4	init_scaling_matrix4(float scale_x, float scale_y, float scale_z)
+t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z)
 {
 	t_matrix4	scalar;
 
@@ -54,7 +54,7 @@ t_matrix4	init_scaling_matrix4(float scale_x, float scale_y, float scale_z)
 	return (scalar);
 }
 
-t_matrix4	init_shearing_matrix4(t_shear shear)
+t_matrix4	shearing(t_shear shear)
 {
 	t_matrix4	shearing;
 

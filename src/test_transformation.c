@@ -3,7 +3,7 @@
 
 static void	test1(void)
 {
-	t_point	point;
+	t_point	p;
 	t_point	result;
 	t_matrix4	(transform);
 
@@ -12,17 +12,17 @@ static void	test1(void)
 Given transform ← translation(5, -3, 2)\n\
 And p ← point(-3, 4, 5)\n\
 Then transform * p = point(2, 1, 7)\n");
-	point = init_point(-3, 4, 5);
-	print_tuple(point);
-	transform = init_translation_matrix4(5, -3, 2);
+	p = point(-3, 4, 5);
+	print_tuple(p);
+	transform = translation_matrix4(5, -3, 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test2(void)
 {
-	t_point	point;
+	t_point	p;
 	t_point	result;
 	t_matrix4	(transform);
 	t_matrix4	(invert);
@@ -33,18 +33,18 @@ Given transform ← translation(5, -3, 2)\n\
 And inv ← inverse(transform)\n\
 And p ← point(-3, 4, 5)\n\
 Then inv * p = point(-8, 7, 3)\n");
-	point = init_point(-3, 4, 5);
-	print_tuple(point);
-	transform = init_translation_matrix4(5, -3, 2);
+	p = point(-3, 4, 5);
+	print_tuple(p);
+	transform = translation_matrix4(5, -3, 2);
 	print_matrix4(transform);
 	invert = matrix4_invert(transform);
-	result = matrix4_and_tuple_multiply(invert, point);
+	result = matrix4_and_tuple_multiply(invert, p);
 	print_tuple(result);
 }
 
 static void	test3(void)
 {
-	t_point	vector;
+	t_point	v;
 	t_point	result;
 	t_matrix4	(transform);
 
@@ -53,17 +53,17 @@ static void	test3(void)
 Given transform ← translation(5, -3, 2)\n\
 And v ← vector(-3, 4, 5)\n\
 Then transform * v = v\n");
-	vector = init_vector(5, -3, 2);
-	print_tuple(vector);
-	transform = init_translation_matrix4(-3, 4, 5);
+	v = vector(5, -3, 2);
+	print_tuple(v);
+	transform = translation_matrix4(-3, 4, 5);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, vector);
+	result = matrix4_and_tuple_multiply(transform, v);
 	print_tuple(result);
 }
 
 static void	test4(void)
 {
-	t_point	point;
+	t_point	p;
 	t_point	result;
 	t_matrix4	(transform);
 
@@ -72,17 +72,17 @@ static void	test4(void)
 Given transform ← scaling(2, 3, 4)\n\
 And p ← point(-4, 6, 8)\n\
 Then transform * p = point(-8, 18, 32)\n");
-	point = init_point(-4, 6, 8);
-	print_tuple(point);
-	transform = init_scaling_matrix4(2, 3, 4);
+	p = point(-4, 6, 8);
+	print_tuple(p);
+	transform = scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test5(void)
 {
-	t_vector	vector;
+	t_vector	v;
 	t_point		result;
 	t_matrix4		(transform);
 
@@ -91,17 +91,17 @@ static void	test5(void)
 Given transform ← scaling(2, 3, 4)\n\
 And v ← vector(-4, 6, 8)\n\
 Then transform * v = vector(-8, 18, 32)\n");
-	vector = init_vector(-4, 6, 8);
-	print_tuple(vector);
-	transform = init_scaling_matrix4(2, 3, 4);
+	v = vector(-4, 6, 8);
+	print_tuple(v);
+	transform = scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, vector);
+	result = matrix4_and_tuple_multiply(transform, v);
 	print_tuple(result);
 }
 
 static void	test6(void)
 {
-	t_vector	vector;
+	t_vector	v;
 	t_point		result;
 	t_matrix4		(transform);
 	t_matrix4		(inverse);
@@ -112,19 +112,19 @@ Given transform ← scaling(2, 3, 4)\n\
 And inv ← inverse(transform)\n\
 And v ← vector(-4, 6, 8)\n\
 Then inv * v = vector(-2, 2, 2)\n");
-	vector = init_vector(-4, 6, 8);
-	print_tuple(vector);
-	transform = init_scaling_matrix4(2, 3, 4);
+	v = vector(-4, 6, 8);
+	print_tuple(v);
+	transform = scaling_matrix4(2, 3, 4);
 	print_matrix4(transform);
 	inverse = matrix4_invert(transform);
 	print_matrix4(inverse);
-	result = matrix4_and_tuple_multiply(inverse, vector);
+	result = matrix4_and_tuple_multiply(inverse, v);
 	print_tuple(result);
 }
 
 static void	test7(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_matrix4		(transform);
 
@@ -133,17 +133,17 @@ static void	test7(void)
 Given transform ← scaling(-1, 1, 1)\n\
 And p ← point(2, 3, 4)\n\
 Then transform * p = point(-2, 3, 4)\n");
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_scaling_matrix4(-1, 1, 1);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = scaling_matrix4(-1, 1, 1);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test8(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_matrix4		(transform);
 
@@ -154,21 +154,21 @@ And half_quarter← rotation_x(π / 4)\n\
 And full_quarter← rotation_x(π / 2)\n\
 Then half_quarter * p = point(0, √2/2, √2/2)\n\
 And full_quarter * p = point(0, 0, 1)\n");
-	point = init_point(0, 1, 0);
-	print_tuple(point);
-	transform = init_x_rotation_matrix(M_PI / 4);
+	p = point(0, 1, 0);
+	print_tuple(p);
+	transform = x_rotation(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
-	transform = init_x_rotation_matrix(M_PI / 2);
+	transform = x_rotation(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test9(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_matrix4		(transform);
 	t_matrix4		(inverse);
@@ -179,20 +179,20 @@ Given p ← point(0, 1, 0)\n\
 And half_quarter← rotation_x(π / 4)\n\
 And inv ← inverse(half_quarter)\n\
 Then inv * p = point(0, √2/2, -√2/2)\n");
-	point = init_point(0, 1, 0);
-	print_tuple(point);
-	transform = init_x_rotation_matrix(M_PI / 4);
+	p = point(0, 1, 0);
+	print_tuple(p);
+	transform = x_rotation(M_PI / 4);
 	print_matrix4(transform);
 	inverse = matrix4_invert(transform);
 	print_matrix4(inverse);
-	result = matrix4_and_tuple_multiply(inverse, point);
+	result = matrix4_and_tuple_multiply(inverse, p);
 	print_tuple(result);
 }
 
 
 static void	test10(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_matrix4		(transform);
 
@@ -203,21 +203,21 @@ And half_quarter← rotation_y(π / 4)\n\
 And full_quarter← rotation_y(π / 2)\n\
 Then half_quarter * p = point(√2/2, 0, √2/2)\n\
 And full_quarter * p = point(1, 0, 0)\n");
-	point = init_point(0, 0, 1);
-	print_tuple(point);
-	transform = init_y_rotation_matrix4(M_PI / 4);
+	p = point(0, 0, 1);
+	print_tuple(p);
+	transform = y_rotation(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
-	transform = init_y_rotation_matrix4(M_PI / 2);
+	transform = y_rotation(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test11(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_matrix4		(transform);
 
@@ -228,21 +228,21 @@ And half_quarter← rotation_z(π / 4)\n\
 And full_quarter← rotation_z(π / 2)\n\
 Then half_quarter * p = point(-√2/2, √2/2, 0)\n\
 And full_quarter * p = point(-1, 0, 0)\n");
-	point = init_point(0, 1, 0);
-	print_tuple(point);
-	transform = init_z_rotation_matrix4(M_PI / 4);
+	p = point(0, 1, 0);
+	print_tuple(p);
+	transform = z_rotation(M_PI / 4);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
-	transform = init_z_rotation_matrix4(M_PI / 2);
+	transform = z_rotation(M_PI / 2);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test12(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4		(transform);
@@ -254,17 +254,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(5, 3, 4)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.xy = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test13(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4		(transform);
@@ -276,17 +276,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(6, 3, 4)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.xz = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test14(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4		(transform);
@@ -298,17 +298,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(2, 5, 4)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.yx = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test15(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4		(transform);
@@ -320,17 +320,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(2, 7, 4)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.yz = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test16(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4	(transform);
@@ -342,17 +342,17 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(2, 3, 6)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.zx = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 
 static void	test17(void)
 {
-	t_vector	point;
+	t_vector	p;
 	t_point		result;
 	t_shear		shear;
 	t_matrix4	transform;
@@ -364,11 +364,11 @@ And p ← point(2, 3, 4)\n\
 Then transform * p = point(2, 3, 7)\n");
 	ft_bzero(&shear, sizeof(t_shear));
 	shear.zy = 1;
-	point = init_point(2, 3, 4);
-	print_tuple(point);
-	transform = init_shearing_matrix4(shear);
+	p = point(2, 3, 4);
+	print_tuple(p);
+	transform = shearing(shear);
 	print_matrix4(transform);
-	result = matrix4_and_tuple_multiply(transform, point);
+	result = matrix4_and_tuple_multiply(transform, p);
 	print_tuple(result);
 }
 

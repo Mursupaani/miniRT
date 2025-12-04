@@ -4,7 +4,7 @@ static void	calculate_coefs(t_ray ray, float *a, float *b, float *c)
 {
 	t_vector	sphere_to_ray;
 
-	sphere_to_ray = tuple_subtract(ray.origin, init_point(0, 0, 0));
+	sphere_to_ray = tuple_subtract(ray.origin, point(0, 0, 0));
 	*a = vector_dot_product(ray.direction, ray.direction);
 	*b = 2 * vector_dot_product(ray.direction, sphere_to_ray);
 	*c = vector_dot_product(sphere_to_ray, sphere_to_ray) - 1;

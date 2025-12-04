@@ -131,10 +131,10 @@ void	projectile(t_app *app)
 	t_proj	proj;
 	t_env	env;
 
-	proj.p = init_point(0, 1, 0);
-	proj.v = tuple_scale_multiply(vector_normalize(init_vector(1, 1, 0)), 20);
-	env.g = init_vector(0, -0.1, 0);
-	env.w = init_vector(-0.01, 0, 0);
+	proj.p = point(0, 1, 0);
+	proj.v = tuple_scale_multiply(vector_normalize(vector(1, 1, 0)), 20);
+	env.g = vector(0, -0.1, 0);
+	env.w = vector(-0.01, 0, 0);
 	while (proj.p.y >= 0)
 	{
 		proj = tick(env, proj);

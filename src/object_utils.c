@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_color_255	init_color_255(
+t_color_255	color_255(
 		unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	t_color_255	color;

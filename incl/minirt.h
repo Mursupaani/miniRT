@@ -260,18 +260,18 @@ void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 
 // Tuples (vectors, points):
-t_tuple		init_tuple(float x, float y, float z, float w);
-t_vector	init_vector(float x, float y, float z);
-t_point		init_point(float x, float y, float z);
+t_tuple		tuple(float x, float y, float z, float w);
+t_vector	vector(float x, float y, float z);
+t_point		point(float x, float y, float z);
 
 // Transformation matrices
-t_matrix4	init_translation_matrix4(
+t_matrix4	translation_matrix4(
 			float scale_x, float scale_y, float scale_z);
-t_matrix4	init_scaling_matrix4(float scale_x, float scale_y, float scale_z);
-t_matrix4	init_x_rotation_matrix(float radians);
-t_matrix4	init_y_rotation_matrix4(float radians);
-t_matrix4	init_z_rotation_matrix4(float radians);
-t_matrix4	init_shearing_matrix4(t_shear shear);
+t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z);
+t_matrix4	x_rotation(float radians);
+t_matrix4	y_rotation(float radians);
+t_matrix4	z_rotation(float radians);
+t_matrix4	shearing(t_shear shear);
 
 // Tuple math:
 t_tuple		tuple_sum(t_tuple a, t_tuple b);
@@ -338,7 +338,7 @@ t_vector	reflect(t_vector in, t_vector normal);
 // Objects:
 t_object	*sphere_new(t_point center, float diameter, t_color_255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
-t_color_255	init_color_255(
+t_color_255	color_255(
 		unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 t_color_1	color_1_from_color255(t_color_255 color_255);
 

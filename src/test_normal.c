@@ -19,12 +19,12 @@ void	test1()
 	t_vector	normal;
 
 	printf("TEST 1:\n");
-	sphere = sphere_new(init_point(0, 0, 0), 1, init_color_255(255, 0, 0, 255));
+	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
 	printf("Scenario: The normal on a sphere at a point on the x axis\n\
 Given s ← sphere()\n\
 When n ← normal_at(s, point(1, 0, 0))\n\
 Then n = vector(1, 0, 0)\n");
-	normal = normal_at(*sphere, init_point(1, 0, 0));
+	normal = normal_at(*sphere, point(1, 0, 0));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -35,12 +35,12 @@ void	test2()
 	t_vector	normal;
 
 	printf("TEST 2:\n");
-	sphere = sphere_new(init_point(0, 0, 0), 1, init_color_255(255, 0, 0, 255));
+	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
 	printf("Scenario: The normal on a sphere at a nonaxial point\n\
 Given s ← sphere()\n\
 When n ← normal_at(s, point(√3/3, √3/3, √3/3))\n\
 Then n = vector(√3/3, √3/3, √3/3)\n");
-	normal = normal_at(*sphere, init_point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
+	normal = normal_at(*sphere, point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -56,14 +56,14 @@ Given s ← sphere()\n\
 And set_transform(s, translation(0, 1, 0))\n\
 When n ← normal_at(s, point(0, 1.70711, -0.70711))\n\
 Then n = vector(0, 0.70711, -0.70711)\n");
-	sphere = sphere_new(init_point(0, 0, 0), 1, init_color_255(255, 0, 0, 255));
-	set_transform(sphere, init_translation_matrix4(0, 1, 0));
-	normal = normal_at(*sphere, init_point(0, 1.70711, -0.70711));
+	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	set_transform(sphere, translation_matrix4(0, 1, 0));
+	normal = normal_at(*sphere, point(0, 1.70711, -0.70711));
 	print_tuple(normal);
 	free(sphere);
-	sphere = sphere_new(init_point(0, 1, 0), 1, init_color_255(255, 0, 0, 255));
-	// set_transform(sphere, init_translation_matrix4(0, 1, 0));
-	normal = normal_at(*sphere, init_point(0, 1.70711, -0.70711));
+	sphere = sphere_new(point(0, 1, 0), 1, color_255(255, 0, 0, 255));
+	// set_transform(sphere, translation_matrix4(0, 1, 0));
+	normal = normal_at(*sphere, point(0, 1.70711, -0.70711));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -81,10 +81,10 @@ And m ← scaling(1, 0.5, 1) * rotation_z(π/5)\n\
 And set_transform(s, m)\n\
 When n ← normal_at(s, point(0, √2/2, -√2/2))\n\
 Then n = vector(0, 0.97014, -0.24254)\n");
-	sphere = sphere_new(init_point(0, 0, 0), 1, init_color_255(255, 0, 0, 255));
-	m = matrix4_multiply(init_scaling_matrix4(1, 0.5, 1), init_z_rotation_matrix4(M_PI / 5));
+	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	m = matrix4_multiply(scaling_matrix4(1, 0.5, 1), z_rotation(M_PI / 5));
 	set_transform(sphere, m);
-	normal = normal_at(*sphere, init_point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
+	normal = normal_at(*sphere, point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -101,8 +101,8 @@ Given v ← vector(1, -1, 0)\n\
 And n ← vector(0, 1, 0)\n\
 When r ← reflect(v, n)\n\
 Then r = vector(1, 1, 0)\n");
-	v = init_vector(1, -1, 0);
-	n = init_vector(0, 1, 0);
+	v = vector(1, -1, 0);
+	n = vector(0, 1, 0);
 	r = reflect(v, n);
 	print_tuple(r);
 }
@@ -119,8 +119,8 @@ Given v ← vector(0, -1, 0)\n\
 And n ← vector(√2/2, √2/2, 0)\n\
 When r ← reflect(v, n)\n\
 Then r = vector(1, 0, 0)\n");
-	v = init_vector(0, -1, 0);
-	n = init_vector(sqrtf(2) / 2, sqrtf(2) / 2, 0);
+	v = vector(0, -1, 0);
+	n = vector(sqrtf(2) / 2, sqrtf(2) / 2, 0);
 	r = reflect(v, n);
 	print_tuple(r);
 }
