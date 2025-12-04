@@ -23,8 +23,8 @@ static void	test1(void)
 Given a1 ← tuple(3, -2, 5, 1)\n \
 And a2 ← tuple(-2, 3, 1, 0)\n \
 Then a1 + a2 = tuple(1, 1, 6, 1)\n");
-	tuple1 = init_point(3, -2, 5);
-	tuple2 = init_vector(-2, 3, 1);
+	tuple1 = point(3, -2, 5);
+	tuple2 = vector(-2, 3, 1);
 	tuple3 = tuple_sum(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -42,8 +42,8 @@ static void	test2(void)
 Given p1 ← point(3, 2, 1)\n\
 And p2 ← point(5, 6, 7)\n\
 Then p1 - p2 = vector(-2, -4, -6)\n");
-	tuple1 = init_point(3, 2, 1);
-	tuple2 = init_point(5, 6, 7);
+	tuple1 = point(3, 2, 1);
+	tuple2 = point(5, 6, 7);
 	tuple3 = tuple_subtract(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -61,8 +61,8 @@ static void	test3(void)
 Given p1 ← point(3, 2, 1)\n\
 And p2 ← point(5, 6, 7)\n\
 Then p1 - p2 = vector(-2, -4, -6)\n");
-	tuple1 = init_point(3, 2, 1);
-	tuple2 = init_point(5, 6, 7);
+	tuple1 = point(3, 2, 1);
+	tuple2 = point(5, 6, 7);
 	tuple3 = tuple_subtract(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -80,8 +80,8 @@ static void	test4(void)
 Given v1 ← vector(3, 2, 1)\n\
 And v2 ← vector(5, 6, 7)\n\
 Then v1 - v2 = vector(-2, -4, -6)\n");
-	tuple1 = init_vector(3, 2, 1);
-	tuple2 = init_vector(5, 6, 7);
+	tuple1 = vector(3, 2, 1);
+	tuple2 = vector(5, 6, 7);
 	tuple3 = tuple_subtract(tuple1, tuple2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -97,7 +97,7 @@ static void	test5(void)
 	printf("Scenario: Negating a tuple\n\
 Given a ← tuple(1, -2, 3, -4)\n\
 Then -a = tuple(-1, 2, -3, 4)\n");
-	tuple1 = init_tuple(1, -2, 3, -4);
+	tuple1 = tuple(1, -2, 3, -4);
 	tuple2 = tuple_negate(tuple1);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -112,7 +112,7 @@ static void	test6(void)
 	printf("Scenario: Multiplying a tuple by a fraction\n\
 Given a ← tuple(1, -2, 3, -4)\n\
 Then a * 0.5 = tuple(0.5, -1, 1.5, -2)\n");
-	tuple1 = init_tuple(1, -2, 3, -4);
+	tuple1 = tuple(1, -2, 3, -4);
 	tuple2 = tuple_scale_multiply(tuple1, 0.5);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -127,7 +127,7 @@ static void	test7(void)
 	printf("Scenario: Dividing a tuple by a scalar\n\
 Given a ← tuple(1, -2, 3, -4)\n\
 Then a / 2 = tuple(0.5, -1, 1.5, -2)\n");
-	tuple1 = init_tuple(1, -2, 3, -4);
+	tuple1 = tuple(1, -2, 3, -4);
 	tuple2 = tuple_scale_divide(tuple1, 2);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -141,7 +141,7 @@ static void	test8(void)
 	printf("Scenario: Computing the magnitude of vector(1, 2, 3)\n\
 Given v ← vector(1, 2, 3)\n\
 Then magnitude(v) = %f\n", sqrtf(14));
-	tuple1 = init_vector(1, 2, 3);
+	tuple1 = vector(1, 2, 3);
 	print_tuple(tuple1);
 }
 
@@ -155,7 +155,7 @@ static void	test9(void)
 Given v ← vector(4, 0, 0)\n\
 Then normalize(v) = vector(1, 0, 0)\n\
 Then magnitude(norm) = 1\n");
-	tuple1 = init_vector(4, 0, 0);
+	tuple1 = vector(4, 0, 0);
 	tuple2 = vector_normalize(tuple1);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
@@ -171,8 +171,8 @@ static void	test10(void)
 Given a ← vector(1, 2, 3)\n\
 And b ← vector(2, 3, 4)\n\
 Then dot(a, b) = 20\n");
-	tuple1 = init_vector(1, 2, 3);
-	tuple2 = init_vector(2, 3, 4);
+	tuple1 = vector(1, 2, 3);
+	tuple2 = vector(2, 3, 4);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
 	printf("Dot product = %f\n", vector_dot_product(tuple1, tuple2));
@@ -190,8 +190,8 @@ Given a ← vector(1, 2, 3)\n\
 And b ← vector(2, 3, 4)\n\
 Then cross(a, b) = vector(-1, 2, -1)\n\
 And cross(b, a) = vector(1, -2, 1)\n");
-	tuple1 = init_vector(1, 2, 3);
-	tuple2 = init_vector(2, 3, 4);
+	tuple1 = vector(1, 2, 3);
+	tuple2 = vector(2, 3, 4);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
 	tuple3 = vector_cross_product(tuple1, tuple2);

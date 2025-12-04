@@ -20,7 +20,7 @@ static t_vector	sphere_normal_at(t_object sphere, t_point world_point)
 
 	object_point = matrix4_and_tuple_multiply(
 				sphere.inverse_transform, world_point);
-	object_normal = tuple_subtract(object_point, init_point(0, 0, 0));
+	object_normal = tuple_subtract(object_point, point(0, 0, 0));
 	world_normal = matrix4_and_tuple_multiply(
 		matrix4_transpose(sphere.inverse_transform), object_normal);
 	world_normal.w = 0;
@@ -32,5 +32,5 @@ t_vector	normal_at(t_object obj, t_point world_point)
 	if (obj.type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
 	else
-		return (vector_normalize(init_vector(FLT_MAX, FLT_MAX, FLT_MAX)));
+		return (vector_normalize(vector(FLT_MAX, FLT_MAX, FLT_MAX)));
 }

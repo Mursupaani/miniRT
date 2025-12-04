@@ -102,7 +102,7 @@ Then A * B is the following 4x4 matrix:\n\
 
 static void	test4(void)
 {
-	t_tuple	tuple;
+	t_tuple	t;
 	t_tuple	result;
 
 	printf("TEST 4:\n");
@@ -114,10 +114,10 @@ Given the following matrix A:\n\
 | 0 | 0 | 0 | 1 |\n\
 And b ← tuple(1, 2, 3, 1)\n\
 Then A * b = tuple(18, 24, 33, 1)\n");
-	tuple = init_tuple(1, 2, 3, 1);
-	result = matrix4_and_tuple_multiply(m5, tuple);
+	t = tuple(1, 2, 3, 1);
+	result = matrix4_and_tuple_multiply(m5, t);
 	print_matrix4(m1);
-	print_tuple(tuple);
+	print_tuple(t);
 	print_tuple(result);
 }
 
