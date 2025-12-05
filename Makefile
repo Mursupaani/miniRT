@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/12/05 10:20:28 by anpollan         ###   ########.fr        #
+#    Updated: 2025/12/05 17:12:42 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,9 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  matrix_minor_and_cofactor.c matrix_inversion.c \
 				  transformation.c rotations.c render_routine.c \
 				  intersect_sphere.c intersection.c ray.c objects.c normal.c \
-				  reflect.c point_light.c color.c \
+				  reflect.c lighting.c color.c color_utils.c material.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
-				  test_rays.c test.c test_normal.c \
+				  test_rays.c test.c test_normal.c test_color.c \
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:54:51 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/01 18:48:37 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:58:19 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	test1()
 	t_vector	normal;
 
 	printf("TEST 1:\n");
-	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 0, 0));
 	printf("Scenario: The normal on a sphere at a point on the x axis\n\
 Given s ← sphere()\n\
 When n ← normal_at(s, point(1, 0, 0))\n\
 Then n = vector(1, 0, 0)\n");
-	normal = normal_at(*sphere, point(1, 0, 0));
+	normal = normal_at(sphere, point(1, 0, 0));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -35,12 +35,12 @@ void	test2()
 	t_vector	normal;
 
 	printf("TEST 2:\n");
-	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 0, 0));
 	printf("Scenario: The normal on a sphere at a nonaxial point\n\
 Given s ← sphere()\n\
 When n ← normal_at(s, point(√3/3, √3/3, √3/3))\n\
 Then n = vector(√3/3, √3/3, √3/3)\n");
-	normal = normal_at(*sphere, point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
+	normal = normal_at(sphere, point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -56,14 +56,14 @@ Given s ← sphere()\n\
 And set_transform(s, translation(0, 1, 0))\n\
 When n ← normal_at(s, point(0, 1.70711, -0.70711))\n\
 Then n = vector(0, 0.70711, -0.70711)\n");
-	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 0, 0));
 	set_transform(sphere, translation_matrix4(0, 1, 0));
-	normal = normal_at(*sphere, point(0, 1.70711, -0.70711));
+	normal = normal_at(sphere, point(0, 1.70711, -0.70711));
 	print_tuple(normal);
 	free(sphere);
-	sphere = sphere_new(point(0, 1, 0), 1, color_255(255, 0, 0, 255));
+	sphere = sphere_new_args(point(0, 1, 0), 1, color255(255, 0, 0));
 	// set_transform(sphere, translation_matrix4(0, 1, 0));
-	normal = normal_at(*sphere, point(0, 1.70711, -0.70711));
+	normal = normal_at(sphere, point(0, 1.70711, -0.70711));
 	print_tuple(normal);
 	free(sphere);
 }
@@ -81,10 +81,10 @@ And m ← scaling(1, 0.5, 1) * rotation_z(π/5)\n\
 And set_transform(s, m)\n\
 When n ← normal_at(s, point(0, √2/2, -√2/2))\n\
 Then n = vector(0, 0.97014, -0.24254)\n");
-	sphere = sphere_new(point(0, 0, 0), 1, color_255(255, 0, 0, 255));
+	sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 0, 0));
 	m = matrix4_multiply(scaling_matrix4(1, 0.5, 1), z_rotation(M_PI / 5));
 	set_transform(sphere, m);
-	normal = normal_at(*sphere, point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
+	normal = normal_at(sphere, point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
 	print_tuple(normal);
 	free(sphere);
 }

@@ -6,15 +6,15 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 10:18:46 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 10:44:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:06:20 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color_1	color(float r, float g, float b)
+t_color	color(float r, float g, float b)
 {
-	t_color_1	color;
+	t_color	color;
 
 	color.r = r;
 	color.g = g;
@@ -22,26 +22,34 @@ t_color_1	color(float r, float g, float b)
 	return (color);
 }
 
-t_color_255	color_255(
-		unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+t_color255	color255(
+		unsigned char r, unsigned char g, unsigned char b)
 {
-	t_color_255	color;
+	t_color255	color255;
 
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	color.a = a;
-	color.rgba = (r << 24) + (g << 16) + (b << 8) + a;
-	return (color);
+	color255.r = r;
+	color255.g = g;
+	color255.b = b;
+	return (color255);
 }
 
-t_color_1	color_1_from_color255(t_color_255 color_255)
+t_color	color_mix(t_color color_obj, t_color color_light)
 {
-	t_color_1	color_1;
+	return ((t_color){color_obj.r * color_light.r,
+				color_obj.g * color_light.g,
+				color_obj.b * color_light.b});
+}
 
-	color_1.r = color_255.r / 255.0f;
-	color_1.g = color_255.g / 255.0f;
-	color_1.b = color_255.b / 255.0f;
-	color_1.a = color_255.a / 255.0f;
-	return (color_1);
+t_color	color_multiply(t_color color, float multiplier)
+{
+	return ((t_color){color.r * multiplier,
+			color.g * multiplier,
+			color.b * multiplier});
+}
+
+t_color	color_sum(t_color color1, t_color color2)
+{
+	return ((t_color){color1.r + color2.r,
+				color1.g + color2.g,
+				color1.b + color2.b});
 }

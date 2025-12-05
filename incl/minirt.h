@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 10:44:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:11:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@
 
 # ifndef EPSILON
 #  define EPSILON 1e-4f
+# endif
+
+// Material default max values
+# ifndef AMBIENT
+#  define AMBIENT 0.1
+# endif
+
+# ifndef DIFFUSE
+#  define DIFFUSE 0.9
+# endif
+
+# ifndef SPECULAR
+#  define SPECULAR 0.9
+# endif
+
+# ifndef SHININESS
+#  define SHININESS 200.0
 # endif
 
 typedef struct s_thread_data t_thread_data;
@@ -77,17 +94,14 @@ typedef struct s_color_255
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-	unsigned char	a;
-	int				rgba;
-}	t_color_255;
+}	t_color255;
 
 typedef struct s_color_1
 {
 	float	r;
 	float	g;
 	float	b;
-	float	a;
-}	t_color_1;
+}	t_color;
 
 //FIXME: Testing
 typedef struct s_proj
@@ -124,20 +138,12 @@ typedef enum s_object_type
 	CYLINDER
 }	t_object_type;
 
-// typedef struct s_ambient_light
-// {
-// 	float			brightness;
-// 	t_color_1		*color_1;
-// 	t_color_255		*color_255;
-// }	t_ambient_light;
-//
-typedef struct s_point_light
+typedef struct s_light
 {
-	float			intensity;
+	t_color			intensity;
 	t_point			position;
-	t_color_1		color_1;
-	t_color_255		color_255;
-}	t_point_light;
+	// t_color_255		color_255;
+}	t_light;
 
 typedef struct s_material
 {
@@ -145,6 +151,7 @@ typedef struct s_material
 	float	diffuse;
 	float	specular;
 	float	shininess;
+	t_color	color;
 }	t_material;
 
 typedef struct s_camera
@@ -160,10 +167,9 @@ typedef struct s_object
 	t_point			center;
 	float			diameter;
 	float			height;
-	t_color_1		color_1;
-	t_color_255		color_255;
 	t_matrix4		transform;
 	t_matrix4		inverse_transform;
+	t_material		material;
 }	t_object;
 
 typedef struct s_scene
@@ -236,6 +242,7 @@ typedef struct	s_intersection
 }	t_intersection;
 
 // Tests
+void		free_object(t_object *object);
 void		run_tests();
 void		test_tuples(void);
 void		test_matrices(void);
@@ -243,15 +250,18 @@ void		test_transformation(void);
 void		test_rays(void);
 void		render_chapter_5_scene(t_app *app);
 void		test_normal(void);
+void		test_color();
+void		render_chapter_7_scene(t_app *app);
 
 // Debug
 void		print_tuple(t_tuple tuple);
-// void		print_matrix2(float (*matrix)[2]);
 void		print_matrix2(t_matrix2 matrix);
-// void		print_matrix3(float (*matrix)[3]);
 void		print_matrix3(t_matrix3 matrix);
-// void		print_matrix4(float (*matrix)[4]);
 void		print_matrix4(t_matrix4 matrix);
+void		print_color(t_color color);
+void		print_color_255(t_color255 color);
+void		print_point_light(t_light *point_light);
+void		print_material(t_material material);
 t_proj		tick(t_env env, t_proj proj);
 void		projectile(t_app *app);
 
@@ -291,8 +301,8 @@ t_tuple		tuple_negate(t_tuple tuple);
 // Vector math:
 float		vector_magnitude(t_tuple vector);
 t_vector	vector_normalize(t_vector vector);
-float		vector_dot_product(t_vector a, t_vector b);
-t_vector	vector_cross_product(t_vector a, t_vector b);
+float		dot(t_vector a, t_vector b);
+t_vector	cross(t_vector a, t_vector b);
 
 // Matrix utils:
 bool		matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2);
@@ -344,16 +354,32 @@ t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
 
 // Objects:
-t_object	*sphere_new(t_point center, float diameter, t_color_255 color);
+t_object	*sphere_new(void);
+t_object	*sphere_new_args(t_point center, float diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
-t_color_255	color_255(
-		unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-t_color_1	color_1_from_color255(t_color_255 color_255);
 
 // Color:
-t_color_1	color(float r, float g, float b);
+t_color		color(float r, float g, float b);
+t_color255	color255(
+		unsigned char r, unsigned char g, unsigned char b);
+t_color		color_mix(t_color color_obj, t_color color_light);
+t_color		color_multiply(t_color color, float multiplier);
+t_color		color_sum(t_color color1, t_color color2);
+t_color		color_from_color255(t_color255 color_255);
+t_color255	color255_from_color(t_color color);
+int			color_hex_from_color255(t_color255 color255);
+int			color_hex_from_color(t_color color);
+
+// Light:
+t_light	*point_light(t_point position, t_color intensity);
+t_color	lighting(t_object *obj, t_light *light, t_point point, t_vector eyev);
+
+// Material:
+t_material		material(void);
+t_material		material_with_color(t_color color);
+t_material		material_change_color(t_material material, t_color color);
 
 // Normal
-t_vector	normal_at(t_object obj, t_point point);
+t_vector	normal_at(t_object *obj, t_point point);
 
 #endif

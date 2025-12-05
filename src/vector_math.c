@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:15:33 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/07 17:29:28 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:08:46 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vector	vector_normalize(t_vector v)
 	if (v.w != 0)
 	{
 		printf("Can't normalize a point\n");
-		return (vector(0, 0, 0));
+		return (vector(0.0f, 0.0f, 0.0f));
 	}
 	magnitude = vector_magnitude(v);
 	return (vector(v.x / magnitude,
@@ -35,7 +35,7 @@ t_vector	vector_normalize(t_vector v)
 			v.z / magnitude));
 }
 
-float	vector_dot_product(t_vector a, t_vector b)
+float	dot(t_vector a, t_vector b)
 {
 	if (a.w != 0 || b.w != 0)
 	{
@@ -47,7 +47,7 @@ float	vector_dot_product(t_vector a, t_vector b)
 		+ a.z * b.z);
 }
 
-t_vector	vector_cross_product(t_vector a, t_vector b)
+t_vector	cross(t_vector a, t_vector b)
 {
 	if (a.w != 0 || b.w != 0)
 	{

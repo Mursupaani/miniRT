@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 20:55:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/01 17:11:51 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:31:50 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	run_tests()
 	// test_transformation();
 	// test_rays();
 	// render_chapter_5_scene();
-	test_normal();
+	// test_normal();
+	// test_color();
 }
