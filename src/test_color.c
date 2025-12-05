@@ -237,7 +237,6 @@ void	render_chapter_7_scene(t_app *app)
 	print_material(sphere->material);
 
 	printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
-
 	for (int y = 0; y < canvas_pixels; y++)
 	{
 		float	world_y = half - pixel_size * y;
