@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_utils.c                                     :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/01 17:05:04 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/01 17:08:11 by anpollan         ###   ########.fr       */
+/*   Created: 2025/12/05 10:18:46 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/05 10:44:14 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_color_1	color(float r, float g, float b)
+{
+	t_color_1	color;
+
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	return (color);
+}
 
 t_color_255	color_255(
 		unsigned char r, unsigned char g, unsigned char b, unsigned char a)

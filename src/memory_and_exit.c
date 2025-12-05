@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/25 15:41:56 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/05 10:27:48 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ void	free_scene(t_scene *scene)
 {
 	if (!scene)
 		return ;
-	if (scene->ambient_light)
-	{
-		free(scene->ambient_light->color_1);
-		free(scene->ambient_light->color_255);
-	}
-	if (scene->light)
-	{
-		free(scene->light->center);
-		free(scene->light->color_1);
-		free(scene->light->color_255);
-	}
+	// if (scene->ambient_light)
+	// {
+	// 	free(scene->ambient_light->color_1);
+	// 	free(scene->ambient_light->color_255);
+	// }
+	// if (scene->light)
+	// {
+		// free(scene->light->position);
+		// free(scene->light->color_1);
+		// free(scene->light->color_255);
+	// }
 	if (scene->camera)
 		free(scene->camera);
 	free(scene);

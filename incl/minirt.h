@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/01 18:44:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 10:44:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,20 +124,28 @@ typedef enum s_object_type
 	CYLINDER
 }	t_object_type;
 
-typedef struct s_ambient_light
-{
-	float			brightness;
-	t_color_1		*color_1;
-	t_color_255		*color_255;
-}	t_ambient_light;
-
+// typedef struct s_ambient_light
+// {
+// 	float			brightness;
+// 	t_color_1		*color_1;
+// 	t_color_255		*color_255;
+// }	t_ambient_light;
+//
 typedef struct s_point_light
 {
-	float			brightness;
-	t_point			*center;
-	t_color_1		*color_1;
-	t_color_255		*color_255;
+	float			intensity;
+	t_point			position;
+	t_color_1		color_1;
+	t_color_255		color_255;
 }	t_point_light;
+
+typedef struct s_material
+{
+	float	ambient;
+	float	diffuse;
+	float	specular;
+	float	shininess;
+}	t_material;
 
 typedef struct s_camera
 {
@@ -161,8 +169,8 @@ typedef struct s_object
 typedef struct s_scene
 {
 	t_camera		*camera;
-	t_ambient_light	*ambient_light;
-	t_point_light	*light;
+	// t_ambient_light	*ambient_light;
+	// t_point_light	*light;
 	t_object		*objects[];
 }	t_scene;
 
@@ -341,6 +349,9 @@ void		set_transform(t_object *object, t_matrix4 transform);
 t_color_255	color_255(
 		unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 t_color_1	color_1_from_color255(t_color_255 color_255);
+
+// Color:
+t_color_1	color(float r, float g, float b);
 
 // Normal
 t_vector	normal_at(t_object obj, t_point point);
