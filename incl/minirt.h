@@ -103,6 +103,20 @@ typedef struct s_color_1
 	float	b;
 }	t_color;
 
+typedef struct s_lighting
+{
+	t_vector	normalv;
+	t_vector	lightv;
+	float		light_dot_normal;
+	t_vector	reflectv;
+	float		reflect_dot_eye;
+	float		factor;
+	t_color		ambient;
+	t_color		effective_color;
+	t_color		diffuse;
+	t_color		specular;
+}	t_lighting;
+
 //FIXME: Testing
 typedef struct s_proj
 {
