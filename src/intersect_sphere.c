@@ -5,9 +5,9 @@ static void	calculate_coefs(t_ray ray, float *a, float *b, float *c)
 	t_vector	sphere_to_ray;
 
 	sphere_to_ray = tuple_subtract(ray.origin, point(0, 0, 0));
-	*a = vector_dot_product(ray.direction, ray.direction);
-	*b = 2 * vector_dot_product(ray.direction, sphere_to_ray);
-	*c = vector_dot_product(sphere_to_ray, sphere_to_ray) - 1;
+	*a = dot(ray.direction, ray.direction);
+	*b = 2 * dot(ray.direction, sphere_to_ray);
+	*c = dot(sphere_to_ray, sphere_to_ray) - 1;
 }
 
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)

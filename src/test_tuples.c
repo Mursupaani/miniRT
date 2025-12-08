@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:37:36 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/24 18:23:31 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:57:49 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ Then dot(a, b) = 20\n");
 	tuple2 = vector(2, 3, 4);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
-	printf("Dot product = %f\n", vector_dot_product(tuple1, tuple2));
+	printf("Dot product = %f\n", dot(tuple1, tuple2));
 }
 
 static void	test11(void)
@@ -194,9 +194,9 @@ And cross(b, a) = vector(1, -2, 1)\n");
 	tuple2 = vector(2, 3, 4);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
-	tuple3 = vector_cross_product(tuple1, tuple2);
+	tuple3 = cross(tuple1, tuple2);
 	print_tuple(tuple3);
-	tuple3 = vector_cross_product(tuple2, tuple1);
+	tuple3 = cross(tuple2, tuple1);
 	print_tuple(tuple3);
 }
 
