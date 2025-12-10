@@ -373,7 +373,7 @@ void			intersection_free(t_intersection *lst);
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
-void			quick_sort_intersections(t_intersection **xs, int start, int end);
+void			quick_sort_intersections(t_intersection *xs, int start, int end);
 
 // Rays:
 t_ray		ray(t_point origin, t_vector direction);

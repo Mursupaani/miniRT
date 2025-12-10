@@ -35,7 +35,7 @@ static t_intersections	*intersect_with_sphere(t_object *sphere, t_ray ray)
 	xs->xs[0] = intersection((-abc[1] - sqrtf(disc)) / (2 * abc[0]), sphere);
 	xs->xs[1] = intersection((-abc[1] + sqrtf(disc)) / (2 * abc[0]), sphere);
 	xs->count = 2;
-	quick_sort_intersections(&xs->xs, 0, xs->count - 1);
+	quick_sort_intersections(xs->xs, 0, xs->count - 1);
 	return (xs);
 }
 

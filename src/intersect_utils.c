@@ -36,29 +36,29 @@ static void	swap_intersections(t_intersection *x1, t_intersection *x2)
 	*x2 = temp;
 }
 
-static int	partition(t_intersection **xs, int start, int end)
+static int	partition(t_intersection *xs, int start, int end)
 {
 	float	pivot;
 	int		store_i;
 	int		i;
 
-	pivot = (*xs)[end].t;
+	pivot = xs[end].t;
 	store_i = start - 1;
 	i = start;
 	while (i < end)
 	{
-		if ((*xs)[i].t < pivot)
+		if (xs[i].t < pivot)
 		{
 			store_i++;
-			swap_intersections(&(*xs)[i], &(*xs)[store_i]);
+			swap_intersections(&xs[i], &xs[store_i]);
 		}
 		i++;
 	}
-	swap_intersections(&(*xs)[store_i + 1], &(*xs)[end]);
+	swap_intersections(&xs[store_i + 1], &xs[end]);
 	return (store_i + 1);
 }
 
-void	quick_sort_intersections(t_intersection **xs, int start, int end)
+void	quick_sort_intersections(t_intersection *xs, int start, int end)
 {
 	int	pivot;
 

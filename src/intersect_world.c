@@ -60,7 +60,7 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 			continue ;
 		xs->count += current->count;
 		xs->xs = add_intersection(current, xs);
-		quick_sort_intersections(&xs->xs, 0, xs->count - 1);
+		quick_sort_intersections(xs->xs, 0, xs->count - 1);
 	}
 	return (xs);
 }
