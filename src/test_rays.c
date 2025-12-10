@@ -227,7 +227,7 @@ void	render_chapter_5_scene(t_app *app)
 		{
 			float	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
-			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
+			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
 			t_intersection	*xs = intersect_sphere(shape, r);
 			t_intersection	*hit = intersection_hit(xs);

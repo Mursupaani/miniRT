@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:08:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ void	projectile(t_app *app)
 	t_env	env;
 
 	proj.p = point(0, 1, 0);
-	proj.v = tuple_scale_multiply(vector_normalize(vector(1, 1, 0)), 20);
+	proj.v = tuple_scale_multiply(normalize(vector(1, 1, 0)), 20);
 	env.g = vector(0, -0.1, 0);
 	env.w = vector(-0.01, 0, 0);
 	while (proj.p.y >= 0)

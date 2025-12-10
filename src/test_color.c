@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:31:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/09 17:57:59 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ void	render_chapter_7_scene(t_app *app)
 		{
 			float	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
-			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
+			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
 			t_intersections	*xs = intersect(sphere, r);
 			if (xs && xs->count > 0)

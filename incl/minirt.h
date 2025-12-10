@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 17:28:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:56:03 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ t_tuple		tuple_negate(t_tuple tuple);
 
 // Vector math:
 float		vector_magnitude(t_tuple vector);
-t_vector	vector_normalize(t_vector vector);
+t_vector	normalize(t_vector vector);
 float		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
 
@@ -429,5 +429,8 @@ t_vector	normal_at(t_object *obj, t_point point);
 // World
 t_world		*world();
 t_world		*default_world();
+
+// Camera
+t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 
 #endif

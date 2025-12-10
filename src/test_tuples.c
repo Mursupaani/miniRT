@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:37:36 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:57:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ Given v ← vector(4, 0, 0)\n\
 Then normalize(v) = vector(1, 0, 0)\n\
 Then magnitude(norm) = 1\n");
 	tuple1 = vector(4, 0, 0);
-	tuple2 = vector_normalize(tuple1);
+	tuple2 = normalize(tuple1);
 	print_tuple(tuple1);
 	print_tuple(tuple2);
 }

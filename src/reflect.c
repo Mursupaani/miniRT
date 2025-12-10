@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:37:01 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:57:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_color	lighting(t_object *obj, t_light *light, t_point position, t_vector eyev)
 	if (!obj || !light)
 		return ((t_color){1, 1, 1});
 	l.normalv = normal_at(obj, position);
-	l.lightv = vector_normalize(tuple_subtract(light->position, position));
+	l.lightv = normalize(tuple_subtract(light->position, position));
 	l.light_dot_normal = dot(l.lightv, l.normalv);
 	return (calculate_color(obj, light, eyev, l));
 }

@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:06:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 19:09:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,99 @@ Then c = inner.material.color\n");
 	free_world(w);
 }
 
+static	void test10()
+{
+	t_point		from;
+	t_point		to;
+	t_vector	up;
+	t_matrix4	t;
+	t_matrix4	identity;
+
+	printf("TEST 10:\n");
+	printf("Scenario: The transformation matrix for the default orientation\n\
+Given from ← point(0, 0, 0)\n\
+And to ← point(0, 0, -1)\n\
+And up ← vector(0, 1, 0)\n\
+When t ← view_transform(from, to, up)\n\
+Then t = identity_matrix\n");
+	from = point(0, 0, 0);
+	to = point(0, 0, -1);
+	up = vector(0, 1, 0);
+	t = view_transform(from, to, up);
+	identity = matrix4_identity();
+	printf("CALCULATED ");
+	print_matrix4(t);
+	printf("CORRECT ");
+	print_matrix4(identity);
+		printf("\n");
+	if (matrix4s_are_equal(t, identity))
+		printf("Matrices are equal\n");
+	else
+		printf("Matrices are NOT equal\n");
+}
+
+static	void test11()
+{
+	t_point		from;
+	t_point		to;
+	t_vector	up;
+	t_matrix4	t;
+	t_matrix4	scaling;
+
+	printf("TEST 11:\n");
+	printf("Scenario: A view transformation matrix looking in positive z direction\n\
+Given from ← point(0, 0, 0)\n\
+And to ← point(0, 0, 1)\n\
+And up ← vector(0, 1, 0)\n\
+When t ← view_transform(from, to, up)\n\
+Then t = scaling(-1, 1, -1)\n");
+	from = point(0, 0, 0);
+	to = point(0, 0, 1);
+	up = vector(0, 1, 0);
+	t = view_transform(from, to, up);
+	scaling = scaling_matrix4(-1, 1, -1);
+	printf("CALCULATED ");
+	print_matrix4(t);
+	printf("CORRECT ");
+	print_matrix4(scaling);
+		printf("\n");
+	if (matrix4s_are_equal(t, scaling))
+		printf("Matrices are equal\n");
+	else
+		printf("Matrices are NOT equal\n");
+}
+
+static	void test12()
+{
+	t_point		from;
+	t_point		to;
+	t_vector	up;
+	t_matrix4	t;
+	t_matrix4	translation;
+
+	printf("TEST 12:\n");
+	printf("Scenario: The view transformation moves the world\n\
+Given from ← point(0, 0, 8)\n\
+And to ← point(0, 0, 0)\n\
+And up ← vector(0, 1, 0)\n\
+When t ← view_transform(from, to, up)\n\
+Then t = translation(0, 0, -8)\n");
+	from = point(0, 0, 8);
+	to = point(0, 0, 0);
+	up = vector(0, 1, 0);
+	t = view_transform(from, to, up);
+	translation = translation_matrix4(0, 0, -8);
+	printf("CALCULATED ");
+	print_matrix4(t);
+	printf("CORRECT ");
+	print_matrix4(translation);
+		printf("\n");
+	if (matrix4s_are_equal(t, translation))
+		printf("Matrices are equal\n");
+	else
+		printf("Matrices are NOT equal\n");
+}
+
 void	test_world()
 {
 	printf("\n");
@@ -259,6 +352,12 @@ void	test_world()
 	test8();
 	printf("_____________________________________________\n");
 	test9();
+	printf("_____________________________________________\n");
+	test10();
+	printf("_____________________________________________\n");
+	test11();
+	printf("_____________________________________________\n");
+	test12();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING WORLD FINISHED -----------\n");
 	printf("\n");
