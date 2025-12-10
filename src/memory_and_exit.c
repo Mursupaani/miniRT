@@ -47,6 +47,15 @@ void	free_world(t_world *w)
 	free(w);
 }
 
+void	free_intersections(t_intersections *xs)
+{
+	if (xs)
+	{
+		free(xs->xs);
+		free(xs);
+	}
+}
+
 void	free_app_memory(t_app *app)
 {
 	if (!app)

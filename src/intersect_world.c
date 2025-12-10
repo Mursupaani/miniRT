@@ -30,10 +30,14 @@ t_intersection	*add_intersection(t_intersections *cur, t_intersections *xs)
 		temp = xs->xs;
 		xs->xs = malloc(sizeof(t_intersection) * (xs->count));
 		if (!xs->xs)
+		{
+			free(temp);
 			return (NULL);
+		}
 		i = -1;
 		while (++i < xs->count - 2)
 			xs->xs[i] = temp[i];
+		free(temp);
 		xs->xs[i++] = cur->xs[0];
 		xs->xs[i] = cur->xs[1];
 	}
@@ -60,6 +64,7 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 			continue ;
 		xs->count += current->count;
 		xs->xs = add_intersection(current, xs);
+		free_intersections(current);
 		quick_sort_intersections(xs->xs, 0, xs->count - 1);
 	}
 	return (xs);

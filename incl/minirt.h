@@ -300,6 +300,7 @@ void	skip_whitespace(char **str);
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 void		free_world(t_world *w);
+void		free_intersections(t_intersections *xs);
 
 // Tuples (vectors, points):
 t_tuple		tuple(float x, float y, float z, float w);
