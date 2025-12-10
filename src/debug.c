@@ -188,6 +188,8 @@ void	print_world(t_world *world)
 
 void	print_intersections(t_intersections *xs)
 {
+	if (!xs)
+		return ;
 	int	i;
 	printf("--------------------\n");
 	printf("INTERSECTIONS:\n");

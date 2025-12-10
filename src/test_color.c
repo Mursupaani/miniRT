@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 static void	test1()
 {
@@ -234,9 +233,9 @@ void	render_chapter_7_scene(t_app *app)
 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));
 	t_light		*light = point_light(point(-10, 10, -10), color(1, 1, 1));
 	sphere->material.color = color(1, 0.5, 1);
-	print_material(sphere->material);
+	// print_material(sphere->material);
 
-	printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
+	// printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
 	for (int y = 0; y < canvas_pixels; y++)
 	{
 		float	world_y = half - pixel_size * y;
@@ -247,13 +246,15 @@ void	render_chapter_7_scene(t_app *app)
 			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
 			t_intersections	*xs = intersect(sphere, r);
-			if (xs->count > 0)
+			if (xs && xs->count > 0)
 			{
-// Inside the x/y loop in render_chapter_7_scene
+				// Inside the x/y loop in render_chapter_7_scene
 				t_point	point = ray_position(r, xs->xs[0].t);
 				t_vector eye = tuple_negate(r.direction);
 				if (pixel_fits_image(x, y, app))
 					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(xs->xs->object, light, point, eye)));
+				free(xs->xs);
+				free(xs);
 			}
 			else
 			{
@@ -261,7 +262,6 @@ void	render_chapter_7_scene(t_app *app)
 					mlx_put_pixel(app->img, x, y, 0);
 
 			}
-			free(xs->xs);
 		}
 	}
 	free_object(sphere);
