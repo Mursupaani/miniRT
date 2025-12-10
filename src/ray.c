@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_ray	ray_new(t_point origin, t_vector direction)
+t_ray	ray(t_point origin, t_vector direction)
 {
 	t_ray	ray;
 

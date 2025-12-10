@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:17:05 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:35:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	print_tuple(t_tuple tuple)
 {
-	printf("--------------------\n");
 	if (tuple.w == 0)
 		printf("VECTOR: (%.2f, %.2f, %.2f)\n", tuple.x, tuple.y, tuple.z);
 	else
@@ -45,14 +44,12 @@ void	print_tuple(t_tuple tuple)
 		printf("%f\n", tuple.w);
 		printf(" Magnitude:\tN/A\n");
 	}
-	printf("--------------------\n");
 }
 
 void	print_matrix4(t_matrix4 matrix)
 {
 	int i = 0;
 
-	printf("--------------------\n");
 	printf("MATRIX [4][4]:\n");
 	while (i < 4)
 	{
@@ -70,14 +67,12 @@ void	print_matrix4(t_matrix4 matrix)
 		printf("\n");
 		i++;
 	}
-	printf("--------------------\n");
 }
 
 void	print_matrix2(t_matrix2 matrix)
 {
 	int i = 0;
 
-	printf("--------------------\n");
 	printf("MATRIX [2][2]:\n");
 	while (i < 2)
 	{
@@ -92,14 +87,12 @@ void	print_matrix2(t_matrix2 matrix)
 		printf("\n");
 		i++;
 	}
-	printf("--------------------\n");
 }
 
 void	print_matrix3(t_matrix3 matrix)
 {
 	int i = 0;
 
-	printf("--------------------\n");
 	printf("MATRIX [3][3]:\n");
 	while (i < 3)
 	{
@@ -114,53 +107,101 @@ void	print_matrix3(t_matrix3 matrix)
 		printf("\n");
 		i++;
 	}
-	printf("--------------------\n");
 }
 
 void	print_color(t_color color)
 {
-	printf("--------------------\n");
 	printf("COLOR:\n");
 	printf(" r:\t%f\n g:\t%f\n b:\t%f\n",
 			color.r, color.g, color.b);
 	printf (" HEX:\t%X\n", color_hex_from_color(color));
-	printf("--------------------\n");
 }
 
 void	print_color_255(t_color255 color)
 {
-	printf("--------------------\n");
 	printf("COLOR255:\n");
 	printf(" r:\t%d\n g:\t%d\n b:\t%d\n",
 			color.r, color.g, color.b);
 	printf (" HEX:\t%X\n", color_hex_from_color255(color));
-	printf("--------------------\n");
 }
 
 void	print_point_light(t_light *point_light)
 {
-	printf("--------------------\n");
-	printf("POINT LIGHT:\n");
-	printf(" Position:\n");
+	printf("POINT LIGHT:\n\n");
+	printf("POSITION ");
 	print_tuple(point_light->position);
-	printf(" Intensity:\n");
+	printf("\n");
+	printf("INTENSITY ");
 	print_color(point_light->intensity);
-	printf("--------------------\n");
 }
 
 void	print_material(t_material material)
 {
-	printf("--------------------\n");
-	printf("MATERIAL:\n");
+	printf("MATERIAL:\n\n");
 	printf(" Ambient:\t%f\n", material.ambient);
 	printf(" Diffuse:\t%f\n", material.diffuse);
 	printf(" Specular:\t%f\n", material.specular);
 	printf(" Shininess:\t%f\n", material.shininess);
-	printf ("\n COLOR:\n");
-	printf("  r:\t%f\n  g:\t%f\n  b:\t%f\n",
+	printf ("\n\nCOLOR:\n\n");
+	printf(" r:\t%f\n g:\t%f\n b:\t%f\n",
 			material.color.r, material.color.g, material.color.b);
-	printf ("  HEX:\t%X\n", color_hex_from_color(material.color));
+	printf ("\nHEX:\t%X\n", color_hex_from_color(material.color));
+}
+
+void	print_object(t_object *o)
+{
+	printf("OBJECT:\n");
+	if (o->type == SPHERE)
+		printf(" Type:\tSphere\n");
+	else if (o->type == PLANE)
+		printf(" Type:\tPlane\n");
+	else if (o->type == CYLINDER)
+		printf(" Type:\tCylinder\n");
+	else
+		printf(" Type:\tundefined\n");
+	printf(" MATERIAL:\n");
+	printf("  Ambient:\t%f\n", o->material.ambient);
+	printf("  Diffuse:\t%f\n", o->material.diffuse);
+	printf("  Specular:\t%f\n", o->material.specular);
+	printf("  Shininess:\t%f\n", o->material.shininess);
+	printf ("\n  COLOR:\n");
+	printf("   r:\t%f\n   g:\t%f\n   b:\t%f\n",
+			o->material.color.r, o->material.color.g, o->material.color.b);
+	printf ("   HEX:\t%X\n", color_hex_from_color(o->material.color));
+}
+
+void	print_world(t_world *world)
+{
+	int	i;
 	printf("--------------------\n");
+	if (world->light)
+		print_point_light(world->light);
+	i = -1;
+	while (world->objects[++i])
+	{
+		printf("--------------------\n");
+		printf("%d ", i);
+		print_object(world->objects[i]);
+		printf("--------------------\n");
+	}
+}
+
+void	print_intersections(t_intersections *xs)
+{
+	int	i;
+	printf("--------------------\n");
+	printf("INTERSECTIONS:\n");
+	printf(" Count: %d\n", xs->count);
+	if (xs->xs)
+	{
+		i = -1;
+		while (++i < xs->count)
+		{
+			printf("--------------------\n");
+			printf("Intersection %d: %f\n",i, xs->xs[i].t);
+			printf("--------------------\n");
+		}
+	}
 }
 
 t_proj	tick(t_env env, t_proj proj)

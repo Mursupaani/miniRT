@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:31:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 19:09:36 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/09 17:57:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,16 +245,15 @@ void	render_chapter_7_scene(t_app *app)
 			float	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
-			t_ray	ray = ray_new(ray_origin, direction);
-			t_intersection	*xs = intersect_sphere(sphere, ray);
-			t_intersection	*hit = intersection_hit(xs);
-			if (hit != NULL)
+			t_ray	r = ray(ray_origin, direction);
+			t_intersections	*xs = intersect(sphere, r);
+			if (xs->count > 0)
 			{
 // Inside the x/y loop in render_chapter_7_scene
-				t_point	point = ray_position(ray, hit->t);
-				t_vector eye = tuple_negate(ray.direction);
+				t_point	point = ray_position(r, xs->xs[0].t);
+				t_vector eye = tuple_negate(r.direction);
 				if (pixel_fits_image(x, y, app))
-					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(hit->object, light, point, eye)));
+					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(xs->xs->object, light, point, eye)));
 			}
 			else
 			{
@@ -262,7 +261,7 @@ void	render_chapter_7_scene(t_app *app)
 					mlx_put_pixel(app->img, x, y, 0);
 
 			}
-			intersection_free(xs);
+			free(xs->xs);
 		}
 	}
 	free_object(sphere);
@@ -294,3 +293,75 @@ void	test_color()
 	printf("---------- TESTING COLOR FINISHED -----------\n");
 	printf("\n");
 }
+
+// void	render_chapter_7_scene(t_app *app)
+// {
+// 	t_point		ray_origin = point(0, 0, -5);
+// 	float		wall_z = 10;
+// 	float		wall_size = 7.0;
+// 	int			canvas_pixels = 2048;
+// 	float		pixel_size = wall_size / canvas_pixels;
+// 	float		half = wall_size / 2;
+// 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));
+// 	t_light		*light = point_light(point(-10, 10, -10), color(1, 1, 1));
+// 	sphere->material.color = color(1, 0.5, 1);
+// 	print_material(sphere->material);
+//
+// 	printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
+// 	for (int y = 0; y < canvas_pixels; y++)
+// 	{
+// 		float	world_y = half - pixel_size * y;
+// 		for (int x = 0; x < canvas_pixels; x++)
+// 		{
+// 			float	world_x = -half + pixel_size * x;
+// 			t_point	position = point(world_x, world_y, wall_z);
+// 			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
+// 			t_ray	r = ray(ray_origin, direction);
+// 			t_intersection	*xs = intersect_sphere(sphere, r);
+// 			t_intersection	*hit = intersection_hit(xs);
+// 			if (hit != NULL)
+// 			{
+// // Inside the x/y loop in render_chapter_7_scene
+// 				t_point	point = ray_position(r, hit->t);
+// 				t_vector eye = tuple_negate(r.direction);
+// 				if (pixel_fits_image(x, y, app))
+// 					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(hit->object, light, point, eye)));
+// 			}
+// 			else
+// 			{
+// 				if (pixel_fits_image(x, y, app))
+// 					mlx_put_pixel(app->img, x, y, 0);
+//
+// 			}
+// 			intersection_free(xs);
+// 		}
+// 	}
+// 	free_object(sphere);
+// }
+//
+// void	test_color()
+// {
+// 	printf("\n");
+// 	printf("---------------- TESTING COLOR --------------\n");
+// 	printf("_____________________________________________\n");
+// 	test1();
+// 	printf("_____________________________________________\n");
+// 	test2();
+// 	printf("_____________________________________________\n");
+// 	test3();
+// 	printf("_____________________________________________\n");
+// 	test4();
+// 	printf("_____________________________________________\n");
+// 	test5();
+// 	printf("_____________________________________________\n");
+// 	test6();
+// 	printf("_____________________________________________\n");
+// 	test7();
+// 	printf("_____________________________________________\n");
+// 	test8();
+// 	printf("_____________________________________________\n");
+// 	test9();
+// 	printf("_____________________________________________\n");
+// 	printf("---------- TESTING COLOR FINISHED -----------\n");
+// 	printf("\n");
+// }

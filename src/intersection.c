@@ -1,5 +1,15 @@
 #include "minirt.h"
 
+t_intersection	intersection(float t, t_object *object)
+{
+	t_intersection	intersection;
+
+	intersection.t = t;
+	intersection.object = object;
+	intersection.next = NULL;
+	return (intersection);
+}
+
 t_intersection	*intersection_new(float t, t_object *object)
 {
 	t_intersection	*new_node;

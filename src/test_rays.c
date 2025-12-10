@@ -28,19 +28,19 @@ void	test_rays(void)
 
 	// Print position after applying t
 	printf("--- Testing Ray implementation ---\n");
-	result = ray_position(ray_new(point(2, 3, 4), vector(1, 0, 0)), 0);
+	result = ray_position(ray(point(2, 3, 4), vector(1, 0, 0)), 0);
 	printf("1.0 Ray position(r, 0): %.1f, %.1f, %.1f, %.1f\n", result.x, result.y, result.z, result.w);
-	result = ray_position(ray_new(point(2, 3, 4), vector(1, 0, 0)), 1);
+	result = ray_position(ray(point(2, 3, 4), vector(1, 0, 0)), 1);
 	printf("1.1 Ray position(r, 1): %.1f, %.1f, %.1f, %.1f\n", result.x, result.y, result.z, result.w);
-	result = ray_position(ray_new(point(2, 3, 4), vector(1, 0, 0)), -1);
+	result = ray_position(ray(point(2, 3, 4), vector(1, 0, 0)), -1);
 	printf("1.2 Ray position(r, -1): %.1f, %.1f, %.1f, %.1f\n", result.x, result.y, result.z, result.w);
-	result = ray_position(ray_new(point(2, 3, 4), vector(1, 0, 0)), 2.5);
+	result = ray_position(ray(point(2, 3, 4), vector(1, 0, 0)), 2.5);
 	printf("1.3 Ray position(r, 2.5): %.1f, %.1f, %.1f, %.1f\n", result.x, result.y, result.z, result.w);
 	
 	// Print intersections with sphere
-	t_ray	ray = ray_new(point(0, 0, -5), vector(0, 0, 1));
+	t_ray	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 255, 255));
-	t_intersection	*xs = intersect_sphere(sphere, ray);
+	t_intersection	*xs = intersect_sphere(sphere, r);
 	t_intersection	*xs_head = xs;
 	printf("--- Intersections ---\n");
 	printf("2.0 Ray intersects sphere at two points\n");
@@ -54,8 +54,8 @@ void	test_rays(void)
 	}
 	intersection_free(xs_head);
 	printf("2.1 Ray intersects sphere at a tangent\n");
-	ray = ray_new(point(0, 1, -5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, ray);
+	r = ray(point(0, 1, -5), vector(0, 0, 1));
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -67,8 +67,8 @@ void	test_rays(void)
 	}
 	intersection_free(xs_head);
 	printf("2.2 Ray misses the sphere\n");
-	ray = ray_new(point(0, 2, -5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, ray);
+	r = ray(point(0, 2, -5), vector(0, 0, 1));
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -80,8 +80,8 @@ void	test_rays(void)
 	}
 	intersection_free(xs_head);
 	printf("2.3 Ray originates inside a sphere\n");
-	ray = ray_new(point(0, 0, 0), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, ray);
+	r = ray(point(0, 0, 0), vector(0, 0, 1));
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -93,8 +93,8 @@ void	test_rays(void)
 	}
 	intersection_free(xs_head);
 	printf("2.4 A sphere is behind the ray\n");
-	ray = ray_new(point(0, 0, 5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, ray);
+	r = ray(point(0, 0, 5), vector(0, 0, 1));
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -154,27 +154,27 @@ void	test_rays(void)
 	// Transforming Rays
 	printf("--- Transform rays ---\n");
 	t_ray	transformed_ray;
-	ray = ray_new(point(1, 2, 3), vector(0, 1, 0));
+	r = ray(point(1, 2, 3), vector(0, 1, 0));
 	t_matrix4	matrix = translation_matrix4(3, 4, 5);
-	transformed_ray = ray_transform(ray, matrix);
+	transformed_ray = ray_transform(r, matrix);
 	printf("4.0 Translating a ray\n");
 	printf("Translated ray origin: %.1f, %.1f, %.1f\n", transformed_ray.origin.x, transformed_ray.origin.y, transformed_ray.origin.z);
 	printf("Translated ray direction: %.1f, %.1f, %.1f\n", transformed_ray.direction.x, transformed_ray.direction.y, transformed_ray.direction.z);
 	printf("4.1 Scaling a ray\n");
-	ray = ray_new(point(1, 2, 3), vector(0, 1, 0));
+	r = ray(point(1, 2, 3), vector(0, 1, 0));
 	matrix = scaling_matrix4(2, 3, 4);
-	transformed_ray = ray_transform(ray, matrix);
+	transformed_ray = ray_transform(r, matrix);
 	printf("Scaled ray origin: %.1f, %.1f, %.1f\n", transformed_ray.origin.x, transformed_ray.origin.y, transformed_ray.origin.z);
 	printf("Scaled ray direction: %.1f, %.1f, %.1f\n", transformed_ray.direction.x, transformed_ray.direction.y, transformed_ray.direction.z);
 
 	// Transforming sphere
 	printf("--- Transforming sphere ---\n");
 	printf("5.0 Intersecting a scaled sphere with a ray\n");
-	ray = ray_new(point(0, 0, -5), vector(0, 0, 1));
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	t_matrix4	scaling = scaling_matrix4(2, 2, 2);
 	set_transform(sphere, scaling);
 	xs = NULL;
-	xs = intersect_sphere(sphere, ray);
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count is: %d\n", count_xs(xs));
 	i = 0;
@@ -186,11 +186,11 @@ void	test_rays(void)
 	}
 	intersection_free(xs_head);
 	printf("5.1 Intersecting a translated sphere with a ray\n");
-	ray = ray_new(point(0, 0, -5), vector(0, 0, 1));
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	t_matrix4	translation = translation_matrix4(5, 0, 0);
 	set_transform(sphere, translation);
 	xs = NULL;
-	xs = intersect_sphere(sphere, ray);
+	xs = intersect_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count is: %d\n", count_xs(xs));
 	i = 0;
@@ -228,8 +228,8 @@ void	render_chapter_5_scene(t_app *app)
 			float	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
-			t_ray	ray = ray_new(ray_origin, direction);
-			t_intersection	*xs = intersect_sphere(shape, ray);
+			t_ray	r = ray(ray_origin, direction);
+			t_intersection	*xs = intersect_sphere(shape, r);
 			t_intersection	*hit = intersection_hit(xs);
 			if (hit != NULL)
 			{

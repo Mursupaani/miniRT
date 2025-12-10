@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 18:11:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:21:28 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ typedef enum s_exit_value
 	ERROR_MLX_IMG_INIT,
 	ERROR_INVALID_FILE_TYPE,
 	ERROR_OPEN,
-	ERROR_SCENE,
+	ERROR_WORLD,
 	ERROR_PARSING,
 	ERROR_THREADS,
 	
@@ -186,13 +186,12 @@ typedef struct s_object
 	t_material		material;
 }	t_object;
 
-typedef struct s_scene
+typedef struct s_world
 {
 	t_camera		*camera;
-	// t_ambient_light	*ambient_light;
-	// t_point_light	*light;
-	t_object		*objects[];
-}	t_scene;
+	t_light			*light;
+	t_object		**objects;
+}	t_world;
 
 typedef struct s_app
 {
@@ -200,7 +199,7 @@ typedef struct s_app
 	int				monitor_height;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	t_scene			*scene;
+	t_world			*scene;
 	t_thread_data	*threads;
 }	t_app;
 
@@ -255,6 +254,12 @@ typedef struct	s_intersection
 	struct s_intersection	*next;
 }	t_intersection;
 
+typedef struct s_intersections
+{
+	int				count;
+	t_intersection	*xs;
+}	t_intersections;
+
 // Tests
 void		free_object(t_object *object);
 void		run_tests();
@@ -266,6 +271,7 @@ void		render_chapter_5_scene(t_app *app);
 void		test_normal(void);
 void		test_color();
 void		render_chapter_7_scene(t_app *app);
+void		test_world();
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -276,6 +282,9 @@ void		print_color(t_color color);
 void		print_color_255(t_color255 color);
 void		print_point_light(t_light *point_light);
 void		print_material(t_material material);
+void		print_material(t_material material);
+void		print_intersections(t_intersections *xs);
+void		print_world(t_world *world);
 t_proj		tick(t_env env, t_proj proj);
 void		projectile(t_app *app);
 
@@ -290,6 +299,7 @@ void	skip_whitespace(char **str);
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
+void		free_world(t_world *w);
 
 // Tuples (vectors, points):
 t_tuple		tuple(float x, float y, float z, float w);
@@ -355,14 +365,18 @@ void		join_threads(t_thread_data *thread_data, int thread_count);
 
 // Intersections:
 t_intersection	*intersection_new(float t, t_object *object);
+t_intersection	intersection(float t, t_object *object);
 t_intersection	*intersection_hit(t_intersection *xs);
 void			intersection_add_back(t_intersection **lst, 
 				t_intersection *new);
 void			intersection_free(t_intersection *lst);
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+t_intersections	*intersect(t_object *obj, t_ray ray);
+t_intersections	*intersect_world(t_world *w, t_ray r);
+void			quick_sort_intersections(t_intersection **xs, int start, int end);
 
 // Rays:
-t_ray		ray_new(t_point origin, t_vector direction);
+t_ray		ray(t_point origin, t_vector direction);
 t_point		ray_position(t_ray ray, float t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
@@ -395,5 +409,9 @@ t_material		material_change_color(t_material material, t_color color);
 
 // Normal
 t_vector	normal_at(t_object *obj, t_point point);
+
+// World
+t_world		*world();
+t_world		*default_world();
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 17:33:57 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 16:37:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:32:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	parse_rt_file(char **av, t_app *app)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_and_free_memory(ERROR_OPEN, app);
-	app->scene = ft_calloc(1, sizeof(t_scene));
+	app->scene = ft_calloc(1, sizeof(t_world));
 	if (!app->scene)
-		exit_and_free_memory(ERROR_SCENE, app);
+		exit_and_free_memory(ERROR_WORLD, app);
 	parse_rt_file_lines(fd, app);
 	close(fd);
 }
