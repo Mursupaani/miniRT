@@ -249,11 +249,11 @@ void	render_chapter_7_scene(t_app *app)
 			if (xs && xs->count > 0)
 			{
 				// Inside the x/y loop in render_chapter_7_scene
-				t_point	point = ray_position(r, xs->xs[0].t);
+				t_point	point = ray_position(r, xs->arr[0].t);
 				t_vector eye = tuple_negate(r.direction);
 				if (pixel_fits_image(x, y, app))
-					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(xs->xs->object, light, point, eye)));
-				free(xs->xs);
+					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(xs->arr->object, light, point, eye)));
+				free(xs->arr);
 				free(xs);
 			}
 			else

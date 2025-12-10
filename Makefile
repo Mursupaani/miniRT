@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/12/09 17:58:37 by anpollan         ###   ########.fr        #
+#    Updated: 2025/12/10 17:09:27 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  transformation.c rotations.c render_routine.c \
 				  intersect_sphere.c intersection.c ray.c objects.c normal.c \
 				  reflect.c lighting.c color.c color_utils.c material.c \
-				  world.c intersect_world.c intersect_utils.c \
+				  world.c intersect_world.c intersect_utils.c shading.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c test_world.c \
 

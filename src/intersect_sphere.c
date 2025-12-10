@@ -28,14 +28,14 @@ static t_intersections	*intersect_with_sphere(t_object *sphere, t_ray ray)
 	if (!xs)
 		// Exit and free if malloc fails?
 		return (NULL);
-	xs->xs = malloc(sizeof(t_intersection) * 2);
-	if (!xs->xs)
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	if (!xs->arr)
 		// Exit and free if malloc fails?
 		return (NULL);
-	xs->xs[0] = intersection((-abc[1] - sqrtf(disc)) / (2 * abc[0]), sphere);
-	xs->xs[1] = intersection((-abc[1] + sqrtf(disc)) / (2 * abc[0]), sphere);
+	xs->arr[0] = intersection((-abc[1] - sqrtf(disc)) / (2 * abc[0]), sphere);
+	xs->arr[1] = intersection((-abc[1] + sqrtf(disc)) / (2 * abc[0]), sphere);
 	xs->count = 2;
-	quick_sort_intersections(xs->xs, 0, xs->count - 1);
+	quick_sort_intersections(xs->arr, 0, xs->count - 1);
 	return (xs);
 }
 

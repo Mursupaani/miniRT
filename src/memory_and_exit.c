@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/09 15:32:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:37:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	free_intersections(t_intersections *xs)
 {
 	if (xs)
 	{
-		free(xs->xs);
+		if (xs->arr)
+			free(xs->arr);
 		free(xs);
 	}
 }

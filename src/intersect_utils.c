@@ -12,21 +12,6 @@
 
 #include "minirt.h"
 
-t_intersections	*sort_intersections(t_intersections *xs)
-{
-	// t_intersection	temp;
-	int				i;
-
-	if (!xs)
-		return (NULL);
-	i = -1;
-	while (i < xs->count)
-	{
-		i++;
-	}
-	return (NULL);
-}
-
 static void	swap_intersections(t_intersection *x1, t_intersection *x2)
 {
 	t_intersection	temp;

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/09 18:35:13 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:08:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,18 +194,37 @@ void	print_intersections(t_intersections *xs)
 	printf("--------------------\n");
 	printf("INTERSECTIONS:\n");
 	printf(" Count: %d\n", xs->count);
-	if (xs->xs)
+	if (xs->arr)
 	{
 		i = -1;
 		while (++i < xs->count)
 		{
 			printf("--------------------\n");
-			printf("Intersection %d: %f\n",i, xs->xs[i].t);
+			printf("Intersection %d:\n", i);
+			printf("t = %f\n",xs->arr[i].t);
+			print_object(xs->arr[i].object);
 			printf("--------------------\n");
 		}
 	}
 }
 
+void	print_computations(t_computations comps)
+{
+	printf("--------------------\n");
+	printf("COMPUTATIONS:\n");
+	printf(" Point:\n");
+	print_tuple(comps. point);
+	printf("\n Eyev:\n");
+	print_tuple(comps. eyev);
+	printf("\n Normalv:\n");
+	print_tuple(comps. normalv);
+	printf("\n Inside: ");
+	if (comps.inside)
+		printf("true\n");
+	else
+		printf("false\n");
+	printf("--------------------\n");
+}
 t_proj	tick(t_env env, t_proj proj)
 {
 	t_proj	new_proj;
