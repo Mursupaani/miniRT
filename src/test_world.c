@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h>
 
 static	void test1()
 {
@@ -330,6 +329,31 @@ Then t = translation(0, 0, -8)\n");
 		printf("Matrices are NOT equal\n");
 }
 
+static void	test13()
+{
+	t_point		from;
+	t_point		to;
+	t_vector	up;
+	t_matrix4	t;
+
+	printf("Scenario: An arbitrary view transformation\n\
+Given from ← point(1, 3, 2)\n\
+And to ← point(4, -2, 8)\n\
+And up ← vector(1, 1, 0)\n\
+When t ← view_transform(from, to, up)\n\
+Then t is the following 4x4 matrix:\n\
+| -0.50709 | 0.50709 | 0.67612 | -2.36643 |\n\
+| 0.76772 | 0.60609 | 0.12122 | -2.82843 |\n\
+| -0.35857 | 0.59761 | -0.71714 | 0.00000 |\n\
+| 0.00000 | 0.00000 | 0.00000 | 1.00000 |\n");
+	from = point(1, 3, 2);
+	to = point(4, -2, 8);
+	up = vector(1, 1, 0);
+	t = view_transform(from, to, up);
+	printf("CALCULATED ");
+	print_matrix4(t);
+}
+
 void	test_world()
 {
 	printf("\n");
@@ -358,6 +382,8 @@ void	test_world()
 	test11();
 	printf("_____________________________________________\n");
 	test12();
+	printf("_____________________________________________\n");
+	test13();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING WORLD FINISHED -----------\n");
 	printf("\n");

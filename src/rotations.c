@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_matrix4	x_rotation(float radians)
+t_matrix4	rotation_x(float radians)
 {
 	t_matrix4	rotation;
 
@@ -26,7 +26,7 @@ t_matrix4	x_rotation(float radians)
 	return (rotation);
 }
 
-t_matrix4	y_rotation(float radians)
+t_matrix4	rotation_y(float radians)
 {
 	t_matrix4	rotation;
 
@@ -40,7 +40,7 @@ t_matrix4	y_rotation(float radians)
 	return (rotation);
 }
 
-t_matrix4	z_rotation(float radians)
+t_matrix4	rotation_z(float radians)
 {
 	t_matrix4	rotation;
 

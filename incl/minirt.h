@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:56:03 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:43:04 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,12 @@ typedef struct s_camera
 	t_point		*view_point;
 	t_vector	*orientation;
 	float		fov;
+	int			hsize;
+	int			vsize;
+	t_matrix4	transform;
+	float		half_width;
+	float		half_height;
+	float		pixel_size;
 }	t_camera;
 
 typedef struct s_object
@@ -282,9 +288,11 @@ void		test_normal(void);
 void		test_color();
 void		render_chapter_7_scene(t_app *app);
 void		test_world();
+void		test_camera();
 
 // Debug
 void		print_tuple(t_tuple tuple);
+void		print_ray(t_ray r);
 void		print_matrix2(t_matrix2 matrix);
 void		print_matrix3(t_matrix3 matrix);
 void		print_matrix4(t_matrix4 matrix);
@@ -296,6 +304,7 @@ void		print_material(t_material material);
 void		print_intersections(t_intersections *xs);
 void		print_world(t_world *world);
 void		print_computations(t_computations comps);
+void		print_camera(t_camera *camera);
 t_proj		tick(t_env env, t_proj proj);
 void		projectile(t_app *app);
 
@@ -322,9 +331,9 @@ t_point		point(float x, float y, float z);
 t_matrix4	translation_matrix4(
 			float scale_x, float scale_y, float scale_z);
 t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z);
-t_matrix4	x_rotation(float radians);
-t_matrix4	y_rotation(float radians);
-t_matrix4	z_rotation(float radians);
+t_matrix4	rotation_x(float radians);
+t_matrix4	rotation_y(float radians);
+t_matrix4	rotation_z(float radians);
 t_matrix4	shearing(t_shear shear);
 
 // Tuple math:
@@ -394,6 +403,7 @@ t_ray		ray(t_point origin, t_vector direction);
 t_point		ray_position(t_ray ray, float t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
+t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
 t_object	*sphere_new(void);
@@ -430,7 +440,8 @@ t_vector	normal_at(t_object *obj, t_point point);
 t_world		*world();
 t_world		*default_world();
 
-// Camera
+// Camera and view
+t_camera	*camera(int hsize, int vsize, float fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 
 #endif

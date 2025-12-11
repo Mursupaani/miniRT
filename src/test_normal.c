@@ -82,7 +82,7 @@ And set_transform(s, m)\n\
 When n ← normal_at(s, point(0, √2/2, -√2/2))\n\
 Then n = vector(0, 0.97014, -0.24254)\n");
 	sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 0, 0));
-	m = matrix4_multiply(scaling_matrix4(1, 0.5, 1), z_rotation(M_PI / 5));
+	m = matrix4_multiply(scaling_matrix4(1, 0.5, 1), rotation_z(M_PI / 5));
 	set_transform(sphere, m);
 	normal = normal_at(sphere, point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
 	print_tuple(normal);

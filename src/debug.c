@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:45:05 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_tuple(t_tuple tuple)
 	if (tuple.w == 0)
 	{
 		printf(" w:\t\t");
-		printf("%f\n", tuple.w);
+		printf(" %f\n", tuple.w);
 		printf(" Magnitude:\t %f\n", vector_magnitude(tuple));
 	}
 	else
@@ -42,8 +42,18 @@ void	print_tuple(t_tuple tuple)
 		if (tuple.z >= 0)
 			printf(" ");
 		printf("%f\n", tuple.w);
-		printf(" Magnitude:\tN/A\n");
+		printf(" Magnitude:\t N/A\n");
 	}
+}
+
+void	print_ray(t_ray r)
+{
+	printf("RAY:\n");
+	printf(" ORIGIN ");
+	print_tuple(r.origin);
+	printf("\n");
+	printf(" DIRECTION ");
+	print_tuple(r.direction);
 }
 
 void	print_matrix4(t_matrix4 matrix)
@@ -225,6 +235,19 @@ void	print_computations(t_computations comps)
 		printf("false\n");
 	printf("--------------------\n");
 }
+
+void	print_camera(t_camera *camera)
+{
+	printf("--------------------\n");
+	printf("CAMERA:\n");
+	printf(" Horizontal size:\t%d\n", camera->hsize);
+	printf(" Vertical size:\t\t%d\n", camera->vsize);
+	printf(" Field of view:\t\t%f\n", camera->fov);
+	printf("\n");
+	printf(" TRANSFORMATION ");
+	print_matrix4(camera->transform);
+}
+
 t_proj	tick(t_env env, t_proj proj)
 {
 	t_proj	new_proj;
