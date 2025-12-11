@@ -1,4 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersection.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/10 18:28:15 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/10 18:28:35 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+t_intersection	intersection(float t, t_object *object)
+{
+	t_intersection	intersection;
+
+	intersection.t = t;
+	intersection.object = object;
+	intersection.next = NULL;
+	return (intersection);
+}
+
+t_intersection	hit(t_intersections *xs)
+{
+	int				i;
+	t_intersection	closest;
+
+	i = -1;
+	closest = (t_intersection){FLT_MAX, NULL, NULL};
+	while (++i < xs->count)
+	{
+		if (xs->arr[i].t >= 0)
+		{
+			if (xs->arr[i].t < closest.t)
+				closest = xs->arr[i];
+		}
+	}
+	return (closest);
+}
+
+//FIXME: Old intersection functions using linked list
 
 t_intersection	*intersection_new(float t, t_object *object)
 {

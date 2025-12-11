@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:15:33 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 19:08:46 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ float	vector_magnitude(t_vector vector)
 			+ vector.w * vector.w));
 }
 
-t_vector	vector_normalize(t_vector v)
+t_vector	normalize(t_vector v)
 {
 	float	magnitude;
 
