@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:22:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 	world_normal = matrix4_and_tuple_multiply(
 		matrix4_transpose(sphere->inverse_transform), object_normal);
 	world_normal.w = 0;
-	return (vector_normalize(world_normal));
+	return (normalize(world_normal));
 }
 
 t_vector	normal_at(t_object *obj, t_point world_point)
@@ -32,5 +32,5 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 	if (obj->type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
 	else
-		return (vector_normalize(vector(FLT_MAX, FLT_MAX, FLT_MAX)));
+		return (normalize(vector(FLT_MAX, FLT_MAX, FLT_MAX)));
 }

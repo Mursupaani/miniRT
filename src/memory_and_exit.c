@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 10:27:48 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:37:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,34 @@ void	free_scene_objects(t_object *objects[])
 	free(objects[i]);
 }
 
-void	free_scene(t_scene *scene)
+void	free_world(t_world *w)
 {
-	if (!scene)
+	int	i;
+
+	if (!w)
 		return ;
-	// if (scene->ambient_light)
-	// {
-	// 	free(scene->ambient_light->color_1);
-	// 	free(scene->ambient_light->color_255);
-	// }
-	// if (scene->light)
-	// {
-		// free(scene->light->position);
-		// free(scene->light->color_1);
-		// free(scene->light->color_255);
-	// }
-	if (scene->camera)
-		free(scene->camera);
-	free(scene);
+	if (w->light)
+		free(w->light);
+	if (w->objects)
+	{
+		i = -1;
+		while (w->objects[++i])
+			free(w->objects[i]);
+		free(w->objects);
+	}
+	if (w->camera)
+		free(w->camera);
+	free(w);
+}
+
+void	free_intersections(t_intersections *xs)
+{
+	if (xs)
+	{
+		if (xs->arr)
+			free(xs->arr);
+		free(xs);
+	}
 }
 
 void	free_app_memory(t_app *app)
@@ -59,7 +69,7 @@ void	free_app_memory(t_app *app)
 		mlx_terminate(app->mlx);
 	}
 	if (app->scene)
-		free_scene(app->scene);
+		free_world(app->scene);
 	if (app->threads)
 		free(app->threads);
 	free(app);
@@ -77,7 +87,7 @@ void	exit_and_free_memory(int exit_code, t_app *app)
 		ft_fprintf(STDERR_FILENO, "Error\nInvalid filetype\n");
 	else if (exit_code == ERROR_OPEN)
 		ft_fprintf(STDERR_FILENO, "Error\nCan't open file\n");
-	else if (exit_code == ERROR_SCENE)
+	else if (exit_code == ERROR_WORLD)
 		ft_fprintf(STDERR_FILENO, "Error\nCan't create scene\n");
 	else if (exit_code == ERROR_PARSING)
 		ft_fprintf(STDERR_FILENO, "Error\nFailed to parse file contents\n");

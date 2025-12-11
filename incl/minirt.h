@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 18:11:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:43:04 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ typedef enum s_exit_value
 	ERROR_MLX_IMG_INIT,
 	ERROR_INVALID_FILE_TYPE,
 	ERROR_OPEN,
-	ERROR_SCENE,
+	ERROR_WORLD,
 	ERROR_PARSING,
 	ERROR_THREADS,
 	
@@ -173,6 +173,12 @@ typedef struct s_camera
 	t_point		*view_point;
 	t_vector	*orientation;
 	float		fov;
+	int			hsize;
+	int			vsize;
+	t_matrix4	transform;
+	float		half_width;
+	float		half_height;
+	float		pixel_size;
 }	t_camera;
 
 typedef struct s_object
@@ -186,13 +192,12 @@ typedef struct s_object
 	t_material		material;
 }	t_object;
 
-typedef struct s_scene
+typedef struct s_world
 {
 	t_camera		*camera;
-	// t_ambient_light	*ambient_light;
-	// t_point_light	*light;
-	t_object		*objects[];
-}	t_scene;
+	t_light			*light;
+	t_object		**objects;
+}	t_world;
 
 typedef struct s_app
 {
@@ -200,7 +205,7 @@ typedef struct s_app
 	int				monitor_height;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	t_scene			*scene;
+	t_world			*scene;
 	t_thread_data	*threads;
 }	t_app;
 
@@ -255,6 +260,22 @@ typedef struct	s_intersection
 	struct s_intersection	*next;
 }	t_intersection;
 
+typedef struct s_intersections
+{
+	int				count;
+	t_intersection	*arr;
+}	t_intersections;
+
+typedef struct s_computations
+{
+	bool		inside;
+	float		t;
+	t_object	*object;
+	t_point		point;
+	t_vector	eyev;
+	t_vector	normalv;
+}	t_computations;
+
 // Tests
 void		free_object(t_object *object);
 void		run_tests();
@@ -266,9 +287,12 @@ void		render_chapter_5_scene(t_app *app);
 void		test_normal(void);
 void		test_color();
 void		render_chapter_7_scene(t_app *app);
+void		test_world();
+void		test_camera();
 
 // Debug
 void		print_tuple(t_tuple tuple);
+void		print_ray(t_ray r);
 void		print_matrix2(t_matrix2 matrix);
 void		print_matrix3(t_matrix3 matrix);
 void		print_matrix4(t_matrix4 matrix);
@@ -276,6 +300,11 @@ void		print_color(t_color color);
 void		print_color_255(t_color255 color);
 void		print_point_light(t_light *point_light);
 void		print_material(t_material material);
+void		print_material(t_material material);
+void		print_intersections(t_intersections *xs);
+void		print_world(t_world *world);
+void		print_computations(t_computations comps);
+void		print_camera(t_camera *camera);
 t_proj		tick(t_env env, t_proj proj);
 void		projectile(t_app *app);
 
@@ -290,6 +319,8 @@ void	skip_whitespace(char **str);
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
+void		free_world(t_world *w);
+void		free_intersections(t_intersections *xs);
 
 // Tuples (vectors, points):
 t_tuple		tuple(float x, float y, float z, float w);
@@ -300,9 +331,9 @@ t_point		point(float x, float y, float z);
 t_matrix4	translation_matrix4(
 			float scale_x, float scale_y, float scale_z);
 t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z);
-t_matrix4	x_rotation(float radians);
-t_matrix4	y_rotation(float radians);
-t_matrix4	z_rotation(float radians);
+t_matrix4	rotation_x(float radians);
+t_matrix4	rotation_y(float radians);
+t_matrix4	rotation_z(float radians);
 t_matrix4	shearing(t_shear shear);
 
 // Tuple math:
@@ -314,7 +345,7 @@ t_tuple		tuple_negate(t_tuple tuple);
 
 // Vector math:
 float		vector_magnitude(t_tuple vector);
-t_vector	vector_normalize(t_vector vector);
+t_vector	normalize(t_vector vector);
 float		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
 
@@ -355,24 +386,31 @@ void		join_threads(t_thread_data *thread_data, int thread_count);
 
 // Intersections:
 t_intersection	*intersection_new(float t, t_object *object);
+t_intersection	intersection(float t, t_object *object);
 t_intersection	*intersection_hit(t_intersection *xs);
 void			intersection_add_back(t_intersection **lst, 
 				t_intersection *new);
 void			intersection_free(t_intersection *lst);
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+t_intersections	*intersect(t_object *obj, t_ray ray);
+t_intersections	*intersect_world(t_world *w, t_ray r);
+void			quick_sort_intersections(t_intersection *xs, int start, int end);
+t_computations	prepare_computations(t_intersection x, t_ray r);
+t_intersection	hit(t_intersections *xs);
 
 // Rays:
-t_ray		ray_new(t_point origin, t_vector direction);
+t_ray		ray(t_point origin, t_vector direction);
 t_point		ray_position(t_ray ray, float t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
+t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, float diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
 
-// Color:
+// Color & shading:
 t_color		color(float r, float g, float b);
 t_color255	color255(
 		unsigned char r, unsigned char g, unsigned char b);
@@ -383,6 +421,8 @@ t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
+t_color		shade_hit(t_world *w, t_computations comps);
+t_color		color_at(t_world *w, t_ray r);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
@@ -395,5 +435,13 @@ t_material		material_change_color(t_material material, t_color color);
 
 // Normal
 t_vector	normal_at(t_object *obj, t_point point);
+
+// World
+t_world		*world();
+t_world		*default_world();
+
+// Camera and view
+t_camera	*camera(int hsize, int vsize, float fov);
+t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 10:13:15 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 19:14:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:44:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 t_light	*point_light(t_point position, t_color intensity)
 {
