@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 19:09:38 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:07:45 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,6 +354,75 @@ Then t is the following 4x4 matrix:\n\
 	print_matrix4(t);
 }
 
+static	void test14()
+{
+	t_world			*w;
+	t_ray			r;
+	t_object		*shape;
+	t_intersection	i;
+	t_computations	comps;
+	t_color			c;
+
+	printf("TEST 14:\n");
+	printf("Scenario: shade_hit() is given an intersection in shadow\n\
+Given w ← world()\n\
+And w.light ← point_light(point(0, 0, -10), color(1, 1, 1))\n\
+And s1 ← sphere()\n\
+And s1 is added to w\n\
+And s2 ← sphere() with:\n\
+| transform | translation(0, 0, 10) |\n\
+And s2 is added to w\n\
+And r ← ray(point(0, 0, 5), vector(0, 0, 1))\n\
+And i ← intersection(4, s2)\n\
+When comps ← prepare_computations(i, r)\n\
+And c ← shade_hit(w, comps)\n\
+Then c = color(0.1, 0.1, 0.1)\n");
+	w = default_world();
+	free(w->light);
+	w->light = point_light(point(0, 0, -10), color(1, 1, 1));
+	r = ray(point(0, 0, 5), vector(0, 0, 1));
+	shape = w->objects[1];
+	set_transform(shape, translation_matrix4(0, 0, 10));
+	i = intersection(4, shape);
+	comps = prepare_computations(i, r);
+	print_computations(comps);
+	if (is_shadowed(w, comps.point) == true)
+	{
+		w->light->in_shadow = true;
+		printf("is shadowed\n");
+	}
+	c = shade_hit(w, comps);
+	print_color(c);
+	free_world(w);
+}
+
+static void	test15()
+{
+	t_ray			r;
+	t_object		*shape;
+	t_intersection	i;
+	t_computations	comps;
+	
+	printf("TEST 15:\n");
+	printf("Scenario: The hit should offset the point\n\
+Given r ← ray(point(0, 0, -5), vector(0, 0, 1))\n\
+And shape ← sphere() with:\n\
+| transform | translation(0, 0, 1) |\n\
+And i ← intersection(5, shape)\n\
+When comps ← prepare_computations(i, r)\n\
+Then comps.over_point.z < -EPSILON/2\n\
+And comps.point.z > comps.over_point.z\n");
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	shape = sphere_new();
+	set_transform(shape, translation_matrix4(0, 0, 1));
+	i = intersection(5, shape);
+	comps = prepare_computations(i, r);
+	if (comps.over_point.z < -EPSILON/2 && comps.point.z > comps.over_point.z)
+		printf("\033[0;32mpass\n\033[0m");
+	else
+		printf("\033[0;31mfail\n\033[0m");
+}
+
 void	test_world()
 {
 	printf("\n");
@@ -384,6 +453,10 @@ void	test_world()
 	test12();
 	printf("_____________________________________________\n");
 	test13();
+	printf("_____________________________________________\n");
+	test14();
+	printf("_____________________________________________\n");
+	test15();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING WORLD FINISHED -----------\n");
 	printf("\n");

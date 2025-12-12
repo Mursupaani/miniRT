@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:43:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:49:59 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_light
 {
 	t_color			intensity;
 	t_point			position;
+	bool			in_shadow;
 	// t_color_255		color_255;
 }	t_light;
 
@@ -272,6 +273,7 @@ typedef struct s_computations
 	float		t;
 	t_object	*object;
 	t_point		point;
+	t_point		over_point;
 	t_vector	eyev;
 	t_vector	normalv;
 }	t_computations;
@@ -289,6 +291,7 @@ void		test_color();
 void		render_chapter_7_scene(t_app *app);
 void		test_world();
 void		test_camera();
+void		test_shadows();
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -423,6 +426,7 @@ int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
 t_color		shade_hit(t_world *w, t_computations comps);
 t_color		color_at(t_world *w, t_ray r);
+bool		is_shadowed(t_world *w, t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:37:01 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:23:19 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ t_color	lighting(t_object *obj, t_light *light, t_point position, t_vector eyev)
 
 	if (!obj || !light)
 		return ((t_color){1, 1, 1});
+	if (light->in_shadow == true)
+	{
+		l.effective_color = color_mix(obj->material.color, light->intensity);
+		l.ambient = color_multiply(l.effective_color, obj->material.ambient);
+		return (l.ambient);
+	}
 	l.normalv = normal_at(obj, position);
 	l.lightv = normalize(tuple_subtract(light->position, position));
 	l.light_dot_normal = dot(l.lightv, l.normalv);

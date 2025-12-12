@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/12/11 14:43:57 by anpollan         ###   ########.fr        #
+#    Updated: 2025/12/12 11:28:16 by juhana           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  view_transform.c camera.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c test_world.c \
-				  test_camera.c
+				  test_camera.c test_shadows.c
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

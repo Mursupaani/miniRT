@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect_world.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 17:44:44 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:53:38 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_computations	prepare_computations(t_intersection x, t_ray r)
 	}
 	else
 		comps.inside = false;
+	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
 	return (comps);
 }
 
