@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 15:26:47 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 15:27:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:05:25 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_color	color_from_color255(t_color255 color_255)
 	return (color);
 }
 
-t_color255	color255_from_color(t_color color)
+/*t_color255	color255_from_color(t_color color)
 {
 	t_color255	color255;
 
@@ -67,4 +67,4 @@ t_color255	color255_from_color(t_color color)
 	if (color255.b < 0)
 		color.b = 0;
 	return (color255);
-}
+}*/

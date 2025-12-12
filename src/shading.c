@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:29:37 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:47:53 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+bool	is_shadowed(t_world *w, t_point p)
+{
+	t_vector		v;
+	float			distance;
+	t_ray			r;
+	t_intersections	*xs;
+	t_intersection	h;
+	
+	v = tuple_subtract(w->light->position, p);
+	distance = vector_magnitude(v);
+	r = ray(p, normalize(v));
+	xs = intersect_world(w, r);
+	h = hit(xs);
+	if (h.t != FLT_MAX && h.t < distance)
+		return (true);
+	else
+		return (false);
+}
+
 t_color	shade_hit(t_world *w, t_computations comps)
 {
 	if (!w)
 		return (t_color){0, 0, 0};
+	if (is_shadowed(w, comps.point) == true)
+		w->light->in_shadow = true;
 	return (lighting(comps.object, w->light, comps.point, comps.eyev));
 }
 

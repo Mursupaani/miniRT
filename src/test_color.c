@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_color.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:31:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:05:41 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,28 @@ Then result = color(0.1, 0.1, 0.1)\n");
 	print_color(result);
 }
 
+static void	test10()
+{
+	t_vector	eyev;
+	t_light		*light;
+	t_color		result;
+	t_object	*sphere;
+
+	printf("TEST 10\n");
+	printf("Scenario: Lighting with the surface in shadow\n\
+Given eyev ← vector(0, 0, -1)\n\
+And normalv ← vector(0, 0, -1)\n\
+And light ← point_light(point(0, 0, -10), color(1, 1, 1))\n\
+When result ← lighting(m, light, position, eyev, normalv, in_shadow)\n\
+Then result = color(0.1, 0.1, 0.1)\n");
+	eyev = vector(0, 0, -1);
+	light = point_light(point(0, 0, 10), color(1, 1, 1));
+	sphere = sphere_new_args(point(0, 0, 1), 1, (t_color255){255,255,255});
+	light->in_shadow = true;
+	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	print_color(result);
+}
+
 void	render_chapter_7_scene(t_app *app)
 {
 	t_point		ray_origin = point(0, 0, -5);
@@ -289,6 +311,8 @@ void	test_color()
 	test8();
 	printf("_____________________________________________\n");
 	test9();
+	printf("_____________________________________________\n");
+	test10();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING COLOR FINISHED -----------\n");
 	printf("\n");

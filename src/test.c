@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 20:55:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:43:29 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 12:16:26 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	run_tests()
 	// render_chapter_5_scene();
 	// test_normal();
 	// test_color();
-	// test_world();
-	test_camera();
+	test_world();
+	// test_camera();
+	// test_shadows();
 }
