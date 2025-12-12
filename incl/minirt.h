@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:43:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:12:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ typedef struct s_world
 	t_camera		*camera;
 	t_light			*light;
 	t_object		**objects;
+	int				object_count;
 }	t_world;
 
 typedef struct s_app
@@ -289,6 +290,7 @@ void		test_color();
 void		render_chapter_7_scene(t_app *app);
 void		test_world();
 void		test_camera();
+void		render_chapter_7(t_app *app);;
 
 // Debug
 void		print_tuple(t_tuple tuple);

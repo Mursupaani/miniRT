@@ -6,12 +6,34 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:31:17 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:04:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:20:30 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minirt.h"
+
+t_object	**world_add_object(t_world *w, t_object *obj)
+{
+	t_object	**temp;
+
+	if (!w || !obj)
+		return (NULL);
+	if (w->object_count == 0 && w->objects == NULL)
+	{
+		w->object_count++;
+		w->objects = malloc(sizeof(t_object *) * 2);
+		if (!w->objects)
+			return (NULL);
+		w->objects[0] = obj;
+		w->objects[1] = NULL;
+	}
+	else
+	{
+		w->object_count++;
+		temp = w->objects;
+		w->objects = ft_calloc(1, sizeof(t_object *) * w->object_count + 1)
+	}
+}
 
 t_world	*world()
 {
@@ -20,6 +42,7 @@ t_world	*world()
 	w = ft_calloc(1, sizeof(t_world));
 	if (!w)
 		return (NULL);
+	w->object_count = 0;
 	return (w);
 }
 
