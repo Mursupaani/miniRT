@@ -258,6 +258,7 @@ typedef struct	s_intersection
 {
 	float					t;
 	t_object				*object;
+	// FIXME: Delete
 	struct s_intersection	*next;
 }	t_intersection;
 
@@ -411,6 +412,7 @@ t_ray		ray_for_pixel(t_camera *c, int px, int py);
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, float diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
+void		free_object_array(t_object **objs);
 
 // Color & shading:
 t_color		color(float r, float g, float b);
@@ -441,6 +443,7 @@ t_vector	normal_at(t_object *obj, t_point point);
 // World
 t_world		*world();
 t_world		*default_world();
+t_object	**world_add_object(t_world *w, t_object *obj);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, float fov);

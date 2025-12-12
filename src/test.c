@@ -23,5 +23,5 @@ void	run_tests()
 	// test_normal();
 	// test_color();
 	// test_world();
-	test_camera();
+	// test_camera();
 }

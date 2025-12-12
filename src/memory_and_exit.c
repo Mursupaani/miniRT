@@ -29,19 +29,12 @@ void	free_scene_objects(t_object *objects[])
 
 void	free_world(t_world *w)
 {
-	int	i;
-
 	if (!w)
 		return ;
 	if (w->light)
 		free(w->light);
 	if (w->objects)
-	{
-		i = -1;
-		while (w->objects[++i])
-			free(w->objects[i]);
-		free(w->objects);
-	}
+		free_object_array(w->objects);
 	if (w->camera)
 		free(w->camera);
 	free(w);

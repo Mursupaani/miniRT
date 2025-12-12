@@ -42,8 +42,8 @@ int	main(int ac, char **av)
 	// launch_render(app);
 	// render_chapter_5_scene(app);
 	// render_chapter_7_scene(app);
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
-	mlx_loop(app->mlx);
+	// mlx_image_to_window(app->mlx, app->img, 0, 0);
+	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
 	free_app_memory(app);
 	return (0);

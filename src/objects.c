@@ -1,5 +1,20 @@
 #include "minirt.h"
 
+void	free_object_array(t_object **objs)
+{
+	int	i;
+
+	if (!objs)
+		return ;
+	i = -1;
+	while (objs[++i])
+	{
+		free(objs[i]);
+		objs[i] = NULL;
+	}
+	free(objs);
+	objs = NULL;
+}
 
 void	set_transform(t_object *object, t_matrix4 transform)
 {
