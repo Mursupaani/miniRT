@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 13:49:59 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/12 14:12:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ typedef struct s_shear
 
 typedef struct s_color_255
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
+	int	r;
+	int	g;
+	int	b;
 }	t_color255;
 
 typedef struct s_color_1
@@ -198,6 +198,7 @@ typedef struct s_world
 	t_camera		*camera;
 	t_light			*light;
 	t_object		**objects;
+	int				object_count;
 }	t_world;
 
 typedef struct s_app
@@ -258,6 +259,7 @@ typedef struct	s_intersection
 {
 	float					t;
 	t_object				*object;
+	// FIXME: Delete
 	struct s_intersection	*next;
 }	t_intersection;
 
@@ -291,7 +293,7 @@ void		test_color();
 void		render_chapter_7_scene(t_app *app);
 void		test_world();
 void		test_camera();
-void		test_shadows();
+void		render_chapter_7(t_app *app);;
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -412,6 +414,7 @@ t_ray		ray_for_pixel(t_camera *c, int px, int py);
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, float diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
+void		free_object_array(t_object **objs);
 
 // Color & shading:
 t_color		color(float r, float g, float b);
@@ -443,6 +446,7 @@ t_vector	normal_at(t_object *obj, t_point point);
 // World
 t_world		*world();
 t_world		*default_world();
+t_object	**world_add_object(t_world *w, t_object *obj);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, float fov);

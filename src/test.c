@@ -22,7 +22,6 @@ void	run_tests()
 	// render_chapter_5_scene();
 	// test_normal();
 	// test_color();
-	test_world();
+	// test_world();
 	// test_camera();
-	// test_shadows();
 }
