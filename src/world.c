@@ -21,7 +21,7 @@ static t_object	**copy_objects_to_array(t_object **old_arr, t_object **new_arr, 
 		i = -1;
 		while (old_arr[++i])
 			new_arr[i] = old_arr[i];
-		free_object_array(old_arr);
+		free(old_arr);
 	}
 	else
 		i = 0;

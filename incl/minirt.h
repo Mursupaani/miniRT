@@ -91,9 +91,9 @@ typedef struct s_shear
 
 typedef struct s_color_255
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
+	int	r;
+	int	g;
+	int	b;
 }	t_color255;
 
 typedef struct s_color_1
