@@ -46,6 +46,7 @@ C_FILES			= main.c parsing.c window_management.c initialize.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c test_world.c \
 				  test_camera.c test_render_chapter7.c
+				  test_camera.c test_shadows.c
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

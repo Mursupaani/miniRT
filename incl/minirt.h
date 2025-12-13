@@ -156,6 +156,7 @@ typedef struct s_light
 {
 	t_color			intensity;
 	t_point			position;
+	bool			in_shadow;
 	// t_color_255		color_255;
 }	t_light;
 
@@ -274,6 +275,7 @@ typedef struct s_computations
 	float		t;
 	t_object	*object;
 	t_point		point;
+	t_point		over_point;
 	t_vector	eyev;
 	t_vector	normalv;
 }	t_computations;
@@ -427,6 +429,7 @@ int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
 t_color		shade_hit(t_world *w, t_computations comps);
 t_color		color_at(t_world *w, t_ray r);
+bool		is_shadowed(t_world *w, t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
