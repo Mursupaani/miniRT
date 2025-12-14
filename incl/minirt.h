@@ -171,8 +171,8 @@ typedef struct s_material
 
 typedef struct s_camera
 {
-	t_point		*view_point;
-	t_vector	*orientation;
+	// t_point		*view_point;
+	// t_vector	*orientation;
 	float		fov;
 	int			hsize;
 	int			vsize;
@@ -226,8 +226,8 @@ typedef struct s_app
 typedef struct s_thread_data
 {
 	int			id;
-	int			start_row;
-	int			end_row;
+	uint		start_row;
+	uint		end_row;
 	t_app		*app;
 	pthread_t	thread_handle;
 }	t_thread_data;
@@ -307,6 +307,7 @@ void		print_point_light(t_light *point_light);
 void		print_material(t_material material);
 void		print_material(t_material material);
 void		print_intersections(t_intersections *xs);
+void		print_object(t_object *o);
 void		print_world(t_world *world);
 void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
@@ -434,6 +435,7 @@ bool		is_shadowed(t_world *w, t_point p);
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
 t_color	lighting(t_object *obj, t_light *light, t_point point, t_vector eyev);
+t_color	lighting_test(t_computations comps, t_light *light);
 
 // Material:
 t_material		material(void);

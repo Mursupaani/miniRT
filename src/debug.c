@@ -178,6 +178,9 @@ void	print_object(t_object *o)
 	printf("   r:\t%f\n   g:\t%f\n   b:\t%f\n",
 			o->material.color.r, o->material.color.g, o->material.color.b);
 	printf ("   HEX:\t%X\n", color_hex_from_color(o->material.color));
+	printf("\n");
+	printf(" TRANSFORM ");
+	print_matrix4(o->transform);
 }
 
 void	print_world(t_world *world)

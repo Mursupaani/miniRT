@@ -67,49 +67,20 @@ t_color	lighting(t_object *obj, t_light *light, t_point position, t_vector eyev)
 	return (calculate_color(obj, light, eyev, l));
 }
 
-// t_color	lighting_bu(
-// t_object *obj, t_light *light, t_point position, t_vector eyev)
-// {
-// 	t_vector	normalv;
-// 	t_vector	lightv;
-// 	float		light_dot_normal;
-// 	t_vector	reflectv;
-// 	float		reflect_dot_eye;
-// 	float		factor;
-// 	t_color		ambient;
-// 	t_color		effective_color;
-// 	t_color		diffuse;
-// 	t_color		specular;
-//
-// 	if (!obj || !light)
-// 		return ((t_color){1, 1, 1});
-// 	normalv = normal_at(obj, position);
-// 	effective_color = color_mix(obj->material.color, light->intensity);
-// 	lightv = vector_normalize(tuple_subtract(light->position, position));
-// 	ambient = color_multiply(effective_color, obj->material.ambient);
-// 	light_dot_normal = dot(lightv, normalv);
-// 	if (light_dot_normal < 0)
-// 	{
-// 		diffuse = (t_color){0, 0, 0};
-// 		specular = (t_color){0, 0, 0};
-// 	}
-// 	else
-// 	{
-// 		diffuse = color_multiply(
-// 				color_multiply(effective_color, obj->material.diffuse),
-// 				light_dot_normal);
-// 		reflectv = reflect(tuple_negate(lightv), normalv);
-// 		reflect_dot_eye = dot(reflectv, eyev);
-// 		if (reflect_dot_eye <= 0)
-// 			specular = (t_color){0, 0, 0};
-// 		else
-// 		{
-// 			factor = powf(reflect_dot_eye, obj->material.shininess);
-// 			specular = color_multiply(
-// 				color_multiply(light->intensity, obj->material.specular),
-// 				factor);
-// 		}
-// 	}
-// 	return (color_sum(color_sum(ambient, diffuse), specular));
-// }
-//
+t_color	lighting_test(t_computations comps, t_light *light)
+{
+	t_lighting	l;
+
+	if (!light)
+		return ((t_color){1, 1, 1});
+	// if (light->in_shadow == true)
+	// {
+	// 	l.effective_color = color_mix(comps.object->material.color, light->intensity);
+	// 	l.ambient = color_multiply(l.effective_color, comps.object->material.ambient);
+	// 	return (l.ambient);
+	// }
+	l.normalv = comps.normalv;
+	l.lightv = normalize(tuple_subtract(light->position, comps.point));
+	l.light_dot_normal = dot(l.lightv, l.normalv);
+	return (calculate_color(comps.object, light, comps.eyev, l));
+}

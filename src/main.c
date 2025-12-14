@@ -35,17 +35,17 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	// run_tests();
+	run_tests();
 	app = initialize_app();
 	render_chapter_7(app);
 	// parse_rt_file(av, app);
-	// launch_render(app);
+	launch_render(app);
 	// render_chapter_5_scene(app);
 	// render_chapter_7_scene(app);
-	// mlx_image_to_window(app->mlx, app->img, 0, 0);
-	// mlx_loop(app->mlx);
+	mlx_image_to_window(app->mlx, app->img, 0, 0);
+	mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	free_app_memory(app);
+	// free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;

@@ -37,7 +37,8 @@ t_color	shade_hit(t_world *w, t_computations comps)
 		return (t_color){0, 0, 0};
 	if (is_shadowed(w, comps.point) == true)
 		w->light->in_shadow = true;
-	return (lighting(comps.object, w->light, comps.point, comps.eyev));
+	// return (lighting(comps.object, w->light, comps.point, comps.eyev));
+	return (lighting_test(comps, w->light));
 }
 
 t_color	color_at(t_world *w, t_ray r)
