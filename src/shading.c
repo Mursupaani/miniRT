@@ -36,10 +36,11 @@ t_color	shade_hit(t_world *w, t_computations comps)
 {
 	if (!w)
 		return (t_color){0, 0, 0};
-	if (is_shadowed(w, comps.point) == true)
+	//FIXME: Fixed is_shadowed to use over_point
+	if (is_shadowed(w, comps.over_point) == true)
 		w->light->in_shadow = true;
 	return (lighting_test(comps, w->light));
-	// return (lighting(comps.object, w->light, comps.point, comps.eyev));
+	// return (lighting(comps.object, w->light, comps.over_point, comps.eyev));
 }
 
 t_color	color_at(t_world *w, t_ray r)
