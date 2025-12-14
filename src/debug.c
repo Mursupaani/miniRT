@@ -224,14 +224,16 @@ void	print_intersections(t_intersections *xs)
 void	print_computations(t_computations comps)
 {
 	printf("--------------------\n");
-	printf("COMPUTATIONS:\n");
-	printf(" Point:\n");
-	print_tuple(comps. point);
-	printf("\n Eyev:\n");
-	print_tuple(comps. eyev);
-	printf("\n Normalv:\n");
-	print_tuple(comps. normalv);
-	printf("\n Inside: ");
+	printf("COMPUTATIONS:\n\n");
+	printf(" ");
+	print_tuple(comps.point);
+	printf("\n OVER ");
+	print_tuple(comps.over_point);
+	printf("\n EYE ");
+	print_tuple(comps.eyev);
+	printf("\n NORMAL ");
+	print_tuple(comps.normalv);
+	printf("\n INSIDE: ");
 	if (comps.inside)
 		printf("true\n");
 	else

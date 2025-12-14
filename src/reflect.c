@@ -73,14 +73,15 @@ t_color	lighting_test(t_computations comps, t_light *light)
 
 	if (!light)
 		return ((t_color){1, 1, 1});
-	// if (light->in_shadow == true)
-	// {
-	// 	l.effective_color = color_mix(comps.object->material.color, light->intensity);
-	// 	l.ambient = color_multiply(l.effective_color, comps.object->material.ambient);
-	// 	return (l.ambient);
-	// }
+	if (light->in_shadow == true)
+	{
+		l.effective_color = color_mix(comps.object->material.color, light->intensity);
+		l.ambient = color_multiply(l.effective_color, comps.object->material.ambient);
+		return (l.ambient);
+	}
 	l.normalv = comps.normalv;
-	l.lightv = normalize(tuple_subtract(light->position, comps.point));
+	//FIXME: Fixed lightv to use over_point
+	l.lightv = normalize(tuple_subtract(light->position, comps.over_point));
 	l.light_dot_normal = dot(l.lightv, l.normalv);
 	return (calculate_color(comps.object, light, comps.eyev, l));
 }

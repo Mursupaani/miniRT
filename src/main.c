@@ -27,6 +27,15 @@
  */
 #include "minirt.h"
 
+void	test_render(t_app *app)
+{
+	app = initialize_app();
+	build_chapter7_world(app);
+	launch_render(app);
+	mlx_image_to_window(app->mlx, app->img, 0, 0);
+	mlx_loop(app->mlx);
+}
+
 int	main(int ac, char **av)
 {
 	t_app	*app;
@@ -35,14 +44,14 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	// run_tests();
 	app = initialize_app();
+	test_render(app);
+	// run_tests();
 	// parse_rt_file(av, app);
-	build_chapter7_world(app);
-	launch_render(app);
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
-	mlx_loop(app->mlx);
-	join_threads(app->threads, THREADS);
+	// launch_render(app);
+	// mlx_image_to_window(app->mlx, app->img, 0, 0);
+	// mlx_loop(app->mlx);
+	// join_threads(app->threads, THREADS);
 	free_app_memory(app);
 	return (0);
 	//FIXME: remove this
