@@ -293,7 +293,7 @@ void		test_color();
 void		render_chapter_7_scene(t_app *app);
 void		test_world();
 void		test_camera();
-void		render_chapter_7(t_app *app);;
+void		build_chapter7_world(t_app *app);;
 
 // Debug
 void		print_tuple(t_tuple tuple);

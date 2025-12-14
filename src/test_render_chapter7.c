@@ -71,13 +71,13 @@
 // 	// }
 // }
 
-void	render_chapter_7(t_app *app)
+void	build_chapter7_world(t_app *app)
 {
 	t_camera	*c;
 	t_world		*w;
 
 	w = world();
-	w->light = point_light(point(-10, 10, -10), color(1, 1, 1));
+	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
 	c->transform = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0));
 
@@ -112,13 +112,31 @@ void	render_chapter_7(t_app *app)
 
 	// MIDDLE SPHERE
 	t_object *middle = sphere_new();
-	m = translation_matrix4(-0.5, 1, 0.5); // Fix: Y = 1, not 15
+	m = translation_matrix4(-0.5, 1, 0.5);
 	middle->material.color = color(0.1, 1, 0.5);
 	middle->material.diffuse = 0.7;
 	middle->material.specular = 0.3;
 	set_transform(middle, m);
 	world_add_object(w, middle);
 
+	t_object *right = sphere_new();
+	m = matrix4_multiply(translation_matrix4(1.5, 0.5, -0.5), scaling_matrix4(0.5, 0.5, 0.5));
+	right->material.color = color(0.5, 1, 0.1);
+	right->material.diffuse = 0.7;
+	right->material.specular = 0.3;
+	set_transform(right, m);
+	world_add_object(w, right);
 	app->scene = w;
 	app->scene->camera = c;
+
+	t_object *left = sphere_new();
+	m = matrix4_multiply(translation_matrix4(-1.5, 0.33, -0.75), scaling_matrix4(0.33, 0.33, 0.33));
+	left->material.color = color(1, 0.8, 0.1);
+	left->material.diffuse = 0.7;
+	left->material.specular = 0.3;
+	set_transform(left, m);
+	world_add_object(w, left);
+	app->scene = w;
+	app->scene->camera = c;
+
 }
