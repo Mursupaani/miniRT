@@ -249,7 +249,7 @@ void	render_chapter_7_scene(t_app *app)
 	t_point		ray_origin = point(0, 0, -5);
 	float		wall_z = 10;
 	float		wall_size = 7.0;
-	int			canvas_pixels = 2048;
+	int			canvas_pixels = 540;
 	float		pixel_size = wall_size / canvas_pixels;
 	float		half = wall_size / 2;
 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));

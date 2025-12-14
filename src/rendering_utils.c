@@ -14,6 +14,6 @@
 
 bool	pixel_fits_image(float x, float y, t_app *app)
 {
-	return (x >= 0 && x <= app->monitor_width
-		&& y >= 0 && y <= app->monitor_height);
+	return (x >= 0 && x <= app->img->width
+		&& y >= 0 && y <= app->img->height);
 }
