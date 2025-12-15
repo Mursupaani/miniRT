@@ -252,31 +252,3 @@ void	print_camera(t_camera *camera)
 	printf(" TRANSFORMATION ");
 	print_matrix4(camera->transform);
 }
-
-t_proj	tick(t_env env, t_proj proj)
-{
-	t_proj	new_proj;
-
-	new_proj.p = tuple_sum(proj.p, proj.v);
-	new_proj.v = tuple_sum(tuple_sum(proj.v, env.g), env.w);
-	return (new_proj);
-}
-
-void	projectile(t_app *app)
-{
-	t_proj	proj;
-	t_env	env;
-
-	proj.p = point(0, 1, 0);
-	proj.v = tuple_scale_multiply(normalize(vector(1, 1, 0)), 20);
-	env.g = vector(0, -0.1, 0);
-	env.w = vector(-0.01, 0, 0);
-	while (proj.p.y >= 0)
-	{
-		proj = tick(env, proj);
-		print_tuple(proj.p);
-		if (pixel_fits_image(proj.p.x, proj.p.y, app))
-			mlx_put_pixel(app->img, proj.p.x, proj.p.y, 0xFF0000FF);
-	}
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
-}

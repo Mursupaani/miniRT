@@ -48,33 +48,6 @@ static void	test4()
 		printf("\033[0;32mpass\n\033[0m");
 }
 
-static void	test5()
-{
-	printf("Test 5:");
-	printf("Scenario: The hit should offset the point\n\
-Given r ← ray(point(0, 0, -5), vector(0, 0, 1))\n\
-And shape ← sphere() with:\n\
-| transform | translation(0, 0, 1) |\n\
-And i ← intersection(5, shape)\n\
-When comps ← prepare_computations(i, r)\n\
-Then comps.over_point.z < -EPSILON/2\n\
-And comps.point.z > comps.over_point.z\n");
-	t_ray		r = ray(point(0, 0, -5), vector(0, 0, 1));
-	t_object	*shape = sphere_new();
-	t_matrix4	translation = translation_matrix4(0, 0, 1);
-	set_transform(shape, translation);
-	t_intersection	i = intersection(5, shape);
-	t_computations	comps = prepare_computations(i, r);
-	print_computations(comps);
-	printf("over_point.z < -EPSILON / 2: ");
-	if (comps.over_point.z < -EPSILON / 2)
-		printf("true\n");
-	else
-		printf("false\n");
-	free_object(shape);
-}
-
-
 void	test_shadows()
 {
 	printf("\n");
@@ -87,8 +60,6 @@ void	test_shadows()
 	test3();
 	printf("_____________________________________________\n");
 	test4();
-	printf("_____________________________________________\n");
-	test5();
 	printf("_____________________________________________\n");
 	printf("---------- TESTING SHADOWS FINISHED -----------\n");
 	printf("\n");

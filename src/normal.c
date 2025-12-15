@@ -22,7 +22,7 @@ static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 				sphere->inverse_transform, world_point);
 	object_normal = tuple_subtract(object_point, point(0, 0, 0));
 	world_normal = matrix4_and_tuple_multiply(
-		matrix4_transpose(sphere->inverse_transform), object_normal);
+		sphere->inverse_transpose, object_normal);
 	world_normal.w = 0;
 	return (normalize(world_normal));
 }

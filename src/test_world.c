@@ -388,7 +388,7 @@ Then c = color(0.1, 0.1, 0.1)\n");
 	print_computations(comps);
 	if (is_shadowed(w, comps.point) == true)
 	{
-		w->light->in_shadow = true;
+		// w->light->in_shadow = true;
 		printf("is shadowed\n");
 	}
 	c = shade_hit(w, comps);

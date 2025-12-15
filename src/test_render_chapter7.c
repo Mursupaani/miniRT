@@ -18,7 +18,7 @@ void	build_chapter7_world(t_app *app)
 	t_world		*w;
 
 	w = world();
-	w->light = point_light(point(0, 10, -200), color(1, 1, 1));
+	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
 	c->transform = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0));
 

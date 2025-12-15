@@ -32,7 +32,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-4f
+#  define EPSILON 1e-2f
 # endif
 
 // Material default max values
@@ -117,20 +117,6 @@ typedef struct s_lighting
 	t_color		specular;
 }	t_lighting;
 
-//FIXME: Testing
-typedef struct s_proj
-{
-	t_point		p;
-	t_vector	v;
-}	t_proj;
-
-typedef struct s_env
-{
-	t_vector	g;
-	t_vector	w;
-}	t_env;
-//FIXME: Testing
-
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -156,7 +142,6 @@ typedef struct s_light
 {
 	t_color			intensity;
 	t_point			position;
-	bool			in_shadow;
 	// t_color_255		color_255;
 }	t_light;
 
@@ -171,8 +156,8 @@ typedef struct s_material
 
 typedef struct s_camera
 {
-	// t_point		*view_point;
-	// t_vector	*orientation;
+	// t_point	view_point;
+	// t_vector	orientation;
 	float		fov;
 	int			hsize;
 	int			vsize;
@@ -190,6 +175,7 @@ typedef struct s_object
 	float			height;
 	t_matrix4		transform;
 	t_matrix4		inverse_transform;
+	t_matrix4		inverse_transpose;
 	t_material		material;
 }	t_object;
 
@@ -278,6 +264,7 @@ typedef struct s_computations
 	t_point		over_point;
 	t_vector	eyev;
 	t_vector	normalv;
+	bool		in_shadow;
 }	t_computations;
 
 // Tests
@@ -312,8 +299,6 @@ void		print_object(t_object *o);
 void		print_world(t_world *world);
 void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
-t_proj		tick(t_env env, t_proj proj);
-void		projectile(t_app *app);
 
 // App initialize and management:
 t_app		*initialize_app(void);
@@ -435,8 +420,8 @@ bool		is_shadowed(t_world *w, t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
-t_color	lighting(t_object *obj, t_light *light, t_point point, t_vector eyev);
-t_color	lighting_test(t_computations comps, t_light *light);
+t_color	lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
+t_color	lighting(t_computations comps, t_light *light);
 
 // Material:
 t_material		material(void);

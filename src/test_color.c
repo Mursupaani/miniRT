@@ -108,7 +108,7 @@ Then result = color(1.9, 1.9, 1.9)\n");
 	printf("--------------------\n");
 	printf("NORMALV:\n");
 	print_tuple(normal_at(sphere, point(0, 0, 0)));
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 	free(sphere);
 	free(light);
@@ -137,7 +137,7 @@ Then result = color(1.0, 1.0, 1.0)\n");
 	printf("--------------------\n");
 	printf("NORMALV:\n");
 	print_tuple(normal_at(sphere, point(0, 0, 0)));
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 	free(sphere);
 	free(light);
@@ -166,7 +166,7 @@ Then result = color(0.7364, 0.7364, 0.7364)\n");
 	printf("--------------------\n");
 	printf("NORMALV:\n");
 	print_tuple(normal_at(sphere, point(0, 0, 0)));
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 	free(sphere);
 	free(light);
@@ -195,7 +195,7 @@ Then result = color(1.6364, 1.6364, 1.6364)\n");
 	printf("--------------------\n");
 	printf("NORMALV:\n");
 	print_tuple(normal_at(sphere, point(0, 0, 0)));
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 	free(sphere);
 	free(light);
@@ -218,7 +218,7 @@ Then result = color(0.1, 0.1, 0.1)\n");
 	eyev = vector(0, 0, -1);
 	light = point_light(point(0, 0, 10), color(1, 1, 1));
 	sphere = sphere_new_args(point(0, 0, 1), 1, (t_color255){255,255,255});
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 }
 
@@ -239,8 +239,8 @@ Then result = color(0.1, 0.1, 0.1)\n");
 	eyev = vector(0, 0, -1);
 	light = point_light(point(0, 0, 10), color(1, 1, 1));
 	sphere = sphere_new_args(point(0, 0, 1), 1, (t_color255){255,255,255});
-	light->in_shadow = true;
-	result = lighting(sphere, light, point(0, 0, 0), eyev);
+	// light->in_shadow = true;
+	result = lighting_old(sphere, light, point(0, 0, 0), eyev);
 	print_color(result);
 }
 
@@ -274,7 +274,7 @@ void	render_chapter_7_scene(t_app *app)
 				t_point	point = ray_position(r, xs->arr[0].t);
 				t_vector eye = tuple_negate(r.direction);
 				if (pixel_fits_image(x, y, app))
-					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting(xs->arr->object, light, point, eye)));
+					mlx_put_pixel(app->img, x, y, color_hex_from_color(lighting_old(xs->arr->object, light, point, eye)));
 				free(xs->arr);
 				free(xs);
 			}

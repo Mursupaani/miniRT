@@ -16,7 +16,6 @@ void	run_tests()
 {
 	// test_tuples();
 	// test_matrices();
-	// projectile(app);
 	// test_transformation();
 	// test_rays();
 	// render_chapter_5_scene();
