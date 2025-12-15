@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <float.h>
 
 static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 {

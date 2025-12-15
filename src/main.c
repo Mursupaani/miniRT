@@ -29,7 +29,6 @@
 
 void	test_render(t_app *app)
 {
-	app = initialize_app();
 	build_chapter7_world(app);
 	launch_render(app);
 	mlx_image_to_window(app->mlx, app->img, 0, 0);

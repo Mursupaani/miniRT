@@ -23,18 +23,12 @@ t_app	*initialize_app(void)
 	if (!app->mlx)
 		exit_and_free_memory(ERROR_MLX_INIT, app);
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
+	// NOTE: Uncomment two lines below for testing with valgrind.
+	// app->monitor_height = 200;
+	// app->monitor_width = 200;
 	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
 	app->img = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
 	if (!app->img)
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	return (app);
 }
-
-/*
-	int	d = 200;
-	app->monitor_width = d;
-	app->monitor_height = d;
-	mlx_set_window_size(app->mlx, d, d);
-	app->img = mlx_new_image(app->mlx, d, d);
-
-*/
