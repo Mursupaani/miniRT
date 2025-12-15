@@ -34,18 +34,21 @@ t_computations	prepare_computations(t_intersection x, t_ray r)
 }
 
 static t_intersection	*add_intersection(
-				t_intersections *cur, t_intersections *xs)
+				t_intersections *cur, t_intersections *xs, int old_xs_count)
 {
 	t_intersection *temp;
 	int				i;
 
 	if (!cur || !xs)
 		return (NULL);
-	if (xs->count == 2)
+	if (xs->arr == NULL)
 	{
-		xs->arr = malloc(sizeof(t_intersection) * 2);
-		xs->arr[0] = cur->arr[0];
-		xs->arr[1] = cur->arr[1];
+		xs->arr = malloc(sizeof(t_intersection) * xs->count);
+		if (!xs->arr)
+			return (NULL);
+		i = -1;
+		while (++i < xs->count)
+			xs->arr[i] = cur->arr[i];
 	}
 	else
 	{
@@ -57,11 +60,14 @@ static t_intersection	*add_intersection(
 			return (NULL);
 		}
 		i = -1;
-		while (++i < xs->count - 2)
+		while (++i < old_xs_count)
 			xs->arr[i] = temp[i];
 		free(temp);
-		xs->arr[i++] = cur->arr[0];
-		xs->arr[i] = cur->arr[1];
+		while (i < xs->count)
+		{
+			xs->arr[i] = cur->arr[i - old_xs_count];
+			i++;
+		}
 	}
 	return (xs->arr);
 }
@@ -71,6 +77,7 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 	t_intersections	*xs;
 	t_intersections	*current;
 	int				i;
+	int				old_xs_count;
 
 	if (!w)
 		return (NULL);
@@ -85,8 +92,9 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 		current = intersect(w->objects[i], r);
 		if (!current)
 			continue ;
+		old_xs_count = xs->count;
 		xs->count += current->count;
-		xs->arr = add_intersection(current, xs);
+		xs->arr = add_intersection(current, xs, old_xs_count);
 		free_intersections(current);
 		quick_sort_intersections(xs->arr, 0, xs->count - 1);
 	}

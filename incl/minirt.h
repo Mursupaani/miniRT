@@ -211,11 +211,11 @@ typedef struct s_app
  */
 typedef struct s_thread_data
 {
-	int			id;
-	uint		start_row;
-	uint		end_row;
-	t_app		*app;
-	pthread_t	thread_handle;
+	int				id;
+	unsigned int	start_row;
+	unsigned int	end_row;
+	t_app			*app;
+	pthread_t		thread_handle;
 }	t_thread_data;
 
 /**

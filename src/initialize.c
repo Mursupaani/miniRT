@@ -29,12 +29,3 @@ t_app	*initialize_app(void)
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	return (app);
 }
-
-/*
-	int	d = 200;
-	app->monitor_width = d;
-	app->monitor_height = d;
-	mlx_set_window_size(app->mlx, d, d);
-	app->img = mlx_new_image(app->mlx, d, d);
-
-*/

@@ -38,8 +38,8 @@ static int	init_threads(t_app *app)
 void	*render_routine(void *arg)
 {
 	t_thread_data	*data;
-	uint			x;
-	uint			y;
+	unsigned int	x;
+	unsigned int	y;
 	t_ray			ray;
 	t_color			color;
 
