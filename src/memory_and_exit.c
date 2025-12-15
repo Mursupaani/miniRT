@@ -12,21 +12,6 @@
 
 #include "minirt.h"
 
-void	free_scene_objects(t_object *objects[])
-{
-	int	i;
-
-	if (!objects)
-		return ;
-	i = -1;
-	// while (objects[++i])
-	// {
-		// free(objects[i]->color_1);
-		// free(objects[i]->color_255);
-	// }
-	free(objects[i]);
-}
-
 void	free_world(t_world *w)
 {
 	if (!w)

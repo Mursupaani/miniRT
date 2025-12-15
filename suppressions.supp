@@ -1,0 +1,77 @@
+{
+   <_dlerror_run>
+   Memcheck:Leak
+   ...
+   fun:_dlerror_run
+}
+
+{
+   <_dl_catcn_exception>
+   Memcheck:Leak
+   ...
+   fun:_dl_catch_exception
+}
+
+{
+   <_dl_open>
+   Memcheck:Leak
+   ...
+   fun:_dl_open
+}
+
+{
+   <_dl_init>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_init
+}
+
+{
+   <glfwInit>
+   Memcheck:Leak
+   ...
+   fun:glfwInit
+}
+
+{
+   <dlopen@@GLIBC_2.34>
+   Memcheck:Leak
+   ...
+   fun:dlopen@@GLIBC_2.34
+}
+
+{
+   <XrmGetStringDatabase>
+   Memcheck:Leak
+   ...
+   fun:XrmGetStringDatabase
+}
+
+{
+   <generateCodeForModuleEPNS>
+   Memcheck:Cond
+   ...
+   fun:_ZN4llvm5MCJIT21generateCodeForModuleEPNS_6ModuleE
+}
+
+{
+   <_XrmInitParseInfo>
+   Memcheck:Leak
+   ...
+   fun:_XrmInitParseInfo
+}
+
+{
+   <StandardInstrumentations>
+   Memcheck:Leak
+   ...
+   fun:_ZN4llvm24StandardInstrumentationsC1ERNS_11LLVMContextEbbNS_16PrintPassOptionsE
+}
+
+{
+   <glfwCreateWindow>
+   Memcheck:Leak
+   ...
+   fun:glfwCreateWindow
+}
