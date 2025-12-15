@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static float	get_matrix_row_tuple_product(float m_row[4], t_tuple tuple)
+static double	get_matrix_row_tuple_product(double m_row[4], t_tuple tuple)
 {
 	return (m_row[0] * tuple.x
 		+ m_row[1] * tuple.y
@@ -20,10 +20,10 @@ static float	get_matrix_row_tuple_product(float m_row[4], t_tuple tuple)
 		+ m_row[3] * tuple.w);
 }
 
-static float	get_row_column_product(
+static double	get_row_column_product(
 			int i, int j, t_matrix4 m1, t_matrix4 m2)
 {
-	float	result;
+	double	result;
 	int		k;
 
 	result = 0;

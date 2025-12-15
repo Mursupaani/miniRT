@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <float.h>
 
 static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 {
@@ -32,5 +33,5 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 	if (obj->type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
 	else
-		return (normalize(vector(FLT_MAX, FLT_MAX, FLT_MAX)));
+		return (normalize(vector(DBL_MAX, DBL_MAX, DBL_MAX)));
 }

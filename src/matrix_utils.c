@@ -23,7 +23,7 @@ bool	matrix4s_are_equal(t_matrix4 m1, t_matrix4 m2)
 		j = 0;
 		while (j < 4)
 		{
-			if (!floats_are_equal(m1.data[i][j], m2.data[i][j]))
+			if (!doubles_are_equal(m1.data[i][j], m2.data[i][j]))
 				return (false);
 			j++;
 		}

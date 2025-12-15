@@ -210,11 +210,11 @@ void	test_rays(void)
 void	render_chapter_5_scene(t_app *app)
 {
 	t_point	ray_origin = point(0, 0, -5);
-	float	wall_z = 10;
-	float	wall_size = 7.0;
+	double	wall_z = 10;
+	double	wall_size = 7.0;
 	int		canvas_pixels = 100;
-	float	pixel_size = wall_size / canvas_pixels;
-	float	half = wall_size / 2;
+	double	pixel_size = wall_size / canvas_pixels;
+	double	half = wall_size / 2;
 
 	t_object	*shape = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));
 
@@ -222,10 +222,10 @@ void	render_chapter_5_scene(t_app *app)
 
 	for (int y = 0; y < canvas_pixels; y++)
 	{
-		float	world_y = half - pixel_size * y;
+		double	world_y = half - pixel_size * y;
 		for (int x = 0; x < canvas_pixels; x++)
 		{
-			float	world_x = -half + pixel_size * x;
+			double	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);

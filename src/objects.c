@@ -42,7 +42,7 @@ t_object	*sphere_new(void)
 	sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
 	return (sphere);
 }
-t_object	*sphere_new_args(t_point center, float diameter, t_color255 color)
+t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
 {
 	t_object	*sphere;
 

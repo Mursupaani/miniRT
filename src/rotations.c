@@ -12,43 +12,43 @@
 
 #include "minirt.h"
 
-t_matrix4	rotation_x(float radians)
+t_matrix4	rotation_x(double radians)
 {
 	t_matrix4	rotation;
 
 	ft_bzero(&rotation, sizeof(rotation));
 	rotation.data[0][0] = 1;
-	rotation.data[1][1] = cosf(radians);
-	rotation.data[1][2] = -sinf(radians);
-	rotation.data[2][1] = sinf(radians);
-	rotation.data[2][2] = cosf(radians);
+	rotation.data[1][1] = cos(radians);
+	rotation.data[1][2] = -sin(radians);
+	rotation.data[2][1] = sin(radians);
+	rotation.data[2][2] = cos(radians);
 	rotation.data[3][3] = 1;
 	return (rotation);
 }
 
-t_matrix4	rotation_y(float radians)
+t_matrix4	rotation_y(double radians)
 {
 	t_matrix4	rotation;
 
 	ft_bzero(&rotation, sizeof(rotation));
-	rotation.data[0][0] = cosf(radians);
-	rotation.data[0][2] = sinf(radians);
+	rotation.data[0][0] = cos(radians);
+	rotation.data[0][2] = sin(radians);
 	rotation.data[1][1] = 1;
-	rotation.data[2][0] = -sinf(radians);
-	rotation.data[2][2] = cosf(radians);
+	rotation.data[2][0] = -sin(radians);
+	rotation.data[2][2] = cos(radians);
 	rotation.data[3][3] = 1;
 	return (rotation);
 }
 
-t_matrix4	rotation_z(float radians)
+t_matrix4	rotation_z(double radians)
 {
 	t_matrix4	rotation;
 
 	ft_bzero(&rotation, sizeof(rotation));
-	rotation.data[0][0] = cosf(radians);
-	rotation.data[0][1] = -sinf(radians);
-	rotation.data[1][0] = sinf(radians);
-	rotation.data[1][1] = cosf(radians);
+	rotation.data[0][0] = cos(radians);
+	rotation.data[0][1] = -sin(radians);
+	rotation.data[1][0] = sin(radians);
+	rotation.data[1][1] = cos(radians);
 	rotation.data[2][2] = 1;
 	rotation.data[3][3] = 1;
 	return (rotation);

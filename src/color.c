@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_color	color(float r, float g, float b)
+t_color	color(double r, double g, double b)
 {
 	t_color	color;
 
@@ -40,7 +40,7 @@ t_color	color_mix(t_color color_obj, t_color color_light)
 				color_obj.b * color_light.b});
 }
 
-t_color	color_multiply(t_color color, float multiplier)
+t_color	color_multiply(t_color color, double multiplier)
 {
 	return ((t_color){color.r * multiplier,
 			color.g * multiplier,

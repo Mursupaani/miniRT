@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_tuple	tuple(float x, float y, float z, float w)
+t_tuple	tuple(double x, double y, double z, double w)
 {
 	t_tuple	tuple;
 
@@ -24,12 +24,12 @@ t_tuple	tuple(float x, float y, float z, float w)
 	return (tuple);
 }
 
-t_vector	vector(float x, float y, float z)
+t_vector	vector(double x, double y, double z)
 {
 	return (tuple(x, y, z, 0));
 }
 
-t_point	point(float x, float y, float z)
+t_point	point(double x, double y, double z)
 {
 	return (tuple(x, y, z, 1));
 }

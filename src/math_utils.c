@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool	floats_are_equal(float a, float b)
+bool	doubles_are_equal(double a, double b)
 {
 	return (fabs(a - b) < EPSILON);
 }

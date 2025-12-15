@@ -14,8 +14,8 @@
 
 bool	tuples_are_equal(t_tuple a, t_tuple b)
 {
-	return (floats_are_equal(a.x, b.x)
-		&& floats_are_equal(a.y, b.y)
-		&& floats_are_equal(a.z, b.z)
-		&& floats_are_equal(a.w, b.w));
+	return (doubles_are_equal(a.x, b.x)
+		&& doubles_are_equal(a.y, b.y)
+		&& doubles_are_equal(a.z, b.z)
+		&& doubles_are_equal(a.w, b.w));
 }

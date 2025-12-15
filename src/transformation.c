@@ -13,7 +13,7 @@
 #include "minirt.h"
 
 t_matrix4	translation_matrix4(
-	float scale_x, float scale_y, float scale_z)
+	double scale_x, double scale_y, double scale_z)
 {
 	t_matrix4	translation;
 	int			i;
@@ -42,7 +42,7 @@ t_matrix4	translation_matrix4(
 	return (translation);
 }
 
-t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z)
+t_matrix4	scaling_matrix4(double scale_x, double scale_y, double scale_z)
 {
 	t_matrix4	scalar;
 

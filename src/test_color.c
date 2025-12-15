@@ -128,7 +128,7 @@ And normalv ← vector(0, 0, -1)\n\
 And light ← point_light(point(0, 0, -10), color(1, 1, 1))\n\
 When result ← lighting(m, light, position, eyev, normalv)\n\
 Then result = color(1.0, 1.0, 1.0)\n");
-	eyev = vector(0, sqrtf(2) / 2, -sqrtf(2) / 2);
+	eyev = vector(0, sqrt(2) / 2, -sqrt(2) / 2);
 	light = point_light(point(0, 0, -10), color(1, 1, 1));
 	sphere = sphere_new_args(point(0, 0, 1), 1, (t_color255){255,255,255});
 	printf("--------------------\n");
@@ -186,7 +186,7 @@ And normalv ← vector(0, 0, -1)\n\
 And light ← point_light(point(0, 10, -10), color(1, 1, 1))\n\
 When result ← lighting(m, light, position, eyev, normalv)\n\
 Then result = color(1.6364, 1.6364, 1.6364)\n");
-	eyev = vector(0, -sqrtf(2) / 2, -sqrtf(2) / 2);
+	eyev = vector(0, -sqrt(2) / 2, -sqrt(2) / 2);
 	light = point_light(point(0, 10, -10), color(1, 1, 1));
 	sphere = sphere_new_args(point(0, 0, 1), 1, (t_color255){255,255,255});
 	printf("--------------------\n");
@@ -247,11 +247,11 @@ Then result = color(0.1, 0.1, 0.1)\n");
 void	render_chapter_7_scene(t_app *app)
 {
 	t_point		ray_origin = point(0, 0, -5);
-	float		wall_z = 10;
-	float		wall_size = 7.0;
+	double		wall_z = 10;
+	double		wall_size = 7.0;
 	int			canvas_pixels = 540;
-	float		pixel_size = wall_size / canvas_pixels;
-	float		half = wall_size / 2;
+	double		pixel_size = wall_size / canvas_pixels;
+	double		half = wall_size / 2;
 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));
 	t_light		*light = point_light(point(-10, 10, -10), color(1, 1, 1));
 	sphere->material.color = color(1, 0.5, 1);
@@ -260,10 +260,10 @@ void	render_chapter_7_scene(t_app *app)
 	// printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
 	for (int y = 0; y < canvas_pixels; y++)
 	{
-		float	world_y = half - pixel_size * y;
+		double	world_y = half - pixel_size * y;
 		for (int x = 0; x < canvas_pixels; x++)
 		{
-			float	world_x = -half + pixel_size * x;
+			double	world_x = -half + pixel_size * x;
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
@@ -321,11 +321,11 @@ void	test_color()
 // void	render_chapter_7_scene(t_app *app)
 // {
 // 	t_point		ray_origin = point(0, 0, -5);
-// 	float		wall_z = 10;
-// 	float		wall_size = 7.0;
+// 	double		wall_z = 10;
+// 	double		wall_size = 7.0;
 // 	int			canvas_pixels = 2048;
-// 	float		pixel_size = wall_size / canvas_pixels;
-// 	float		half = wall_size / 2;
+// 	double		pixel_size = wall_size / canvas_pixels;
+// 	double		half = wall_size / 2;
 // 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(0, 255, 0));
 // 	t_light		*light = point_light(point(-10, 10, -10), color(1, 1, 1));
 // 	sphere->material.color = color(1, 0.5, 1);
@@ -334,10 +334,10 @@ void	test_color()
 // 	printf("P3\n%d %d\n255\n", canvas_pixels, canvas_pixels);
 // 	for (int y = 0; y < canvas_pixels; y++)
 // 	{
-// 		float	world_y = half - pixel_size * y;
+// 		double	world_y = half - pixel_size * y;
 // 		for (int x = 0; x < canvas_pixels; x++)
 // 		{
-// 			float	world_x = -half + pixel_size * x;
+// 			double	world_x = -half + pixel_size * x;
 // 			t_point	position = point(world_x, world_y, wall_z);
 // 			t_vector	direction = vector_normalize(tuple_subtract(position, ray_origin));
 // 			t_ray	r = ray(ray_origin, direction);

@@ -12,15 +12,15 @@
 
 #include "minirt.h"
 
-float	matrix2_determinant(t_matrix2 matrix)
+double	matrix2_determinant(t_matrix2 matrix)
 {
 	return (matrix.data[0][0] * matrix.data[1][1]
 			- matrix.data[0][1] * matrix.data[1][0]);
 }
 
-float	matrix3_determinant(t_matrix3 matrix)
+double	matrix3_determinant(t_matrix3 matrix)
 {
-	float	result;
+	double	result;
 	int		i;
 
 	result = 0;
@@ -30,9 +30,9 @@ float	matrix3_determinant(t_matrix3 matrix)
 	return (result);
 }
 
-float	matrix4_determinant(t_matrix4 matrix)
+double	matrix4_determinant(t_matrix4 matrix)
 {
-	float	result;
+	double	result;
 	int		i;
 
 	result = 0;
