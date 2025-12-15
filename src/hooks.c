@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
 #include "minirt.h"
 
-static void	close_window(void *param)
+static void	close_window_mouse(void *param)
 {
 	t_app	*app;
 
@@ -20,7 +21,17 @@ static void	close_window(void *param)
 	exit_and_free_memory(EXIT_SUCCESS, app);
 }
 
+static void	handle_keypress(mlx_key_data_t keydata, void *param)
+{
+	t_app	*app;
+
+	app = (t_app *)param;
+	if (keydata.key == MLX_KEY_ESCAPE)
+		exit_and_free_memory(EXIT_SUCCESS, app);
+}
+
 void	initialize_hooks(t_app *app)
 {
-	mlx_close_hook(app->mlx, close_window, app);
+	mlx_close_hook(app->mlx, close_window_mouse, app);
+	mlx_key_hook(app->mlx, handle_keypress, app);
 }
