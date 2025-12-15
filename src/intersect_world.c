@@ -63,11 +63,9 @@ static t_intersection	*add_intersection(
 		while (++i < old_xs_count)
 			xs->arr[i] = temp[i];
 		free(temp);
-		while (i < xs->count)
-		{
+		--i;
+		while (++i < xs->count)
 			xs->arr[i] = cur->arr[i - old_xs_count];
-			i++;
-		}
 	}
 	return (xs->arr);
 }

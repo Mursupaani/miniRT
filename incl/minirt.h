@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 14:12:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:31:22 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ void		print_camera(t_camera *camera);
 
 // App initialize and management:
 t_app		*initialize_app(void);
+void		initialize_hooks(t_app *app);
 
 // Parsing:
 void	parse_rt_file(char **av, t_app *app);

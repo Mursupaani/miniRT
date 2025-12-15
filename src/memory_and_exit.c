@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 17:37:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:34:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	free_app_memory(t_app *app)
 {
 	if (!app)
 		return ;
+	join_threads(app->threads, THREADS);
 	if (app->img)
 		mlx_delete_image(app->mlx, app->img);
 	if (app->mlx)
