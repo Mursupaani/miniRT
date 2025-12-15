@@ -49,39 +49,38 @@ static t_color	calculate_color(
 	return (color_sum(color_sum(l.ambient, l.diffuse), l.specular));
 }
 
-t_color	lighting(t_object *obj, t_light *light, t_point position, t_vector eyev)
-{
-	t_lighting	l;
-
-	if (!obj || !light)
-		return ((t_color){1, 1, 1});
-	if (light->in_shadow == true)
-	{
-		l.effective_color = color_mix(obj->material.color, light->intensity);
-		l.ambient = color_multiply(l.effective_color, obj->material.ambient);
-		return (l.ambient);
-	}
-	l.normalv = normal_at(obj, position);
-	l.lightv = normalize(tuple_subtract(light->position, position));
-	l.light_dot_normal = dot(l.lightv, l.normalv);
-	return (calculate_color(obj, light, eyev, l));
-}
-
-t_color	lighting_test(t_computations comps, t_light *light)
+t_color	lighting(t_computations comps, t_light *light)
 {
 	t_lighting	l;
 
 	if (!light)
 		return ((t_color){1, 1, 1});
-	if (light->in_shadow == true)
+	if (comps.in_shadow == true)
 	{
 		l.effective_color = color_mix(comps.object->material.color, light->intensity);
 		l.ambient = color_multiply(l.effective_color, comps.object->material.ambient);
 		return (l.ambient);
 	}
 	l.normalv = comps.normalv;
-	//FIXME: Fixed lightv to use over_point
 	l.lightv = normalize(tuple_subtract(light->position, comps.over_point));
 	l.light_dot_normal = dot(l.lightv, l.normalv);
 	return (calculate_color(comps.object, light, comps.eyev, l));
+}
+
+t_color	lighting_old(t_object *obj, t_light *light, t_point position, t_vector eyev)
+{
+	t_lighting	l;
+
+	if (!obj || !light)
+		return ((t_color){1, 1, 1});
+	// if (light->in_shadow == true)
+	// {
+	// 	l.effective_color = color_mix(obj->material.color, light->intensity);
+	// 	l.ambient = color_multiply(l.effective_color, obj->material.ambient);
+	// 	return (l.ambient);
+	// }
+	l.normalv = normal_at(obj, position);
+	l.lightv = normalize(tuple_subtract(light->position, position));
+	l.light_dot_normal = dot(l.lightv, l.normalv);
+	return (calculate_color(obj, light, eyev, l));
 }

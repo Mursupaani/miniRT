@@ -29,6 +29,7 @@ t_computations	prepare_computations(t_intersection x, t_ray r)
 	else
 		comps.inside = false;
 	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.in_shadow = false;
 	return (comps);
 }
 
