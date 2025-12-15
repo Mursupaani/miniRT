@@ -140,7 +140,7 @@ static void	test8(void)
 	printf("TEST 8:\n");
 	printf("Scenario: Computing the magnitude of vector(1, 2, 3)\n\
 Given v ← vector(1, 2, 3)\n\
-Then magnitude(v) = %f\n", sqrtf(14));
+Then magnitude(v) = %f\n", sqrt(14));
 	tuple1 = vector(1, 2, 3);
 	print_tuple(tuple1);
 }

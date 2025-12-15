@@ -17,7 +17,7 @@ t_matrix4	matrix4_invert(t_matrix4 matrix)
 	t_matrix4	invert;
 	int		i;
 	int		j;
-	float	determinant;
+	double	determinant;
 
 	ft_bzero(&invert, sizeof(invert));
 	determinant = matrix4_determinant(matrix);

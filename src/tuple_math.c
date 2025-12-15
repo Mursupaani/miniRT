@@ -30,7 +30,7 @@ t_tuple	tuple_subtract(t_tuple a, t_tuple b)
 			a.w - b.w));
 }
 
-t_tuple	tuple_scale_multiply(t_tuple t, float scalar)
+t_tuple	tuple_scale_multiply(t_tuple t, double scalar)
 {
 	return (tuple(
 			t.x * scalar,
@@ -39,7 +39,7 @@ t_tuple	tuple_scale_multiply(t_tuple t, float scalar)
 			t.w * scalar));
 }
 
-t_tuple	tuple_scale_divide(t_tuple t, float divider)
+t_tuple	tuple_scale_divide(t_tuple t, double divider)
 {
 	return (tuple(
 			t.x / divider,

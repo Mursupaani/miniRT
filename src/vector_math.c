@@ -12,9 +12,9 @@
 
 #include "minirt.h"
 
-float	vector_magnitude(t_vector vector)
+double	vector_magnitude(t_vector vector)
 {
-	return (sqrtf(vector.x * vector.x
+	return (sqrt(vector.x * vector.x
 			+ vector.y * vector.y
 			+ vector.z * vector.z
 			+ vector.w * vector.w));
@@ -22,7 +22,7 @@ float	vector_magnitude(t_vector vector)
 
 t_vector	normalize(t_vector v)
 {
-	float	magnitude;
+	double	magnitude;
 
 	if (v.w != 0)
 	{
@@ -35,7 +35,7 @@ t_vector	normalize(t_vector v)
 			v.z / magnitude));
 }
 
-float	dot(t_vector a, t_vector b)
+double	dot(t_vector a, t_vector b)
 {
 	if (a.w != 0 || b.w != 0)
 	{

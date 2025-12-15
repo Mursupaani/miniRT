@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_intersection	intersection(float t, t_object *object)
+t_intersection	intersection(double t, t_object *object)
 {
 	t_intersection	intersection;
 
@@ -28,7 +28,7 @@ t_intersection	hit(t_intersections *xs)
 	t_intersection	closest;
 
 	i = -1;
-	closest = (t_intersection){FLT_MAX, NULL, NULL};
+	closest = (t_intersection){DBL_MAX, NULL, NULL};
 	while (++i < xs->count)
 	{
 		if (xs->arr[i].t >= 0)
@@ -42,7 +42,7 @@ t_intersection	hit(t_intersections *xs)
 
 //FIXME: Old intersection functions using linked list
 
-t_intersection	*intersection_new(float t, t_object *object)
+t_intersection	*intersection_new(double t, t_object *object)
 {
 	t_intersection	*new_node;
 

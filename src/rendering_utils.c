@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool	pixel_fits_image(float x, float y, t_app *app)
+bool	pixel_fits_image(double x, double y, t_app *app)
 {
 	return (x >= 0 && x <= app->img->width
 		&& y >= 0 && y <= app->img->height);

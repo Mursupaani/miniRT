@@ -23,7 +23,7 @@ static void	swap_intersections(t_intersection *x1, t_intersection *x2)
 
 static int	partition(t_intersection *xs, int start, int end)
 {
-	float	pivot;
+	double	pivot;
 	int		store_i;
 	int		i;
 

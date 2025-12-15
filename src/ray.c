@@ -9,7 +9,7 @@ t_ray	ray(t_point origin, t_vector direction)
 	return (ray);
 }
 
-t_point	ray_position(t_ray ray, float t)
+t_point	ray_position(t_ray ray, double t)
 {
 	t_vector	distance;
 

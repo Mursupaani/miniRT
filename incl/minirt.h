@@ -32,7 +32,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-2f
+#  define EPSILON 1e-5
 # endif
 
 // Material default max values
@@ -56,37 +56,37 @@ typedef struct s_thread_data t_thread_data;
 
 typedef struct s_tuple
 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
 }	t_tuple;
 typedef t_tuple	t_vector;
 typedef t_tuple	t_point;
 
 typedef struct s_matrix2
 {
-	float	data[2][2];
+	double	data[2][2];
 }	t_matrix2;
 
 typedef struct s_matrix3
 {
-	float	data[3][3];
+	double	data[3][3];
 }	t_matrix3;
 
 typedef struct s_matrix4
 {
-	float	data[4][4];
+	double	data[4][4];
 }	t_matrix4;
 
 typedef struct s_shear
 {
-	float	xy;
-	float	xz;
-	float	yx;
-	float	yz;
-	float	zx;
-	float	zy;
+	double	xy;
+	double	xz;
+	double	yx;
+	double	yz;
+	double	zx;
+	double	zy;
 }	t_shear;
 
 typedef struct s_color_255
@@ -98,19 +98,19 @@ typedef struct s_color_255
 
 typedef struct s_color_1
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_color;
 
 typedef struct s_lighting
 {
 	t_vector	normalv;
 	t_vector	lightv;
-	float		light_dot_normal;
+	double		light_dot_normal;
 	t_vector	reflectv;
-	float		reflect_dot_eye;
-	float		factor;
+	double		reflect_dot_eye;
+	double		factor;
 	t_color		ambient;
 	t_color		effective_color;
 	t_color		diffuse;
@@ -147,10 +147,10 @@ typedef struct s_light
 
 typedef struct s_material
 {
-	float	ambient;
-	float	diffuse;
-	float	specular;
-	float	shininess;
+	double	ambient;
+	double	diffuse;
+	double	specular;
+	double	shininess;
 	t_color	color;
 }	t_material;
 
@@ -158,21 +158,21 @@ typedef struct s_camera
 {
 	// t_point	view_point;
 	// t_vector	orientation;
-	float		fov;
+	double		fov;
 	int			hsize;
 	int			vsize;
 	t_matrix4	transform;
-	float		half_width;
-	float		half_height;
-	float		pixel_size;
+	double		half_width;
+	double		half_height;
+	double		pixel_size;
 }	t_camera;
 
 typedef struct s_object
 {
 	t_object_type	type;
 	t_point			center;
-	float			diameter;
-	float			height;
+	double			diameter;
+	double			height;
 	t_matrix4		transform;
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
@@ -237,13 +237,13 @@ typedef struct	s_ray
  * @brief linked list to hold hits, e.g. entering and exiting a sphere
  * 
  * Contains:
- * - float t: multiplier to calculate the distance travelled, where along the vector did the hit occur
+ * - double t: multiplier to calculate the distance travelled, where along the vector did the hit occur
  * - t_object object: the object that the ray hit
  * - t_intersection *next: address of the next hit
  */
 typedef struct	s_intersection
 {
-	float					t;
+	double					t;
 	t_object				*object;
 	// FIXME: Delete
 	struct s_intersection	*next;
@@ -258,7 +258,7 @@ typedef struct s_intersections
 typedef struct s_computations
 {
 	bool		inside;
-	float		t;
+	double		t;
 	t_object	*object;
 	t_point		point;
 	t_point		over_point;
@@ -315,30 +315,30 @@ void		free_world(t_world *w);
 void		free_intersections(t_intersections *xs);
 
 // Tuples (vectors, points):
-t_tuple		tuple(float x, float y, float z, float w);
-t_vector	vector(float x, float y, float z);
-t_point		point(float x, float y, float z);
+t_tuple		tuple(double x, double y, double z, double w);
+t_vector	vector(double x, double y, double z);
+t_point		point(double x, double y, double z);
 
 // Transformation matrices
 t_matrix4	translation_matrix4(
-			float scale_x, float scale_y, float scale_z);
-t_matrix4	scaling_matrix4(float scale_x, float scale_y, float scale_z);
-t_matrix4	rotation_x(float radians);
-t_matrix4	rotation_y(float radians);
-t_matrix4	rotation_z(float radians);
+			double scale_x, double scale_y, double scale_z);
+t_matrix4	scaling_matrix4(double scale_x, double scale_y, double scale_z);
+t_matrix4	rotation_x(double radians);
+t_matrix4	rotation_y(double radians);
+t_matrix4	rotation_z(double radians);
 t_matrix4	shearing(t_shear shear);
 
 // Tuple math:
 t_tuple		tuple_sum(t_tuple a, t_tuple b);
 t_tuple		tuple_subtract(t_tuple a, t_tuple b);
-t_tuple		tuple_scale_multiply(t_tuple tuple, float scalar);
-t_tuple		tuple_scale_divide(t_tuple tuple, float divider);
+t_tuple		tuple_scale_multiply(t_tuple tuple, double scalar);
+t_tuple		tuple_scale_divide(t_tuple tuple, double divider);
 t_tuple		tuple_negate(t_tuple tuple);
 
 // Vector math:
-float		vector_magnitude(t_tuple vector);
+double		vector_magnitude(t_tuple vector);
 t_vector	normalize(t_vector vector);
-float		dot(t_vector a, t_vector b);
+double		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
 
 // Matrix utils:
@@ -352,24 +352,24 @@ t_matrix4	matrix4_transpose(t_matrix4 matrix);
 t_matrix4	matrix4_invert(t_matrix4 matrix);
 
 // Matrix determinants, submatrices, minors and cofactors:
-float	matrix2_determinant(t_matrix2 matrix);
-float	matrix3_determinant(t_matrix3 matrix);
-float	matrix4_determinant(t_matrix4 matrix);
+double	matrix2_determinant(t_matrix2 matrix);
+double	matrix3_determinant(t_matrix3 matrix);
+double	matrix4_determinant(t_matrix4 matrix);
 t_matrix2	matrix3_submatrix(t_matrix3 matrix, int row, int column);
 t_matrix3	matrix4_submatrix(t_matrix4 matrix, int row, int column);
-float	matrix3_minor(t_matrix3 matrix, int row, int column);
-float	matrix4_minor(t_matrix4 matrix, int row, int column);
-float	matrix3_cofactor(t_matrix3 matrix, int row, int column);
-float	matrix4_cofactor(t_matrix4 matrix, int row, int column);
+double	matrix3_minor(t_matrix3 matrix, int row, int column);
+double	matrix4_minor(t_matrix4 matrix, int row, int column);
+double	matrix3_cofactor(t_matrix3 matrix, int row, int column);
+double	matrix4_cofactor(t_matrix4 matrix, int row, int column);
 
 // Tuple utils:
 bool	tuples_are_equal(t_tuple a, t_tuple b);
 
 // Math utils:
-bool		floats_are_equal(float a, float b);
+bool		doubles_are_equal(double a, double b);
 
 // Rendering utils
-bool		pixel_fits_image(float x, float y, t_app *app);
+bool		pixel_fits_image(double x, double y, t_app *app);
 
 // Render_routine.c
 void		*render_routine(void *arg);
@@ -377,8 +377,8 @@ void		launch_render(t_app *app);
 void		join_threads(t_thread_data *thread_data, int thread_count);
 
 // Intersections:
-t_intersection	*intersection_new(float t, t_object *object);
-t_intersection	intersection(float t, t_object *object);
+t_intersection	*intersection_new(double t, t_object *object);
+t_intersection	intersection(double t, t_object *object);
 t_intersection	*intersection_hit(t_intersection *xs);
 void			intersection_add_back(t_intersection **lst, 
 				t_intersection *new);
@@ -392,23 +392,23 @@ t_intersection	hit(t_intersections *xs);
 
 // Rays:
 t_ray		ray(t_point origin, t_vector direction);
-t_point		ray_position(t_ray ray, float t);
+t_point		ray_position(t_ray ray, double t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
 t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
 t_object	*sphere_new(void);
-t_object	*sphere_new_args(t_point center, float diameter, t_color255 color);
+t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
 
 // Color & shading:
-t_color		color(float r, float g, float b);
+t_color		color(double r, double g, double b);
 t_color255	color255(
 		unsigned char r, unsigned char g, unsigned char b);
 t_color		color_mix(t_color color_obj, t_color color_light);
-t_color		color_multiply(t_color color, float multiplier);
+t_color		color_multiply(t_color color, double multiplier);
 t_color		color_sum(t_color color1, t_color color2);
 t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
@@ -437,7 +437,7 @@ t_world		*default_world();
 t_object	**world_add_object(t_world *w, t_object *obj);
 
 // Camera and view
-t_camera	*camera(int hsize, int vsize, float fov);
+t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 
 #endif

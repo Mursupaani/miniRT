@@ -12,24 +12,24 @@
 
 #include "minirt.h"
 
-float	matrix3_minor(t_matrix3 matrix, int row, int column)
+double	matrix3_minor(t_matrix3 matrix, int row, int column)
 {
 	t_matrix2	submatrix;
-	float	minor;
+	double	minor;
 
 	if (row > 2 || row < 0 || column > 2 || column < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Dimensions are outside of 3x3 matrix.");
-		return (FLT_MAX);
+		return (DBL_MAX);
 	}
 	submatrix = matrix3_submatrix(matrix, row, column);
 	minor = matrix2_determinant(submatrix);
 	return (minor);
 }
 
-float	matrix3_cofactor(t_matrix3 matrix, int row, int column)
+double	matrix3_cofactor(t_matrix3 matrix, int row, int column)
 {
-	float	minor;
+	double	minor;
 
 	minor = matrix3_minor(matrix, row, column);
 	if ((row + column) % 2 == 0)
@@ -38,24 +38,24 @@ float	matrix3_cofactor(t_matrix3 matrix, int row, int column)
 		return (-minor);
 }
 
-float	matrix4_minor(t_matrix4 matrix, int row, int column)
+double	matrix4_minor(t_matrix4 matrix, int row, int column)
 {
 	t_matrix3	submatrix;
-	float	minor;
+	double	minor;
 
 	if (row > 3 || row < 0 || column > 3 || column < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Dimensions are outside of 4x4 matrix.");
-		return (FLT_MAX);
+		return (DBL_MAX);
 	}
 	submatrix = matrix4_submatrix(matrix, row, column);
 	minor = matrix3_determinant(submatrix);
 	return (minor);
 }
 
-float	matrix4_cofactor(t_matrix4 matrix, int row, int column)
+double	matrix4_cofactor(t_matrix4 matrix, int row, int column)
 {
-	float	minor;
+	double	minor;
 
 	minor = matrix4_minor(matrix, row, column);
 	if ((row + column) % 2 == 0)

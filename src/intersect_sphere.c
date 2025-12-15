@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-static void	calculate_coefs(t_ray ray, float *a, float *b, float *c)
+static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 {
 	t_vector	sphere_to_ray;
 
@@ -14,8 +14,8 @@ static t_intersections	*intersect_with_sphere(t_object *sphere, t_ray ray)
 {
 	t_ray			local_ray;
 	t_matrix4		inv_matrix;
-	float			abc[3];
-	float			disc;
+	double			abc[3];
+	double			disc;
 	t_intersections	*xs;
 
 	inv_matrix = sphere->inverse_transform;
@@ -32,8 +32,8 @@ static t_intersections	*intersect_with_sphere(t_object *sphere, t_ray ray)
 	if (!xs->arr)
 		// Exit and free if malloc fails?
 		return (NULL);
-	xs->arr[0] = intersection((-abc[1] - sqrtf(disc)) / (2 * abc[0]), sphere);
-	xs->arr[1] = intersection((-abc[1] + sqrtf(disc)) / (2 * abc[0]), sphere);
+	xs->arr[0] = intersection((-abc[1] - sqrt(disc)) / (2 * abc[0]), sphere);
+	xs->arr[1] = intersection((-abc[1] + sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->count = 2;
 	quick_sort_intersections(xs->arr, 0, xs->count - 1);
 	return (xs);
@@ -54,8 +54,8 @@ t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)
 {
 	t_ray			local_ray;
 	t_matrix4		inv_matrix;
-	float			abc[3];
-	float			disc;
+	double			abc[3];
+	double			disc;
 	t_intersection	*xs;
 
 	xs = NULL;
@@ -65,9 +65,9 @@ t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)
 	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (disc < 0)
 		return (NULL);
-	intersection_add_back(&xs, intersection_new((-abc[1] - sqrtf(disc))
+	intersection_add_back(&xs, intersection_new((-abc[1] - sqrt(disc))
 							/ (2 * abc[0]), sphere));
-	intersection_add_back(&xs, intersection_new((-abc[1] + sqrtf(disc))
+	intersection_add_back(&xs, intersection_new((-abc[1] + sqrt(disc))
 							/ (2 * abc[0]), sphere));
 	return (xs);
 }

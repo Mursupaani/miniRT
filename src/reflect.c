@@ -14,7 +14,7 @@
 
 t_vector	reflect(t_vector in, t_vector normal)
 {
-	float	scale;
+	double	scale;
 
 	scale = 2 * dot(in, normal);
 	return (tuple_subtract(in, tuple_scale_multiply(normal, scale)));
@@ -41,7 +41,7 @@ static t_color	calculate_color(
 			l.specular = (t_color){0, 0, 0};
 		else
 		{
-			l.factor = powf(l.reflect_dot_eye, obj->material.shininess);
+			l.factor = pow(l.reflect_dot_eye, obj->material.shininess);
 			l.specular = color_multiply(color_multiply(
 						light->intensity, obj->material.specular), l.factor);
 		}

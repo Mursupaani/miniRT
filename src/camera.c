@@ -12,13 +12,13 @@
 
 #include "minirt.h"
 
-static	float pixel_size(t_camera *camera)
+static	double pixel_size(t_camera *camera)
 {
-	float	half_view;
-	float	aspect_ratio;
+	double	half_view;
+	double	aspect_ratio;
 
-	half_view = tanf(camera->fov / 2);
-	aspect_ratio = (float)camera->hsize / camera->vsize;
+	half_view = tan(camera->fov / 2);
+	aspect_ratio = (double)camera->hsize / camera->vsize;
 	if (aspect_ratio >= 1)
 	{
 		camera->half_width = half_view;
@@ -32,7 +32,7 @@ static	float pixel_size(t_camera *camera)
 	return (camera->half_width * 2) / camera->hsize;
 }
 
-t_camera	*camera(int hsize, int vsize, float fov)
+t_camera	*camera(int hsize, int vsize, double fov)
 {
 	t_camera	*camera;
 
@@ -47,7 +47,7 @@ t_camera	*camera(int hsize, int vsize, float fov)
 	return (camera);
 }
 
-static t_ray	calculate_ray(t_camera *c, float world_x, float world_y)
+static t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
 {
 	t_point		pixel;
 	t_point		origin;
@@ -65,13 +65,13 @@ static t_ray	calculate_ray(t_camera *c, float world_x, float world_y)
 
 t_ray	ray_for_pixel(t_camera *c, int px, int py)
 {
-	float	xoffset;
-	float	yoffset;
-	float	world_x;
-	float	world_y;
+	double	xoffset;
+	double	yoffset;
+	double	world_x;
+	double	world_y;
 
-	xoffset = ((float)px + 0.5) * c->pixel_size;
-	yoffset = ((float)py + 0.5) * c->pixel_size;
+	xoffset = ((double)px + 0.5) * c->pixel_size;
+	yoffset = ((double)py + 0.5) * c->pixel_size;
 	world_x = c->half_width - xoffset;
 	world_y = c->half_height - yoffset;
 	return (calculate_ray(c, world_x, world_y));

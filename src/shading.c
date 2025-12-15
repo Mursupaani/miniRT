@@ -15,7 +15,7 @@
 bool	is_shadowed(t_world *w, t_point p)
 {
 	t_vector		v;
-	float			distance;
+	double			distance;
 	t_ray			r;
 	t_intersections	*xs;
 	t_intersection	h;
@@ -26,7 +26,7 @@ bool	is_shadowed(t_world *w, t_point p)
 	xs = intersect_world(w, r);
 	h = hit(xs);
 	free_intersections(xs);
-	if (h.t != FLT_MAX && h.t < distance)
+	if (h.t != DBL_MAX && h.t < distance)
 		return (true);
 	else
 		return (false);
