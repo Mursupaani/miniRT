@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:07:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:43:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:11:32 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,113 @@ And pattern_at(pattern, point(0.75, 0, 0)) = color(0.25, 0.25, 0.25)\n");
 	print_color(c);
 }
 
+static void	test15()
+{
+	printf("TEST 15:\n");
+	printf("Scenario: A ring should extend in both x and z\n\
+Given pattern ← ring_pattern(white, black)\n\
+Then pattern_at(pattern, point(0, 0, 0)) = white\n\
+And pattern_at(pattern, point(1, 0, 0)) = black\n\
+And pattern_at(pattern, point(0, 0, 1)) = black\n\
+# 0.708 = just slightly more than √2/2\n\
+And pattern_at(pattern, point(0.708, 0, 0.708)) = black\n");
+	t_pattern	pattern = ring_pattern(white, black);
+	t_point p = point(0, 0, 0);
+	t_color	c = ring_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(1, 0, 0);
+	c = ring_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0, 0, 1);
+	c = ring_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0.708, 0, 0.708);
+	c = ring_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+}
+
+static void	test16()
+{
+	printf("TEST 16:\n");
+	printf("Scenario: Checkers should repeat in x\n\
+Given pattern ← checkers_pattern(white, black)\n\
+Then pattern_at(pattern, point(0, 0, 0)) = white\n\
+And pattern_at(pattern, point(0.99, 0, 0)) = white\n\
+And pattern_at(pattern, point(1.01, 0, 0)) = black\n");
+	t_pattern	pattern = checkers_pattern(white, black);
+	t_point p = point(0, 0, 0);
+	t_color	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0.99, 0, 0);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(1.01, 0, 0);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+}
+
+static void	test17()
+{
+	printf("TEST 17:\n");
+	printf("Scenario: Checkers should repeat in y\n\
+Given pattern ← checkers_pattern(white, black)\n\
+Then pattern_at(pattern, point(0, 0, 0)) = white\n\
+And pattern_at(pattern, point(0, 0.99, 0)) = white\n\
+And pattern_at(pattern, point(0, 1.01, 0)) = black\n");
+	t_pattern	pattern = checkers_pattern(white, black);
+	t_point p = point(0, 0, 0);
+	t_color	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0, 0.99, 0);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0, 1.01, 0);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+}
+
+static void	test18()
+{
+	printf("TEST 18:\n");
+	printf("Scenario: Checkers should repeat in z\n\
+Given pattern ← checkers_pattern(white, black)\n\
+Then pattern_at(pattern, point(0, 0, 0)) = white\n\
+And pattern_at(pattern, point(0, 0, 0.99)) = white\n\
+And pattern_at(pattern, point(0, 0, 1.01)) = black\n");
+	t_pattern	pattern = checkers_pattern(white, black);
+	t_point p = point(0, 0, 0);
+	t_color	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0, 0, 0.99);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0, 0, 1.01);
+	c = checkers_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+}
+
 void	test_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -372,6 +479,14 @@ void	test_patterns(void)
 	test13();
 	printf("_____________________________________________\n");
 	test14();
+	printf("_____________________________________________\n");
+	test15();
+	printf("_____________________________________________\n");
+	test16();
+	printf("_____________________________________________\n");
+	test17();
+	printf("_____________________________________________\n");
+	test18();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");

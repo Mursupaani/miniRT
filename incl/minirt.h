@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:33:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:01:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ typedef enum s_pattern_type
 	NONE,
 	STRIPE,
 	GRADIENT,
+	RING,
+	CHECKER,
 	TEST,
 }	t_pattern_type;
 
@@ -453,6 +455,10 @@ t_color		stripe_at(t_pattern pattern, t_point p);
 t_color		stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);
 t_pattern	gradient_pattern(t_color a, t_color b);
 t_color		gradient_at(t_pattern ptrn, t_point p);
+t_pattern	ring_pattern(t_color a, t_color b);
+t_color		ring_at(t_pattern gradient, t_point p);
+t_pattern	checkers_pattern(t_color a, t_color b);
+t_color		checkers_at(t_pattern gradient, t_point p);
 void		set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 void		add_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);

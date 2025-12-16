@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:06:15 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:34:03 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:01:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ t_color	pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p)
 		return (stripe_at(ptrn, ptrn_point));
 	else if (ptrn.type == GRADIENT)
 		return (gradient_at(ptrn, ptrn_point));
+	else if (ptrn.type == RING)
+		return (ring_at(ptrn, ptrn_point));
+	else if (ptrn.type == CHECKER)
+		return (checkers_at(ptrn, ptrn_point));
 	else if (ptrn.type == TEST)
 		return ((t_color){ptrn_point.x, ptrn_point.y, ptrn_point.z});
 	else
