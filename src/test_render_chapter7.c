@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:48:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:34:03 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,42 @@ void	build_chapter7_world(t_app *app)
 	add_pattern_transform(&right->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
 	add_pattern_transform(&right->material.pattern, rotation_z(M_PI / 3));
 	world_add_object(w, right);
-	app->scene = w;
-	app->scene->camera = c;
 
 	t_object *left = sphere_new();
-	m = matrix4_multiply(translation_matrix4(-1.5, 0.33, -0.75), scaling_matrix4(0.33, 0.33, 0.33));
+	m = matrix4_multiply(translation_matrix4(-2.5, 0.33, -1.25), scaling_matrix4(0.33, 0.33, 0.33));
 	left->material.color = color(1, 0.8, 0.1);
 	left->material.diffuse = 0.7;
 	left->material.specular = 0.3;
 	set_transform(left, m);
 	left->material.pattern = test_pattern();
-	// set_pattern_transform(&left->material.pattern, translation_matrix4(0.5, 1, 1.5));
+	set_pattern_transform(&left->material.pattern, rotation_z(M_PI / 2));
+	add_pattern_transform(&left->material.pattern, scaling_matrix4(1.5, 1.5, 1.5));
 	world_add_object(w, left);
+
+	t_object *up_right = sphere_new();
+	m = matrix4_multiply(translation_matrix4(2, 2, -2), scaling_matrix4(0.5, 0.5, 0.5));
+	up_right->material.color = color(1, 0.8, 0.1);
+	up_right->material.diffuse = 0.7;
+	up_right->material.specular = 0.3;
+	set_transform(up_right, rotation_y(M_PI / 4));
+	add_transform(up_right, m);
+	up_right->material.pattern = ring_pattern(color(0.5, 0.1, 0.8), color(0, 0, 0));
+	set_pattern_transform(&up_right->material.pattern, rotation_x(M_PI / 2));
+	add_pattern_transform(&up_right->material.pattern, scaling_matrix4(0.2, 0.2, 0.2));
+	world_add_object(w, up_right);
+
+	t_object *up_left = sphere_new();
+	m = matrix4_multiply(translation_matrix4(-2, 2, -2), scaling_matrix4(0.5, 0.5, 0.5));
+	up_left->material.color = color(1, 0.8, 0.1);
+	up_left->material.diffuse = 0.7;
+	up_left->material.specular = 0.3;
+	set_transform(up_left, rotation_y(M_PI / 4));
+	add_transform(up_left, m);
+	up_left->material.pattern = checkers_pattern(color(0.2, 0.7, 0.5), color(0, 0, 0));
+	set_pattern_transform(&up_left->material.pattern, rotation_y(-M_PI / 4));
+	add_pattern_transform(&up_left->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
+	world_add_object(w, up_left);
+
 	app->scene = w;
 	app->scene->camera = c;
-
 }
