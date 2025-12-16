@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:55:11 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 16:06:01 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:35:29 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,27 @@ t_pattern	stripe_pattern(t_color a, t_color b)
 	return (ptrn);
 }
 
-t_color	stripe_at(t_pattern pattern, t_point p)
+t_color	stripe_at(t_pattern stripe, t_point p)
 {
 	if (p.x >= 0)
 	{
 		if ((int)p.x % 2 == 0)
-			return (pattern.a);
+			return (stripe.a);
 		else
-			return (pattern.b);
+			return (stripe.b);
 	}
 	else
 	{
 		if ((int)floor(p.x) % 2 == 0)
-			return (pattern.a);
+			return (stripe.a);
 		else
-			return (pattern.b);
+			return (stripe.b);
 	}
 }
 
 t_color	stripe_at_object(t_pattern ptrn, t_object *obj, t_point p)
 {
+	//FIXME: Used only in testing?
 	t_point	obj_point;
 	t_point	ptrn_point;
 

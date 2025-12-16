@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 16:26:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:48:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	build_chapter7_world(t_app *app)
 	middle->material.color = color(0.1, 1, 0.5);
 	middle->material.diffuse = 0.7;
 	middle->material.specular = 0.3;
-	middle->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
+	middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
 	set_transform(middle, m);
+	set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
 	world_add_object(w, middle);
 
 	t_object *right = sphere_new();
@@ -83,6 +84,8 @@ void	build_chapter7_world(t_app *app)
 	left->material.diffuse = 0.7;
 	left->material.specular = 0.3;
 	set_transform(left, m);
+	left->material.pattern = test_pattern();
+	// set_pattern_transform(&left->material.pattern, translation_matrix4(0.5, 1, 1.5));
 	world_add_object(w, left);
 	app->scene = w;
 	app->scene->camera = c;

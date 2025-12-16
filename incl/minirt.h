@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 16:25:44 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:33:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ typedef enum s_pattern_type
 {
 	NONE,
 	STRIPE,
+	GRADIENT,
+	TEST,
 }	t_pattern_type;
 
 typedef struct s_light
@@ -300,10 +302,11 @@ void		test_world();
 void		test_camera();
 void		build_chapter7_world(t_app *app);;
 void		test_shadows();
+t_pattern	test_pattern();
 void		test_patterns(void);
 
 // Old functions / unused?:
-t_color	lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
+t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
 t_intersection	*intersection_new(double t, t_object *object);
 t_intersection	*intersection_hit(t_intersection *xs);
 void			intersection_add_back(t_intersection **lst, 
@@ -435,6 +438,7 @@ t_color255	color255(
 t_color		color_mix(t_color color_obj, t_color color_light);
 t_color		color_multiply(t_color color, double multiplier);
 t_color		color_sum(t_color color1, t_color color2);
+t_color		color_subtract(t_color color1, t_color color2);
 t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
@@ -447,6 +451,8 @@ bool		is_shadowed(t_world *w, t_point p);
 t_pattern	stripe_pattern(t_color a, t_color b);
 t_color		stripe_at(t_pattern pattern, t_point p);
 t_color		stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);
+t_pattern	gradient_pattern(t_color a, t_color b);
+t_color		gradient_at(t_pattern ptrn, t_point p);
 void		set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 void		add_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);

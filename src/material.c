@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static t_pattern	empty_pattern(void)
+static t_pattern	no_pattern(void)
 {
 	t_pattern	empty;
 
@@ -58,6 +58,6 @@ t_material	material(void)
 	material.specular = SPECULAR;
 	material.shininess = SHININESS;
 	material.color = (t_color){1, 1, 1};
-	material.pattern = empty_pattern();
+	material.pattern = no_pattern();
 	return (material);
 }

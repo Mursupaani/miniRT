@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:07:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 12:44:13 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:43:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,109 @@ Then c = white\n");
 	free(obj);
 }
 
+static void	test9()
+{
+	printf("TEST 9:\n");
+	printf("Scenario: The default pattern transformation\n\
+Given pattern ← test_pattern()\n\
+Then pattern.transform = identity_matrix\n");
+	t_pattern pattern = test_pattern();
+	print_matrix4(pattern.transform);
+}
+
+static void	test10()
+{
+	printf("TEST 10:\n");
+	printf("Scenario: Assigning a transformation\n\
+Given pattern ← test_pattern()\n\
+When set_pattern_transform(pattern, translation(1, 2, 3))\n\
+Then pattern.transform = translation(1, 2, 3)\n");
+	t_pattern pattern = test_pattern();
+	set_pattern_transform(&pattern, translation_matrix4(1, 2, 3));
+	print_matrix4(pattern.transform);
+}
+
+static void	test11()
+{
+	printf("TEST 11:\n");
+	printf("Scenario: A pattern with an object transformation\n\
+Given shape ← sphere()Chapter 10. Patterns • 134\n\
+And set_transform(shape, scaling(2, 2, 2))\n\
+And pattern ← test_pattern()\n\
+When c ← pattern_at_shape(pattern, shape, point(2, 3, 4))\n\
+Then c = color(1, 1.5, 2)\n");
+	t_object *shape = sphere_new();
+	set_transform(shape, scaling_matrix4(2, 2, 2));
+	t_pattern pattern = test_pattern();
+	t_color c = pattern_at_shape(pattern, shape, point(2, 3, 4));
+	print_color(c);
+}
+
+static void	test12()
+{
+	printf("TEST 12:\n");
+	printf("Scenario: A pattern with a pattern transformation\n\
+Given shape ← sphere()\n\
+And pattern ← test_pattern()\n\
+And set_pattern_transform(pattern, scaling(2, 2, 2))\n\
+When c ← pattern_at_shape(pattern, shape, point(2, 3, 4))\n\
+Then c = color(1, 1.5, 2)\n");
+	t_object *shape = sphere_new();
+	t_pattern pattern = test_pattern();
+	set_pattern_transform(&pattern, scaling_matrix4(2, 2, 2));
+	t_color c = pattern_at_shape(pattern, shape, point(2, 3, 4));
+	print_color(c);
+}
+
+static void	test13()
+{
+	printf("TEST 13:\n");
+	printf("Scenario: A pattern with both an object and a pattern transformation\n\
+Given shape ← sphere()\n\
+And set_transform(shape, scaling(2, 2, 2))\n\
+And pattern ← test_pattern()\n\
+And set_pattern_transform(pattern, translation(0.5, 1, 1.5))\n\
+When c ← pattern_at_shape(pattern, shape, point(2.5, 3, 3.5))\n\
+Then c = color(0.75, 0.5, 0.25)\n");
+	t_object *shape = sphere_new();
+	set_transform(shape, scaling_matrix4(2, 2, 2));
+	t_pattern pattern = test_pattern();
+	set_pattern_transform(&pattern, translation_matrix4(0.5, 1, 1.5));
+	t_color c = pattern_at_shape(pattern, shape, point(2.5, 3, 3.5));
+	print_color(c);
+}
+
+static void	test14()
+{
+	printf("TEST 14:\n");
+	printf("Scenario: A gradient linearly interpolates between colors\n\
+Given pattern ← gradient_pattern(white, black)\n\
+Then pattern_at(pattern, point(0, 0, 0)) = white\n\
+And pattern_at(pattern, point(0.25, 0, 0)) = color(0.75, 0.75, 0.75)\n\
+And pattern_at(pattern, point(0.5, 0, 0)) = color(0.5, 0.5, 0.5)\n\
+And pattern_at(pattern, point(0.75, 0, 0)) = color(0.25, 0.25, 0.25)\n");
+	t_pattern	pattern = gradient_pattern(white, black);
+	t_point p = point(0, 0, 0);
+	t_color	c = gradient_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0.25, 0, 0);
+	c = gradient_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0.50, 0, 0);
+	c = gradient_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+	printf("----------\n");
+	p = point(0.75, 0, 0);
+	c = gradient_at(pattern, p);
+	print_tuple(p);
+	print_color(c);
+}
+
 void	test_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -257,6 +360,18 @@ void	test_patterns(void)
 	test7();
 	printf("_____________________________________________\n");
 	test8();
+	printf("_____________________________________________\n");
+	test9();
+	printf("_____________________________________________\n");
+	test10();
+	printf("_____________________________________________\n");
+	test11();
+	printf("_____________________________________________\n");
+	test12();
+	printf("_____________________________________________\n");
+	test13();
+	printf("_____________________________________________\n");
+	test14();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");
