@@ -23,13 +23,20 @@ t_app	*initialize_app(void)
 	if (!app->mlx)
 		exit_and_free_memory(ERROR_MLX_INIT, app);
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
+
 	// NOTE: Uncomment two lines below for testing with different resolution.
-	app->monitor_height = 640;
-	app->monitor_width = 1024;
+	// app->monitor_width = 1024;
+	// app->monitor_height = 640;
+
+	// NOTE: Uncomment two lines below for testing with Valgrind.
+	// app->monitor_width = 50;
+	// app->monitor_height = 50;
+
 	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
 	app->img = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
 	if (!app->img)
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	initialize_hooks(app);
+	app->keep_rendering = true;
 	return (app);
 }
