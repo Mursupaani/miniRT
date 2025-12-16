@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/15 15:31:22 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:23:12 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,33 @@ typedef struct s_light
 	// t_color_255		color_255;
 }	t_light;
 
+typedef struct s_pattern
+{
+	t_color	a;
+	t_color	b;
+}	t_pattern;
+
 typedef struct s_material
 {
-	double	ambient;
-	double	diffuse;
-	double	specular;
-	double	shininess;
-	t_color	color;
+	double		ambient;
+	double		diffuse;
+	double		specular;
+	double		shininess;
+	t_color		color;
+	t_pattern	pattern;
 }	t_material;
+
+typedef struct s_object
+{
+	t_object_type	type;
+	t_point			center;
+	double			diameter;
+	double			height;
+	t_matrix4		transform;
+	t_matrix4		inverse_transform;
+	t_matrix4		inverse_transpose;
+	t_material		material;
+}	t_object;
 
 typedef struct s_camera
 {
@@ -166,18 +185,6 @@ typedef struct s_camera
 	double		half_height;
 	double		pixel_size;
 }	t_camera;
-
-typedef struct s_object
-{
-	t_object_type	type;
-	t_point			center;
-	double			diameter;
-	double			height;
-	t_matrix4		transform;
-	t_matrix4		inverse_transform;
-	t_matrix4		inverse_transpose;
-	t_material		material;
-}	t_object;
 
 typedef struct s_world
 {
@@ -282,6 +289,16 @@ void		test_world();
 void		test_camera();
 void		build_chapter7_world(t_app *app);;
 void		test_shadows();
+void		test_patterns(void);
+
+// Old functions / unused?:
+t_color	lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
+t_intersection	*intersection_new(double t, t_object *object);
+t_intersection	*intersection_hit(t_intersection *xs);
+void			intersection_add_back(t_intersection **lst, 
+				t_intersection *new);
+void			intersection_free(t_intersection *lst);
+t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -299,6 +316,7 @@ void		print_object(t_object *o);
 void		print_world(t_world *world);
 void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
+void		print_pattern(t_pattern pattern);
 
 // App initialize and management:
 t_app		*initialize_app(void);
@@ -378,13 +396,7 @@ void		launch_render(t_app *app);
 void		join_threads(t_thread_data *thread_data, int thread_count);
 
 // Intersections:
-t_intersection	*intersection_new(double t, t_object *object);
 t_intersection	intersection(double t, t_object *object);
-t_intersection	*intersection_hit(t_intersection *xs);
-void			intersection_add_back(t_intersection **lst, 
-				t_intersection *new);
-void			intersection_free(t_intersection *lst);
-t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
@@ -419,9 +431,12 @@ t_color		shade_hit(t_world *w, t_computations comps);
 t_color		color_at(t_world *w, t_ray r);
 bool		is_shadowed(t_world *w, t_point p);
 
+// Patterns:
+t_pattern	stripe_pattern(t_color a, t_color b);
+t_color		stripe_at(t_pattern pattern, t_point p);
+
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
-t_color	lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
 t_color	lighting(t_computations comps, t_light *light);
 
 // Material:

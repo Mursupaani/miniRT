@@ -6,14 +6,14 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:54:51 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:58:19 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:09:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-void	test1()
+static void	test1()
 {
 	t_object	*sphere;
 	t_vector	normal;
@@ -29,7 +29,7 @@ Then n = vector(1, 0, 0)\n");
 	free(sphere);
 }
 
-void	test2()
+static void	test2()
 {
 	t_object	*sphere;
 	t_vector	normal;
@@ -45,7 +45,7 @@ Then n = vector(√3/3, √3/3, √3/3)\n");
 	free(sphere);
 }
 
-void	test3()
+static void	test3()
 {
 	t_object	*sphere;
 	t_vector	normal;
@@ -68,7 +68,7 @@ Then n = vector(0, 0.70711, -0.70711)\n");
 	free(sphere);
 }
 
-void	test4()
+static void	test4()
 {
 	t_object	*sphere;
 	t_matrix4	m;
@@ -89,7 +89,7 @@ Then n = vector(0, 0.97014, -0.24254)\n");
 	free(sphere);
 }
 
-void	test5()
+static void	test5()
 {
 	t_vector	v;
 	t_vector	n;
@@ -107,7 +107,7 @@ Then r = vector(1, 1, 0)\n");
 	print_tuple(r);
 }
 
-void	test6()
+static void	test6()
 {
 	t_vector	v;
 	t_vector	n;
