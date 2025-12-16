@@ -26,6 +26,7 @@ static int	init_threads(t_app *app)
 		app->threads[i].id = i;
 		app->threads[i].start_row = i * rows_per_thread;
 		app->threads[i].app = app;
+		app->threads[i].keep_rendering = &app->keep_rendering;
 		if (i == THREADS - 1)
 			app->threads[i].end_row = app->monitor_height;
 		else
@@ -45,7 +46,7 @@ void	*render_routine(void *arg)
 
  	data = (t_thread_data *)arg;
  	y = data->start_row;
- 	while (y < data->end_row)
+ 	while (y < data->end_row && *data->keep_rendering)
 	{
 		x = 0;
 		while (x < data->app->img->width)

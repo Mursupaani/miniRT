@@ -75,3 +75,9 @@
    ...
    fun:glfwCreateWindow
 }
+
+{
+   <ignore_radeon_driver_race>
+   Helgrind:Race
+   obj:*/radeonsi_dri.so
+}

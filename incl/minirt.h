@@ -16,6 +16,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <float.h>
+# include <stdatomic.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -217,6 +218,7 @@ typedef struct s_app
 	mlx_image_t		*img;
 	t_world			*scene;
 	t_thread_data	*threads;
+	atomic_int		keep_rendering;
 }	t_app;
 
 /**
@@ -238,6 +240,7 @@ typedef struct s_thread_data
 	unsigned int	end_row;
 	t_app			*app;
 	pthread_t		thread_handle;
+	atomic_int		*keep_rendering;
 }	t_thread_data;
 
 /**
