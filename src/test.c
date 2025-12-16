@@ -15,7 +15,7 @@
 void	run_tests()
 {
 	// test_tuples();
-	test_matrices();
+	// test_matrices();
 	// test_transformation();
 	// test_rays();
 	// render_chapter_5_scene();
@@ -24,5 +24,5 @@ void	run_tests()
 	// test_world();
 	// test_camera();
 	// test_shadows();
-	// test_patterns();
+	test_patterns();
 }

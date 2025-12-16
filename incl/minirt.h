@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 14:23:12 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:25:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_lighting
 	t_color		effective_color;
 	t_color		diffuse;
 	t_color		specular;
+	t_color		color_at_point;
 }	t_lighting;
 
 typedef enum s_exit_value
@@ -138,6 +139,12 @@ typedef enum s_object_type
 	CYLINDER
 }	t_object_type;
 
+typedef enum s_pattern_type
+{
+	NONE,
+	STRIPE,
+}	t_pattern_type;
+
 typedef struct s_light
 {
 	t_color			intensity;
@@ -147,8 +154,12 @@ typedef struct s_light
 
 typedef struct s_pattern
 {
-	t_color	a;
-	t_color	b;
+	t_pattern_type	type;
+	t_color			a;
+	t_color			b;
+	t_matrix4		transform;
+	t_matrix4		inverse_transform;
+	t_matrix4		inverse_transpose;
 }	t_pattern;
 
 typedef struct s_material
@@ -414,6 +425,7 @@ t_ray		ray_for_pixel(t_camera *c, int px, int py);
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
 void		set_transform(t_object *object, t_matrix4 transform);
+void		add_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
 
 // Color & shading:
@@ -434,6 +446,10 @@ bool		is_shadowed(t_world *w, t_point p);
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);
 t_color		stripe_at(t_pattern pattern, t_point p);
+t_color		stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);
+void		set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
+void		add_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
+t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

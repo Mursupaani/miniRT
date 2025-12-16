@@ -136,6 +136,105 @@ And stripe_at(pattern, point(-1.1, 0, 0)) = white\n");
 	print_color(c);
 }
 
+static void	test5()
+{
+	printf("TEST 5:\n");
+	printf("Scenario: Lighting with a pattern applied\n\
+Given m.pattern ← stripe_pattern(color(1, 1, 1), color(0, 0, 0))\n\
+And m.ambient ← 1\n\
+And m.diffuse ← 0\n\
+And m.specular ← 0\n\
+And eyev ← vector(0, 0, -1)\n\
+And normalv ← vector(0, 0, -1)\n\
+And light ← point_light(point(0, 0, -10), color(1, 1, 1))\n\
+When c1 ← lighting(m, light, point(0.9, 0, 0), eyev, normalv, false)\n\
+And c2 ← lighting(m, light, point(1.1, 0, 0), eyev, normalv, false)\n\
+Then c1 = color(1, 1, 1)\n\
+And c2 = color(0, 0, 0)\n");
+	printf("----------\n");
+	t_object *obj = sphere_new();
+	t_material m = material();
+	m.pattern = stripe_pattern(white, black);
+	m.ambient = 1;
+	m.diffuse = 0;
+	m.specular = 0;
+	obj->material = m;
+	t_vector eyev = vector(0, 0, -1);
+	t_vector normalv = vector(0, 0, -1);
+	t_light *light = point_light(point(0, 0, -10), color(1, 1, 1));
+	t_computations comps;
+	comps.over_point = point(0.9, 0, 0);
+	comps.normalv = normalv;
+	comps.eyev = eyev;
+	comps.in_shadow = false;
+	comps.object = obj;
+	t_color c1 = lighting(comps, light);
+	print_tuple(comps.over_point);
+	print_color(c1);
+	printf("----------\n");
+	comps.over_point = point(1.1, 0, 0);
+	t_color c2 = lighting(comps, light);
+	print_tuple(comps.over_point);
+	print_color(c2);
+	free(obj);
+}
+
+static void	test6()
+{
+	printf("TEST 6:\n");
+	printf("Scenario: Stripes with an object transformation\n\
+Given object ← sphere()\n\
+And set_transform(object, scaling(2, 2, 2))\n\
+And pattern ← stripe_pattern(white, black)\n\
+When c ← stripe_at_object(pattern, object, point(1.5, 0, 0))\n\
+Then c = white\n");
+	printf("----------\n");
+	t_object *obj = sphere_new();
+	set_transform(obj, scaling_matrix4(2, 2, 2));
+	t_pattern pattern = stripe_pattern(white, black);
+	t_color c = stripe_at_object(pattern, obj, point(1.5, 0, 0));
+	print_color(c);
+	free(obj);
+}
+
+static void	test7()
+{
+	printf("TEST 7:\n");
+	printf("Scenario: Stripes with a pattern transformation\n\
+Given object ← sphere()\n\
+And pattern ← stripe_pattern(white, black)\n\
+And set_pattern_transform(pattern, scaling(2, 2, 2))\n\
+When c ← stripe_at_object(pattern, object, point(1.5, 0, 0))\n\
+Then c = white\n");
+	printf("----------\n");
+	t_object *obj = sphere_new();
+	t_pattern pattern = stripe_pattern(white, black);
+	set_pattern_transform(&pattern, scaling_matrix4(2, 2, 2));
+	t_color c = stripe_at_object(pattern, obj, point(1.5, 0, 0));
+	print_color(c);
+	free(obj);
+}
+
+static void	test8()
+{
+	printf("TEST 8:\n");
+	printf("Scenario: Stripes with both an object and a pattern transformation\n\
+Given object ← sphere()\n\
+And set_transform(object, scaling(2, 2, 2))\n\
+And pattern ← stripe_pattern(white, black)\n\
+And set_pattern_transform(pattern, translation(0.5, 0, 0))\n\
+When c ← stripe_at_object(pattern, object, point(2.5, 0, 0))\n\
+Then c = white\n");
+	printf("----------\n");
+	t_object *obj = sphere_new();
+	set_transform(obj, scaling_matrix4(2, 2, 2));
+	t_pattern pattern = stripe_pattern(white, black);
+	set_pattern_transform(&pattern, translation_matrix4(0.5, 0, 0));
+	t_color c = stripe_at_object(pattern, obj, point(2.5, 0, 0));
+	print_color(c);
+	free(obj);
+}
+
 void	test_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -150,6 +249,14 @@ void	test_patterns(void)
 	test3();
 	printf("_____________________________________________\n");
 	test4();
+	printf("_____________________________________________\n");
+	test5();
+	printf("_____________________________________________\n");
+	test6();
+	printf("_____________________________________________\n");
+	test7();
+	printf("_____________________________________________\n");
+	test8();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");

@@ -6,11 +6,24 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 15:38:24 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/05 18:43:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 15:58:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static t_pattern	empty_pattern(void)
+{
+	t_pattern	empty;
+
+	empty.type = NONE;
+	empty.a = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
+	empty.b = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
+	empty.transform = matrix4_identity();
+	empty.inverse_transform = empty.transform;
+	empty.inverse_transpose = empty.transform;
+	return (empty);
+}
 
 t_material	material_change_color(t_material material, t_color color)
 {
@@ -45,5 +58,6 @@ t_material	material(void)
 	material.specular = SPECULAR;
 	material.shininess = SHININESS;
 	material.color = (t_color){1, 1, 1};
+	material.pattern = empty_pattern();
 	return (material);
 }
