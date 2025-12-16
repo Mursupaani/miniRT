@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:45:05 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:21:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,4 +251,16 @@ void	print_camera(t_camera *camera)
 	printf("\n");
 	printf(" TRANSFORMATION ");
 	print_matrix4(camera->transform);
+}
+
+void	print_pattern(t_pattern pattern)
+{
+	printf("--------------------\n");
+	printf("PATTERN:\n");
+	printf("\n");
+	printf("A ");
+	print_color(pattern.a);
+	printf("\n");
+	printf("B ");
+	print_color(pattern.b);
 }

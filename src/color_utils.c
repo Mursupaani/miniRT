@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 15:26:47 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 11:05:25 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/16 17:16:36 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,3 @@ t_color	color_from_color255(t_color255 color_255)
 	color.b = color_255.b / 255.0f;
 	return (color);
 }
-
-/*t_color255	color255_from_color(t_color color)
-{
-	t_color255	color255;
-
-	color255.r = color.r * 255.0f;
-	if (color255.r > 255)
-		color.r = 255;
-	if (color255.r < 0)
-		color.r = 0;
-	color255.g = color.g * 255.0f;
-	if (color255.g > 255)
-		color.g = 255;
-	if (color255.g < 0)
-		color.g = 0;
-	color255.b = color.b * 255.0f;
-	if (color255.b > 255)
-		color.b = 255;
-	if (color255.b < 0)
-		color.b = 0;
-	return (color255);
-}*/

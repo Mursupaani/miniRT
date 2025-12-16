@@ -16,6 +16,15 @@ void	free_object_array(t_object **objs)
 	objs = NULL;
 }
 
+void	add_transform(t_object *object, t_matrix4 transform)
+{
+	if (!object)
+		return ;
+	object->transform = matrix4_multiply(transform, object->transform);
+	object->inverse_transform = matrix4_invert(object->transform);
+	object->inverse_transpose = matrix4_transpose(object->inverse_transform);
+}
+
 void	set_transform(t_object *object, t_matrix4 transform)
 {
 	if (!object)
@@ -42,6 +51,7 @@ t_object	*sphere_new(void)
 	sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
 	return (sphere);
 }
+
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
 {
 	t_object	*sphere;
@@ -65,17 +75,3 @@ t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
 		set_transform(sphere, translation_matrix4(center.x, center.y, center.z));
 	return (sphere);
 }
-//
-// t_object	*sphere_new(void)
-// {
-// 	t_object	*sphere;
-//
-// 	sphere = malloc(sizeof(t_object));
-// 	if (!sphere)
-// 		return (NULL);
-// 	sphere->type = SPHERE;
-// 	sphere->transform = matrix4_identity();
-// 	sphere->inverse_transform = matrix4_identity();
-// 	sphere->center = point(0, 0, 0);
-// 	return (sphere);
-// }
