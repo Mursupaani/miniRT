@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/10 18:43:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:20:21 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 {
 	if (obj->type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
+	else if (obj->type == PLANE)
+		return (vector(0, 1, 0));
 	else
 		return (normalize(vector(DBL_MAX, DBL_MAX, DBL_MAX)));
 }
