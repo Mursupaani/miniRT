@@ -52,7 +52,8 @@ void	*render_routine(void *arg)
 		while (x < data->app->img->width)
 		{
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
-			color = color_at(data->app->scene, ray);
+			color = color_at(data->app->scene, ray, REFLECTIONS);
+			// FIXME: No need for this?
 			// if (pixel_fits_image(x, y, data->app))
 			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;

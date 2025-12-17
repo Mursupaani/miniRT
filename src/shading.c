@@ -32,7 +32,7 @@ bool	is_shadowed(t_world *w, t_point p)
 		return (false);
 }
 
-t_color	shade_hit(t_world *w, t_computations comps)
+t_color	shade_hit(t_world *w, t_computations comps, int reflections)
 {
 	t_color	surface;
 	t_color	reflected;
@@ -42,11 +42,11 @@ t_color	shade_hit(t_world *w, t_computations comps)
 	if (is_shadowed(w, comps.over_point) == true)
 		comps.shadowed = true;
 	surface = lighting(comps, w->light);
-	reflected = reflected_color(w, comps);
+	reflected = reflected_color(w, comps, reflections);
 	return (color_sum(surface, reflected));
 }
 
-t_color	color_at(t_world *w, t_ray r)
+t_color	color_at(t_world *w, t_ray r, int reflections)
 {
 	t_intersections	*xs;
 	t_intersection	x;
@@ -61,5 +61,5 @@ t_color	color_at(t_world *w, t_ray r)
 	}
 	comps = prepare_computations(x, r);
 	free_intersections(xs);
-	return (shade_hit(w, comps));
+	return (shade_hit(w, comps, reflections));
 }

@@ -58,7 +58,7 @@ Then color = color(0, 0, 0)\n");
 	shape->material.ambient = 1;
 	t_intersection i = intersection(1, shape);
 	t_computations comps = prepare_computations(i, r);
-	t_color c = reflected_color(w, comps);
+	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
 }
@@ -86,9 +86,71 @@ Then color = color(0.19032, 0.2379, 0.14274)\n");
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
 	t_computations comps = prepare_computations(i, r);
-	t_color c = reflected_color(w, comps);
+	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
+}
+
+static void	test5()
+{
+	printf("TEST 5:");
+	printf("Scenario: shade_hit() with a reflective material\n\
+Given w ← default_world()\n\
+And shape ← plane() with:\n\
+| material.reflective | 0.5 |\n\
+| transform | translation(0, -1, 0) |\n\
+And shape is added to w\n\
+And r ← ray(point(0, 0, -3), vector(0, -√2/2, √2/2))\n\
+And i ← intersection(√2, shape)\n\
+When comps ← prepare_computations(i, r)\n\
+And color ← shade_hit(w, comps)\n\
+Then color = color(0.87677, 0.92436, 0.82918)\n");
+	t_world	*w = default_world();
+	t_object *shape = plane_new();
+	shape->material.reflective = 0.5;
+	set_transform(shape, translation_matrix4(0, -1, 0));
+	world_add_object(w, shape);
+	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
+	t_intersection i = intersection(sqrt(2), shape);
+	t_computations comps = prepare_computations(i, r);
+	t_color c = shade_hit(w, comps, 1);
+	print_color(c);
+	free(shape);
+}
+
+static void	test6()
+{
+	printf("TEST 6:");
+	printf("Scenario: color_at() with mutually reflective surfaces\n\
+Given w ← world()\n\
+And w.light ← point_light(point(0, 0, 0), color(1, 1, 1))\n\
+And lower ← plane() with:\n\
+| material.reflective | 1 |\n\
+| transform | translation(0, -1, 0) |\n\
+And lower is added to w\n\
+And upper ← plane() with:\n\
+| material.reflective | 1 |\n\
+| transform | translation(0, 1, 0) |\n\
+And upper is added to w\n\
+And r ← ray(point(0, 0, 0), vector(0, 1, 0))\n\
+Then color_at(w, r) should terminate successfully\n");
+	t_world	*w = world();
+	free(w->light);
+	w->light = point_light(point(0, 0, 0), color(1, 1, 1));
+	t_object *lower = plane_new();
+	lower->material.reflective = 1;
+	set_transform(lower, translation_matrix4(0, -1, 0));
+	world_add_object(w, lower);
+	t_object *upper = plane_new();
+	upper->material.reflective = 1;
+	set_transform(upper, translation_matrix4(0, 1, 0));
+	world_add_object(w, upper);
+	print_world(w);
+	t_ray r = ray(point(0, 0, 0), vector(0, 1, 0));
+	t_color c = color_at(w, r, REFLECTIONS);
+	print_color(c);
+	free(lower);
+	free(upper);
 }
 
 void	test_reflections()
@@ -103,6 +165,10 @@ void	test_reflections()
 	test3();
 	printf("_____________________________________________\n");
 	test4();
+	printf("_____________________________________________\n");
+	test5();
+	printf("_____________________________________________\n");
+	test6();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFLECTIONS FINISHED -------\n");
 	printf("\n");

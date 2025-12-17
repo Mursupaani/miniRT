@@ -60,6 +60,8 @@ static t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
 	origin = matrix4_and_tuple_multiply(
 			c->inverse_transform, point(0, 0, 0));
 	direction = normalize(tuple_subtract(pixel, origin));
+	// FIXME: Backup. Started using set_camera_transform() so every pixel doesn't have
+	// to recalculate inversce_transform.
 	// inverse_camera_transform = matrix4_invert(c->transform);
 	// pixel = matrix4_and_tuple_multiply(
 			// inverse_camera_transform, point(world_x, world_y, -1));
