@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 13:05:07 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 14:06:29 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void	build_chapter7_world(t_app *app)
 	world_add_object(w, floor);
 
     // --- LEFT WALL ---
-// t_object *left_wall = sphere_new();
-// m = scaling_matrix4(10, 0.01, 10);
-// m = matrix4_multiply(rotation_x(M_PI / 2), m); 
-// m = matrix4_multiply(rotation_y(-M_PI / 4), m); 
-// m = matrix4_multiply(translation_matrix4(0, 0, 5), m);
-// set_transform(left_wall, m);
-// left_wall->material = floor->material;
-// left_wall->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
-// set_pattern_transform(&left_wall->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
-// add_pattern_transform(&left_wall->material.pattern, rotation_z(M_PI / 2.5));
-// world_add_object(w, left_wall);
+	t_object *left_wall = sphere_new();
+	m = scaling_matrix4(10, 0.01, 10);
+	m = matrix4_multiply(rotation_x(M_PI / 2), m); 
+	m = matrix4_multiply(rotation_y(-M_PI / 4), m); 
+	m = matrix4_multiply(translation_matrix4(0, 0, 5), m);
+	set_transform(left_wall, m);
+	left_wall->material = floor->material;
+	left_wall->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
+	set_pattern_transform(&left_wall->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
+	add_pattern_transform(&left_wall->material.pattern, rotation_z(M_PI / 2.5));
+	world_add_object(w, left_wall);
 
     // --- RIGHT WALL ---
     // t_object *right_wall = plane_new();
@@ -112,16 +112,16 @@ void	build_chapter7_world(t_app *app)
 	world_add_object(w, up_left);
 
 	// BACK WALL - A plane behind the scene
-	t_object *back_wall = plane_new();
-	m = rotation_x(M_PI / 2);
-	m = matrix4_multiply(translation_matrix4(0, 0, 8), m);
-	set_transform(back_wall, m);
-	back_wall->material.color = color(0.8, 0.8, 0.9);
-	back_wall->material.diffuse = 0.7;
-	back_wall->material.specular = 0.1;
-	back_wall->material.pattern = checkers_pattern(color(0.6, 0.6, 0.7), color(0.9, 0.9, 1.0));
-	set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
-	world_add_object(w, back_wall);
+	// t_object *back_wall = plane_new();
+	// m = rotation_x(M_PI / 2);
+	// m = matrix4_multiply(translation_matrix4(0, 0, 8), m);
+	// set_transform(back_wall, m);
+	// back_wall->material.color = color(0.8, 0.8, 0.9);
+	// back_wall->material.diffuse = 0.7;
+	// back_wall->material.specular = 0.1;
+	// back_wall->material.pattern = checkers_pattern(color(0.6, 0.6, 0.7), color(0.9, 0.9, 1.0));
+	// set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
+	// world_add_object(w, back_wall);
 
 	app->scene = w;
 	app->scene->camera = c;

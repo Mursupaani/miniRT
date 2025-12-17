@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:44:58 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 13:29:23 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,8 @@ typedef struct s_world
 	t_light			*light;
 	t_object		**objects;
 	int				object_count;
+	double			ambient_ratio;
+	t_color			ambient_color;
 }	t_world;
 
 typedef struct s_app
@@ -345,6 +347,12 @@ void		initialize_hooks(t_app *app);
 void	parse_rt_file(char **av, t_app *app);
 bool	filetype_is_valid(char *filename);
 void	skip_whitespace(char **str);
+bool	parse_double(char **str, double *result);
+bool	parse_int(char **str, int *result);
+bool	parse_vector(char **str, t_vector *vec);
+bool	parse_point(char **str, t_point *point);
+bool	parse_color(char **str, t_color *color);
+double	ft_strtod(const char *str, char **endptr);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
