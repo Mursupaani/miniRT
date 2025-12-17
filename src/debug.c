@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 18:41:27 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:13:55 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,8 @@ void	print_computations(t_computations comps)
 	print_tuple(comps.normalv);
 	printf("\n REFLECTV ");
 	print_tuple(comps.reflectv);
+	printf("\n N1: %f\n", comps.n1);
+	printf("\n N2: %f\n", comps.n2);
 	printf("\n INSIDE: ");
 	if (comps.inside)
 		printf("true\n");

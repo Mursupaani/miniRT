@@ -6,13 +6,11 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 20:08:21 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:15:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-
 
 static int	containers_has_item(t_intersection x, t_intersection **containers)
 {
@@ -56,7 +54,7 @@ static bool	get_n1_and_n2(
 				comps->n1 = containers[--j]->object->material.refractive_index;
 			}
 		}
-		if (containers_has_item(*(containers[i]), containers))
+		if (containers[i] && containers_has_item(*(containers[i]), containers))
 			return (false);
 	}
 	(void)containers_items;
@@ -69,6 +67,8 @@ t_computations	prepare_computations(
 	t_computations	comps;
 	
 	(void)xs;
+	// comps.n1 = -1;
+	// comps.n2 = -1;
 	comps.t = x.t;
 	comps.object = x.object;
 	comps.point = ray_position(r, comps.t);

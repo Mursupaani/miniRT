@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 18:36:44 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:35:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:10:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ And comps.n2 = <n2>\n");
 	xs->arr[5] = (t_intersection){6, a};
 	xs->count = 6;
 	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	print_computations(comps);
+	comps = prepare_computations(xs->arr[1], r, xs);
+	print_computations(comps);
+	comps = prepare_computations(xs->arr[2], r, xs);
+	print_computations(comps);
+	comps = prepare_computations(xs->arr[3], r, xs);
+	print_computations(comps);
+	comps = prepare_computations(xs->arr[4], r, xs);
+	print_computations(comps);
+	comps = prepare_computations(xs->arr[5], r, xs);
 	print_computations(comps);
 }
 
