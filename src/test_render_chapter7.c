@@ -25,9 +25,9 @@ void	build_chapter7_world(t_app *app)
 
 	t_object *floor = plane_new();
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
-	floor->material.color = color(1, 0.9, 0.9);
+	floor->material.color = color(0, 0, 0);
 	floor->material.specular = 0;
-	floor->material.reflective = 0.5;
+	floor->material.reflective = 0.8;
 	set_transform(floor, m);
 	world_add_object(w, floor);
 
@@ -127,7 +127,7 @@ void	build_chapter7_world(t_app *app)
 	back_wall->material.diffuse = 0.7;
 	back_wall->material.specular = 0.1;
 	back_wall->material.reflective = 0.2;
-	back_wall->material.pattern = checkers_pattern(color(0.6, 0.6, 0.7), color(0.9, 0.9, 1.0));
+	back_wall->material.pattern = checkers_pattern(color(0, 0, 0), color(0.1, 0.1, 0.1));
 	set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
 	world_add_object(w, back_wall);
 

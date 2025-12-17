@@ -53,6 +53,10 @@
 #  define SHININESS 200.0
 # endif
 
+# ifndef REFLECTIONS
+#  define REFLECTIONS 5
+# endif
+
 typedef struct s_thread_data t_thread_data;
 
 typedef struct s_tuple
@@ -452,12 +456,12 @@ t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
-t_color		shade_hit(t_world *w, t_computations comps);
-t_color		color_at(t_world *w, t_ray r);
+t_color		shade_hit(t_world *w, t_computations comps, int reflections);
+t_color		color_at(t_world *w, t_ray r, int reflections);
 bool		is_shadowed(t_world *w, t_point p);
 
 // Reflections:
-t_color		reflected_color(t_world *w, t_computations comps);
+t_color		reflected_color(t_world *w, t_computations comps, int reflections);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);

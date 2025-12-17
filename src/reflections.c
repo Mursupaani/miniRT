@@ -12,14 +12,14 @@
 
 #include "minirt.h"
 
-t_color	reflected_color(t_world *w, t_computations comps)
+t_color	reflected_color(t_world *w, t_computations comps, int reflections)
 {
 	t_ray	reflect_ray;
 	t_color	color;
 
-	if (comps.object->material.reflective == 0)
+	if (comps.object->material.reflective == 0 || reflections <= 0)
 		return ((t_color){0, 0, 0});
 	reflect_ray = ray(comps.over_point, comps.reflectv);
-	color = color_at(w, reflect_ray);
+	color = color_at(w, reflect_ray, --reflections);
 	return(color_multiply(color, comps.object->material.reflective));
 }
