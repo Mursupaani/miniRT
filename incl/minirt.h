@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:44:58 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 19:33:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ typedef struct s_material
 	double		specular;
 	double		shininess;
 	double		reflective;
+	double		transparency;
+	double		refractive_index;
 	t_color		color;
 	t_pattern	pattern;
 }	t_material;
@@ -277,7 +279,7 @@ typedef struct	s_intersection
 	double					t;
 	t_object				*object;
 	// FIXME: Delete
-	struct s_intersection	*next;
+	// struct s_intersection	*next;
 }	t_intersection;
 
 typedef struct s_intersections
@@ -290,6 +292,8 @@ typedef struct s_computations
 {
 	bool		inside;
 	double		t;
+	double		n1;
+	double		n2;
 	t_object	*object;
 	t_point		point;
 	t_point		over_point;
@@ -317,6 +321,8 @@ void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
 void		test_reflections();
+void		test_transparency();
+t_object	*glass_sphere();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -326,6 +332,7 @@ void			intersection_add_back(t_intersection **lst,
 				t_intersection *new);
 void			intersection_free(t_intersection *lst);
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+t_computations	prepare_computations_old(t_intersection x, t_ray r);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -427,7 +434,8 @@ t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
-t_computations	prepare_computations(t_intersection x, t_ray r);
+t_computations	prepare_computations(
+			t_intersection x, t_ray r, t_intersections *xs);
 t_intersection	hit(t_intersections *xs);
 
 // Rays:

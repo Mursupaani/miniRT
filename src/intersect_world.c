@@ -6,22 +6,76 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:08:21 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_computations	prepare_computations(t_intersection x, t_ray r)
+
+
+static int	containers_has_item(t_intersection x, t_intersection **containers)
+{
+	int	i;
+
+	i = -1;
+	while (containers[++i])
+	{
+		if (x.object->type == containers[i]->object->type
+			&& x.t == containers[i]->t)
+			return (i);
+	}
+	return (-1);
+}
+
+static bool	get_n1_and_n2(
+			t_intersection x, t_intersections *xs, t_computations *comps)
+{
+	t_intersection	**containers;
+	int				i;
+	int				j;
+	int				containers_items;
+
+	containers = ft_calloc(1, sizeof(t_intersection *) * xs->count + 1);
+	containers_items = 0;
+	// Exit app if malloc fails.
+	if (!containers)
+		return (false);
+	i = -1;
+	while (++i < xs->count)
+	{
+		if (xs->arr[i].object->type == x.object->type && xs->arr[i].t == x.t )
+		{
+			if (containers[i] == NULL)
+				comps->n1 = 1;
+			else
+			{
+				j = 0;
+				while (containers[j])
+					j++;
+				comps->n1 = containers[--j]->object->material.refractive_index;
+			}
+		}
+		if (containers_has_item(*(containers[i]), containers))
+			return (false);
+	}
+	(void)containers_items;
+	return (false);
+}
+
+t_computations	prepare_computations(
+			t_intersection x, t_ray r, t_intersections *xs)
 {
 	t_computations	comps;
 	
+	(void)xs;
 	comps.t = x.t;
 	comps.object = x.object;
 	comps.point = ray_position(r, comps.t);
 	comps.eyev = tuple_negate(r.direction);
 	comps.normalv = normal_at(comps.object, comps.point);
 	comps.reflectv = reflect(r.direction, comps.normalv);
+	get_n1_and_n2(x, xs, &comps);
 	if (dot(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = true;
@@ -98,4 +152,27 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 		quick_sort_intersections(xs->arr, 0, xs->count - 1);
 	}
 	return (xs);
+}
+
+// FIXME: Old function. Left here so that previous tests don't fail.
+t_computations	prepare_computations_old(t_intersection x, t_ray r)
+{
+	t_computations	comps;
+	
+	comps.t = x.t;
+	comps.object = x.object;
+	comps.point = ray_position(r, comps.t);
+	comps.eyev = tuple_negate(r.direction);
+	comps.normalv = normal_at(comps.object, comps.point);
+	comps.reflectv = reflect(r.direction, comps.normalv);
+	if (dot(comps.normalv, comps.eyev) < 0)
+	{
+		comps.inside = true;
+		comps.normalv = tuple_negate(comps.normalv);
+	}
+	else
+		comps.inside = false;
+	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.shadowed = false;
+	return (comps);
 }

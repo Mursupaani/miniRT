@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:47:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:35:14 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_color	color_at(t_world *w, t_ray r, int reflections)
 		free_intersections(xs);
 		return ((t_color){0, 0, 0});
 	}
-	comps = prepare_computations(x, r);
+	comps = prepare_computations_old(x, r);
 	free_intersections(xs);
 	return (shade_hit(w, comps, reflections));
 }
