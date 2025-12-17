@@ -45,29 +45,31 @@ t_intersections *intersect(t_object *obj, t_ray ray)
 		return (NULL);
 	if (obj->type == SPHERE)
 		return (intersect_with_sphere(obj, ray));
+	else if (obj->type == PLANE)
+		return (intersect_with_plane(obj, ray));
 	else
 		return (NULL);
 }
 
 // FIXME: Start using functions above?
-t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)
-{
-	t_ray			local_ray;
-	t_matrix4		inv_matrix;
-	double			abc[3];
-	double			disc;
-	t_intersection	*xs;
+// t_intersection	*intersect_sphere(t_object *sphere, t_ray ray)
+// {
+// 	t_ray			local_ray;
+// 	t_matrix4		inv_matrix;
+// 	double			abc[3];
+// 	double			disc;
+// 	t_intersection	*xs;
 
-	xs = NULL;
-	inv_matrix = sphere->inverse_transform;
-	local_ray = ray_transform(ray, inv_matrix);
-	calculate_coefs(local_ray, &abc[0], &abc[1], &abc[2]);
-	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
-	if (disc < 0)
-		return (NULL);
-	intersection_add_back(&xs, intersection_new((-abc[1] - sqrt(disc))
-							/ (2 * abc[0]), sphere));
-	intersection_add_back(&xs, intersection_new((-abc[1] + sqrt(disc))
-							/ (2 * abc[0]), sphere));
-	return (xs);
-}
+// 	xs = NULL;
+// 	inv_matrix = sphere->inverse_transform;
+// 	local_ray = ray_transform(ray, inv_matrix);
+// 	calculate_coefs(local_ray, &abc[0], &abc[1], &abc[2]);
+// 	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
+// 	if (disc < 0)
+// 		return (NULL);
+// 	intersection_add_back(&xs, intersection_new((-abc[1] - sqrt(disc))
+// 							/ (2 * abc[0]), sphere));
+// 	intersection_add_back(&xs, intersection_new((-abc[1] + sqrt(disc))
+// 							/ (2 * abc[0]), sphere));
+// 	return (xs);
+// }
