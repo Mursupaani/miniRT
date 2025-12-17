@@ -32,7 +32,7 @@ And r ← ray(point(0, 1, -1), vector(0, -√2/2, √2/2))\n\
 And i ← intersection(√2, shape)\n\
 When comps ← prepare_computations(i, r)\n\
 Then comps.reflectv = vector(0, √2/2, √2/2)\n");
-	t_object *shape = plane();
+	t_object *shape = sphere_new();
 	t_ray r = ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersection i = intersection(sqrt(2), shape);
 	t_computations comps = prepare_computations(i, r);
@@ -70,6 +70,8 @@ void	test_reflections()
 	test1();
 	printf("_____________________________________________\n");
 	test2();
+	printf("_____________________________________________\n");
+	test3();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFLECTIONS FINISHED -------\n");
 	printf("\n");
