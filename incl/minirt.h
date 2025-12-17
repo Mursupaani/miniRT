@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/15 15:31:22 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:11:52 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,5 +440,9 @@ t_object	**world_add_object(t_world *w, t_object *obj);
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+
+// Plane
+t_object		*plane_new();
+t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
 
 #endif

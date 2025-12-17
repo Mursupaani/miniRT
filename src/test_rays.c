@@ -40,7 +40,7 @@ void	test_rays(void)
 	// Print intersections with sphere
 	t_ray	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	t_object	*sphere = sphere_new_args(point(0, 0, 0), 1, color255(255, 255, 255));
-	t_intersection	*xs = intersect_sphere(sphere, r);
+	t_intersection	*xs = intersect_with_sphere(sphere, r);
 	t_intersection	*xs_head = xs;
 	printf("--- Intersections ---\n");
 	printf("2.0 Ray intersects sphere at two points\n");
@@ -55,7 +55,7 @@ void	test_rays(void)
 	intersection_free(xs_head);
 	printf("2.1 Ray intersects sphere at a tangent\n");
 	r = ray(point(0, 1, -5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -68,7 +68,7 @@ void	test_rays(void)
 	intersection_free(xs_head);
 	printf("2.2 Ray misses the sphere\n");
 	r = ray(point(0, 2, -5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -81,7 +81,7 @@ void	test_rays(void)
 	intersection_free(xs_head);
 	printf("2.3 Ray originates inside a sphere\n");
 	r = ray(point(0, 0, 0), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -94,7 +94,7 @@ void	test_rays(void)
 	intersection_free(xs_head);
 	printf("2.4 A sphere is behind the ray\n");
 	r = ray(point(0, 0, 5), vector(0, 0, 1));
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count: %d\n", count_xs(xs));
 	i = 0;
@@ -174,7 +174,7 @@ void	test_rays(void)
 	t_matrix4	scaling = scaling_matrix4(2, 2, 2);
 	set_transform(sphere, scaling);
 	xs = NULL;
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count is: %d\n", count_xs(xs));
 	i = 0;
@@ -190,7 +190,7 @@ void	test_rays(void)
 	t_matrix4	translation = translation_matrix4(5, 0, 0);
 	set_transform(sphere, translation);
 	xs = NULL;
-	xs = intersect_sphere(sphere, r);
+	xs = intersect_with_sphere(sphere, r);
 	xs_head = xs;
 	printf("Intersection count is: %d\n", count_xs(xs));
 	i = 0;
@@ -229,7 +229,7 @@ void	render_chapter_5_scene(t_app *app)
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
-			t_intersection	*xs = intersect_sphere(shape, r);
+			t_intersection	*xs = intersect_with_sphere(shape, r);
 			t_intersection	*hit = intersection_hit(xs);
 			if (hit != NULL)
 			{
