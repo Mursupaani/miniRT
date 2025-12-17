@@ -18,6 +18,7 @@ static void	close_window_mouse(void *param)
 	t_app	*app;
 
 	app = (t_app *)param;
+	app->keep_rendering = false;
 	exit_and_free_memory(EXIT_SUCCESS, app);
 }
 
@@ -27,7 +28,10 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 
 	app = (t_app *)param;
 	if (keydata.key == MLX_KEY_ESCAPE)
+	{
+		app->keep_rendering = false;
 		exit_and_free_memory(EXIT_SUCCESS, app);
+	}
 }
 
 void	initialize_hooks(t_app *app)

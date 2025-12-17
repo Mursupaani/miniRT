@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 13:57:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:27:50 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@
  */
 #include "minirt.h"
 
-void	test_render(t_app *app)
+void	test_render()
 {
+	t_app	*app;
+
+	app = initialize_app();
 	build_chapter7_world(app);
 	launch_render(app);
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
@@ -43,15 +46,15 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	app = initialize_app();
-	test_render(app);
+	// app = initialize_app();
+	test_render();
 	// run_tests();
 	// parse_rt_file(av, app);
 	// launch_render(app);
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	free_app_memory(app);
+	// free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;
