@@ -53,9 +53,8 @@ void	*render_routine(void *arg)
 		{
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
 			color = color_at(data->app->scene, ray);
-			if (pixel_fits_image(x, y, data->app))
-				mlx_put_pixel(data->app->img, x, y,
-					color_hex_from_color(color));
+			// if (pixel_fits_image(x, y, data->app))
+			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;
 		}
 		y++;

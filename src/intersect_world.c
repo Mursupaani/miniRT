@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 13:53:38 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_computations	prepare_computations(t_intersection x, t_ray r)
 	comps.point = ray_position(r, comps.t);
 	comps.eyev = tuple_negate(r.direction);
 	comps.normalv = normal_at(comps.object, comps.point);
+	comps.reflectv = reflect(r.direction, comps.normalv);
 	if (dot(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = true;
@@ -29,7 +30,7 @@ t_computations	prepare_computations(t_intersection x, t_ray r)
 	else
 		comps.inside = false;
 	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
-	comps.in_shadow = false;
+	comps.shadowed = false;
 	return (comps);
 }
 

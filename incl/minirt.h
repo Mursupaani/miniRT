@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-4
+#  define EPSILON 1e-6
 # endif
 
 // Material default max values
@@ -173,6 +173,7 @@ typedef struct s_material
 	double		diffuse;
 	double		specular;
 	double		shininess;
+	double		reflective;
 	t_color		color;
 	t_pattern	pattern;
 }	t_material;
@@ -197,6 +198,7 @@ typedef struct s_camera
 	int			hsize;
 	int			vsize;
 	t_matrix4	transform;
+	t_matrix4	inverse_transform;
 	double		half_width;
 	double		half_height;
 	double		pixel_size;
@@ -289,7 +291,8 @@ typedef struct s_computations
 	t_point		over_point;
 	t_vector	eyev;
 	t_vector	normalv;
-	bool		in_shadow;
+	t_vector	reflectv;
+	bool		shadowed;
 }	t_computations;
 
 // Tests
@@ -309,6 +312,7 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
+void		test_reflections();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -452,6 +456,9 @@ t_color		shade_hit(t_world *w, t_computations comps);
 t_color		color_at(t_world *w, t_ray r);
 bool		is_shadowed(t_world *w, t_point p);
 
+// Reflections:
+t_color		reflected_color(t_world *w, t_computations comps);
+
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);
 t_color		stripe_at(t_pattern pattern, t_point p);
@@ -486,6 +493,7 @@ t_object	**world_add_object(t_world *w, t_object *obj);
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 
 // Plane
 t_object		*plane_new();
