@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 12:21:13 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:29:36 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,11 @@ void	print_material(t_material material)
 	printf(" Diffuse:\t%f\n", material.diffuse);
 	printf(" Specular:\t%f\n", material.specular);
 	printf(" Shininess:\t%f\n", material.shininess);
+	printf(" Reflective:\t%f\n", material.reflective);
 	printf ("\n\nCOLOR:\n\n");
 	printf(" r:\t%f\n g:\t%f\n b:\t%f\n",
 			material.color.r, material.color.g, material.color.b);
-	printf ("\nHEX:\t%X\n", color_hex_from_color(material.color));
+	printf (" HEX:\t%X\n", color_hex_from_color(material.color));
 }
 
 void	print_object(t_object *o)
@@ -233,6 +234,8 @@ void	print_computations(t_computations comps)
 	print_tuple(comps.eyev);
 	printf("\n NORMAL ");
 	print_tuple(comps.normalv);
+	printf("\n REFLECTV ");
+	print_tuple(comps.reflectv);
 	printf("\n INSIDE: ");
 	if (comps.inside)
 		printf("true\n");

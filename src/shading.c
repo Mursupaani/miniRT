@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 13:47:53 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 11:47:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_color	shade_hit(t_world *w, t_computations comps)
 	if (!w)
 		return (t_color){0, 0, 0};
 	if (is_shadowed(w, comps.over_point) == true)
-		comps.in_shadow = true;
+		comps.shadowed = true;
 	return (lighting(comps, w->light));
 }
 

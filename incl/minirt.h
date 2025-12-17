@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 19:01:56 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_material
 	double		diffuse;
 	double		specular;
 	double		shininess;
+	double		reflective;
 	t_color		color;
 	t_pattern	pattern;
 }	t_material;
@@ -289,7 +290,8 @@ typedef struct s_computations
 	t_point		over_point;
 	t_vector	eyev;
 	t_vector	normalv;
-	bool		in_shadow;
+	t_vector	reflectv;
+	bool		shadowed;
 }	t_computations;
 
 // Tests
@@ -309,6 +311,7 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
+void		test_reflections();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -451,6 +454,9 @@ int			color_hex_from_color(t_color color);
 t_color		shade_hit(t_world *w, t_computations comps);
 t_color		color_at(t_world *w, t_ray r);
 bool		is_shadowed(t_world *w, t_point p);
+
+// Reflections:
+t_color		reflected_color(t_world *w, t_computations comps);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);

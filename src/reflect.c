@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:37:01 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 16:05:21 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_color	lighting(t_computations comps, t_light *light)
 				comps.object->material.pattern, comps.object, comps.over_point);
 	else
 		l.color_at_point = comps.object->material.color;
-	if (comps.in_shadow == true)
+	if (comps.shadowed == true)
 	{
 		l.effective_color = color_mix(l.color_at_point, light->intensity);
 		l.ambient = color_multiply(

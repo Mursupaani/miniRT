@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:07:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 19:11:32 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ And c2 = color(0, 0, 0)\n");
 	comps.over_point = point(0.9, 0, 0);
 	comps.normalv = normalv;
 	comps.eyev = eyev;
-	comps.in_shadow = false;
+	comps.shadowed = false;
 	comps.object = obj;
 	t_color c1 = lighting(comps, light);
 	print_tuple(comps.over_point);
