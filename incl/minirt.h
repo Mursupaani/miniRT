@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:14:13 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/17 12:44:58 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-5
+#  define EPSILON 1e-4
 # endif
 
 // Material default max values

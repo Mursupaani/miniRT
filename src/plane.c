@@ -18,16 +18,18 @@ t_object	*plane_new()
 t_intersections	*intersect_with_plane(t_object *plane, t_ray ray)
 {
 	t_intersections	*xs;
+	t_ray			local_ray;
 	double			t;
 
-	if (fabs(ray.direction.y) < EPSILON)
+	local_ray = ray_transform(ray, plane->inverse_transform);
+	if (fabs(local_ray.direction.y) < EPSILON)
 		return (NULL);
-	t = -ray.origin.y / ray.direction.y;
+	t = -local_ray.origin.y / local_ray.direction.y;
 	xs = ft_calloc(1, sizeof(t_intersections));
 	if (!xs)
 		return (NULL);
 	xs->count = 1;
-	xs->arr = ft_calloc(1, sizeof(t_intersections));
+	xs->arr = ft_calloc(1, sizeof(t_intersection));
 	if (!xs->arr)
 	{
 		free(xs);
