@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-4
+#  define EPSILON 1e-6
 # endif
 
 // Material default max values
@@ -198,6 +198,7 @@ typedef struct s_camera
 	int			hsize;
 	int			vsize;
 	t_matrix4	transform;
+	t_matrix4	inverse_transform;
 	double		half_width;
 	double		half_height;
 	double		pixel_size;
@@ -492,6 +493,7 @@ t_object	**world_add_object(t_world *w, t_object *obj);
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 
 // Plane
 t_object		*plane_new();

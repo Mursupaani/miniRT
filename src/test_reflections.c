@@ -32,7 +32,7 @@ And r ← ray(point(0, 1, -1), vector(0, -√2/2, √2/2))\n\
 And i ← intersection(√2, shape)\n\
 When comps ← prepare_computations(i, r)\n\
 Then comps.reflectv = vector(0, √2/2, √2/2)\n");
-	t_object *shape = sphere_new();
+	t_object *shape = plane_new();
 	t_ray r = ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersection i = intersection(sqrt(2), shape);
 	t_computations comps = prepare_computations(i, r);
@@ -58,7 +58,36 @@ Then color = color(0, 0, 0)\n");
 	shape->material.ambient = 1;
 	t_intersection i = intersection(1, shape);
 	t_computations comps = prepare_computations(i, r);
-	print_computations(comps);
+	t_color c = reflected_color(w, comps);
+	print_color(c);
+	free(shape);
+}
+
+static void	test4()
+{
+	printf("TEST 4:");
+	printf("Scenario: The reflected color for a reflective material\n\
+Given w ← default_world()\n\
+And shape ← plane() with:\n\
+| material.reflective | 0.5 |\n\
+| transform | translation(0, -1, 0) |\n\
+And shape is added to w\n\
+And r ← ray(point(0, 0, -3), vector(0, -√2/2, √2/2))\n\
+And i ← intersection(√2, shape)\n\
+When comps ← prepare_computations(i, r)\n\
+And color ← reflected_color(w, comps)\n\
+Then color = color(0.19032, 0.2379, 0.14274)\n");
+	t_world	*w = default_world();
+	t_object *shape = plane_new();
+	// print_object(shape);
+	shape->material.reflective = 0.5;
+	set_transform(shape, translation_matrix4(0, -1, 0));
+	world_add_object(w, shape);
+	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
+	t_intersection i = intersection(sqrt(2), shape);
+	t_computations comps = prepare_computations(i, r);
+	t_color c = reflected_color(w, comps);
+	print_color(c);
 	free(shape);
 }
 
@@ -72,6 +101,8 @@ void	test_reflections()
 	test2();
 	printf("_____________________________________________\n");
 	test3();
+	printf("_____________________________________________\n");
+	test4();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFLECTIONS FINISHED -------\n");
 	printf("\n");

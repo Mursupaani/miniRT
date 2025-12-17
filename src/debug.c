@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:29:36 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:29:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,13 +147,13 @@ void	print_point_light(t_light *point_light)
 
 void	print_material(t_material material)
 {
-	printf("MATERIAL:\n\n");
+	printf(" MATERIAL:\n");
 	printf(" Ambient:\t%f\n", material.ambient);
 	printf(" Diffuse:\t%f\n", material.diffuse);
 	printf(" Specular:\t%f\n", material.specular);
 	printf(" Shininess:\t%f\n", material.shininess);
 	printf(" Reflective:\t%f\n", material.reflective);
-	printf ("\n\nCOLOR:\n\n");
+	printf ("\n COLOR:\n");
 	printf(" r:\t%f\n g:\t%f\n b:\t%f\n",
 			material.color.r, material.color.g, material.color.b);
 	printf (" HEX:\t%X\n", color_hex_from_color(material.color));
@@ -163,25 +163,18 @@ void	print_object(t_object *o)
 {
 	printf("OBJECT:\n");
 	if (o->type == SPHERE)
-		printf(" Type:\tSphere\n");
+		printf(" TYPE:\tSphere\n\n");
 	else if (o->type == PLANE)
-		printf(" Type:\tPlane\n");
+		printf(" TYPE:\tPlane\n\n");
 	else if (o->type == CYLINDER)
-		printf(" Type:\tCylinder\n");
+		printf(" TYPE:\tCylinder\n\n");
 	else
-		printf(" Type:\tundefined\n");
-	printf(" MATERIAL:\n");
-	printf("  Ambient:\t%f\n", o->material.ambient);
-	printf("  Diffuse:\t%f\n", o->material.diffuse);
-	printf("  Specular:\t%f\n", o->material.specular);
-	printf("  Shininess:\t%f\n", o->material.shininess);
-	printf ("\n  COLOR:\n");
-	printf("   r:\t%f\n   g:\t%f\n   b:\t%f\n",
-			o->material.color.r, o->material.color.g, o->material.color.b);
-	printf ("   HEX:\t%X\n", color_hex_from_color(o->material.color));
+		printf(" TYPE:\tundefined\n\n");
+	print_material(o->material);
 	printf("\n");
 	printf(" TRANSFORM ");
 	print_matrix4(o->transform);
+	printf("\n");
 }
 
 void	print_world(t_world *world)
@@ -194,7 +187,7 @@ void	print_world(t_world *world)
 	while (world->objects[++i])
 	{
 		printf("--------------------\n");
-		printf("%d ", i);
+		printf("[%d] ", i);
 		print_object(world->objects[i]);
 		printf("--------------------\n");
 	}
