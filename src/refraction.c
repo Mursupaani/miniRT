@@ -12,6 +12,23 @@
 
 #include "minirt.h"
 
+double	schlick(t_computations comps)
+{
+	double	cos;
+	double	n;
+	double	sin_2t;
+
+	cos = dot(comps.eyev, comps.normalv);
+	if (comps.n1 > comps.n2)
+	{
+		n = comps.n1 / comps.n2;
+		sin_2t = n * n * (1 - cos * cos);
+		if (sin_2t > 1)
+			return (1);
+	}
+	return (0);
+}
+
 static t_color calculate_refracted_color(t_world *w, t_computations comps, int recursions)
 {
 	t_refraction	r;

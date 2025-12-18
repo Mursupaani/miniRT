@@ -284,6 +284,50 @@ Then color = color(0.93642, 0.68642, 0.68642)\n");
 	print_color(c);
 }
 
+static void	test10()
+{
+	printf("TEST 10:");
+	printf("Scenario: The Schlick approximation under total internal reflection\n\
+Given shape ← glass_sphere()\n\
+And r ← ray(point(0, 0, √2/2), vector(0, 1, 0))\n\
+And xs ← intersections(-√2/2:shape, √2/2:shape)\n\
+When comps ← prepare_computations(xs[1], r, xs)\n\
+And reflectance ← schlick(comps)\n\
+Then reflectance = 1.0\n");
+	t_object	*shape = glass_sphere();
+	t_ray	r = ray(point(0, 0, sqrt(2) / 2), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){-sqrt(2) / 2, shape};
+	xs->arr[1] = (t_intersection){sqrt(2) / 2, shape};
+	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	double reflectance = schlick(comps);
+	printf("%f\n", reflectance);
+}
+
+static void	test11()
+{
+	printf("TEST 11:");
+	printf("Scenario: The Schlick approximation with a perpendicular viewing angle\n\
+Given shape ← glass_sphere()\n\
+And r ← ray(point(0, 0, 0), vector(0, 1, 0))\n\
+And xs ← intersections(-1:shape, 1:shape)\n\
+When comps ← prepare_computations(xs[1], r, xs)\n\
+And reflectance ← schlick(comps)\n\
+Then reflectance = 0.04\n");
+	t_object	*shape = glass_sphere();
+	t_ray	r = ray(point(0, 0, 0), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){-1, shape};
+	xs->arr[1] = (t_intersection){1, shape};
+	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	double reflectance = schlick(comps);
+	printf("%f\n", reflectance);
+}
+
 void	test_transparency()
 {
 	printf("\n");
@@ -306,6 +350,10 @@ void	test_transparency()
 	test8();
 	printf("_____________________________________________\n");
 	test9();
+	printf("_____________________________________________\n");
+	test10();
+	printf("_____________________________________________\n");
+	test11();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");

@@ -485,6 +485,7 @@ t_color		reflected_color(t_world *w, t_computations comps, int recursions);
 
 // Refractions:
 t_color	refracted_color(t_world *w, t_computations comps, int recursions);
+double	schlick(t_computations comps);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);

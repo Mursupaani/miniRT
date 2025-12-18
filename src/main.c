@@ -47,8 +47,8 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	// app = initialize_app();
-	// run_tests();
-	test_render();
+	run_tests();
+	// test_render();
 	// parse_rt_file(av, app);
 	// launch_render(app);
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);

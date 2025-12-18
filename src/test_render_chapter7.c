@@ -27,7 +27,7 @@ void	build_chapter7_world(t_app *app)
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
 	floor->material.color = color(0, 0, 0);
 	floor->material.specular = 0;
-	floor->material.reflective = 0.8;
+	floor->material.reflective = 0.5;
 	set_transform(floor, m);
 	world_add_object(w, floor);
 
