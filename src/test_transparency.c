@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 18:36:44 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 20:10:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:15:49 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,30 @@ And comps.n2 = <n2>\n");
 	printf("[5]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 }
 
+static void	test4()
+{
+	printf("TEST 4:");
+	printf("Scenario: The under point is offset below the surface\n\
+Given r ← ray(point(0, 0, -5), vector(0, 0, 1))\n\
+And shape ← glass_sphere() with:\n\
+| transform | translation(0, 0, 1) |\n\
+And i ← intersection(5, shape)\n\
+And xs ← intersections(i)\n\
+When comps ← prepare_computations(i, r, xs)\n\
+Then comps.under_point.z > EPSILON/2\n\
+And comps.point.z < comps.under_point.z\n");
+	t_ray	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_object	*sphere = glass_sphere();
+	set_transform(sphere, translation_matrix4(0, 0, 1));
+	t_intersection	i = intersection(5, sphere);
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection));
+	xs->arr[0] = i;
+	xs->count = 1;
+	t_computations	comps = prepare_computations(i, r, xs);
+	print_computations(comps);
+}
+
 void	test_transparency()
 {
 	printf("\n");
@@ -106,6 +130,8 @@ void	test_transparency()
 	test2();
 	printf("_____________________________________________\n");
 	test3();
+	printf("_____________________________________________\n");
+	test4();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");

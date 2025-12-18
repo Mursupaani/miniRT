@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 20:13:55 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:16:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,8 @@ void	print_computations(t_computations comps)
 	print_tuple(comps.point);
 	printf("\n OVER ");
 	print_tuple(comps.over_point);
+	printf("\n UNDER ");
+	print_tuple(comps.under_point);
 	printf("\n EYE ");
 	print_tuple(comps.eyev);
 	printf("\n NORMAL ");

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:33:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:07:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,7 @@ typedef struct s_computations
 	t_object	*object;
 	t_point		point;
 	t_point		over_point;
+	t_point		under_point;
 	t_vector	eyev;
 	t_vector	normalv;
 	t_vector	reflectv;
@@ -434,9 +435,13 @@ t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
+t_intersection	hit(t_intersections *xs);
+
+// Prepare computations:
 t_computations	prepare_computations(
 			t_intersection x, t_ray r, t_intersections *xs);
-t_intersection	hit(t_intersections *xs);
+void	handle_n1(t_computations *comps, t_intersection **containers);
+void	handle_n2(t_computations *comps, t_intersection **containers);
 
 // Rays:
 t_ray		ray(t_point origin, t_vector direction);

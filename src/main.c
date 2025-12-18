@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 20:11:07 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:18:30 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	// app = initialize_app();
-	run_tests();
-	// test_render();
+	// run_tests();
+	test_render();
 	// parse_rt_file(av, app);
 	// launch_render(app);
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);

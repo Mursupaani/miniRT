@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 13:05:07 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/18 15:24:42 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ void	build_chapter7_world(t_app *app)
 	set_transform(up_left, rotation_y(M_PI / 2));
 	add_transform(up_left, m);
 	up_left->material.pattern = checkers_pattern(color(0.2, 0.7, 0.5), color(0, 0, 0));
-	// set_pattern_transform(&up_left->material.pattern, rotation_y(-M_PI / 4));
-	add_pattern_transform(&up_left->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
+	set_pattern_transform(&up_left->material.pattern, rotation_y(M_PI / 4));
+	add_pattern_transform(&up_left->material.pattern, scaling_matrix4(0.3, 0.3, 0.3));
 	world_add_object(w, up_left);
 
 	// BACK WALL - A plane behind the scene
