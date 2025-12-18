@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:47:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:35:14 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,20 @@ bool	is_shadowed(t_world *w, t_point p)
 		return (false);
 }
 
-t_color	shade_hit(t_world *w, t_computations comps, int reflections)
+t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 {
 	t_color	surface;
 	t_color	reflected;
+	t_color	refracted;
 
 	if (!w)
 		return (t_color){0, 0, 0};
 	if (is_shadowed(w, comps.over_point) == true)
 		comps.shadowed = true;
 	surface = lighting(comps, w->light);
-	reflected = reflected_color(w, comps, reflections);
-	return (color_sum(surface, reflected));
+	reflected = reflected_color(w, comps, recursions);
+	refracted = refracted_color(w, comps, recursions);
+	return (color_sum(color_sum(surface, reflected), refracted));
 }
 
 t_color	color_at(t_world *w, t_ray r, int reflections)
@@ -59,7 +61,7 @@ t_color	color_at(t_world *w, t_ray r, int reflections)
 		free_intersections(xs);
 		return ((t_color){0, 0, 0});
 	}
-	comps = prepare_computations(x, r);
+	comps = prepare_computations(x, r, xs);
 	free_intersections(xs);
 	return (shade_hit(w, comps, reflections));
 }

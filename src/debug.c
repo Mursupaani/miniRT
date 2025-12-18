@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:29:34 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:16:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void	print_material(t_material material)
 	printf(" Specular:\t%f\n", material.specular);
 	printf(" Shininess:\t%f\n", material.shininess);
 	printf(" Reflective:\t%f\n", material.reflective);
+	printf(" Transparency:\t%f\n", material.transparency);
+	printf(" Refract. idx:\t%f\n", material.refractive_index);
 	printf ("\n COLOR:\n");
 	printf(" r:\t%f\n g:\t%f\n b:\t%f\n",
 			material.color.r, material.color.g, material.color.b);
@@ -223,12 +225,16 @@ void	print_computations(t_computations comps)
 	print_tuple(comps.point);
 	printf("\n OVER ");
 	print_tuple(comps.over_point);
+	printf("\n UNDER ");
+	print_tuple(comps.under_point);
 	printf("\n EYE ");
 	print_tuple(comps.eyev);
 	printf("\n NORMAL ");
 	print_tuple(comps.normalv);
 	printf("\n REFLECTV ");
 	print_tuple(comps.reflectv);
+	printf("\n N1: %f\n", comps.n1);
+	printf("\n N2: %f\n", comps.n2);
 	printf("\n INSIDE: ");
 	if (comps.inside)
 		printf("true\n");

@@ -6,12 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:15:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:35:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:32:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 static void	test1()
 {
@@ -35,7 +34,7 @@ Then comps.reflectv = vector(0, √2/2, √2/2)\n");
 	t_object *shape = plane_new();
 	t_ray r = ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	print_computations(comps);
 	free(shape);
 }
@@ -57,7 +56,7 @@ Then color = color(0, 0, 0)\n");
 	t_object *shape = w->objects[1];
 	shape->material.ambient = 1;
 	t_intersection i = intersection(1, shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -85,7 +84,7 @@ Then color = color(0.19032, 0.2379, 0.14274)\n");
 	world_add_object(w, shape);
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -112,7 +111,7 @@ Then color = color(0.87677, 0.92436, 0.82918)\n");
 	world_add_object(w, shape);
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = shade_hit(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -147,7 +146,7 @@ Then color_at(w, r) should terminate successfully\n");
 	world_add_object(w, upper);
 	print_world(w);
 	t_ray r = ray(point(0, 0, 0), vector(0, 1, 0));
-	t_color c = color_at(w, r, REFLECTIONS);
+	t_color c = color_at(w, r, RECURSIONS);
 	print_color(c);
 	free(lower);
 	free(upper);

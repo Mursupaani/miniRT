@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:44:58 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/18 15:49:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@
 #  define SHININESS 200.0
 # endif
 
-# ifndef REFLECTIONS
-#  define REFLECTIONS 5
+# ifndef RECURSIONS
+#  define RECURSIONS 5
 # endif
 
 typedef struct s_thread_data t_thread_data;
@@ -123,6 +123,14 @@ typedef struct s_lighting
 	t_color		color_at_point;
 }	t_lighting;
 
+typedef struct s_refraction
+{
+	double		n_ratio;
+	double		cos_i;
+	double		cos_t;
+	double		sin2_t;
+}	t_refraction;
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -178,6 +186,8 @@ typedef struct s_material
 	double		specular;
 	double		shininess;
 	double		reflective;
+	double		transparency;
+	double		refractive_index;
 	t_color		color;
 	t_pattern	pattern;
 }	t_material;
@@ -274,10 +284,9 @@ typedef struct	s_ray
  */
 typedef struct	s_intersection
 {
-	double					t;
-	t_object				*object;
-	// FIXME: Delete
-	struct s_intersection	*next;
+	double		t;
+	t_object	*object;
+	// int			id;
 }	t_intersection;
 
 typedef struct s_intersections
@@ -290,9 +299,12 @@ typedef struct s_computations
 {
 	bool		inside;
 	double		t;
+	double		n1;
+	double		n2;
 	t_object	*object;
 	t_point		point;
 	t_point		over_point;
+	t_point		under_point;
 	t_vector	eyev;
 	t_vector	normalv;
 	t_vector	reflectv;
@@ -317,6 +329,8 @@ void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
 void		test_reflections();
+void		test_transparency();
+t_object	*glass_sphere();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -326,6 +340,7 @@ void			intersection_add_back(t_intersection **lst,
 				t_intersection *new);
 void			intersection_free(t_intersection *lst);
 t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+t_computations	prepare_computations_old(t_intersection x, t_ray r);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -427,8 +442,13 @@ t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
-t_computations	prepare_computations(t_intersection x, t_ray r);
 t_intersection	hit(t_intersections *xs);
+
+// Prepare computations:
+t_computations	prepare_computations(
+			t_intersection x, t_ray r, t_intersections *xs);
+void	handle_n1(t_computations *comps, t_intersection **containers);
+void	handle_n2(t_computations *comps, t_intersection **containers);
 
 // Rays:
 t_ray		ray(t_point origin, t_vector direction);
@@ -456,12 +476,15 @@ t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
-t_color		shade_hit(t_world *w, t_computations comps, int reflections);
-t_color		color_at(t_world *w, t_ray r, int reflections);
+t_color		shade_hit(t_world *w, t_computations comps, int recursions);
+t_color		color_at(t_world *w, t_ray r, int recursions);
 bool		is_shadowed(t_world *w, t_point p);
 
 // Reflections:
-t_color		reflected_color(t_world *w, t_computations comps, int reflections);
+t_color		reflected_color(t_world *w, t_computations comps, int recursions);
+
+// Refractions:
+t_color	refracted_color(t_world *w, t_computations comps, int recursions);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);
