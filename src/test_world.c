@@ -6,12 +6,13 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 14:07:45 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/18 14:01:13 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/*
 static	void test1()
 {
 	t_world	*w;
@@ -462,3 +463,4 @@ void	test_world()
 	printf("\n");
 	return;
 }
+*/

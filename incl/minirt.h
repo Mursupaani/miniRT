@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 13:29:23 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/18 15:07:47 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
+void		test_parsing(void);
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -342,17 +343,6 @@ void		print_pattern(t_pattern pattern);
 // App initialize and management:
 t_app		*initialize_app(void);
 void		initialize_hooks(t_app *app);
-
-// Parsing:
-void	parse_rt_file(char **av, t_app *app);
-bool	filetype_is_valid(char *filename);
-void	skip_whitespace(char **str);
-bool	parse_double(char **str, double *result);
-bool	parse_int(char **str, int *result);
-bool	parse_vector(char **str, t_vector *vec);
-bool	parse_point(char **str, t_point *point);
-bool	parse_color(char **str, t_color *color);
-double	ft_strtod(const char *str, char **endptr);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
@@ -498,5 +488,25 @@ t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 // Plane
 t_object		*plane_new();
 t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
+
+// Parsing
+void		parse_rt_file(char **av, t_app *app);
+void		skip_whitespace(char **str);
+bool		filetype_is_valid(char *filename);
+void		parse_error(char *message, t_app *app);
+bool		parse_double(char **str, double *result);
+bool		parse_int(char **str, int *result);
+double		ft_strtod(const char *str, char **endptr, int *i);
+bool		parse_vector(char **str, t_vector *vec);
+bool		parse_point(char **str, t_point *point);
+bool		parse_color(char **str, t_color *color);
+void		parse_ambient(char *line, t_app *app);
+void		parse_camera(char *line, t_app *app);
+void		parse_light(char *line, t_app *app);
+void		parse_sphere(char *line, t_app *app);
+void		parse_plane(char *line, t_app *app);
+void		parse_cylinder(char *line, t_app *app);
+t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
+t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
 
 #endif

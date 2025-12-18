@@ -16,44 +16,43 @@ static double	parse_fraction(const char *str, int *len)
 	return (fraction);
 }
 
-double	ft_strtod(const char *str, char **endptr)
+double	ft_strtod(const char *str, char **endptr, int *i)
 {
 	double	result;
 	int		sign;
-	int		i;
 
 	result = 0.0;
 	sign = 1;
-	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (ft_isspace(str[*i]))
+		(*i)++;
+	if (str[*i] == '-' || str[*i] == '+')
 	{
-		if (str[i] == '-')
+		if (str[(*i)++] == '-')
 			sign = -1;
-		i++;
 	}
-	while (ft_isdigit(str[i]))
+	while (ft_isdigit(str[*i]))
 	{
-		result = result * 10.0 + (str[i] - '0');
-		i++;
+		result = result * 10.0 + (str[*i] - '0');
+		(*i)++;
 	}
-	if (str[i] == '.')
+	if (str[*i] == '.')
 	{
-		i++;
-		result += parse_fraction(str, &i);
+		(*i)++;
+		result += parse_fraction(str, i);
 	}
 	if (endptr)
-		*endptr = (char *)(str + i);
+		*endptr = (char *)(str + *i);
 	return (result * sign);
 }
 
 bool	parse_double(char **str, double *result)
 {
 	char	*endptr;
+	int		i;
 
 	skip_whitespace(str);
-	*result = ft_strtod(*str, &endptr);
+	i = 0;
+	*result = ft_strtod(*str, &endptr, &i);
 	if (*str == endptr)
 		return (false);
 	*str = endptr;
@@ -62,19 +61,20 @@ bool	parse_double(char **str, double *result)
 
 bool	parse_int(char **str, int *result)
 {
-	char	*endptr;
 	long	val;
+	int		error;
 
 	skip_whitespace(str);
-	val = ft_atol(*str);
-	*result = (int)val;
-	endptr = *str;
-	if (*endptr == '-' || *endptr == '+')
-		endptr++;
-	if (!ft_isdigit(*endptr))
+	if (**str != '-' && **str != '+' && !ft_isdigit(**str))
 		return (false);
-	while (ft_isdigit(*endptr))
-		endptr++;
-	*str = endptr;
+	error = 0;
+	val = ft_atol_safe(*str, &error);
+	if (error || val > INT_MAX || val < INT_MIN)
+		return (false);
+	*result = (int)val;
+	if (**str == '-' || **str == '+')
+		(*str)++;
+	while (ft_isdigit(**str))
+		(*str)++;
 	return (true);
 }

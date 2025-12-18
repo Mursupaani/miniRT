@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-static void	parse_sphere(char *line, t_app *app)
+void	parse_sphere(char *line, t_app *app)
 {
 	t_point		center;
 	double		diameter;
@@ -25,7 +25,7 @@ static void	parse_sphere(char *line, t_app *app)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
 
-static void	parse_plane(char *line, t_app *app)
+void	parse_plane(char *line, t_app *app)
 {
 	t_point		position;
 	t_vector	normal;
@@ -54,7 +54,7 @@ static void	parse_plane(char *line, t_app *app)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
 
-static void	parse_cylinder(char *line, t_app *app)
+void	parse_cylinder(char *line, t_app *app)
 {
 	t_point		position;
 	t_vector	axis;

@@ -6,7 +6,7 @@
 // }
 // maybe takes width?
 
-static t_object	*create_sphere_object(t_point pos, double diameter, t_color color)
+t_object	*create_sphere_object(t_point pos, double diameter, t_color color)
 {
 	t_object	*sphere;
 
@@ -20,7 +20,7 @@ static t_object	*create_sphere_object(t_point pos, double diameter, t_color colo
 	return (sphere);
 }
 
-static t_object	*create_plane_object(t_point pos, t_vector normal, t_color color)
+t_object	*create_plane_object(t_point pos, t_vector normal, t_color color)
 {
 	t_object	*plane;
 
