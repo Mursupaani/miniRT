@@ -6,11 +6,12 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 18:36:44 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:15:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:46:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdlib.h>
 
 t_object	*glass_sphere()
 {
@@ -117,7 +118,61 @@ And comps.point.z < comps.under_point.z\n");
 	xs->arr[0] = i;
 	xs->count = 1;
 	t_computations	comps = prepare_computations(i, r, xs);
-	print_computations(comps);
+	printf("%f > %f\n", comps.under_point.z, EPSILON / 2);
+	printf("%f < %f\n", comps.point.z, comps.under_point.z);
+}
+
+static void	test5()
+{
+	printf("TEST 5:");
+	printf("Scenario: The refracted color with an opaque surface\n\
+Given w ← default_world()\n\
+And shape ← the first object in w\n\
+And r ← ray(point(0, 0, -5), vector(0, 0, 1))\n\
+And xs ← intersections(4:shape, 6:shape)\n\
+When comps ← prepare_computations(xs[0], r, xs)\n\
+And c ← refracted_color(w, comps, 5)\n\
+Then c = color(0, 0, 0)\n");
+	t_world		*w = default_world();
+	t_object	*shape = w->objects[0];
+	t_ray	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){4, shape};
+	xs->arr[1] = (t_intersection){6, shape};
+	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_color c = refracted_color(w, comps, 5);
+	print_color(c);
+}
+
+static void	test6()
+{
+	printf("TEST 6:");
+	printf("Scenario: The refracted color at the maximum recursive depth\n\
+Given w ← default_world()\n\
+And shape ← the first object in w\n\
+And shape has:\n\
+| material.transparency | 1.0 |\n\
+| material.refractive_index | 1.5 |\n\
+And r ← ray(point(0, 0, -5), vector(0, 0, 1))\n\
+And xs ← intersections(4:shape, 6:shape)\n\
+When comps ← prepare_computations(xs[0], r, xs)\n\
+And c ← refracted_color(w, comps, 0)\n\
+Then c = color(0, 0, 0)\n");
+	t_world		*w = default_world();
+	t_object	*shape = w->objects[0];
+	shape->material.transparency = 1;
+	shape->material.refractive_index = 1.5;
+	t_ray	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){4, shape};
+	xs->arr[1] = (t_intersection){6, shape};
+	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_color c = refracted_color(w, comps, 0);
+	print_color(c);
 }
 
 void	test_transparency()
@@ -132,6 +187,10 @@ void	test_transparency()
 	test3();
 	printf("_____________________________________________\n");
 	test4();
+	printf("_____________________________________________\n");
+	test5();
+	printf("_____________________________________________\n");
+	test6();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");

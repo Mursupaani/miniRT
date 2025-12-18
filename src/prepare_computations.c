@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 14:33:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:05:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:55:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_computations	prepare_computations(
 	else
 		comps.inside = false;
 	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.under_point = tuple_subtract(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
 	comps.shadowed = false;
 	return (comps);
 }

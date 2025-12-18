@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:15:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:00:54 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:32:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ Then color_at(w, r) should terminate successfully\n");
 	world_add_object(w, upper);
 	print_world(w);
 	t_ray r = ray(point(0, 0, 0), vector(0, 1, 0));
-	t_color c = color_at(w, r, REFLECTIONS);
+	t_color c = color_at(w, r, RECURSIONS);
 	print_color(c);
 	free(lower);
 	free(upper);

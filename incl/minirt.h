@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:07:02 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:49:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@
 #  define SHININESS 200.0
 # endif
 
-# ifndef REFLECTIONS
-#  define REFLECTIONS 5
+# ifndef RECURSIONS
+#  define RECURSIONS 5
 # endif
 
 typedef struct s_thread_data t_thread_data;
@@ -276,10 +276,9 @@ typedef struct	s_ray
  */
 typedef struct	s_intersection
 {
-	double					t;
-	t_object				*object;
-	// FIXME: Delete
-	// struct s_intersection	*next;
+	double		t;
+	t_object	*object;
+	// int			id;
 }	t_intersection;
 
 typedef struct s_intersections
@@ -469,12 +468,15 @@ t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
-t_color		shade_hit(t_world *w, t_computations comps, int reflections);
-t_color		color_at(t_world *w, t_ray r, int reflections);
+t_color		shade_hit(t_world *w, t_computations comps, int recursions);
+t_color		color_at(t_world *w, t_ray r, int recursions);
 bool		is_shadowed(t_world *w, t_point p);
 
 // Reflections:
-t_color		reflected_color(t_world *w, t_computations comps, int reflections);
+t_color		reflected_color(t_world *w, t_computations comps, int recursions);
+
+// Refractions:
+t_color	refracted_color(t_world *w, t_computations comps, int recursions);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);
