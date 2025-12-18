@@ -123,6 +123,14 @@ typedef struct s_lighting
 	t_color		color_at_point;
 }	t_lighting;
 
+typedef struct s_refraction
+{
+	double		n_ratio;
+	double		cos_i;
+	double		cos_t;
+	double		sin2_t;
+}	t_refraction;
+
 typedef enum s_exit_value
 {
 	SUCCESS,

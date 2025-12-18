@@ -175,6 +175,75 @@ Then c = color(0, 0, 0)\n");
 	print_color(c);
 }
 
+static void	test7()
+{
+	printf("TEST 7:");
+	printf("Scenario: The refracted color under total internal reflection\n\
+Given w ← default_world()\n\
+And shape ← the first object in w\n\
+And shape has:\n\
+| material.transparency | 1.0 |\n\
+| material.refractive_index | 1.5 |\n\
+And r ← ray(point(0, 0, √2/2), vector(0, 1, 0))\n\
+And xs ← intersections(-√2/2:shape, √2/2:shape)\n\
+# NOTE: this time you're inside the sphere, so you need\n\
+# to look at the second intersection, xs[1], not xs[0]\n\
+When comps ← prepare_computations(xs[1], r, xs)\n\
+And c ← refracted_color(w, comps, 5)\n\
+Then c = color(0, 0, 0)\n");
+	t_world		*w = default_world();
+	t_object	*shape = w->objects[0];
+	shape->material.transparency = 1;
+	shape->material.refractive_index = 1.5;
+	t_ray	r = ray(point(0, 0, sqrt(2) / 2), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){-sqrt(2) / 2, shape};
+	xs->arr[1] = (t_intersection){sqrt(2) / 2, shape};
+	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	t_color c = refracted_color(w, comps, 5);
+	print_color(c);
+}
+
+static void	test8()
+{
+	printf("TEST 8:");
+	printf("Scenario: The refracted color with a refracted ray\n\
+Given w ← default_world()\n\
+And A ← the first object in w\n\
+And A has:\n\
+| material.ambient | 1.0 |\n\
+| material.pattern | test_pattern() |\n\
+And B ← the second object in w\n\
+And B has:\n\
+| material.transparency | 1.0 |\n\
+| material.refractive_index | 1.5 |\n\
+And r ← ray(point(0, 0, 0.1), vector(0, 1, 0))\n\
+And xs ← intersections(-0.9899:A, -0.4899:B, 0.4899:B, 0.9899:A)\n\
+When comps ← prepare_computations(xs[2], r, xs)\n\
+And c ← refracted_color(w, comps, 5)\n\
+Then c = color(0, 0.99888, 0.04725)\n");
+	t_world		*w = default_world();
+	t_object	*a = w->objects[0];
+	a->material.ambient = 1;
+	a->material.pattern = test_pattern();
+	t_object	*b = w->objects[1];
+	b->material.transparency = 1;
+	b->material.refractive_index = 1.5;
+	t_ray	r = ray(point(0, 0, 0.1), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 4);
+	xs->count = 4;
+	xs->arr[0] = (t_intersection){-0.9899, a};
+	xs->arr[1] = (t_intersection){-0.4899, b};
+	xs->arr[2] = (t_intersection){0.4899, b};
+	xs->arr[1] = (t_intersection){0.9899, b};
+	t_computations comps = prepare_computations(xs->arr[2], r, xs);
+	t_color c = refracted_color(w, comps, 5);
+	print_color(c);
+}
+
 void	test_transparency()
 {
 	printf("\n");
@@ -191,6 +260,10 @@ void	test_transparency()
 	test5();
 	printf("_____________________________________________\n");
 	test6();
+	printf("_____________________________________________\n");
+	test7();
+	printf("_____________________________________________\n");
+	test8();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");

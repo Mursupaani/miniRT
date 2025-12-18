@@ -83,6 +83,7 @@ static bool	get_n1_and_n2(
 			break ;
 		}
 	}
+	free(containers);
 	return (true);
 }
 
