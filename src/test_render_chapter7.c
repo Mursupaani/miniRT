@@ -127,7 +127,7 @@ void	build_chapter7_world(t_app *app)
 	back_wall->material.diffuse = 0.7;
 	back_wall->material.specular = 0.1;
 	back_wall->material.reflective = 0.2;
-	back_wall->material.pattern = checkers_pattern(color(0, 0, 0), color(0.1, 0.1, 0.1));
+	back_wall->material.pattern = checkers_pattern(color(0.5, 0.5, 0.5), color(0.1, 0.1, 0.1));
 	set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
 	world_add_object(w, back_wall);
 
