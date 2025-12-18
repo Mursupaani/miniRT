@@ -83,17 +83,17 @@ And comps.n2 = <n2>\n");
 	xs->arr[5] = (t_intersection){6, a};
 	xs->count = 6;
 	t_computations comps = prepare_computations(xs->arr[0], r, xs);
-	print_computations(comps);
+	printf("[0]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 	comps = prepare_computations(xs->arr[1], r, xs);
-	print_computations(comps);
+	printf("[1]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 	comps = prepare_computations(xs->arr[2], r, xs);
-	print_computations(comps);
+	printf("[2]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 	comps = prepare_computations(xs->arr[3], r, xs);
-	print_computations(comps);
+	printf("[3]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 	comps = prepare_computations(xs->arr[4], r, xs);
-	print_computations(comps);
+	printf("[4]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 	comps = prepare_computations(xs->arr[5], r, xs);
-	print_computations(comps);
+	printf("[5]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 }
 
 void	test_transparency()

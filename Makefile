@@ -45,7 +45,7 @@ C_FILES			= main.c parsing.c initialize.c math_utils.c memory_and_exit.c \
 				  view_transform.c camera.c patterns.c pattern_stripe.c \
 				  color_math.c pattern_gradient.c pattern_ring.c \
 				  pattern_checkers.c reflections.c plane.c \
-				  \
+				  prepare_computations.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c test_world.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \

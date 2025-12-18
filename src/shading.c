@@ -59,7 +59,7 @@ t_color	color_at(t_world *w, t_ray r, int reflections)
 		free_intersections(xs);
 		return ((t_color){0, 0, 0});
 	}
-	comps = prepare_computations_old(x, r);
+	comps = prepare_computations(x, r, xs);
 	free_intersections(xs);
 	return (shade_hit(w, comps, reflections));
 }
