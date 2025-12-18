@@ -56,15 +56,15 @@ void	build_chapter7_world(t_app *app)
     // world_add_object(w, right_wall);
 
 	// MIDDLE SPHERE
-	t_object *middle = sphere_new();
+	t_object *middle = glass_sphere();
 	m = translation_matrix4(-0.5, 1, 0.5);
-	middle->material.color = color(0.1, 1, 0.5);
+	middle->material.color = color(0.5, 0.5, 0.5);
 	middle->material.diffuse = 0.7;
 	middle->material.specular = 0.3;
-	middle->material.reflective = 0.3;
-	middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
+	middle->material.reflective = 0.5;
+	// middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
 	set_transform(middle, m);
-	set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
+	// set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
 	world_add_object(w, middle);
 
 	t_object *right = sphere_new();

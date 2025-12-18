@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdlib.h>
 
 t_object	*glass_sphere()
 {
@@ -238,9 +237,50 @@ Then c = color(0, 0.99888, 0.04725)\n");
 	xs->arr[0] = (t_intersection){-0.9899, a};
 	xs->arr[1] = (t_intersection){-0.4899, b};
 	xs->arr[2] = (t_intersection){0.4899, b};
-	xs->arr[1] = (t_intersection){0.9899, b};
+	xs->arr[3] = (t_intersection){0.9899, b};
 	t_computations comps = prepare_computations(xs->arr[2], r, xs);
 	t_color c = refracted_color(w, comps, 5);
+	print_color(c);
+}
+
+static void	test9()
+{
+	printf("TEST 9:");
+	printf("Scenario: shade_hit() with a transparent material\n\
+Given w ← default_world()\n\
+And floor ← plane() with:\n\
+| transform | translation(0, -1, 0) |\n\
+| material.transparency | 0.5 |\n\
+| material.refractive_index | 1.5 |\n\
+And floor is added to w\n\
+And ball ← sphere() with:\n\
+| material.color | (1, 0, 0) |\n\
+| material.ambient | 0.5 |\n\
+| transform | translation(0, -3.5, -0.5) |\n\
+And ball is added to w\n\
+And r ← ray(point(0, 0, -3), vector(0, -√2/2, √2/2))\n\
+And xs ← intersections(√2:floor)\n\
+When comps ← prepare_computations(xs[0], r, xs)\n\
+And color ← shade_hit(w, comps, 5)\n\
+Then color = color(0.93642, 0.68642, 0.68642)\n");
+	t_world		*w = default_world();
+	t_object	*floor = plane_new();
+	set_transform(floor, translation_matrix4(0, -1, 0));
+	floor->material.transparency = 0.5;
+	floor->material.refractive_index = 1.5;
+	world_add_object(w, floor);
+	t_object	*ball = sphere_new();
+	ball->material.color = color(1, 0, 0);
+	ball->material.ambient = 0.5;
+	set_transform(ball, translation_matrix4(0, -3.5, -0.5));
+	world_add_object(w, ball);
+	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 1;
+	xs->arr[0] = (t_intersection){sqrt(2), floor};
+	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_color c = shade_hit(w, comps, 5);
 	print_color(c);
 }
 
@@ -264,6 +304,8 @@ void	test_transparency()
 	test7();
 	printf("_____________________________________________\n");
 	test8();
+	printf("_____________________________________________\n");
+	test9();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");
