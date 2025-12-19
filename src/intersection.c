@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:28:15 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:34:20 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/19 16:39:53 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_intersection	intersection(double t, t_object *object)
 
 	intersection.t = t;
 	intersection.object = object;
-	// intersection.next = NULL;
 	return (intersection);
 }
 

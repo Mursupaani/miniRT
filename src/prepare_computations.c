@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdlib.h>
 
 static	void	add_item(t_intersection *x, t_intersection **containers)
 {
@@ -68,7 +69,7 @@ static bool	get_n1_and_n2(
 	int				i;
 	int				containers_items;
 
-	containers = ft_calloc(1, sizeof(t_intersection *) * xs->count + 1);
+	containers = ft_calloc(1, sizeof(t_intersection *) * (xs->count + 1));
 	containers_items = 0;
 	if (!containers)
 		return (false);

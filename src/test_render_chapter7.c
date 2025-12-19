@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:24:42 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/19 15:58:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	build_chapter7_world(t_app *app)
 	t_object *middle = glass_sphere();
 	m = translation_matrix4(-0.5, 1, 0.5);
 	middle->material.color = color(0.5, 0.5, 0.5);
-	middle->material.diffuse = 0.7;
+	middle->material.diffuse = 0.1;
 	middle->material.specular = 0.3;
 	middle->material.reflective = 0.9;
 	middle->material.transparency = 0.9;
@@ -44,13 +44,28 @@ void	build_chapter7_world(t_app *app)
 	// set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
 	add_object_to_world(middle, w);
 
+	t_object *middle_inner = glass_sphere();
+	m = translation_matrix4(-0.5, 1, 0.5);
+	middle_inner->material.color = color(0, 0, 0);
+	middle_inner->material.diffuse = 0;
+	middle_inner->material.specular = 0;
+	middle_inner->material.reflective = 0;
+	middle_inner->material.transparency = 1;
+	middle_inner->material.refractive_index = 1;
+	// middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
+	set_transform(middle_inner, scaling_matrix4(0.8, 0.8, 0.8));
+	add_transform(middle_inner, m);
+	// set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
+	add_object_to_world(middle_inner, w);
+
 	t_object *right = sphere_new();
-	m = matrix4_multiply(translation_matrix4(1.5, 0.5, -0.5), scaling_matrix4(0.5, 0.5, 0.5));
+	m = scaling_matrix4(0.5, 0.5, 0.5);
 	right->material.color = color(0.5, 1, 0.1);
 	right->material.diffuse = 0.7;
 	right->material.specular = 0.3;
 	right->material.reflective = 1;
 	set_transform(right, m);
+	add_transform(right, translation_matrix4(-0.5, 1, 0.5));
 	right->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
 	set_pattern_transform(&right->material.pattern, rotation_z(M_PI / 5));
 	add_pattern_transform(&right->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
