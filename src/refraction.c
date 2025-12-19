@@ -17,6 +17,8 @@ double	schlick(t_computations comps)
 	double	cos;
 	double	n;
 	double	sin_2t;
+	double	cos_t;
+	double	r0;
 
 	cos = dot(comps.eyev, comps.normalv);
 	if (comps.n1 > comps.n2)
@@ -25,8 +27,11 @@ double	schlick(t_computations comps)
 		sin_2t = n * n * (1 - cos * cos);
 		if (sin_2t > 1)
 			return (1);
+		cos_t = sqrt(1 - sin_2t);
+		cos = cos_t;
 	}
-	return (0);
+	r0 = pow((comps.n1 - comps.n2) / (comps.n1 + comps.n2), 2);
+	return (r0 + (1 - r0) * pow((1 - cos), 5));
 }
 
 static t_color calculate_refracted_color(t_world *w, t_computations comps, int recursions)

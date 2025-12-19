@@ -29,31 +29,7 @@ void	build_chapter7_world(t_app *app)
 	floor->material.specular = 0;
 	floor->material.reflective = 0.5;
 	set_transform(floor, m);
-	world_add_object(w, floor);
-
-    // --- LEFT WALL ---
-// t_object *left_wall = sphere_new();
-// m = scaling_matrix4(10, 0.01, 10);
-// m = matrix4_multiply(rotation_x(M_PI / 2), m); 
-// m = matrix4_multiply(rotation_y(-M_PI / 4), m); 
-// m = matrix4_multiply(translation_matrix4(0, 0, 5), m);
-// set_transform(left_wall, m);
-// left_wall->material = floor->material;
-// left_wall->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
-// set_pattern_transform(&left_wall->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
-// add_pattern_transform(&left_wall->material.pattern, rotation_z(M_PI / 2.5));
-// world_add_object(w, left_wall);
-
-    // --- RIGHT WALL ---
-    // t_object *right_wall = plane_new();
-    // m = scaling_matrix4(10, 0.01, 10);
-    // m = matrix4_multiply(rotation_x(M_PI / 2), m);
-    // m = matrix4_multiply(rotation_y(M_PI / 4), m);
-    // m = matrix4_multiply(translation_matrix4(0, 0, 5), m);
-	// set_transform(right_wall, m);
-    // right_wall->material = floor->material;
-	// right_wall->material.pattern = stripe_pattern(color(1, 1, 1), color(1, 0, 0));
-    // world_add_object(w, right_wall);
+	add_object_to_world(floor, w);
 
 	// MIDDLE SPHERE
 	t_object *middle = glass_sphere();
@@ -61,11 +37,12 @@ void	build_chapter7_world(t_app *app)
 	middle->material.color = color(0.5, 0.5, 0.5);
 	middle->material.diffuse = 0.7;
 	middle->material.specular = 0.3;
-	middle->material.reflective = 0.5;
+	middle->material.reflective = 0.9;
+	middle->material.transparency = 0.9;
 	// middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
 	set_transform(middle, m);
 	// set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
-	world_add_object(w, middle);
+	add_object_to_world(middle, w);
 
 	t_object *right = sphere_new();
 	m = matrix4_multiply(translation_matrix4(1.5, 0.5, -0.5), scaling_matrix4(0.5, 0.5, 0.5));
@@ -78,7 +55,7 @@ void	build_chapter7_world(t_app *app)
 	set_pattern_transform(&right->material.pattern, rotation_z(M_PI / 5));
 	add_pattern_transform(&right->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
 	add_pattern_transform(&right->material.pattern, rotation_z(M_PI / 3));
-	world_add_object(w, right);
+	add_object_to_world(right, w);
 
 	t_object *left = sphere_new();
 	m = matrix4_multiply(translation_matrix4(-2.5, 0.33, -1.25), scaling_matrix4(0.33, 0.33, 0.33));
@@ -90,7 +67,7 @@ void	build_chapter7_world(t_app *app)
 	left->material.pattern = test_pattern();
 	set_pattern_transform(&left->material.pattern, rotation_z(M_PI / 2));
 	add_pattern_transform(&left->material.pattern, scaling_matrix4(1.5, 1.5, 1.5));
-	world_add_object(w, left);
+	add_object_to_world(left, w);
 
 	t_object *up_right = sphere_new();
 	m = matrix4_multiply(translation_matrix4(2, 2, -2), scaling_matrix4(0.5, 0.5, 0.5));
@@ -103,7 +80,7 @@ void	build_chapter7_world(t_app *app)
 	up_right->material.pattern = ring_pattern(color(0.5, 0.1, 0.8), color(0, 0, 0));
 	set_pattern_transform(&up_right->material.pattern, rotation_x(M_PI / 2));
 	add_pattern_transform(&up_right->material.pattern, scaling_matrix4(0.2, 0.2, 0.2));
-	world_add_object(w, up_right);
+	add_object_to_world(up_right, w);
 
 	t_object *up_left = sphere_new();
 	m = matrix4_multiply(translation_matrix4(-2, 2, -2), scaling_matrix4(0.5, 0.5, 0.5));
@@ -116,7 +93,7 @@ void	build_chapter7_world(t_app *app)
 	up_left->material.pattern = checkers_pattern(color(0.2, 0.7, 0.5), color(0, 0, 0));
 	set_pattern_transform(&up_left->material.pattern, rotation_y(M_PI / 4));
 	add_pattern_transform(&up_left->material.pattern, scaling_matrix4(0.3, 0.3, 0.3));
-	world_add_object(w, up_left);
+	add_object_to_world(up_left, w);
 
 	// BACK WALL - A plane behind the scene
 	t_object *back_wall = plane_new();
@@ -129,7 +106,7 @@ void	build_chapter7_world(t_app *app)
 	back_wall->material.reflective = 0.2;
 	back_wall->material.pattern = checkers_pattern(color(0, 0, 0), color(0.1, 0.1, 0.1));
 	set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(0.5, 0.5, 0.5));
-	world_add_object(w, back_wall);
+	add_object_to_world(back_wall, w);
 
 	app->scene = w;
 	app->scene->camera = c;

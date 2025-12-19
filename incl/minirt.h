@@ -516,7 +516,7 @@ t_vector	normal_at(t_object *obj, t_point point);
 // World
 t_world		*world();
 t_world		*default_world();
-t_object	**world_add_object(t_world *w, t_object *obj);
+t_object	**add_object_to_world(t_object *obj, t_world *w);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);

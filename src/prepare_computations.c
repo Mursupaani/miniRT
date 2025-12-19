@@ -20,6 +20,7 @@ static	void	add_item(t_intersection *x, t_intersection **containers)
 	while (containers[i])
 		i++;
 	containers[i] = x;
+	containers[i + 1] = NULL;
 }
 
 static	void remove_item(int i, t_intersection **containers, int containers_items)
