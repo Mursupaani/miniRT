@@ -58,6 +58,8 @@ t_material	material(void)
 	material.specular = SPECULAR;
 	material.shininess = SHININESS;
 	material.reflective = 0;
+	material.transparency = 0;
+	material.refractive_index = 1;
 	material.color = (t_color){1, 1, 1};
 	material.pattern = no_pattern();
 	return (material);

@@ -30,7 +30,7 @@ static t_object	**copy_objects_to_array(t_object **old_arr, t_object **new_arr, 
 	return (new_arr);
 }
 
-t_object	**world_add_object(t_world *w, t_object *obj)
+t_object	**add_object_to_world(t_object *obj, t_world *w)
 {
 	t_object	**temp;
 

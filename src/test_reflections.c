@@ -6,12 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:15:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:35:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:32:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 static void	test1()
 {
@@ -35,7 +34,7 @@ Then comps.reflectv = vector(0, √2/2, √2/2)\n");
 	t_object *shape = plane_new();
 	t_ray r = ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	print_computations(comps);
 	free(shape);
 }
@@ -57,7 +56,7 @@ Then color = color(0, 0, 0)\n");
 	t_object *shape = w->objects[1];
 	shape->material.ambient = 1;
 	t_intersection i = intersection(1, shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -82,10 +81,10 @@ Then color = color(0.19032, 0.2379, 0.14274)\n");
 	// print_object(shape);
 	shape->material.reflective = 0.5;
 	set_transform(shape, translation_matrix4(0, -1, 0));
-	world_add_object(w, shape);
+	add_object_to_world(shape, w);
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = reflected_color(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -109,10 +108,10 @@ Then color = color(0.87677, 0.92436, 0.82918)\n");
 	t_object *shape = plane_new();
 	shape->material.reflective = 0.5;
 	set_transform(shape, translation_matrix4(0, -1, 0));
-	world_add_object(w, shape);
+	add_object_to_world(shape, w);
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
-	t_computations comps = prepare_computations(i, r);
+	t_computations comps = prepare_computations_old(i, r);
 	t_color c = shade_hit(w, comps, 1);
 	print_color(c);
 	free(shape);
@@ -140,14 +139,14 @@ Then color_at(w, r) should terminate successfully\n");
 	t_object *lower = plane_new();
 	lower->material.reflective = 1;
 	set_transform(lower, translation_matrix4(0, -1, 0));
-	world_add_object(w, lower);
+	add_object_to_world(lower, w);
 	t_object *upper = plane_new();
 	upper->material.reflective = 1;
 	set_transform(upper, translation_matrix4(0, 1, 0));
-	world_add_object(w, upper);
+	add_object_to_world(upper, w);
 	print_world(w);
 	t_ray r = ray(point(0, 0, 0), vector(0, 1, 0));
-	t_color c = color_at(w, r, REFLECTIONS);
+	t_color c = color_at(w, r, RECURSIONS);
 	print_color(c);
 	free(lower);
 	free(upper);

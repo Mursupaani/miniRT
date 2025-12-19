@@ -47,6 +47,8 @@ t_intersections *intersect(t_object *obj, t_ray ray)
 		return (intersect_with_sphere(obj, ray));
 	else if (obj->type == PLANE)
 		return (intersect_with_plane(obj, ray));
+	else if (obj->type == CUBE)
+		return (intersect_with_cube(obj, ray));
 	else
 		return (NULL);
 }

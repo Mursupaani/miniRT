@@ -40,12 +40,34 @@ static t_vector	plane_normal_at(t_object *plane, t_point world_point)
 	return (normalize(world_normal));
 }
 
+t_vector	cube_normal_at(t_object *cube, t_point world_point)
+{
+	double		maxc;
+	t_vector	object_normal;
+	t_vector	world_normal;
+
+	
+	maxc = max_absolute_coord_component(world_point.x, world_point.y, world_point.z);
+	if (doubles_are_equal(maxc, fabs(world_point.x)))
+		object_normal = vector(world_point.x, 0, 0);
+	else if (doubles_are_equal(maxc, fabs(world_point.y)))
+		object_normal = vector(0, world_point.y, 0);
+	else
+		object_normal = vector(0, 0, world_point.z);
+	world_normal = matrix4_and_tuple_multiply(
+		cube->inverse_transpose, object_normal);
+	world_normal.w = 0;
+	return (normalize(world_normal));
+}
+
 t_vector	normal_at(t_object *obj, t_point world_point)
 {
 	if (obj->type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
 	else if (obj->type == PLANE)
 		return (plane_normal_at(obj, world_point));
+	else if (obj->type == CUBE)
+		return (cube_normal_at(obj, world_point));
 	else
-		return (normalize(vector(DBL_MAX, DBL_MAX, DBL_MAX)));
+		return (vector(DBL_MAX, DBL_MAX, DBL_MAX));
 }

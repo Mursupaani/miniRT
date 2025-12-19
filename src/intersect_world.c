@@ -6,33 +6,12 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 11:47:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:15:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_computations	prepare_computations(t_intersection x, t_ray r)
-{
-	t_computations	comps;
-	
-	comps.t = x.t;
-	comps.object = x.object;
-	comps.point = ray_position(r, comps.t);
-	comps.eyev = tuple_negate(r.direction);
-	comps.normalv = normal_at(comps.object, comps.point);
-	comps.reflectv = reflect(r.direction, comps.normalv);
-	if (dot(comps.normalv, comps.eyev) < 0)
-	{
-		comps.inside = true;
-		comps.normalv = tuple_negate(comps.normalv);
-	}
-	else
-		comps.inside = false;
-	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
-	comps.shadowed = false;
-	return (comps);
-}
 
 static t_intersection	*add_intersection(
 				t_intersections *cur, t_intersections *xs, int old_xs_count)
@@ -98,4 +77,27 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 		quick_sort_intersections(xs->arr, 0, xs->count - 1);
 	}
 	return (xs);
+}
+
+// FIXME: Old function. Left here so that previous tests don't fail.
+t_computations	prepare_computations_old(t_intersection x, t_ray r)
+{
+	t_computations	comps;
+	
+	comps.t = x.t;
+	comps.object = x.object;
+	comps.point = ray_position(r, comps.t);
+	comps.eyev = tuple_negate(r.direction);
+	comps.normalv = normal_at(comps.object, comps.point);
+	comps.reflectv = reflect(r.direction, comps.normalv);
+	if (dot(comps.normalv, comps.eyev) < 0)
+	{
+		comps.inside = true;
+		comps.normalv = tuple_negate(comps.normalv);
+	}
+	else
+		comps.inside = false;
+	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.shadowed = false;
+	return (comps);
 }
