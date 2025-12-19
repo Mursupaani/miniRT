@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minirt.h"
 
 t_object	*glass_sphere()
@@ -268,12 +269,12 @@ Then color = color(0.93642, 0.68642, 0.68642)\n");
 	set_transform(floor, translation_matrix4(0, -1, 0));
 	floor->material.transparency = 0.5;
 	floor->material.refractive_index = 1.5;
-	world_add_object(w, floor);
+	add_object_to_world(floor, w);
 	t_object	*ball = sphere_new();
 	ball->material.color = color(1, 0, 0);
 	ball->material.ambient = 0.5;
 	set_transform(ball, translation_matrix4(0, -3.5, -0.5));
-	world_add_object(w, ball);
+	add_object_to_world(ball, w);
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersections	*xs = malloc(sizeof(t_intersections));
 	xs->arr = malloc(sizeof(t_intersection) * 2);
@@ -281,6 +282,114 @@ Then color = color(0.93642, 0.68642, 0.68642)\n");
 	xs->arr[0] = (t_intersection){sqrt(2), floor};
 	t_computations comps = prepare_computations(xs->arr[0], r, xs);
 	t_color c = shade_hit(w, comps, 5);
+	print_color(c);
+}
+
+static void	test10()
+{
+	printf("TEST 10:");
+	printf("Scenario: The Schlick approximation under total internal reflection\n\
+Given shape ← glass_sphere()\n\
+And r ← ray(point(0, 0, √2/2), vector(0, 1, 0))\n\
+And xs ← intersections(-√2/2:shape, √2/2:shape)\n\
+When comps ← prepare_computations(xs[1], r, xs)\n\
+And reflectance ← schlick(comps)\n\
+Then reflectance = 1.0\n");
+	t_object	*shape = glass_sphere();
+	t_ray	r = ray(point(0, 0, sqrt(2) / 2), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){-sqrt(2) / 2, shape};
+	xs->arr[1] = (t_intersection){sqrt(2) / 2, shape};
+	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	double reflectance = schlick(comps);
+	printf("%f\n", reflectance);
+}
+
+static void	test11()
+{
+	printf("TEST 11:");
+	printf("Scenario: The Schlick approximation with a perpendicular viewing angle\n\
+Given shape ← glass_sphere()\n\
+And r ← ray(point(0, 0, 0), vector(0, 1, 0))\n\
+And xs ← intersections(-1:shape, 1:shape)\n\
+When comps ← prepare_computations(xs[1], r, xs)\n\
+And reflectance ← schlick(comps)\n\
+Then reflectance = 0.04\n");
+	t_object	*shape = glass_sphere();
+	t_ray	r = ray(point(0, 0, 0), vector(0, 1, 0));
+	t_intersections	*xs = malloc(sizeof(t_intersections));
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = (t_intersection){-1, shape};
+	xs->arr[1] = (t_intersection){1, shape};
+	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	double reflectance = schlick(comps);
+	printf("%f\n", reflectance);
+}
+
+static void	test12()
+{
+	printf("TEST 12:");
+	printf("Scenario: The Schlick approximation with small angle and n2 > n1\n\
+Given shape ← glass_sphere()\n\
+And r ← ray(point(0, 0.99, -2), vector(0, 0, 1))\n\
+And xs ← intersections(1.8589:shape)\n\
+When comps ← prepare_computations(xs[0], r, xs)\n\
+And reflectance ← schlick(comps)\n\
+Then reflectance = 0.48873\n");
+	t_object	*shape = glass_sphere();
+	t_ray	r = ray(point(0, 0.99, -2), vector(0, 0, 1));
+	t_intersections	*xs = ft_calloc(1, (sizeof(t_intersections)));
+	xs->arr = ft_calloc(1, sizeof(t_intersection) * 1);
+	xs->count = 1;
+	xs->arr[0] = (t_intersection){1.8589, shape};
+	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	double reflectance = schlick(comps);
+	printf("%f\n", reflectance);
+}
+
+static void	test13()
+{
+	printf("TEST 13:");
+	printf("Scenario: shade_hit() with a reflective, transparent material\n\
+Given w ← default_world()\n\
+And r ← ray(point(0, 0, -3), vector(0, -√2/2, √2/2))\n\
+And floor ← plane() with:\n\
+| transform | translation(0, -1, 0) |\n\
+| material.reflective | 0.5 |\n\
+| material.transparency | 0.5 |\n\
+| material.refractive_index | 1.5 |\n\
+And floor is added to w\n\
+And ball ← sphere() with:\n\
+| material.color | (1, 0, 0) |\n\
+| material.ambient | 0.5 |\n\
+| transform | translation(0, -3.5, -0.5) |\n\
+And ball is added to w\n\
+And xs ← intersections(√2:floor)\n\
+When comps ← prepare_computations(xs[0], r, xs)\n\
+And color ← shade_hit(w, comps, 5)\n\
+Then color = color(0.93391, 0.69643, 0.69243)\n");
+	t_world		*w = default_world();
+	t_ray	r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+	t_object	*floor = plane_new();
+	set_transform(floor, translation_matrix4(0, -1, 0));
+	floor->material.reflective = 0.5;
+	floor->material.transparency = 0.5;
+	floor->material.refractive_index = 1.5;
+	add_object_to_world(floor, w);
+	t_object	*ball = sphere_new();
+	ball->material.color = color(1, 0, 0);
+	ball->material.ambient = 0.5;
+	set_transform(ball, translation_matrix4(0, -3.5, -0.5));
+	add_object_to_world(ball, w);
+	t_intersections	*xs = ft_calloc(1, (sizeof(t_intersections)));
+	xs->arr = ft_calloc(1, sizeof(t_intersection) * 1);
+	xs->count = 1;
+	xs->arr[0] = (t_intersection){sqrt(2), floor};
+	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_color	c = shade_hit(w, comps, 5);
 	print_color(c);
 }
 
@@ -306,6 +415,14 @@ void	test_transparency()
 	test8();
 	printf("_____________________________________________\n");
 	test9();
+	printf("_____________________________________________\n");
+	test10();
+	printf("_____________________________________________\n");
+	test11();
+	printf("_____________________________________________\n");
+	test12();
+	printf("_____________________________________________\n");
+	test13();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING REFRACTIONS FINISHED -------\n");
 	printf("\n");

@@ -60,7 +60,7 @@ OBJ_DIR			= ./obj/
 OBJS			= $(addprefix $(OBJ_DIR), $(C_FILES:%.c=%.o))
 
 # Build flags
-C_FLAGS			= -Wall -Wextra -Werror -g -DTHREADS=$(THREADS)
+C_FLAGS			= -Wall -Wextra -Werror -g -o3 -DTHREADS=$(THREADS)
 MLX_FLAGS		= -lglfw -ldl -lpthread -lm
 
 # Threads
