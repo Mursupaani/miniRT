@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:16:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/19 16:45:22 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,18 @@ void	print_object(t_object *o)
 		printf(" TYPE:\tPlane\n\n");
 	else if (o->type == CYLINDER)
 		printf(" TYPE:\tCylinder\n\n");
+	else if (o->type == CUBE)
+		printf(" TYPE:\tCube\n\n");
 	else
 		printf(" TYPE:\tundefined\n\n");
 	print_material(o->material);
 	printf("\n");
 	printf(" TRANSFORM ");
 	print_matrix4(o->transform);
+	printf(" INVERSE TRANSFORM ");
+	print_matrix4(o->inverse_transform);
+	printf(" INVERSE TRANSPOSE ");
+	print_matrix4(o->inverse_transpose);
 	printf("\n");
 }
 

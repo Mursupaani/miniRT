@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:49:34 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/19 16:53:14 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ typedef enum s_object_type
 {
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CUBE,
 }	t_object_type;
 
 typedef enum s_pattern_type
@@ -282,6 +283,13 @@ typedef struct	s_ray
  * - t_object object: the object that the ray hit
  * - t_intersection *next: address of the next hit
  */
+
+typedef struct s_local_intersect
+{
+	double	min;
+	double	max;
+}	t_loc_intersect;
+
 typedef struct	s_intersection
 {
 	double		t;
@@ -331,6 +339,7 @@ void		test_patterns(void);
 void		test_reflections();
 void		test_transparency();
 t_object	*glass_sphere();
+void		test_cubes();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -460,6 +469,8 @@ t_ray		ray_for_pixel(t_camera *c, int px, int py);
 // Objects:
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
+t_object	*plane_new();
+t_object	*cube_new(void);
 void		set_transform(t_object *object, t_matrix4 transform);
 void		add_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
@@ -524,7 +535,14 @@ t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 
 // Plane
-t_object		*plane_new();
 t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
+
+// Cube
+t_intersections	*intersect_with_cube(t_object *cube, t_ray ray);
+double			min_of_max_t(double xtmin, double ytmin, double ztmin);
+double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
+void   	 		swap_doubles(double *tmin, double *tmax);
+double 	 		max_absolute_coord_component(double x, double y, double z);
+t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 #endif
