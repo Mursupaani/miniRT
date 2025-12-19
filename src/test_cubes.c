@@ -45,6 +45,27 @@ And xs[1].t = <t2>\n");
 	printf("\n");
 	free_intersections(xs);
 
+	r = ray(point(0.5, -5, 0), vector(0, 1, 0));
+	xs = local_intersect(cube, r);
+	printf("t1 = %lf\n", xs->arr[0].t);
+	printf("t2 = %lf\n", xs->arr[1].t);
+	printf("\n");
+	free_intersections(xs);
+
+	r = ray(point(0.5, 0, 5), vector(0, 0, -1));
+	xs = local_intersect(cube, r);
+	printf("t1 = %lf\n", xs->arr[0].t);
+	printf("t2 = %lf\n", xs->arr[1].t);
+	printf("\n");
+	free_intersections(xs);
+
+	r = ray(point(0.5, 0, -5), vector(0, 0, 1));
+	xs = local_intersect(cube, r);
+	printf("t1 = %lf\n", xs->arr[0].t);
+	printf("t2 = %lf\n", xs->arr[1].t);
+	printf("\n");
+	free_intersections(xs);
+
 	r = ray(point(0, 0.5, 0), vector(0, 0, 1));
 	xs = local_intersect(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
