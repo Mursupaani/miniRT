@@ -538,9 +538,11 @@ void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
 
 // Cube
-t_intersections	*local_intersect(t_object *cube, t_ray ray);
-double	min_of_max_t(double xtmin, double ytmin, double ztmin);
-double	max_of_min_t(double xtmin, double ytmin, double ztmin);
-void	swap_doubles(double *tmin, double *tmax);
+t_intersections	*intersect_with_cube(t_object *cube, t_ray ray);
+double			min_of_max_t(double xtmin, double ytmin, double ztmin);
+double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
+void   	 		swap_doubles(double *tmin, double *tmax);
+double 	 		max_absolute_coord_component(double x, double y, double z);
+t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 #endif

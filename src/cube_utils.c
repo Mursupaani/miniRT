@@ -48,3 +48,15 @@ void	swap_doubles(double *tmin, double *tmax)
 	*tmin = *tmax;
 	*tmax = temp;
 }
+
+double	max_absolute_coord_component(double x, double y, double z)
+{
+	double	max;
+
+	max = fabs(x);
+	if (fabs(y) > max)
+		max = fabs(y);
+	if (fabs(z) > max)
+		max = fabs(z);
+	return (max);
+}

@@ -178,6 +178,10 @@ void	print_object(t_object *o)
 	printf("\n");
 	printf(" TRANSFORM ");
 	print_matrix4(o->transform);
+	printf(" INVERSE TRANSFORM ");
+	print_matrix4(o->inverse_transform);
+	printf(" INVERSE TRANSPOSE ");
+	print_matrix4(o->inverse_transpose);
 	printf("\n");
 }
 

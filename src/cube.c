@@ -18,14 +18,16 @@ t_intersections	*calculate_min_and_max(t_loc_intersect xt, t_loc_intersect yt, t
 	double	tmin;
 	double	tmax;
 
+	tmin = max_of_min_t(xt.min, yt.min, zt.min);
+	tmax = min_of_max_t(xt.max, yt.max, zt.max);
+	if (tmin > tmax)
+		return (NULL);
 	xs = malloc(sizeof(t_intersections));
 	if (!xs)
 		return (NULL);
 	xs->arr = malloc(sizeof(t_intersection) * 2);
 	if (!xs->arr)
 		return (NULL);
-	tmin = max_of_min_t(xt.min, yt.min, zt.min);
-	tmax = min_of_max_t(xt.max, yt.max, zt.max);
 	xs->count = 2;
 	xs->arr[0] = intersection(tmin, cube);
 	xs->arr[1] = intersection(tmax, cube);
@@ -56,15 +58,17 @@ t_loc_intersect	check_axis(double origin, double direction)
 	return ((t_loc_intersect){tmin, tmax});
 }
 
-t_intersections	*local_intersect(t_object *cube, t_ray ray)
+t_intersections	*intersect_with_cube(t_object *cube, t_ray ray)
 {
 	t_loc_intersect	xt;
 	t_loc_intersect	yt;
 	t_loc_intersect	zt;
+	t_ray			local_ray;
 
-	xt = check_axis(ray.origin.x, ray.direction.x);
-	yt = check_axis(ray.origin.y, ray.direction.y);
-	zt = check_axis(ray.origin.z, ray.direction.z);
+	local_ray = ray_transform(ray, cube->inverse_transform);
+	xt = check_axis(local_ray.origin.x, local_ray.direction.x);
+	yt = check_axis(local_ray.origin.y, local_ray.direction.y);
+	zt = check_axis(local_ray.origin.z, local_ray.direction.z);
 	return (calculate_min_and_max(xt, yt, zt, cube));
 }
 
