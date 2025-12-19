@@ -53,8 +53,8 @@
 #  define SHININESS 200.0
 # endif
 
-# ifndef REFLECTIONS
-#  define REFLECTIONS 5
+# ifndef RECURSIONS
+#  define RECURSIONS 7
 # endif
 
 typedef struct s_thread_data t_thread_data;
