@@ -6,11 +6,17 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:42:20 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/20 13:30:14 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
+{
+	(void)cylinder;
+	return (vector(world_point.x, 0, world_point.z));
+}
 
 static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 {
@@ -68,6 +74,8 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 		return (plane_normal_at(obj, world_point));
 	else if (obj->type == CUBE)
 		return (cube_normal_at(obj, world_point));
+	else if (obj->type == CYLINDER)
+		return (cylinder_normal_at(obj, world_point));
 	else
 		return (vector(DBL_MAX, DBL_MAX, DBL_MAX));
 }

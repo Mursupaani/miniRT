@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 16:41:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/20 12:38:20 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	// app = initialize_app();
-	// run_tests();
-	test_render();
+	run_tests();
+	// test_render();
 	// parse_rt_file(av, app);
 	// build_chapter7_world(app);
 	// launch_render(app);

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 16:53:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/20 12:55:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,6 +340,7 @@ void		test_reflections();
 void		test_transparency();
 t_object	*glass_sphere();
 void		test_cubes();
+void		test_cylinders();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -469,8 +470,9 @@ t_ray		ray_for_pixel(t_camera *c, int px, int py);
 // Objects:
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
-t_object	*plane_new();
+t_object	*plane_new(void);
 t_object	*cube_new(void);
+t_object	*cylinder_new(void);
 void		set_transform(t_object *object, t_matrix4 transform);
 void		add_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
@@ -544,5 +546,8 @@ double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
 void   	 		swap_doubles(double *tmin, double *tmax);
 double 	 		max_absolute_coord_component(double x, double y, double z);
 t_vector		cube_normal_at(t_object * obj, t_point world_point);
+
+// Cylinder
+t_intersections	*intersect_with_cylinder(t_object *cylinder, t_ray ray);
 
 #endif

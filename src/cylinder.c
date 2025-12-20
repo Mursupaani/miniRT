@@ -1,0 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/20 12:34:14 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/20 13:21:10 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+t_intersections	*intersect_with_cylinder(t_object *cylinder, t_ray ray)
+{
+	t_intersections	*xs;
+	t_ray	local_ray;
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t0;
+	double	t1;
+
+	local_ray = ray_transform(ray, cylinder->inverse_transform);
+	a = pow(local_ray.direction.x, 2) + pow(local_ray.direction.z, 2);
+	if (doubles_are_equal(a, 0))
+		return (NULL);
+	b = 2 * local_ray.origin.x * local_ray.direction.x + 2 * local_ray.origin.z * local_ray.direction.z;
+	c = pow(local_ray.origin.x, 2) + pow(local_ray.origin.z, 2) - 1;
+	disc = pow(b, 2) - 4 * a * c;
+	if (disc < 0)
+		return (NULL);
+	xs = malloc(sizeof(t_intersections));
+	if (!xs)
+		return (NULL);
+	t0 = (-b - sqrt(disc)) / (2 * a);
+	t1 = (-b + sqrt(disc)) / (2 * a);
+	xs->arr = malloc(sizeof(t_intersection) * 2);
+	xs->count = 2;
+	xs->arr[0] = intersection(t0, cylinder);
+	xs->arr[1] = intersection(t1, cylinder);
+	return (xs);
+}
+
+t_object	*cylinder_new(void)
+{
+	t_object	*cylinder;
+
+	cylinder = ft_calloc(1, sizeof(t_object));
+	if (!cylinder)
+		return (NULL);
+	cylinder->type = CYLINDER;
+	cylinder->center = point(0, 0, 0);
+	cylinder->transform = matrix4_identity();
+	cylinder->inverse_transform = cylinder->transform;
+	cylinder->inverse_transpose = cylinder->transform;
+	cylinder->material = material();
+	// FIXME: cylinder dimensions?
+	cylinder->height = 1;
+	cylinder->diameter = 1;
+	return (cylinder);
+}

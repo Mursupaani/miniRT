@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:27:07 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 17:20:52 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/20 12:43:05 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_object	*cube_new(void)
 	cube->inverse_transpose = cube->transform;
 	cube->material = material();
 	// FIXME: Cube dimensions?
-	cube->height = 2;
-	cube->diameter = 2;
+	cube->height = 1;
+	cube->diameter = 1;
 	return (cube);
 }
