@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/20 13:30:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:37:51 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
 {
 	(void)cylinder;
+	// NOTE: No need to normalize?
 	return (vector(world_point.x, 0, world_point.z));
 }
 

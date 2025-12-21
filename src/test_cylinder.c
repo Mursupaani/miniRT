@@ -6,11 +6,12 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 12:35:01 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/20 13:33:52 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:40:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <math.h>
 
 static void	test1()
 {
@@ -60,7 +61,6 @@ Examples:\n\
 		printf("3 / 3 fail\n");
 	print_intersections(xs);
 	free_intersections(xs);
-
 }
 
 static void	test2()
@@ -95,7 +95,6 @@ And xs[1].t = <t1>\n");
 	xs = intersect(cylinder, r);
 	print_intersections(xs);
 	free_intersections(xs);
-
 }
 
 static void	test3()
@@ -118,7 +117,28 @@ Then n = <normal>\n");
 	p = point(-1, 1, 0);
 	normal = normal_at(cylinder, p);
 	print_tuple(normal);
+}
 
+static void	test4()
+{
+	printf("TEST 4:\n");
+	printf("Scenario: The default minimum and maximum for a cylinder\n\
+Given cyl ← cylinder()\n\
+Then cyl.minimum = -infinity\n\
+And cyl.maximum = infinity\n");
+	t_object *cylinder = cylinder_new();
+	t_point	p = point(1, 0, 0);
+	t_vector normal = normal_at(cylinder, p);
+	print_tuple(normal);
+	p = point(0, 5, -1);
+	normal = normal_at(cylinder, p);
+	print_tuple(normal);
+	p = point(0, -2, 1);
+	normal = normal_at(cylinder, p);
+	print_tuple(normal);
+	p = point(-1, 1, 0);
+	normal = normal_at(cylinder, p);
+	print_tuple(normal);
 }
 
 void	test_cylinders()
@@ -132,6 +152,8 @@ void	test_cylinders()
 	test2();
 	printf("_____________________________________________\n");
 	test3();
+	printf("_____________________________________________\n");
+	test4();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING CYLINDERS FINISHED ---------\n");
 	printf("\n");

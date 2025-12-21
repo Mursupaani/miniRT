@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:27:07 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/20 12:43:05 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:45:48 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,12 @@ t_loc_intersect	check_axis(double origin, double direction)
 	return ((t_loc_intersect){tmin, tmax});
 }
 
-t_intersections	*intersect_with_cube(t_object *cube, t_ray ray)
+t_intersections	*intersect_cube(t_object *cube, t_ray local_ray)
 {
 	t_loc_intersect	xt;
 	t_loc_intersect	yt;
 	t_loc_intersect	zt;
-	t_ray			local_ray;
 
-	local_ray = ray_transform(ray, cube->inverse_transform);
 	xt = check_axis(local_ray.origin.x, local_ray.direction.x);
 	yt = check_axis(local_ray.origin.y, local_ray.direction.y);
 	zt = check_axis(local_ray.origin.z, local_ray.direction.z);
@@ -74,19 +72,20 @@ t_intersections	*intersect_with_cube(t_object *cube, t_ray ray)
 
 t_object	*cube_new(void)
 {
-	t_object	*cube;
-
-	cube = ft_calloc(1, sizeof(t_object));
-	if (!cube)
-		return (NULL);
-	cube->type = CUBE;
-	cube->center = point(0, 0, 0);
-	cube->transform = matrix4_identity();
-	cube->inverse_transform = cube->transform;
-	cube->inverse_transpose = cube->transform;
-	cube->material = material();
-	// FIXME: Cube dimensions?
-	cube->height = 1;
-	cube->diameter = 1;
-	return (cube);
+	return (object_new(CUBE));
+	// t_object	*cube;
+	//
+	// cube = ft_calloc(1, sizeof(t_object));
+	// if (!cube)
+	// 	return (NULL);
+	// cube->type = CUBE;
+	// cube->center = point(0, 0, 0);
+	// cube->transform = matrix4_identity();
+	// cube->inverse_transform = cube->transform;
+	// cube->inverse_transpose = cube->transform;
+	// cube->material = material();
+	// // FIXME: Cube dimensions?
+	// cube->height = 1;
+	// cube->diameter = 1;
+	// return (cube);
 }

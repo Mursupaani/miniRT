@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:27:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 17:28:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 14:59:27 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ And xs[0].t = <t1>\n\
 And xs[1].t = <t2>\n");
 	t_object	*cube = cube_new();
 	t_ray	r = ray(point(5, 0.5, 0), vector(-1, 0, 0));
-	t_intersections *xs = intersect_with_cube(cube, r);
+	t_intersections *xs = intersect_cube(cube, r);
 	printf("\n");
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
@@ -32,42 +32,42 @@ And xs[1].t = <t2>\n");
 	free_intersections(xs);
 
 	r = ray(point(-5, 0.5, 0), vector(1, 0, 0));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
 	free_intersections(xs);
 
 	r = ray(point(0.5, 5, 0), vector(0, -1, 0));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
 	free_intersections(xs);
 
 	r = ray(point(0.5, -5, 0), vector(0, 1, 0));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
 	free_intersections(xs);
 
 	r = ray(point(0.5, 0, 5), vector(0, 0, -1));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
 	free_intersections(xs);
 
 	r = ray(point(0.5, 0, -5), vector(0, 0, 1));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
 	free_intersections(xs);
 
 	r = ray(point(0, 0.5, 0), vector(0, 0, 1));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	printf("t1 = %lf\n", xs->arr[0].t);
 	printf("t2 = %lf\n", xs->arr[1].t);
 	printf("\n");
@@ -101,7 +101,7 @@ Examples:\n\
 | vector(-1, 0, 0)\n");
 	t_object	*cube = cube_new();
 	t_ray	r = ray(point(-2, 0, 0), vector(0.2673, 0.5345, 0.8018));
-	t_intersections *xs = intersect_with_cube(cube, r);
+	t_intersections *xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("1 / 6 is NULL aka SUCCESS!\n");
 	else
@@ -109,7 +109,7 @@ Examples:\n\
 	free_intersections(xs);
 
 	r = ray(point(0, -2, 0), vector(0.8018, 0.2673, 0.5345));
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("2 / 6 is NULL aka SUCCESS!\n");
 	else
@@ -117,8 +117,8 @@ Examples:\n\
 	free_intersections(xs);
 
 	r = ray(point(0, 0, -2), vector(0.5345, 0.8018, 0.2673));
-	xs = intersect_with_cube(cube, r);
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("3 / 6 is NULL aka SUCCESS!\n");
 	else
@@ -126,8 +126,8 @@ Examples:\n\
 	free_intersections(xs);
 
 	r = ray(point(2, 0, 2), vector(0, 0, -1));
-	xs = intersect_with_cube(cube, r);
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("4 / 6 is NULL aka SUCCESS!\n");
 	else
@@ -135,8 +135,8 @@ Examples:\n\
 	free_intersections(xs);
 
 	r = ray(point(0, 2, 2), vector(0, -1, 0));
-	xs = intersect_with_cube(cube, r);
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("5 / 6 is NULL aka SUCCESS!\n");
 	else
@@ -144,8 +144,8 @@ Examples:\n\
 	free_intersections(xs);
 
 	r = ray(point(2, 2, 0), vector(-1, 0, 0));
-	xs = intersect_with_cube(cube, r);
-	xs = intersect_with_cube(cube, r);
+	xs = intersect_cube(cube, r);
+	xs = intersect_cube(cube, r);
 	if (!xs)
 		printf("6 / 6 is NULL aka SUCCESS!\n");
 	else

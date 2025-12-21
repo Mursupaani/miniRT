@@ -2,26 +2,25 @@
 
 t_object	*plane_new()
 {
-	t_object	*plane;
-
-	plane = ft_calloc(1, sizeof(t_object));
-	if (!plane)
-		return (NULL);
-	plane->type = PLANE;
-	plane->transform = matrix4_identity();
-	plane->inverse_transform = matrix4_identity();
-	plane->inverse_transpose = matrix4_identity();
-	plane->material = material();
-	return (plane);
+	return (object_new(PLANE));
+	// t_object	*plane;
+	//
+	// plane = ft_calloc(1, sizeof(t_object));
+	// if (!plane)
+	// 	return (NULL);
+	// plane->type = PLANE;
+	// plane->transform = matrix4_identity();
+	// plane->inverse_transform = matrix4_identity();
+	// plane->inverse_transpose = matrix4_identity();
+	// plane->material = material();
+	// return (plane);
 }
 
-t_intersections	*intersect_with_plane(t_object *plane, t_ray ray)
+t_intersections	*intersect_plane(t_object *plane, t_ray local_ray)
 {
 	t_intersections	*xs;
-	t_ray			local_ray;
 	double			t;
 
-	local_ray = ray_transform(ray, plane->inverse_transform);
 	if (fabs(local_ray.direction.y) < EPSILON)
 		return (NULL);
 	t = -local_ray.origin.y / local_ray.direction.y;
