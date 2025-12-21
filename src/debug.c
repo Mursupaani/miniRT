@@ -184,9 +184,17 @@ void	print_object(t_object *o)
 	printf("\n");
 	printf(" INVERSE TRANSPOSE ");
 	print_matrix4(o->inverse_transpose);
-	printf("\n");
-	printf(" MINIMUM:\t%lf\n", o->minimum);
-	printf(" MINIMUM:\t%lf\n", o->maximum);
+	if (o->type == CYLINDER)
+	{
+		printf("\n");
+		printf(" MINIMUM:\t%lf\n", o->minimum);
+		printf(" MINIMUM:\t%lf\n", o->maximum);
+		printf("\n");
+		if (o->closed)
+			printf(" CLOSED:\ttrue\n");
+		else
+			printf(" CLOSED:\tfalse\n");
+	}
 	printf("\n");
 }
 

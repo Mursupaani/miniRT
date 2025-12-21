@@ -203,8 +203,10 @@ typedef struct s_object
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
 	t_material		material;
+	// Cylinder logic
 	double			minimum;
 	double			maximum;
+	bool			closed;
 }	t_object;
 
 typedef struct s_camera
@@ -385,7 +387,8 @@ void	skip_whitespace(char **str);
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 void		free_world(t_world *w);
-void		free_intersections(t_intersections *xs);
+// void		free_intersections(t_intersections *xs);
+void		free_intersections(t_intersections **xs);
 
 // Tuples (vectors, points):
 t_tuple		tuple(double x, double y, double z, double w);
@@ -455,6 +458,7 @@ t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
 t_intersection	hit(t_intersections *xs);
+t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs);
 
 // Prepare computations:
 t_computations	prepare_computations(

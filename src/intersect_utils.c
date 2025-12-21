@@ -55,3 +55,39 @@ void	quick_sort_intersections(t_intersection *xs, int start, int end)
 	}
 }
 
+
+t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs)
+{
+	t_intersections	*temp;
+	int				i;
+	int				count;
+
+	temp = xs;
+	if (temp == NULL)
+		count = 0;
+	else
+		count = temp->count;
+	xs = ft_calloc(1, sizeof(t_intersections));
+	if (!xs)
+	{
+		free_intersections(&temp);
+		return (NULL);
+	}
+	xs->arr = malloc(sizeof(t_intersection) * (count + 1));
+	if (!xs->arr)
+	{
+		free_intersections(&temp);
+		free_intersections(&xs);
+		return (NULL);
+	}
+	i = 0;
+	while (temp && i < count)
+	{
+		xs->arr[i] = temp->arr[i];
+		i++;
+	}
+	xs->arr[i] = new;
+	xs->count = count + 1;
+	free_intersections(&temp);
+	return (xs);
+}

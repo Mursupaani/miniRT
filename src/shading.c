@@ -25,7 +25,7 @@ bool	is_shadowed(t_world *w, t_point p)
 	r = ray(p, normalize(v));
 	xs = intersect_world(w, r);
 	h = hit(xs);
-	free_intersections(xs);
+	free_intersections(&xs);
 	if (h.t != DBL_MAX && h.t < distance)
 		return (true);
 	else
@@ -68,10 +68,10 @@ t_color	color_at(t_world *w, t_ray r, int reflections)
 	x = hit(xs);
 	if (x.object == NULL)
 	{
-		free_intersections(xs);
+		free_intersections(&xs);
 		return ((t_color){0, 0, 0});
 	}
 	comps = prepare_computations(x, r, xs);
-	free_intersections(xs);
+	free_intersections(&xs);
 	return (shade_hit(w, comps, reflections));
 }

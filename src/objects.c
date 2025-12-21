@@ -54,11 +54,13 @@ t_object	*object_new(t_object_type type)
 	{
 		obj->minimum = -INFINITY;
 		obj->maximum = INFINITY;
+		obj->closed = false;
 	}
 	else
 	{
 		obj->minimum = 0;
 		obj->maximum = 0;
+		obj->closed = true;
 	}
 	return (obj);
 }
