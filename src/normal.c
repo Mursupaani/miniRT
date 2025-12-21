@@ -14,7 +14,13 @@
 
 static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
 {
-	(void)cylinder;
+	double	dist;
+
+	dist = pow(world_point.x, 2) + pow(world_point.z, 2);
+	if (dist < 1 && world_point.y >= cylinder->maximum - EPSILON)
+		return (vector(0, 1, 0));
+	else if (dist < 1 && world_point.y <= cylinder->minimum + EPSILON)
+		return (vector(0, -1, 0));
 	// NOTE: No need to normalize?
 	return (vector(world_point.x, 0, world_point.z));
 }

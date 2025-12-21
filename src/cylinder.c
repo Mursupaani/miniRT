@@ -6,13 +6,38 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 12:34:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 16:46:22 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:57:36 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	intersection_within_limits(t_object *cylinder, double t, t_ray local_ray, int *xs_count)
+static bool	check_cap(t_ray local_ray, double t)
+{
+	double	x;
+	double	z;
+
+	x = local_ray.origin.x + t * local_ray.direction.x;
+	z = local_ray.origin.z + t * local_ray.direction.z;
+	return ((x * x + z * z) <= 1);
+}
+
+static t_intersections *intersect_caps(t_object *cylinder, t_ray local_ray, t_intersections *xs)
+{
+	double	t;
+
+	if (cylinder->closed == false || doubles_are_equal(local_ray.direction.y, 0))
+		return (xs);
+	t = (cylinder->minimum - local_ray.origin.y) / local_ray.direction.y;
+	if (check_cap(local_ray, t))
+		xs = add_intersection_to_intersections(intersection(t, cylinder), xs);
+	t = (cylinder->maximum - local_ray.origin.y) / local_ray.direction.y;
+	if (check_cap(local_ray, t))
+		xs = add_intersection_to_intersections(intersection(t, cylinder), xs);
+	return (xs);
+}
+
+static bool	intersection_within_limits(t_object *cylinder, double t, t_ray local_ray, int *xs_count)
 {
 	double	y;
 
@@ -25,7 +50,7 @@ bool	intersection_within_limits(t_object *cylinder, double t, t_ray local_ray, i
 	return (false);
 }
 
-t_intersections	*calculate_hit_points(t_object *cylinder, double t0, double t1, t_ray local_ray)
+static t_intersections	*calculate_hit_points(t_object *cylinder, double t0, double t1, t_ray local_ray)
 {
 	t_intersections	*xs;
 	int		xs_count;
@@ -37,7 +62,7 @@ t_intersections	*calculate_hit_points(t_object *cylinder, double t0, double t1, 
 	add_t0 = intersection_within_limits(cylinder, t0, local_ray, &xs_count);
 	add_t1 = intersection_within_limits(cylinder, t1, local_ray, &xs_count);
 	if (add_t0 == false && add_t1 == false)
-		return (NULL);
+		return (intersect_caps(cylinder, local_ray, NULL));
 	xs = malloc(sizeof(t_intersections));
 	if (!xs)
 		return (NULL);
@@ -48,7 +73,7 @@ t_intersections	*calculate_hit_points(t_object *cylinder, double t0, double t1, 
 		xs->arr[i++] = intersection(t0, cylinder);
 	if (add_t1)
 		xs->arr[i] = intersection(t1, cylinder);
-	return (xs);
+	return (intersect_caps(cylinder, local_ray, xs));
 }
 
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray local_ray)
@@ -61,7 +86,7 @@ t_intersections	*intersect_cylinder(t_object *cylinder, t_ray local_ray)
 
 	a = pow(local_ray.direction.x, 2) + pow(local_ray.direction.z, 2);
 	if (doubles_are_equal(a, 0))
-		return (NULL);
+		return (intersect_caps(cylinder, local_ray, NULL));
 	b = 2 * local_ray.origin.x * local_ray.direction.x + 2 * local_ray.origin.z * local_ray.direction.z;
 	disc = pow(b, 2) - 4 * a
 		* (pow(local_ray.origin.x, 2) + pow(local_ray.origin.z, 2) - 1);
