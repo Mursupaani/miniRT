@@ -6,11 +6,24 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 12:42:20 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/21 15:37:51 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
+{
+	double	dist;
+
+	dist = pow(world_point.x, 2) + pow(world_point.z, 2);
+	if (dist < 1 && world_point.y >= cylinder->maximum - EPSILON)
+		return (vector(0, 1, 0));
+	else if (dist < 1 && world_point.y <= cylinder->minimum + EPSILON)
+		return (vector(0, -1, 0));
+	// NOTE: No need to normalize?
+	return (vector(world_point.x, 0, world_point.z));
+}
 
 static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
 {
@@ -68,6 +81,8 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 		return (plane_normal_at(obj, world_point));
 	else if (obj->type == CUBE)
 		return (cube_normal_at(obj, world_point));
+	else if (obj->type == CYLINDER)
+		return (cylinder_normal_at(obj, world_point));
 	else
 		return (vector(DBL_MAX, DBL_MAX, DBL_MAX));
 }

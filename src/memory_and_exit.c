@@ -25,13 +25,14 @@ void	free_world(t_world *w)
 	free(w);
 }
 
-void	free_intersections(t_intersections *xs)
+void	free_intersections(t_intersections **xs)
 {
-	if (xs)
+	if (xs && *xs)
 	{
-		if (xs->arr)
-			free(xs->arr);
-		free(xs);
+		if ((*xs)->arr)
+			free((*xs)->arr);
+		free(*xs);
+		*xs = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 16:53:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:43:23 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,10 @@ typedef struct s_object
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
 	t_material		material;
+	// Cylinder logic
+	double			minimum;
+	double			maximum;
+	bool			closed;
 }	t_object;
 
 typedef struct s_camera
@@ -340,15 +344,16 @@ void		test_reflections();
 void		test_transparency();
 t_object	*glass_sphere();
 void		test_cubes();
+void		test_cylinders();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
-t_intersection	*intersection_new(double t, t_object *object);
-t_intersection	*intersection_hit(t_intersection *xs);
-void			intersection_add_back(t_intersection **lst, 
-				t_intersection *new);
-void			intersection_free(t_intersection *lst);
-t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+// t_intersection	*intersection_new(double t, t_object *object);
+// t_intersection	*intersection_hit(t_intersection *xs);
+// void			intersection_add_back(t_intersection **lst, 
+// 				t_intersection *new);
+// void			intersection_free(t_intersection *lst);
+// t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
 t_computations	prepare_computations_old(t_intersection x, t_ray r);
 
 // Debug
@@ -382,7 +387,8 @@ void	skip_whitespace(char **str);
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 void		free_world(t_world *w);
-void		free_intersections(t_intersections *xs);
+// void		free_intersections(t_intersections *xs);
+void		free_intersections(t_intersections **xs);
 
 // Tuples (vectors, points):
 t_tuple		tuple(double x, double y, double z, double w);
@@ -452,6 +458,7 @@ t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
 t_intersection	hit(t_intersections *xs);
+t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs);
 
 // Prepare computations:
 t_computations	prepare_computations(
@@ -467,10 +474,10 @@ t_vector	reflect(t_vector in, t_vector normal);
 t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
-t_object	*sphere_new(void);
-t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
-t_object	*plane_new();
+t_object	*object_new(t_object_type type);
+t_object	*plane_new(void);
 t_object	*cube_new(void);
+t_object	*cylinder_new(void);
 void		set_transform(t_object *object, t_matrix4 transform);
 void		add_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
@@ -534,15 +541,23 @@ t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 
+// Sphere
+t_object	*sphere_new(void);
+t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
+t_intersections	*intersect_sphere(t_object *sphere, t_ray ray);
+
 // Plane
-t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
+t_intersections	*intersect_plane(t_object *plane, t_ray ray);
 
 // Cube
-t_intersections	*intersect_with_cube(t_object *cube, t_ray ray);
+t_intersections	*intersect_cube(t_object *cube, t_ray ray);
 double			min_of_max_t(double xtmin, double ytmin, double ztmin);
 double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
 void   	 		swap_doubles(double *tmin, double *tmax);
 double 	 		max_absolute_coord_component(double x, double y, double z);
 t_vector		cube_normal_at(t_object * obj, t_point world_point);
+
+// Cylinder
+t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
 
 #endif

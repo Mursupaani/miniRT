@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 15:58:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:28:12 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,49 @@ void	build_chapter7_world(t_app *app)
 
 	t_object *floor = plane_new();
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
-	floor->material.color = color(0, 0, 0);
-	floor->material.specular = 0;
+	floor->material.color = color(0.1, 0.1, 0.1);
+	floor->material.specular = 0.1;
 	floor->material.reflective = 0.5;
 	set_transform(floor, m);
 	add_object_to_world(floor, w);
 
 	// MIDDLE 
-	
-	t_object *cube = cube_new();
-	cube->material.color = color(0.5, 0.5, 0.5);
-	cube->material.diffuse = 0.1;
-	cube->material.specular = 0.3;
-	cube->material.reflective = 0.9;
-	cube->material.transparency = 0.9;
-	cube->material.refractive_index = 1.2;
-	// m = translation_matrix4(-10, 5, 0.5);
-	m = rotation_x(M_PI / 4);
-	set_transform(cube, m);
-	m = rotation_y(M_PI / 4);
-	set_transform(cube, m);
-	add_object_to_world(cube, w);
+	t_object *cylinder = cylinder_new();
+	cylinder->closed = true;
+	cylinder->minimum = 1;
+	cylinder->maximum = 2;
+	cylinder->material.color = color(1, 0.5, 0.5);
+	cylinder->material.diffuse = 0.1;
+	cylinder->material.specular = 0.3;
+	cylinder->material.reflective = 0.1;
+	// cylinder->material.transparency = 0.9;
+	add_object_to_world(cylinder, w);
 
-	t_object *middle = glass_sphere();
-	middle->material.color = color(0.5, 0.5, 0.5);
-	middle->material.diffuse = 0.1;
-	middle->material.specular = 0.3;
-	middle->material.reflective = 0.9;
-	middle->material.transparency = 0.9;
-	// m = translation_matrix4(-0.5, 1, 0.5);
-	// set_transform(middle, m);
-	add_object_to_world(middle, w);
-
+	// t_object *cube = cube_new();
+	// cube->material.color = color(0.5, 0.5, 0.5);
+	// cube->material.diffuse = 0.1;
+	// cube->material.specular = 0.3;
+	// cube->material.reflective = 0.9;
+	// cube->material.transparency = 0.9;
+	// cube->material.refractive_index = 1.2;
+	// // m = translation_matrix4(-10, 5, 0.5);
+	// m = rotation_x(M_PI / 4);
+	// // m = rotation_y(M_PI / 4);
+	// set_transform(cube, m);
+	// // m = rotation_x(M_PI / 4);
+	// // set_transform(cube, m);
+	// add_object_to_world(cube, w);
+	//
+	// t_object *middle = glass_sphere();
+	// middle->material.color = color(0.5, 0.5, 0.5);
+	// middle->material.diffuse = 0.1;
+	// middle->material.specular = 0.3;
+	// middle->material.reflective = 0.9;
+	// middle->material.transparency = 0.9;
+	// // m = translation_matrix4(-0.5, 1, 0.5);
+	// // set_transform(middle, m);
+	// add_object_to_world(middle, w);
+	//
 	// t_object *middle_inner = glass_sphere();
 	// middle_inner->material.color = color(0, 0, 0);
 	// middle_inner->material.diffuse = 0;
@@ -65,10 +76,10 @@ void	build_chapter7_world(t_app *app)
 	// middle_inner->material.transparency = 1;
 	// middle_inner->material.refractive_index = 1;
 	// set_transform(middle_inner, scaling_matrix4(0.8, 0.8, 0.8));
-	// m = translation_matrix4(-0.5, 1, 0.5);
-	// add_transform(middle_inner, m);
-	// middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
-	// set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
+	// // m = translation_matrix4(-0.5, 1, 0.5);
+	// // add_transform(middle_inner, m);
+	// // middle->material.pattern = gradient_pattern(color(1, 0, 0), color(0, 0, 1));
+	// // set_pattern_transform(&middle->material.pattern, scaling_matrix4(1, 1, 1));
 	// add_object_to_world(middle_inner, w);
 
 	t_object *right = sphere_new();
