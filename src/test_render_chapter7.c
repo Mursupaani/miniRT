@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 15:58:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:14:52 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,16 @@ void	build_chapter7_world(t_app *app)
 	add_object_to_world(floor, w);
 
 	// MIDDLE 
-	
+	t_object *cylinder = cylinder_new();
+	cylinder->minimum = 1;
+	cylinder->maximum = 3;
+	cylinder->material.color = color(1, 0.5, 0.5);
+	cylinder->material.diffuse = 0.1;
+	cylinder->material.specular = 0.3;
+	cylinder->material.reflective = 0.9;
+	cylinder->material.transparency = 0.9;
+	add_object_to_world(cylinder, w);
+
 	t_object *cube = cube_new();
 	cube->material.color = color(0.5, 0.5, 0.5);
 	cube->material.diffuse = 0.1;

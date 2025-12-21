@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/19 16:45:22 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:52:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,15 @@ void	print_object(t_object *o)
 	printf("\n");
 	printf(" TRANSFORM ");
 	print_matrix4(o->transform);
+	printf("\n");
 	printf(" INVERSE TRANSFORM ");
 	print_matrix4(o->inverse_transform);
+	printf("\n");
 	printf(" INVERSE TRANSPOSE ");
 	print_matrix4(o->inverse_transpose);
+	printf("\n");
+	printf(" MINIMUM:\t%lf\n", o->minimum);
+	printf(" MINIMUM:\t%lf\n", o->maximum);
 	printf("\n");
 }
 
