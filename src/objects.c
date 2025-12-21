@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include <math.h>
 
 void	free_object_array(t_object **objs)
 {
@@ -49,5 +50,15 @@ t_object	*object_new(t_object_type type)
 	obj->transform = matrix4_identity();
 	obj->inverse_transform = obj->transform;
 	obj->inverse_transpose = obj->transform;
+	if (type == CYLINDER)
+	{
+		obj->minimum = -INFINITY;
+		obj->maximum = INFINITY;
+	}
+	else
+	{
+		obj->minimum = 0;
+		obj->maximum = 0;
+	}
 	return (obj);
 }

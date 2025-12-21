@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 12:35:01 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:40:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:59:53 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,18 +127,64 @@ Given cyl ← cylinder()\n\
 Then cyl.minimum = -infinity\n\
 And cyl.maximum = infinity\n");
 	t_object *cylinder = cylinder_new();
-	t_point	p = point(1, 0, 0);
-	t_vector normal = normal_at(cylinder, p);
-	print_tuple(normal);
-	p = point(0, 5, -1);
-	normal = normal_at(cylinder, p);
-	print_tuple(normal);
-	p = point(0, -2, 1);
-	normal = normal_at(cylinder, p);
-	print_tuple(normal);
-	p = point(-1, 1, 0);
-	normal = normal_at(cylinder, p);
-	print_tuple(normal);
+	print_object(cylinder);
+}
+
+static void	test5()
+{
+	printf("TEST 5:\n");
+	printf("Scenario Outline: Intersecting a constrained cylinder\n\
+Given cyl ← cylinder()\n\
+And cyl.minimum ← 1\n\
+And cyl.maximum ← 2\n\
+And direction ← normalize(<direction>)\n\
+And r ← ray(<point>, direction)\n\
+When xs ← local_intersect(cyl, r)\n\
+Then xs.count = <count>\n\\n");
+	t_object *cylinder = cylinder_new();
+	cylinder->minimum = 1;
+	cylinder->maximum = 2;
+	t_point origin = point(0, 1.5, 0);
+	t_vector v = vector(0.1, 1, 0);
+	t_vector direction = normalize(v);
+	t_ray r = ray(origin, direction);
+	t_intersections *xs = intersect(cylinder, r);
+	print_intersections(xs);
+	printf("\n");
+	origin = point(0, 3, -5);
+	v = vector(0, 0, 1);
+	direction = normalize(v);
+	r = ray(origin, direction);
+	xs = intersect(cylinder, r);
+	print_intersections(xs);
+	origin = point(0, 0, -5);
+	v = vector(0, 0, 1);
+	direction = normalize(v);
+	r = ray(origin, direction);
+	xs = intersect(cylinder, r);
+	print_intersections(xs);
+	free_intersections(xs);
+	origin = point(0, 2, -5);
+	v = vector(0, 0, 1);
+	direction = normalize(v);
+	r = ray(origin, direction);
+	xs = intersect(cylinder, r);
+	print_intersections(xs);
+	free_intersections(xs);
+	origin = point(0, 1, -5);
+	v = vector(0, 0, 1);
+	direction = normalize(v);
+	r = ray(origin, direction);
+	xs = intersect(cylinder, r);
+	print_intersections(xs);
+	free_intersections(xs);
+	origin = point(0, 1.5, -2);
+	v = vector(0, 0, 1);
+	direction = normalize(v);
+	r = ray(origin, direction);
+	xs = intersect(cylinder, r);
+	print_intersections(xs);
+	free_intersections(xs);
 }
 
 void	test_cylinders()
@@ -154,6 +200,8 @@ void	test_cylinders()
 	test3();
 	printf("_____________________________________________\n");
 	test4();
+	printf("_____________________________________________\n");
+	test5();
 	printf("_____________________________________________\n");
 	printf("-------- TESTING CYLINDERS FINISHED ---------\n");
 	printf("\n");

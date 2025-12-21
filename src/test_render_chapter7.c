@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:28:12 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:14:52 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	build_chapter7_world(t_app *app)
 
 	// MIDDLE 
 	t_object *cylinder = cylinder_new();
+	cylinder->minimum = 1;
+	cylinder->maximum = 3;
 	cylinder->material.color = color(1, 0.5, 0.5);
 	cylinder->material.diffuse = 0.1;
 	cylinder->material.specular = 0.3;
