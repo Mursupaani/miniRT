@@ -20,7 +20,7 @@ void	parse_sphere(char *line, t_app *app)
 	sphere = create_sphere_object(center, diameter, color);
 	if (!sphere)
 		exit_and_free_memory(ERROR_PARSING, app);
-	app->scene->objects = world_add_object(app->scene, sphere);
+	app->scene->objects = add_object_to_world(sphere, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -49,44 +49,47 @@ void	parse_plane(char *line, t_app *app)
 	plane = create_plane_object(position, normal, color);
 	if (!plane)
 		exit_and_free_memory(ERROR_PARSING, app);
-	app->scene->objects = world_add_object(app->scene, plane);
+	app->scene->objects = add_object_to_world(plane, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
 
+static bool	is_valid_axis(t_vector v)
+{
+	return (v.x >= -1.0 && v.x <= 1.0 && v.y >= -1.0 && v.y <= 1.0
+		&& v.z >= -1.0 && v.z <= 1.0);
+}
+
+static void	get_cylinder_data(char **line, t_specs *s, t_app *app)
+{
+	skip_whitespace(line);
+	if (!parse_point(line, &s->position))
+		parse_error("Invalid cylinder position", app);
+	skip_whitespace(line);
+	if (!parse_vector(line, &s->axis) || !is_valid_axis(s->axis))
+		parse_error("Invalid cylinder axis", app);
+	skip_whitespace(line);
+	if (!parse_double(line, &s->diameter) || s->diameter <= 0)
+		parse_error("Invalid cylinder diameter", app);
+	skip_whitespace(line);
+	if (!parse_double(line, &s->height) || s->height <= 0)
+		parse_error("Invalid cylinder height", app);
+	skip_whitespace(line);
+	if (!parse_color(line, &s->color))
+		parse_error("Invalid cylinder color", app);
+}
+
 void	parse_cylinder(char *line, t_app *app)
 {
-	t_point		position;
-	t_vector	axis;
-	double		diameter;
-	double		height;
-	t_color		color;
+	t_specs		s;
+	t_object	*cyl;
 
 	line += 2;
-	skip_whitespace(&line);
-	if (!parse_point(&line, &position))
-		parse_error("Invalid cylinder position", app);
-	skip_whitespace(&line);
-	if (!parse_vector(&line, &axis))
-		parse_error("Invalid cylinder axis", app);
-	if (axis.x < -1.0 || axis.x > 1.0 ||
-		axis.y < -1.0 || axis.y > 1.0 ||
-		axis.z < -1.0 || axis.z > 1.0)
-		parse_error("Cylinder axis must be normalized [-1,1]", app);
-	skip_whitespace(&line);
-	if (!parse_double(&line, &diameter) || diameter <= 0)
-		parse_error("Invalid cylinder diameter", app);
-	skip_whitespace(&line);
-	if (!parse_double(&line, &height) || height <= 0)
-		parse_error("Invalid cylinder height", app);
-	skip_whitespace(&line);
-	if (!parse_color(&line, &color))
-		parse_error("Invalid cylinder color", app);
-	// TODO: Implement cylinder object creation
-	(void)position;
-	(void)axis;
-	(void)diameter;
-	(void)height;
-	(void)color;
-	parse_error("Cylinder not yet implemented", app);
+	get_cylinder_data(&line, &s, app);
+	cyl = create_cylinder_object(s);
+	if (!cyl)
+		exit_and_free_memory(ERROR_PARSING, app);
+	app->scene->objects = add_object_to_world(cyl, app->scene);
+	if (!app->scene->objects)
+		exit_and_free_memory(ERROR_PARSING, app);
 }

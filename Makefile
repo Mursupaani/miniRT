@@ -6,7 +6,7 @@
 #    By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2025/12/22 13:42:40 by jjaaskel         ###   ########.fr        #
+#    Updated: 2025/12/22 14:59:16 by jjaaskel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  world.c intersect_world.c intersect_utils.c shading.c \
 				  view_transform.c camera.c patterns.c pattern_stripe.c \
 				  color_math.c pattern_gradient.c pattern_ring.c \
-				  pattern_checkers.c plane.c \
 				  parse_dispatcher.c parse_numbers.c parse_tuple.c \
 				  parse_utils.c parse_light_and_camera.c parse_objects.c \
 				  parse_objects_utils.c \
@@ -56,7 +55,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  test_rays.c test.c test_normal.c test_color.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \
 				  test_patterns.c test_reflections.c test_transparency.c \
-				  test_cubes.c test_cylinder.c
+				  test_cubes.c test_cylinder.c test_parsing.c
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
