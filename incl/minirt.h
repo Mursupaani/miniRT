@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:43:23 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:40:56 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,8 @@ typedef struct s_world
 	t_light			*light;
 	t_object		**objects;
 	int				object_count;
+	double			ambient_ratio;
+	t_color			ambient_color;
 }	t_world;
 
 typedef struct s_app
@@ -240,6 +242,7 @@ typedef struct s_app
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;
+	bool			parsing_success;
 }	t_app;
 
 /**
@@ -340,11 +343,15 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
+<<<<<<< HEAD
+void		test_parsing(void);
+=======
 void		test_reflections();
 void		test_transparency();
 t_object	*glass_sphere();
 void		test_cubes();
 void		test_cylinders();
+>>>>>>> main
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -377,11 +384,6 @@ void		print_pattern(t_pattern pattern);
 // App initialize and management:
 t_app		*initialize_app(void);
 void		initialize_hooks(t_app *app);
-
-// Parsing:
-void	parse_rt_file(char **av, t_app *app);
-bool	filetype_is_valid(char *filename);
-void	skip_whitespace(char **str);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
@@ -559,5 +561,25 @@ t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 // Cylinder
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
+
+// Parsing
+void		parse_rt_file(char **av, t_app *app);
+void		skip_whitespace(char **str);
+bool		filetype_is_valid(char *filename);
+void		parse_error(char *message, t_app *app);
+bool		parse_double(char **str, double *result);
+bool		parse_int(char **str, int *result);
+double		ft_strtod(const char *str, char **endptr, int *i);
+bool		parse_vector(char **str, t_vector *vec);
+bool		parse_point(char **str, t_point *point);
+bool		parse_color(char **str, t_color *color);
+void		parse_ambient(char *line, t_app *app);
+void		parse_camera(char *line, t_app *app);
+void		parse_light(char *line, t_app *app);
+void		parse_sphere(char *line, t_app *app);
+void		parse_plane(char *line, t_app *app);
+void		parse_cylinder(char *line, t_app *app);
+t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
+t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
 
 #endif

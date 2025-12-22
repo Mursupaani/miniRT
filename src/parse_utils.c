@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:12:30 by anpollan          #+#    #+#             */
-/*   Updated: 2025/11/10 15:24:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:34:12 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ bool	filetype_is_valid(char *filename)
 	if (strlen >= 4 && ft_strncmp(".rt", &filename[strlen - 3], 3) == 0)
 		return (true);
 	return (false);
+}
+
+void	parse_error(char *message, t_app *app)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putendl_fd(message, 2);
+	app->parsing_success = false;
 }

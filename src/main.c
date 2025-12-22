@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 16:25:32 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:40:37 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	// app = initialize_app();
+	app = initialize_app();
+	// test_render();
 	// run_tests();
-	test_render();
-	// parse_rt_file(av, app);
-	// build_chapter7_world(app);
+	parse_rt_file(av, app);
+	test_parsing();
 	// launch_render(app);
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	// free_app_memory(app);
+	free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;
