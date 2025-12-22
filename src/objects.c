@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include <math.h>
 
 void	free_object_array(t_object **objs)
 {
@@ -34,44 +35,32 @@ void	set_transform(t_object *object, t_matrix4 transform)
 	object->inverse_transpose = matrix4_transpose(object->inverse_transform);
 }
 
-t_object	*sphere_new(void)
+t_object	*object_new(t_object_type type)
 {
-	t_object	*sphere;
+	t_object	*obj;
 
-	sphere = ft_calloc(1, sizeof(t_object));
-	if (!sphere)
+	obj = ft_calloc(1, sizeof(t_object));
+	if (!obj)
 		return (NULL);
-	sphere->type = SPHERE;
-	sphere->center = point(0, 0, 0);
-	sphere->diameter = 1;
-	sphere->height = 1;
-	sphere->material = material();
-	sphere->transform = matrix4_identity();
-	sphere->inverse_transform = sphere->transform;
-	sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
-	return (sphere);
-}
-
-t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
-{
-	t_object	*sphere;
-
-	sphere = ft_calloc(1, sizeof(t_object));
-	if (!sphere)
-		return (NULL);
-	sphere->type = SPHERE;
-	sphere->center = center;
-	sphere->diameter = diameter;
-	sphere->height = diameter;
-	sphere->material = material();
-	sphere->material.color = color_from_color255(color);
-	if (tuples_are_equal(point(0, 0, 0), center))
+	obj->type = type;
+	obj->center = point(0, 0, 0);
+	obj->diameter = 1;
+	obj->height = 1;
+	obj->material = material();
+	obj->transform = matrix4_identity();
+	obj->inverse_transform = obj->transform;
+	obj->inverse_transpose = obj->transform;
+	if (type == CYLINDER)
 	{
-		sphere->transform = matrix4_identity();
-		sphere->inverse_transform = sphere->transform;
-		sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
+		obj->minimum = -INFINITY;
+		obj->maximum = INFINITY;
+		obj->closed = false;
 	}
 	else
-		set_transform(sphere, translation_matrix4(center.x, center.y, center.z));
-	return (sphere);
+	{
+		obj->minimum = 0;
+		obj->maximum = 0;
+		obj->closed = true;
+	}
+	return (obj);
 }

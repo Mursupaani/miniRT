@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:33:22 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:40:56 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-4
+#  define EPSILON 1e-6
 # endif
 
 // Material default max values
@@ -51,6 +51,10 @@
 
 # ifndef SHININESS
 #  define SHININESS 200.0
+# endif
+
+# ifndef RECURSIONS
+#  define RECURSIONS 5
 # endif
 
 typedef struct s_thread_data t_thread_data;
@@ -119,6 +123,14 @@ typedef struct s_lighting
 	t_color		color_at_point;
 }	t_lighting;
 
+typedef struct s_refraction
+{
+	double		n_ratio;
+	double		cos_i;
+	double		cos_t;
+	double		sin2_t;
+}	t_refraction;
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -137,7 +149,8 @@ typedef enum s_object_type
 {
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CUBE,
 }	t_object_type;
 
 typedef enum s_pattern_type
@@ -173,6 +186,9 @@ typedef struct s_material
 	double		diffuse;
 	double		specular;
 	double		shininess;
+	double		reflective;
+	double		transparency;
+	double		refractive_index;
 	t_color		color;
 	t_pattern	pattern;
 }	t_material;
@@ -187,6 +203,10 @@ typedef struct s_object
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
 	t_material		material;
+	// Cylinder logic
+	double			minimum;
+	double			maximum;
+	bool			closed;
 }	t_object;
 
 typedef struct s_camera
@@ -197,6 +217,7 @@ typedef struct s_camera
 	int			hsize;
 	int			vsize;
 	t_matrix4	transform;
+	t_matrix4	inverse_transform;
 	double		half_width;
 	double		half_height;
 	double		pixel_size;
@@ -269,12 +290,18 @@ typedef struct	s_ray
  * - t_object object: the object that the ray hit
  * - t_intersection *next: address of the next hit
  */
+
+typedef struct s_local_intersect
+{
+	double	min;
+	double	max;
+}	t_loc_intersect;
+
 typedef struct	s_intersection
 {
-	double					t;
-	t_object				*object;
-	// FIXME: Delete
-	struct s_intersection	*next;
+	double		t;
+	t_object	*object;
+	// int			id;
 }	t_intersection;
 
 typedef struct s_intersections
@@ -287,12 +314,16 @@ typedef struct s_computations
 {
 	bool		inside;
 	double		t;
+	double		n1;
+	double		n2;
 	t_object	*object;
 	t_point		point;
 	t_point		over_point;
+	t_point		under_point;
 	t_vector	eyev;
 	t_vector	normalv;
-	bool		in_shadow;
+	t_vector	reflectv;
+	bool		shadowed;
 }	t_computations;
 
 // Tests
@@ -312,16 +343,25 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
+<<<<<<< HEAD
 void		test_parsing(void);
+=======
+void		test_reflections();
+void		test_transparency();
+t_object	*glass_sphere();
+void		test_cubes();
+void		test_cylinders();
+>>>>>>> main
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
-t_intersection	*intersection_new(double t, t_object *object);
-t_intersection	*intersection_hit(t_intersection *xs);
-void			intersection_add_back(t_intersection **lst, 
-				t_intersection *new);
-void			intersection_free(t_intersection *lst);
-t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+// t_intersection	*intersection_new(double t, t_object *object);
+// t_intersection	*intersection_hit(t_intersection *xs);
+// void			intersection_add_back(t_intersection **lst, 
+// 				t_intersection *new);
+// void			intersection_free(t_intersection *lst);
+// t_intersection	*intersect_sphere(t_object *sphere, t_ray ray);
+t_computations	prepare_computations_old(t_intersection x, t_ray r);
 
 // Debug
 void		print_tuple(t_tuple tuple);
@@ -349,7 +389,8 @@ void		initialize_hooks(t_app *app);
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 void		free_world(t_world *w);
-void		free_intersections(t_intersections *xs);
+// void		free_intersections(t_intersections *xs);
+void		free_intersections(t_intersections **xs);
 
 // Tuples (vectors, points):
 t_tuple		tuple(double x, double y, double z, double w);
@@ -418,8 +459,14 @@ t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray);
 t_intersections	*intersect_world(t_world *w, t_ray r);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
-t_computations	prepare_computations(t_intersection x, t_ray r);
 t_intersection	hit(t_intersections *xs);
+t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs);
+
+// Prepare computations:
+t_computations	prepare_computations(
+			t_intersection x, t_ray r, t_intersections *xs);
+void	handle_n1(t_computations *comps, t_intersection **containers);
+void	handle_n2(t_computations *comps, t_intersection **containers);
 
 // Rays:
 t_ray		ray(t_point origin, t_vector direction);
@@ -429,8 +476,10 @@ t_vector	reflect(t_vector in, t_vector normal);
 t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
-t_object	*sphere_new(void);
-t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
+t_object	*object_new(t_object_type type);
+t_object	*plane_new(void);
+t_object	*cube_new(void);
+t_object	*cylinder_new(void);
 void		set_transform(t_object *object, t_matrix4 transform);
 void		add_transform(t_object *object, t_matrix4 transform);
 void		free_object_array(t_object **objs);
@@ -447,9 +496,16 @@ t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
 int			color_hex_from_color255(t_color255 color255);
 int			color_hex_from_color(t_color color);
-t_color		shade_hit(t_world *w, t_computations comps);
-t_color		color_at(t_world *w, t_ray r);
+t_color		shade_hit(t_world *w, t_computations comps, int recursions);
+t_color		color_at(t_world *w, t_ray r, int recursions);
 bool		is_shadowed(t_world *w, t_point p);
+
+// Reflections:
+t_color		reflected_color(t_world *w, t_computations comps, int recursions);
+
+// Refractions:
+t_color	refracted_color(t_world *w, t_computations comps, int recursions);
+double	schlick(t_computations comps);
 
 // Patterns:
 t_pattern	stripe_pattern(t_color a, t_color b);
@@ -480,15 +536,31 @@ t_vector	normal_at(t_object *obj, t_point point);
 // World
 t_world		*world();
 t_world		*default_world();
-t_object	**world_add_object(t_world *w, t_object *obj);
+t_object	**add_object_to_world(t_object *obj, t_world *w);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+void		set_camera_transform(t_camera *camera, t_matrix4 transform);
+
+// Sphere
+t_object	*sphere_new(void);
+t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
+t_intersections	*intersect_sphere(t_object *sphere, t_ray ray);
 
 // Plane
-t_object		*plane_new();
-t_intersections	*intersect_with_plane(t_object *plane, t_ray ray);
+t_intersections	*intersect_plane(t_object *plane, t_ray ray);
+
+// Cube
+t_intersections	*intersect_cube(t_object *cube, t_ray ray);
+double			min_of_max_t(double xtmin, double ytmin, double ztmin);
+double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
+void   	 		swap_doubles(double *tmin, double *tmax);
+double 	 		max_absolute_coord_component(double x, double y, double z);
+t_vector		cube_normal_at(t_object * obj, t_point world_point);
+
+// Cylinder
+t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 20:55:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 13:01:19 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/20 12:38:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ void	run_tests()
 	// test_world();
 	// test_camera();
 	// test_shadows();
-	test_patterns();
+	// test_patterns();
+	// test_reflections();
+	// test_transparency();
+	// test_cubes();
+	test_cylinders();
 }
