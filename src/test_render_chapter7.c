@@ -34,13 +34,14 @@ void	build_chapter7_world(t_app *app)
 	// MIDDLE 
 	t_object *cylinder = cylinder_new();
 	cylinder->closed = true;
-	cylinder->minimum = 1;
-	cylinder->maximum = 2;
+	cylinder->minimum = 0;
+	cylinder->maximum = 1;
 	cylinder->material.color = color(1, 0.5, 0.5);
 	cylinder->material.diffuse = 0.1;
 	cylinder->material.specular = 0.3;
 	cylinder->material.reflective = 0.1;
-	// cylinder->material.transparency = 0.9;
+	cylinder->material.transparency = 0.9;
+	cylinder->material.refractive_index = 1.5;
 	add_object_to_world(cylinder, w);
 
 	// t_object *cube = cube_new();

@@ -50,7 +50,7 @@ t_object	*object_new(t_object_type type)
 	obj->transform = matrix4_identity();
 	obj->inverse_transform = obj->transform;
 	obj->inverse_transpose = obj->transform;
-	if (type == CYLINDER)
+	if (type == CYLINDER || type == CONE)
 	{
 		obj->minimum = -INFINITY;
 		obj->maximum = INFINITY;

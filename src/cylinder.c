@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 12:34:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 16:57:36 by anpollan         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minirt.h"
 
@@ -78,22 +67,21 @@ static t_intersections	*calculate_hit_points(t_object *cylinder, double t0, doub
 
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray local_ray)
 {
-	double	a;
-	double	b;
+	t_coefs	coefs;
 	double	disc;
 	double	t0;
 	double	t1;
 
-	a = pow(local_ray.direction.x, 2) + pow(local_ray.direction.z, 2);
-	if (doubles_are_equal(a, 0))
+	coefs.a = pow(local_ray.direction.x, 2) + pow(local_ray.direction.z, 2);
+	if (doubles_are_equal(coefs.a, 0))
 		return (intersect_caps(cylinder, local_ray, NULL));
-	b = 2 * local_ray.origin.x * local_ray.direction.x + 2 * local_ray.origin.z * local_ray.direction.z;
-	disc = pow(b, 2) - 4 * a
-		* (pow(local_ray.origin.x, 2) + pow(local_ray.origin.z, 2) - 1);
+	coefs.b = 2 * local_ray.origin.x * local_ray.direction.x + 2 * local_ray.origin.z * local_ray.direction.z;
+	coefs.c = (pow(local_ray.origin.x, 2) + pow(local_ray.origin.z, 2) - 1);
+	disc = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 	if (disc < 0)
 		return (NULL);
-	t0 = (-b - sqrt(disc)) / (2 * a);
-	t1 = (-b + sqrt(disc)) / (2 * a);
+	t0 = (-coefs.b - sqrt(disc)) / (2 * coefs.a);
+	t1 = (-coefs.b + sqrt(disc)) / (2 * coefs.a);
 	if (t0 > t1)
 		swap_doubles(&t0, &t1);
 	return (calculate_hit_points(cylinder, t0, t1, local_ray));
