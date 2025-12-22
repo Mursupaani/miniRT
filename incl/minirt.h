@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:40:56 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2025/12/22 14:51:59 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,6 +326,17 @@ typedef struct s_computations
 	bool		shadowed;
 }	t_computations;
 
+// Cylinder specifications
+typedef struct s_specs
+{
+	double		diameter;
+	double		height;
+	t_color		color;
+	t_vector	axis;
+	t_point		position;
+}	t_specs;
+
+
 // Tests
 void		free_object(t_object *object);
 void		run_tests();
@@ -343,15 +354,12 @@ void		build_chapter7_world(t_app *app);;
 void		test_shadows();
 t_pattern	test_pattern();
 void		test_patterns(void);
-<<<<<<< HEAD
-void		test_parsing(void);
-=======
+void		test_parsing();
 void		test_reflections();
 void		test_transparency();
 t_object	*glass_sphere();
 void		test_cubes();
 void		test_cylinders();
->>>>>>> main
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -405,6 +413,7 @@ t_matrix4	rotation_x(double radians);
 t_matrix4	rotation_y(double radians);
 t_matrix4	rotation_z(double radians);
 t_matrix4	shearing(t_shear shear);
+t_matrix4	rotation_matrix_from_orientation(t_vector orientation);
 
 // Tuple math:
 t_tuple		tuple_sum(t_tuple a, t_tuple b);
@@ -581,5 +590,6 @@ void		parse_plane(char *line, t_app *app);
 void		parse_cylinder(char *line, t_app *app);
 t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
 t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
+t_object *create_cylinder_object(t_specs s);
 
 #endif
