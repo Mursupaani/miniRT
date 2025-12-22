@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 14:47:07 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/22 13:37:48 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int ac, char **av)
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	// free_app_memory(app);
+	free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:12:30 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 15:43:38 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/22 13:34:12 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	parse_error(char *message, t_app *app)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putendl_fd(message, 2);
-	exit_and_free_memory(ERROR_PARSING, app);
+	app->parsing_success = false;
 }

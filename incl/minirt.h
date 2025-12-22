@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:07:47 by juhana           ###   ########.fr       */
+/*   Updated: 2025/12/22 13:33:22 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ typedef struct s_app
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;
+	bool			parsing_success;
 }	t_app;
 
 /**

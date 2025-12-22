@@ -25,6 +25,7 @@ static void	parse_rt_file_lines(int fd, t_app *app)
 {
 	char	*line;
 
+	app->parsing_success = true;
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -32,6 +33,8 @@ static void	parse_rt_file_lines(int fd, t_app *app)
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (app->parsing_success != true)
+		exit_and_free_memory(ERROR_PARSING, app);
 }
 
 static void	validate_scene(t_app *app)
