@@ -46,11 +46,11 @@ int	main(int ac, char **av)
 	(void)av;
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	app = initialize_app();
-	// test_render();
+	// app = initialize_app();
+	test_render();
 	// run_tests();
-	parse_rt_file(av, app);
-	test_parsing();
+	// parse_rt_file(av, app);
+	// test_parsing();
 	// launch_render(app);
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
