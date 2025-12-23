@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 14:55:17 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:02:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:21:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_intersections *intersect(t_object *obj, t_ray ray)
 		return (intersect_cube(obj, local_ray));
 	else if (obj->type == CYLINDER)
 		return (intersect_cylinder(obj, local_ray));
+	else if (obj->type == CONE)
+		return (intersect_cone(obj, local_ray));
 	else
 		return (NULL);
 }

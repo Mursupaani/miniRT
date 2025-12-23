@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 14:51:59 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:46:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-6
+#  define EPSILON 1e-7
 # endif
 
 // Material default max values
@@ -83,6 +83,13 @@ typedef struct s_matrix4
 {
 	double	data[4][4];
 }	t_matrix4;
+
+typedef struct s_coefs
+{
+	double	a;
+	double	b;
+	double	c;
+}	t_coefs;
 
 typedef struct s_shear
 {
@@ -151,6 +158,7 @@ typedef enum s_object_type
 	PLANE,
 	CYLINDER,
 	CUBE,
+	CONE,
 }	t_object_type;
 
 typedef enum s_pattern_type
@@ -360,6 +368,7 @@ void		test_transparency();
 t_object	*glass_sphere();
 void		test_cubes();
 void		test_cylinders();
+void		test_cones();
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -541,6 +550,7 @@ t_material		material_change_color(t_material material, t_color color);
 
 // Normal
 t_vector	normal_at(t_object *obj, t_point point);
+t_vector	local_normal_at(t_object *obj, t_point local_point);
 
 // World
 t_world		*world();
@@ -559,6 +569,11 @@ t_intersections	*intersect_sphere(t_object *sphere, t_ray ray);
 
 // Plane
 t_intersections	*intersect_plane(t_object *plane, t_ray ray);
+
+// Cone
+t_object		*cone_new(void);
+t_intersections	*intersect_cone(t_object *cylinder, t_ray local_ray);
+t_coefs			calculate_cone_coefs(t_ray local_ray);
 
 // Cube
 t_intersections	*intersect_cube(t_object *cube, t_ray ray);
