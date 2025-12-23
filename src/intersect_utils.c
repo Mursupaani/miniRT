@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 18:36:56 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/09 18:39:55 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:52:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,14 @@ t_intersections	*add_intersection_to_intersections(t_intersection new, t_interse
 	xs->count = count + 1;
 	free_intersections(&temp);
 	return (xs);
+}
+
+t_coefs	calculate_cone_coefs(t_ray local_ray)
+{
+	t_coefs	coefs;
+
+	coefs.a = pow(local_ray.direction.x, 2) - pow(local_ray.direction.y, 2) + pow(local_ray.direction.z, 2);
+	coefs.b = 2 * local_ray.origin.x * local_ray.direction.x - 2 * local_ray.origin.y * local_ray.direction.y + 2 * local_ray.origin.z * local_ray.direction.z;
+	coefs.c = (pow(local_ray.origin.x, 2) - pow(local_ray.origin.y, 2) + pow(local_ray.origin.z, 2));
+	return (coefs);
 }

@@ -111,16 +111,16 @@ When n ← local_normal_at(cyl, <point>)\n\
 Then n = <normal>\n");
 	t_object *cylinder = cylinder_new();
 	t_point	p = point(1, 0, 0);
-	t_vector normal = normal_at(cylinder, p);
+	t_vector normal = local_normal_at(cylinder, p);
 	print_tuple(normal);
 	p = point(0, 5, -1);
-	normal = normal_at(cylinder, p);
+	normal = local_normal_at(cylinder, p);
 	print_tuple(normal);
 	p = point(0, -2, 1);
-	normal = normal_at(cylinder, p);
+	normal = local_normal_at(cylinder, p);
 	print_tuple(normal);
 	p = point(-1, 1, 0);
-	normal = normal_at(cylinder, p);
+	normal = local_normal_at(cylinder, p);
 	print_tuple(normal);
 	free(cylinder);
 }
@@ -278,17 +278,17 @@ Then n = <normal>\n");
 	cylinder->maximum = 2;
 	cylinder->closed = true;
 	t_point origin = point(0, 1, 0);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	origin = point(0.5, 1, 0);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	origin = point(0, 1, 0.5);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	origin = point(0, 2, 0);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	origin = point(0.5, 2, 0);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	origin = point(0, 2, 0.5);
-	print_tuple(normal_at(cylinder, origin));
+	print_tuple(local_normal_at(cylinder, origin));
 	free(cylinder);
 }
 
