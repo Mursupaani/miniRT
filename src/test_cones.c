@@ -131,13 +131,13 @@ When xs ← local_intersect(shape, r)\n\
 Then xs.count = <count>\n");
 	t_object *cone = cone_new();
 	t_point p = point(0, 0, 0);
-	t_vector normal = normal_at(cone, p);
+	t_vector normal = local_normal_at(cone, p);
 	print_tuple(normal);
 	p = point(1, 1, 1);
-	normal = normal_at(cone, p);
+	normal = local_normal_at(cone, p);
 	print_tuple(normal);
 	p = point(-1, -1, 0);
-	normal = normal_at(cone, p);
+	normal = local_normal_at(cone, p);
 	print_tuple(normal);
 	free(cone);
 }

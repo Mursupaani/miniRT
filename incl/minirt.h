@@ -539,6 +539,7 @@ t_material		material_change_color(t_material material, t_color color);
 
 // Normal
 t_vector	normal_at(t_object *obj, t_point point);
+t_vector	local_normal_at(t_object *obj, t_point local_point);
 
 // World
 t_world		*world();

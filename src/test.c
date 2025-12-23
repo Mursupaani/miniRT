@@ -19,7 +19,7 @@ void	run_tests()
 	// test_transformation();
 	// test_rays();
 	// render_chapter_5_scene();
-	// test_normal();
+	test_normal();
 	// test_color();
 	// test_world();
 	// test_camera();
@@ -29,5 +29,5 @@ void	run_tests()
 	// test_transparency();
 	// test_cubes();
 	// test_cylinders();
-	test_cones();
+	// test_cones();
 }

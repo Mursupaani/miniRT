@@ -163,36 +163,36 @@ When normal ← local_normal_at(c, p)\n\
 Then normal = <normal>\n");
 	t_object	*cube = cube_new();
 	t_point	p = point(1, 0.5, -0.8);
-	t_vector normal = normal_at(cube, p);
+	t_vector normal = local_normal_at(cube, p);
 	print_tuple(normal);
 	printf("\n");
 
 	p = point(-1, -0.2, 0.9);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(-0.4, 1, -0.1);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(0.3, -1, -0.7);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(-0.6, 0.3, 1);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(0.4, 0.4, -1);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(1, 1, 1);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	p = point(-1, -1, -1);
-	normal = normal_at(cube, p);
+	normal = local_normal_at(cube, p);
 	print_tuple(normal);
 
 	free(cube);
