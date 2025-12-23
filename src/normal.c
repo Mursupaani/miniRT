@@ -12,6 +12,22 @@
 
 #include "minirt.h"
 
+static t_vector	cone_normal_at(t_object *cone, t_point world_point)
+{
+	double	dist;
+	double	y;
+
+	dist = pow(world_point.x, 2) + pow(world_point.z, 2);
+	if (dist < 1 && world_point.y >= cone->maximum - EPSILON)
+		return (vector(0, 1, 0));
+	else if (dist < 1 && world_point.y <= cone->minimum + EPSILON)
+		return (vector(0, -1, 0));
+	y = sqrt(pow(world_point.x, 2) + pow(world_point.z, 2));
+	if (world_point.y > 0)
+		y = -y;
+	return (normalize(vector(world_point.x, y, world_point.z)));
+}
+
 static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
 {
 	double	dist;
@@ -21,8 +37,7 @@ static t_vector	cylinder_normal_at(t_object *cylinder, t_point world_point)
 		return (vector(0, 1, 0));
 	else if (dist < 1 && world_point.y <= cylinder->minimum + EPSILON)
 		return (vector(0, -1, 0));
-	// NOTE: No need to normalize?
-	return (vector(world_point.x, 0, world_point.z));
+	return (normalize(vector(world_point.x, 0, world_point.z)));
 }
 
 static t_vector	sphere_normal_at(t_object *sphere, t_point world_point)
@@ -75,6 +90,10 @@ t_vector	cube_normal_at(t_object *cube, t_point world_point)
 
 t_vector	normal_at(t_object *obj, t_point world_point)
 {
+	t_point		local_point;
+	t_vector	local_normal;
+	t_vector	world_normal;
+
 	if (obj->type == SPHERE)
 		return (sphere_normal_at(obj, world_point));
 	else if (obj->type == PLANE)
@@ -83,6 +102,9 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 		return (cube_normal_at(obj, world_point));
 	else if (obj->type == CYLINDER)
 		return (cylinder_normal_at(obj, world_point));
+	else if (obj->type == CONE)
+		return (cone_normal_at(obj, world_point));
 	else
 		return (vector(DBL_MAX, DBL_MAX, DBL_MAX));
+	world_normal.w = 0;
 }
