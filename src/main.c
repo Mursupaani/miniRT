@@ -55,7 +55,7 @@ int	main(int ac, char **av)
 	// mlx_image_to_window(app->mlx, app->img, 0, 0);
 	// mlx_loop(app->mlx);
 	// join_threads(app->threads, THREADS);
-	free_app_memory(app);
+	// free_app_memory(app);
 	return (0);
 	//FIXME: remove this
 	(void)app;
