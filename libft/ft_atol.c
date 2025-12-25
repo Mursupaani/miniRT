@@ -68,7 +68,5 @@ long	ft_atol_safe(const char *str, int *err)
 		result = result * 10 + value;
 		i++;
 	}
-	if (str[i] != '\0' && str[i] != '\n')
-		return (*err = 1, 0);
 	return ((long int)(result * sign));
 }

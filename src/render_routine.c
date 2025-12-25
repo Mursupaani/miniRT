@@ -86,6 +86,8 @@ void	join_threads(t_thread_data *thread_data, int thread_count)
 {
 	int	i;
 
+	if (!thread_data)
+		return ;
 	i = 0;
 	while (i < thread_count)
 	{
