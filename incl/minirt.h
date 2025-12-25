@@ -33,7 +33,7 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 1e-7
+#  define EPSILON 1e-8
 # endif
 
 // Material default max values

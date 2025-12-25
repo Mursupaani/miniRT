@@ -47,7 +47,7 @@ void	build_test_render(t_app *app)
 	t_object *glass = cone_new();
 	glass->minimum = 2;
 	glass->maximum = 3;
-	glass->closed = false;
+	glass->closed = true;
 	glass->material.color = color(0.1, 0.1, 0.1);
 	glass->material.transparency = 0.9;
 	glass->material.reflective = 0.9;
