@@ -56,7 +56,8 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  test_rays.c test.c test_normal.c test_color.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \
 				  test_patterns.c test_reflections.c test_transparency.c \
-				  test_cubes.c test_cylinder.c test_parsing.c test_cones.c
+				  test_cubes.c test_cylinder.c test_parsing.c test_cones.c \
+				  test_render.c christmas.c
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

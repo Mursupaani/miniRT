@@ -19,7 +19,7 @@ static bool	check_cap(t_ray local_ray, double t, double limit)
 
 	x = local_ray.origin.x + t * local_ray.direction.x;
 	z = local_ray.origin.z + t * local_ray.direction.z;
-	return ((x * x + z * z) <= fabs(limit));
+	return ((x * x + z * z) <= limit * limit);
 }
 
 static t_intersections *intersect_caps(t_object *cone, t_ray local_ray, t_intersections *xs)
