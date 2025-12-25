@@ -32,7 +32,8 @@ void	test_render()
 	t_app	*app;
 
 	app = initialize_app();
-	build_chapter7_world(app);
+	build_test_render(app);
+	// christmas_tree(app);
 	launch_render(app);
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
 	mlx_loop(app->mlx);

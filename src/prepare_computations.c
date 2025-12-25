@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdlib.h>
 
 static	void	add_item(t_intersection *x, t_intersection **containers)
 {

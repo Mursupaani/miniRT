@@ -32,27 +32,27 @@ void	build_chapter7_world(t_app *app)
 	add_object_to_world(floor, w);
 
 	// MIDDLE 
-	t_object *cylinder = cylinder_new();
-	cylinder->closed = true;
-	cylinder->minimum = 0;
-	cylinder->maximum = 10;
-	cylinder->material.color = color(1, 0.5, 0.5);
-	cylinder->material.diffuse = 0.1;
-	cylinder->material.specular = 0.3;
-	cylinder->material.reflective = 0.1;
-	// cylinder->material.transparency = 0.9;
-	// cylinder->material.refractive_index = 1.5;
-	set_transform(cylinder, scaling_matrix4(0.3, 0.3, 0.3));
-	add_transform(cylinder, translation_matrix4(1, 0, -1));
-	add_object_to_world(cylinder, w);
+	// t_object *cylinder = cylinder_new();
+	// cylinder->closed = true;
+	// cylinder->minimum = 0;
+	// cylinder->maximum = 10;
+	// cylinder->material.color = color(1, 0.5, 0.5);
+	// cylinder->material.diffuse = 0.1;
+	// cylinder->material.specular = 0.3;
+	// cylinder->material.reflective = 0.1;
+	// // cylinder->material.transparency = 0.9;
+	// // cylinder->material.refractive_index = 1.5;
+	// set_transform(cylinder, scaling_matrix4(0.3, 0.3, 0.3));
+	// add_object_to_world(cylinder, w);
 
 	t_object *cone = cone_new();
-	cone->maximum = 0;
+	cone->maximum = 1;
 	cone->minimum = -1;
 	cone->material.reflective = 0.5;
-	// cone->material.transparency = 0.5;
-	// cone->material.refractive_index = 1.5;
-	set_transform(cone, translation_matrix4(0, 1, 0));
+	cone->material.transparency = 0.5;
+	cone->material.refractive_index = 1.5;
+	set_transform(cone, rotation_z(M_PI/2));
+	add_transform(cone, translation_matrix4(0, 1, 0));
 	add_object_to_world(cone, w);
 
 	// t_object *cube = cube_new();

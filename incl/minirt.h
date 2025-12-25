@@ -211,7 +211,7 @@ typedef struct s_object
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
 	t_material		material;
-	// Cylinder logic
+	// Cylinder and cone logic
 	double			minimum;
 	double			maximum;
 	bool			closed;
@@ -332,7 +332,9 @@ typedef struct s_computations
 }	t_computations;
 
 // Tests
+void		christmas_tree(t_app *app);
 void		free_object(t_object *object);
+void		build_test_render(t_app *app);
 void		run_tests();
 void		test_tuples(void);
 void		test_matrices(void);
