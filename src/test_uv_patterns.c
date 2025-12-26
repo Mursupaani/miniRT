@@ -100,9 +100,84 @@ static void	test2()
 	p = point(0, -1 ,0);
 	uv = spherical_map(p);
 	print_uv_points(uv);
-	p = point(sqrt(2) / 2, sqrt(2) / 2 ,0);
+	p = point(sqrt(2) / 2, sqrt(2) / 2, 0);
 	uv = spherical_map(p);
 	print_uv_points(uv);
+}
+
+static void	test3()
+{
+	printf("TEST 3:\n");
+	printf("Scenario Outline: Using a texture map pattern with a spherical map\n\
+  Given checkers ← uv_checkers(16, 8, black, white)\n\
+    And pattern ← texture_map(checkers, spherical_map)\n\
+  Then pattern_at(pattern, <point>) = <color>\n\
+  Examples:\n\
+    | point                            | color |\n\
+    | point(0.4315, 0.4670, 0.7719)    | white |\n\
+    | point(-0.9654, 0.2552, -0.0534)  | black |\n\
+    | point(0.1039, 0.7090, 0.6975)    | white |\n\
+    | point(-0.4986, -0.7856, -0.3663) | black |\n\
+    | point(-0.0317, -0.9395, 0.3411)  | black |\n\
+    | point(0.4809, -0.7721, 0.4154)   | black |\n\
+    | point(0.0285, -0.9612, -0.2745)  | black |\n\
+    | point(-0.5734, -0.2162, -0.7903) | white |\n\
+    | point(0.7688, -0.1470, 0.6223)   | black |\n\
+    | point(-0.7652, 0.2175, 0.6060)   | black |\n");
+	t_point	p;
+	t_color c;
+	t_uv_ptrn checkers = uv_checkers(16, 8, black, white);
+	t_pattern pattern = texture_map(checkers, spherical_map);
+	printf("\n");
+	printf("1:\n");
+	p = point(0.4315, 0.4670, 0.7719);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("2:\n");
+	p = point(-0.9654, 0.2552, -0.0534);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("3:\n");
+	p = point(0.1039, 0.7090, 0.6975);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("4:\n");
+	p = point(-0.4986, -0.7856, -0.3663);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("5:\n");
+	p = point(-0.0317, -0.9395, 0.3411);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("6:\n");
+	p = point(0.4809, -0.7721, 0.4154);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("7:\n");
+	p = point(0.0285, -0.9612, -0.2745);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("8:\n");
+	p = point(-0.5734, -0.2162, -0.7903);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("9:\n");
+	p = point(0.7688, -0.1470, 0.6223);
+	c = pattern_at(pattern, p);
+	print_color(c);
+	printf("\n");
+	printf("10:\n");
+	p = point(-0.7652, 0.2175, 0.6060);
+	c = pattern_at(pattern, p);
+	print_color(c);
 }
 
 void	test_uv_patterns(void)
@@ -115,6 +190,8 @@ void	test_uv_patterns(void)
 	test1();
 	printf("_____________________________________________\n");
 	test2();
+	printf("_____________________________________________\n");
+	test3();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");

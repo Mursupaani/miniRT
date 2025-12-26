@@ -167,7 +167,8 @@ typedef enum s_pattern_type
 	STRIPE,
 	GRADIENT,
 	RING,
-	CHECKER,
+	CHECKERS,
+	UV_PATTERN,
 	TEST,
 }	t_pattern_type;
 
@@ -177,16 +178,6 @@ typedef struct s_light
 	t_point			position;
 	// t_color_255		color_255;
 }	t_light;
-
-typedef struct s_pattern
-{
-	t_pattern_type	type;
-	t_color			a;
-	t_color			b;
-	t_matrix4		transform;
-	t_matrix4		inverse_transform;
-	t_matrix4		inverse_transpose;
-}	t_pattern;
 
 typedef struct s_uv_ptrn
 {
@@ -205,20 +196,31 @@ typedef struct s_uv_map
 typedef struct s_texture_map
 {
 	t_uv_ptrn	pattern;
-	t_uv_map	uv_map;
+	t_uv_map	(*uv_map)(t_point);
 }	t_texture_map;
+
+typedef struct s_pattern
+{
+	t_pattern_type	type;
+	t_color			a;
+	t_color			b;
+	t_matrix4		transform;
+	t_matrix4		inverse_transform;
+	t_matrix4		inverse_transpose;
+	t_texture_map	texture_map;
+}	t_pattern;
 
 typedef struct s_material
 {
-	double		ambient;
-	double		diffuse;
-	double		specular;
-	double		shininess;
-	double		reflective;
-	double		transparency;
-	double		refractive_index;
-	t_color		color;
-	t_pattern	pattern;
+	double			ambient;
+	double			diffuse;
+	double			specular;
+	double			shininess;
+	double			reflective;
+	double			transparency;
+	double			refractive_index;
+	t_color			color;
+	t_pattern		pattern;
 }	t_material;
 
 typedef struct s_object
@@ -563,13 +565,17 @@ t_pattern	checkers_pattern(t_color a, t_color b);
 t_color		checkers_at(t_pattern gradient, t_point p);
 void		set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 void		add_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
+t_color		pattern_at(t_pattern ptrn, t_point ptrn_point);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 
 // UV Patterns:
-t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map uv_map);
+// t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map uv_map);
+// t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map));
+t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
 t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
 t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
 t_uv_map	spherical_map(t_point p);
+t_color	handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);
