@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:02:54 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 23:28:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,16 @@ typedef struct	s_uv_align
 	t_color	br;
 }	t_uv_align;
 
+typedef struct	s_cube_align
+{
+	t_uv_align	left;
+	t_uv_align	right;
+	t_uv_align	up;
+	t_uv_align	down;
+	t_uv_align	front;
+	t_uv_align	back;
+}	t_cube_align;
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -169,6 +179,16 @@ typedef enum s_object_type
 	CUBE,
 	CONE,
 }	t_object_type;
+
+typedef enum s_cube_face
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	FRONT,
+	BACK,
+}	t_cube_face;
 
 typedef enum s_pattern_type
 {
@@ -597,6 +617,13 @@ t_uv_map	planar_map(t_point p);
 t_uv_map	cylindrical_map(t_point p);
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
 t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+t_cube_face	face_from_point(t_point p);
+t_uv_map	cube_uv_up(t_point p);
+t_uv_map	cube_uv_down(t_point p);
+t_uv_map	cube_uv_left(t_point p);
+t_uv_map	cube_uv_right(t_point p);
+t_uv_map	cube_uv_front(t_point p);
+t_uv_map	cube_uv_back(t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

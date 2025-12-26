@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:37:01 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 23:02:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,6 @@ void	print_uv_map(t_uv_map uv)
 {
 	printf("--------------------\n");
 	printf("UV POINTS:\n");
-	printf("\n");
 	printf(" U = %lf\t", uv.u);
 	printf(" V = %lf\n", uv.v);
 }

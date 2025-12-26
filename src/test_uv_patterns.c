@@ -6,14 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:28:59 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:03:23 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 23:17:06 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-#include "minirt.h"
-#include <math.h>
 
 static t_color	black;
 static t_color	white;
@@ -352,6 +349,192 @@ static void	test6()
 	print_color(c);
 }
 
+static void	test7()
+{
+	printf("TEST 7:\n");
+	printf("Scenario Outline: Identifying the face of a cube from a point\n\
+  When face ← face_from_point(<point>)\n\
+  Then face = <face>\n\
+  Examples:\n\
+    | point                  | face  |\n\
+    | point(-1, 0.5, -0.25)  | left  |\n\
+    | point(1.1, -0.75, 0.8) | right |\n\
+    | point(0.1, 0.6, 0.9)   | front |\n\
+    | point(-0.7, 0, -2)     | back  |\n\
+    | point(0.5, 1, 0.9)     | up    |\n\
+    | point(-0.2, -1.3, 1.1) | down  |\n");
+	t_point p;
+	t_cube_face face;
+	printf("1:\n");
+	p = point(-1, 0.5, -0.25);
+	face = face_from_point(p);
+	if (face == LEFT)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+	printf("2:\n");
+	p = point(1.1, -0.75, 0.8);
+	face = face_from_point(p);
+	if (face == RIGHT)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+	printf("3:\n");
+	p = point(0.1, 0.6, 0.9);
+	face = face_from_point(p);
+	if (face == FRONT)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+	printf("4:\n");
+	p = point(-0.7, 0, -2);
+	face = face_from_point(p);
+	if (face == BACK)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+	printf("5:\n");
+	p = point(0.5, 1, 0.9);
+	face = face_from_point(p);
+	if (face == UP)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+	printf("6:\n");
+	p = point(-0.2, -1.3, 1.1);
+	face = face_from_point(p);
+	if (face == DOWN)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+}
+
+static void	test8()
+{
+	printf("TEST 8:\n");
+	printf("Scenario Outline: UV mapping the front face of a cube\n\
+  When (u, v) ← cube_uv_front(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point                | u    | v    |\n\
+    | point(-0.5, 0.5, 1)  | 0.25 | 0.75 |\n\
+    | point(0.5, -0.5, 1)  | 0.75 | 0.25 |\n\
+\n\
+Scenario Outline: UV mapping the back face of a cube\n\
+  When (u, v) ← cube_uv_back(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point                 | u    | v    |\n\
+    | point(0.5, 0.5, -1)   | 0.25 | 0.75 |\n\
+    | point(-0.5, -0.5, -1) | 0.75 | 0.25 |\n\
+\n\
+Scenario Outline: UV mapping the left face of a cube\n\
+  When (u, v) ← cube_uv_left(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point                | u    | v    |\n\
+    | point(-1, 0.5, -0.5) | 0.25 | 0.75 |\n\
+    | point(-1, -0.5, 0.5) | 0.75 | 0.25 |\n\
+\n\
+Scenario Outline: UV mapping the right face of a cube\n\
+  When (u, v) ← cube_uv_right(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point                | u    | v    |\n\
+    | point(1, 0.5, 0.5)   | 0.25 | 0.75 |\n\
+    | point(1, -0.5, -0.5) | 0.75 | 0.25 |\n\
+\n\
+Scenario Outline: UV mapping the upper face of a cube\n\
+  When (u, v) ← cube_uv_up(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point               | u    | v    |\n\
+    | point(-0.5, 1, -0.5) | 0.25 | 0.75 |\n\
+    | point(0.5, 1, 0.5) | 0.75 | 0.25 |\n\
+\n\
+Scenario Outline: UV mapping the lower face of a cube\n\
+  When (u, v) ← cube_uv_down(<point>)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+\n\
+  Examples:\n\
+    | point                 | u    | v    |\n\
+    | point(-0.5, -1, 0.5) | 0.25 | 0.75 |\n\
+    | point(0.5, -1, -0.5)   | 0.75 | 0.25 |\n");
+	t_point p;
+	t_uv_map uv;
+	printf("\n");
+	printf("front 1:\n");
+	p = point(-0.5, 0.5, 1);
+	uv = cube_uv_front(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("front 2:\n");
+	p = point(0.5, -0.5, 1);
+	uv = cube_uv_front(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("back 1:\n");
+	p = point(0.5, 0.5, -1);
+	uv = cube_uv_back(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("back 2:\n");
+	p = point(-0.5, -0.5, -1);
+	uv = cube_uv_back(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("left 1:\n");
+	p = point(-1, 0.5, -0.5);
+	uv = cube_uv_left(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("left 2:\n");
+	p = point(-1, -0.5, 0.5);
+	uv = cube_uv_left(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("right 1:\n");
+	p = point(1, 0.5, 0.5);
+	uv = cube_uv_right(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("right 2:\n");
+	p = point(1, -0.5, -0.5);
+	uv = cube_uv_right(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("up 1:\n");
+	p = point(-0.5, 1, -0.5);
+	uv = cube_uv_up(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("up 2:\n");
+	p = point(0.5, 1, 0.5);
+	uv = cube_uv_up(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("down 1:\n");
+	p = point(-0.5, -1, 0.5);
+	uv = cube_uv_down(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("down 2:\n");
+	p = point(0.5, -1, -0.5);
+	uv = cube_uv_down(p);
+	print_uv_map(uv);
+}
+
 void	test_uv_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -370,6 +553,10 @@ void	test_uv_patterns(void)
 	test5();
 	printf("_____________________________________________\n");
 	test6();
+	printf("_____________________________________________\n");
+	test7();
+	printf("_____________________________________________\n");
+	test8();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");

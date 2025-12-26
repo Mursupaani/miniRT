@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:04:30 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:59:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	// app = initialize_app();
-	test_render();
-	// run_tests();
+	// test_render();
+	run_tests();
 	// parse_rt_file(av, app);
 	// test_parsing();
 	// launch_render(app);
