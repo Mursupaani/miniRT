@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:18:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/25 20:58:02 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 20:40:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b)
 	ptrn.height = h;
 	ptrn.a = a;
 	ptrn.b = b;
+	ptrn.type = UV_CHECKERS;
 	return (ptrn);
 }

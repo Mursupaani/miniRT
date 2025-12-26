@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:37:01 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 21:02:54 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,15 @@ typedef struct s_refraction
 	double		sin2_t;
 }	t_refraction;
 
+typedef struct	s_uv_align
+{
+	t_color	main;
+	t_color	ul;
+	t_color	ur;
+	t_color	bl;
+	t_color	br;
+}	t_uv_align;
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -168,9 +177,15 @@ typedef enum s_pattern_type
 	GRADIENT,
 	RING,
 	CHECKERS,
-	UV_PATTERN,
 	TEST,
+	MAP,
 }	t_pattern_type;
+
+typedef enum s_uv_ptrn_type
+{
+	UV_CHECKERS,
+	ALIGN_CHECK,
+}	t_uv_ptrn_type;
 
 typedef struct s_light
 {
@@ -181,10 +196,12 @@ typedef struct s_light
 
 typedef struct s_uv_ptrn
 {
-	double	width;
-	double	height;
-	t_color	a;
-	t_color	b;
+	double			width;
+	double			height;
+	t_color			a;
+	t_color			b;
+	t_uv_align		align;
+	t_uv_ptrn_type	type;
 }	t_uv_ptrn;
 
 typedef struct s_uv_map
@@ -573,10 +590,13 @@ t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 // t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map));
 t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
 t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
-t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+// t_uv_ptrn	uv_align_check(t_uv_align a);
+t_uv_ptrn	uv_align_check(void);
 t_uv_map	spherical_map(t_point p);
 t_uv_map	planar_map(t_point p);
+t_uv_map	cylindrical_map(t_point p);
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
+t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

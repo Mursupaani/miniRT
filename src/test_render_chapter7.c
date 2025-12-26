@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:58:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 21:05:39 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ void	build_chapter7_world(t_app *app)
 	t_uv_ptrn uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
 
 	t_object *floor = plane_new();
+	t_uv_ptrn align = uv_align_check();
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
 	floor->material.color = color(0.1, 0.1, 0.1);
 	floor->material.specular = 0.1;
 	floor->material.reflective = 0.5;
-	floor->material.pattern = texture_map(uv_check, planar_map);
-	set_transform(floor, m);
+	floor->material.pattern = texture_map(align, planar_map);
 	add_object_to_world(floor, w);
 
-	// MIDDLE 
-	// t_object *cylinder = cylinder_new();
-	// cylinder->closed = true;
-	// cylinder->minimum = 0;
-	// cylinder->maximum = 10;
-	// cylinder->material.color = color(1, 0.5, 0.5);
-	// cylinder->material.diffuse = 0.1;
-	// cylinder->material.specular = 0.3;
-	// cylinder->material.reflective = 0.1;
-	// // cylinder->material.transparency = 0.9;
-	// // cylinder->material.refractive_index = 1.5;
-	// set_transform(cylinder, scaling_matrix4(0.3, 0.3, 0.3));
-	// add_object_to_world(cylinder, w);
+	t_object *cylinder = cylinder_new();
+	cylinder->closed = true;
+	cylinder->minimum = 0;
+	cylinder->maximum = 10;
+	cylinder->material.color = color(1, 0.5, 0.5);
+	cylinder->material.diffuse = 0.7;
+	cylinder->material.specular = 0.3;
+	cylinder->material.reflective = 0.1;
+	cylinder->material.pattern = texture_map(uv_check, cylindrical_map);
+	// cylinder->material.transparency = 0.9;
+	// cylinder->material.refractive_index = 1.5;
+	set_transform(cylinder, scaling_matrix4(1, 3.1415, 1));
+	add_object_to_world(cylinder, w);
 
 	t_object *cone = cone_new();
 	cone->maximum = 1;

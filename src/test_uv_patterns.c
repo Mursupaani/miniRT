@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:28:59 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:38:38 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 21:03:23 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,123 @@ static void	test4()
 	print_uv_map(uv);
 }
 
+static void	test5()
+{
+	printf("TEST 5:\n");
+	printf("Scenario Outline: Using a cylindrical mapping on a 3D point\n\
+  Given p ← <point>\n\
+  When (u, v) ← cylindrical_map(p)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+  Examples:\n\
+    | point                          | u     | v    |\n\
+    | point(0, 0, -1)                | 0.0   | 0.0  |\n\
+    | point(0, 0.5, -1)              | 0.0   | 0.5  |\n\
+    | point(0, 1, -1)                | 0.0   | 0.0  |\n\
+    | point(0.70711, 0.5, -0.70711)  | 0.125 | 0.5  |\n\
+    | point(1, 0.5, 0)               | 0.25  | 0.5  |\n\
+    | point(0.70711, 0.5, 0.70711)   | 0.375 | 0.5  |\n\
+    | point(0, -0.25, 1)             | 0.5   | 0.75 |\n\
+    | point(-0.70711, 0.5, 0.70711)  | 0.625 | 0.5  |\n\
+    | point(-1, 1.25, 0)             | 0.75  | 0.25 |\n\
+    | point(-0.70711, 0.5, -0.70711) | 0.875 | 0.5  |\n");
+	t_point	p;
+	t_uv_map	uv;
+	printf("1:\n");
+	p = point(0, 0, -1);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("2:\n");
+	p = point(0, 0.5, -1);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("3:\n");
+	p = point(0, 1, -1);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("4:\n");
+	p = point(0.70711, 0.5, -0.70711);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("5:\n");
+	p = point(1, 0.5, 0);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("6:\n");
+	p = point(0.70711, 0.5, 0.70711);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("7:\n");
+	p = point(0, -0.25, 1);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("8:\n");
+	p = point(-0.70711, 0.5, 0.70711);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("9:\n");
+	p = point(-1, 1.25, 0);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("10:\n");
+	p = point(-0.70711, 0.5, -0.70711);
+	uv = cylindrical_map(p);
+	print_uv_map(uv);
+}
+
+static void	test6()
+{
+	printf("TEST 6:\n");
+	printf("Scenario Outline: Layout of the align check pattern\n\
+  Given main ← color(1, 1, 1)\n\
+    And ul ← color(1, 0, 0)\n\
+    And ur ← color(1, 1, 0)\n\
+    And bl ← color(0, 1, 0)\n\
+    And br ← color(0, 1, 1)\n\
+    And pattern ← uv_align_check(main, ul, ur, bl, br)\n\
+  When c ← uv_pattern_at(pattern, <u>, <v>)\n\
+  Then c = <expected>\n\
+  Examples:\n\
+    | u    | v    | expected |\n\
+    | 0.5  | 0.5  | main     |\n\
+    | 0.1  | 0.9  | ul       |\n\
+    | 0.9  | 0.9  | ur       |\n\
+    | 0.1  | 0.1  | bl       |\n\
+    | 0.9  | 0.1  | br       |\n");
+	t_color c;
+	// t_uv_align a;
+	// a.main = color(1, 1, 1);
+	// a.ul = color(1, 0, 0);
+	// a.ur = color(1, 1, 0);
+	// a.bl = color(0, 1, 0);
+	// a.br = color(0, 1, 1);
+	t_uv_ptrn pattern = uv_align_check();
+	printf("1:\n");
+	c = uv_pattern_at(pattern, 0.5, 0.5);
+	print_color(c);
+	printf("2:\n");
+	c = uv_pattern_at(pattern, 0.1, 0.9);
+	print_color(c);
+	printf("3:\n");
+	c = uv_pattern_at(pattern, 0.9, 0.9);
+	print_color(c);
+	printf("4:\n");
+	c = uv_pattern_at(pattern, 0.1, 0.1);
+	print_color(c);
+	printf("5:\n");
+	c = uv_pattern_at(pattern, 0.9, 0.1);
+	print_color(c);
+}
+
 void	test_uv_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -249,6 +366,10 @@ void	test_uv_patterns(void)
 	test3();
 	printf("_____________________________________________\n");
 	test4();
+	printf("_____________________________________________\n");
+	test5();
+	printf("_____________________________________________\n");
+	test6();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");
