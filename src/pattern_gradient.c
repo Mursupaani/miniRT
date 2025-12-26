@@ -14,15 +14,16 @@
 
 t_pattern	gradient_pattern(t_color a, t_color b)
 {
-	t_pattern	gradient;
-
-	gradient.type = GRADIENT;
-	gradient.a = a;
-	gradient.b = b;
-	gradient.transform = matrix4_identity();
-	gradient.inverse_transform = gradient.transform;
-	gradient.inverse_transpose = gradient.transform;
-	return (gradient);
+	return (create_pattern(GRADIENT, a, b));
+	// t_pattern	gradient;
+	//
+	// gradient.type = GRADIENT;
+	// gradient.a = a;
+	// gradient.b = b;
+	// gradient.transform = matrix4_identity();
+	// gradient.inverse_transform = gradient.transform;
+	// gradient.inverse_transpose = gradient.transform;
+	// return (gradient);
 }
 
 t_color	gradient_at(t_pattern gradient, t_point p)

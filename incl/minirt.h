@@ -188,6 +188,26 @@ typedef struct s_pattern
 	t_matrix4		inverse_transpose;
 }	t_pattern;
 
+typedef struct s_uv_ptrn
+{
+	double	width;
+	double	height;
+	t_color	a;
+	t_color	b;
+}	t_uv_ptrn;
+
+typedef struct s_uv_map
+{
+	double	u;
+	double	v;
+}	t_uv_map;
+
+typedef struct s_texture_map
+{
+	t_uv_ptrn	pattern;
+	t_uv_map	uv_map;
+}	t_texture_map;
+
 typedef struct s_material
 {
 	double		ambient;
@@ -371,6 +391,7 @@ t_object	*glass_sphere();
 void		test_cubes();
 void		test_cylinders();
 void		test_cones();
+void		test_uv_patterns(void);
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -399,6 +420,8 @@ void		print_world(t_world *world);
 void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
 void		print_pattern(t_pattern pattern);
+void		print_uv_points(t_uv_map uv);
+void		print_uv_pattern(t_uv_ptrn pattern);
 
 // App initialize and management:
 t_app		*initialize_app(void);
@@ -528,6 +551,7 @@ t_color	refracted_color(t_world *w, t_computations comps, int recursions);
 double	schlick(t_computations comps);
 
 // Patterns:
+t_pattern	create_pattern(int type, t_color a, t_color b);
 t_pattern	stripe_pattern(t_color a, t_color b);
 t_color		stripe_at(t_pattern pattern, t_point p);
 t_color		stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);
@@ -540,6 +564,12 @@ t_color		checkers_at(t_pattern gradient, t_point p);
 void		set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 void		add_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
+
+// UV Patterns:
+t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map uv_map);
+t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
+t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+t_uv_map	spherical_map(t_point p);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

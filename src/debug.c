@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:52:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/25 18:33:16 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,4 +284,28 @@ void	print_pattern(t_pattern pattern)
 	printf("\n");
 	printf("B ");
 	print_color(pattern.b);
+}
+
+void	print_uv_points(t_uv_map uv)
+{
+	printf("--------------------\n");
+	printf("UV POINTS:\n");
+	printf("\n");
+	printf(" U = %lf\t", uv.u);
+	printf(" V = %lf\n", uv.v);
+}
+
+void	print_uv_pattern(t_uv_ptrn pattern)
+{
+	printf("--------------------\n");
+	printf("UV PATTERN:\n");
+	printf("\n");
+	printf("A ");
+	print_color(pattern.a);
+	printf("\n");
+	printf("B ");
+	print_color(pattern.b);
+	printf("\n");
+	printf("Width:\t%lf\n", pattern.width);
+	printf("Height:\t%lf\n", pattern.height);
 }

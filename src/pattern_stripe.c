@@ -14,15 +14,16 @@
 
 t_pattern	stripe_pattern(t_color a, t_color b)
 {
-	t_pattern	ptrn;
-
-	ptrn.type = STRIPE;
-	ptrn.a = a;
-	ptrn.b = b;
-	ptrn.transform = matrix4_identity();
-	ptrn.inverse_transform = ptrn.transform;
-	ptrn.inverse_transpose = ptrn.transform;
-	return (ptrn);
+	return (create_pattern(STRIPE, a, b));
+	// t_pattern	ptrn;
+	//
+	// ptrn.type = STRIPE;
+	// ptrn.a = a;
+	// ptrn.b = b;
+	// ptrn.transform = matrix4_identity();
+	// ptrn.inverse_transform = ptrn.transform;
+	// ptrn.inverse_transpose = ptrn.transform;
+	// return (ptrn);
 }
 
 t_color	stripe_at(t_pattern stripe, t_point p)
