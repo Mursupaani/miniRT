@@ -14,7 +14,7 @@
 
 t_pattern	checkers_pattern(t_color a, t_color b)
 {
-	return (create_pattern(CHECKER, a, b));
+	return (create_pattern(CHECKERS, a, b));
 	// t_pattern	checker;
 	//
 	// checker.type = CHECKER;

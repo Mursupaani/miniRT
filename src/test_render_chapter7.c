@@ -108,6 +108,18 @@ void	build_chapter7_world(t_app *app)
 	add_pattern_transform(&right->material.pattern, rotation_z(M_PI / 3));
 	add_object_to_world(right, w);
 
+	t_object *right_bottom = sphere_new();
+	right_bottom->material.color = color(0.5, 1, 0.1);
+	right_bottom->material.diffuse = 0.7;
+	right_bottom->material.specular = 0.3;
+	// right_bottom->material.reflective = 1;
+	add_transform(right_bottom, translation_matrix4(3, 1, -0.5));
+	t_uv_ptrn uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
+	right_bottom->material.pattern = texture_map(uv_check, spherical_map);
+	// set_pattern_transform(&right_bottom->material.pattern, rotation_z(M_PI / 5));
+	// add_pattern_transform(&right_bottom->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));
+	add_object_to_world(right_bottom, w);
+
 	t_object *left = sphere_new();
 	m = matrix4_multiply(translation_matrix4(-2.5, 0.33, -1.25), scaling_matrix4(0.33, 0.33, 0.33));
 	left->material.color = color(1, 0.8, 0.1);

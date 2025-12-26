@@ -55,7 +55,7 @@ t_color	lighting(t_computations comps, t_light *light)
 
 	if (!light)
 		return ((t_color){1, 1, 1});
-	if (comps.object->material.pattern.class != NONE)
+	if (comps.object->material.pattern.type != NONE)
 		l.color_at_point = pattern_at_shape(
 				comps.object->material.pattern, comps.object, comps.over_point);
 	else
