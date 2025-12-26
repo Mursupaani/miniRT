@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:56:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/25 18:33:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:37:01 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ void	print_pattern(t_pattern pattern)
 	print_color(pattern.b);
 }
 
-void	print_uv_points(t_uv_map uv)
+void	print_uv_map(t_uv_map uv)
 {
 	printf("--------------------\n");
 	printf("UV POINTS:\n");

@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:41:52 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:58:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	build_chapter7_world(t_app *app)
 	t_matrix4 c_trans = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0));
 	set_camera_transform(c, c_trans);
 
+	t_uv_ptrn uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
+
 	t_object *floor = plane_new();
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
 	floor->material.color = color(0.1, 0.1, 0.1);
 	floor->material.specular = 0.1;
 	floor->material.reflective = 0.5;
+	floor->material.pattern = texture_map(uv_check, planar_map);
 	set_transform(floor, m);
 	add_object_to_world(floor, w);
 
@@ -114,7 +117,6 @@ void	build_chapter7_world(t_app *app)
 	right_bottom->material.specular = 0.3;
 	// right_bottom->material.reflective = 1;
 	add_transform(right_bottom, translation_matrix4(3, 1, -0.5));
-	t_uv_ptrn uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
 	right_bottom->material.pattern = texture_map(uv_check, spherical_map);
 	// set_pattern_transform(&right_bottom->material.pattern, rotation_z(M_PI / 5));
 	// add_pattern_transform(&right_bottom->material.pattern, scaling_matrix4(0.1, 0.1, 0.1));

@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 12:46:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:37:01 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,7 +422,7 @@ void		print_world(t_world *world);
 void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
 void		print_pattern(t_pattern pattern);
-void		print_uv_points(t_uv_map uv);
+void		print_uv_map(t_uv_map uv);
 void		print_uv_pattern(t_uv_ptrn pattern);
 
 // App initialize and management:
@@ -573,9 +573,10 @@ t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 // t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map));
 t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
 t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
-t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
 t_uv_map	spherical_map(t_point p);
-t_color	handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
+t_uv_map	planar_map(t_point p);
+t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
 
 // Light:
 t_light	*point_light(t_point position, t_color intensity);

@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 13:28:59 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/25 18:33:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:38:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,25 @@ static void	test2()
 	t_uv_map	uv;
 	p = point(0, 0 ,-1);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(1, 0 ,0);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(0, 0 ,1);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(-1, 0 ,0);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(0, 1 ,0);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(0, -1 ,0);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 	p = point(sqrt(2) / 2, sqrt(2) / 2, 0);
 	uv = spherical_map(p);
-	print_uv_points(uv);
+	print_uv_map(uv);
 }
 
 static void	test3()
@@ -180,6 +180,61 @@ static void	test3()
 	print_color(c);
 }
 
+static void	test4()
+{
+	printf("TEST 4:\n");
+	printf("Scenario Outline: Using a planar mapping on a 3D point\n\
+  Given p ← <point>\n\
+  When (u, v) ← planar_map(p)\n\
+  Then u = <u>\n\
+    And v = <v>\n\
+  Examples:\n\
+    | point                   | u    | v    |\n\
+    | point(0.25, 0, 0.5)     | 0.25 | 0.5  |\n\
+    | point(0.25, 0, -0.25)   | 0.25 | 0.75 |\n\
+    | point(0.25, 0.5, -0.25) | 0.25 | 0.75 |\n\
+    | point(1.25, 0, 0.5)     | 0.25 | 0.5  |\n\
+    | point(0.25, 0, -1.75)   | 0.25 | 0.25 |\n\
+    | point(1, 0, -1)         | 0.0  | 0.0  |\n\
+    | point(0, 0, 0)          | 0.0  | 0.0  |\n");
+	t_point	p;
+	t_uv_map	uv;
+	printf("1:\n");
+	p = point(0.25, 0, 0.5);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("2:\n");
+	p = point(0.25, 0, -0.25);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("3:\n");
+	p = point(0.25, 0.5, -0.25);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("4:\n");
+	p = point(1.25, 0, 0.5);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("5:\n");
+	p = point(0.25, 0, -1.75);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("6:\n");
+	p = point(1, 0, -1);
+	uv = planar_map(p);
+	print_uv_map(uv);
+	printf("\n");
+	printf("7:\n");
+	p = point(0, 0, 0);
+	uv = planar_map(p);
+	print_uv_map(uv);
+}
+
 void	test_uv_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -192,6 +247,8 @@ void	test_uv_patterns(void)
 	test2();
 	printf("_____________________________________________\n");
 	test3();
+	printf("_____________________________________________\n");
+	test4();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");
