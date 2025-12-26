@@ -14,15 +14,16 @@
 
 t_pattern	ring_pattern(t_color a, t_color b)
 {
-	t_pattern	ring;
-
-	ring.type = RING;
-	ring.a = a;
-	ring.b = b;
-	ring.transform = matrix4_identity();
-	ring.inverse_transform = ring.transform;
-	ring.inverse_transpose = ring.transform;
-	return (ring);
+	return (create_pattern(RING, a, b));
+	// t_pattern	ring;
+	//
+	// ring.type = RING;
+	// ring.a = a;
+	// ring.b = b;
+	// ring.transform = matrix4_identity();
+	// ring.inverse_transform = ring.transform;
+	// ring.inverse_transpose = ring.transform;
+	// return (ring);
 }
 
 t_color	ring_at(t_pattern gradient, t_point p)

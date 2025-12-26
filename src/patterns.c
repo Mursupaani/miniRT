@@ -14,15 +14,16 @@
 
 t_pattern	test_pattern()
 {
-	t_pattern	test;
-
-	test.type = TEST;
-	test.a = (t_color){1, 1, 1};
-	test.b = (t_color){0, 0, 0};
-	test.transform = matrix4_identity();
-	test.inverse_transform = test.transform;
-	test.inverse_transpose = test.transform;
-	return (test);
+	return (create_pattern(TEST, color(1, 1, 1), color(0, 0, 0)));
+	// t_pattern	test;
+	//
+	// test.type = TEST;
+	// test.a = (t_color){1, 1, 1};
+	// test.b = (t_color){0, 0, 0};
+	// test.transform = matrix4_identity();
+	// test.inverse_transform = test.transform;
+	// test.inverse_transpose = test.transform;
+	// return (test);
 }
 
 t_color	pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p)
@@ -44,6 +45,28 @@ t_color	pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p)
 		return ((t_color){ptrn_point.x, ptrn_point.y, ptrn_point.z});
 	else
 		return ((t_color){DBL_MIN, DBL_MIN, DBL_MIN});
+}
+
+t_pattern	create_pattern(int type, t_color a, t_color b)
+{
+	t_pattern	pattern;
+
+	pattern.a = a;
+	pattern.b = b;
+	pattern.transform = matrix4_identity();
+	pattern.inverse_transform = pattern.transform;
+	pattern.inverse_transpose = pattern.transform;
+	if (type == CHECKER)
+		pattern.type = CHECKER;
+	else if (type == RING)
+		pattern.type = RING;
+	else if (type == STRIPE)
+		pattern.type = STRIPE;
+	else if (type == GRADIENT)
+		pattern.type = GRADIENT;
+	else if (type == TEST)
+		pattern.type = TEST;
+	return (pattern);
 }
 
 void	set_pattern_transform(t_pattern *ptrn, t_matrix4 transform)

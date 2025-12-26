@@ -551,6 +551,7 @@ t_color	refracted_color(t_world *w, t_computations comps, int recursions);
 double	schlick(t_computations comps);
 
 // Patterns:
+t_pattern	create_pattern(int type, t_color a, t_color b);
 t_pattern	stripe_pattern(t_color a, t_color b);
 t_color		stripe_at(t_pattern pattern, t_point p);
 t_color		stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);

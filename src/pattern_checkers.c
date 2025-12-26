@@ -14,15 +14,16 @@
 
 t_pattern	checkers_pattern(t_color a, t_color b)
 {
-	t_pattern	checker;
-
-	checker.type = CHECKER;
-	checker.a = a;
-	checker.b = b;
-	checker.transform = matrix4_identity();
-	checker.inverse_transform = checker.transform;
-	checker.inverse_transpose = checker.transform;
-	return (checker);
+	return (create_pattern(CHECKER, a, b));
+	// t_pattern	checker;
+	//
+	// checker.type = CHECKER;
+	// checker.a = a;
+	// checker.b = b;
+	// checker.transform = matrix4_identity();
+	// checker.inverse_transform = checker.transform;
+	// checker.inverse_transpose = checker.transform;
+	// return (checker);
 }
 
 t_color	checkers_at(t_pattern gradient, t_point p)
