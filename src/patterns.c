@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:06:15 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 19:01:56 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 19:25:10 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_color	pattern_at(t_pattern ptrn, t_point ptrn_point)
 		return (checkers_at(ptrn, ptrn_point));
 	else if (ptrn.type == TEST)
 		return ((t_color){ptrn_point.x, ptrn_point.y, ptrn_point.z});
-	else if (ptrn.type == UV_PATTERN)
+	else if (ptrn.type == MAP)
 		return (handle_uv_pattern(ptrn, ptrn_point));
 	else
 		return ((t_color){DBL_MIN, DBL_MIN, DBL_MIN});
@@ -60,8 +60,8 @@ t_pattern	create_pattern(int type, t_color a, t_color b)
 		pattern.type = GRADIENT;
 	else if (type == TEST)
 		pattern.type = TEST;
-	else if (type == UV_PATTERN)
-		pattern.type = UV_PATTERN;
+	else if (type == MAP)
+		pattern.type = MAP;
 	return (pattern);
 }
 

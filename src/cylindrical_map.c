@@ -1,35 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   planar_map.c                                       :+:      :+:    :+:   */
+/*   cylindrical_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 18:27:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:57:05 by anpollan         ###   ########.fr       */
+/*   Created: 2025/12/26 19:02:42 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/26 20:39:10 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_uv_map	planar_map(t_point p)
+static double	get_u(t_point p)
 {
-	double	u;
-	double	v;
+	double	theta;
 	double	raw_u;
+
+	theta = atan2(p.x, p.z);
+	raw_u = theta / (2 * M_PI);
+	return (1 - (raw_u + 0.5));
+}
+
+static double	get_v(t_point p)
+{
 	double	raw_v;
 	double	integer_part;
 
-	raw_u = modf(p.x, &integer_part);
-	raw_v = modf(p.z, &integer_part);
-	// FIXME: No need to check? Just use the fmod without raw_u and raw_v?
-	if (raw_u >= 0)
-		u = fmod(raw_u, 1);
-	else
-		u = fmod(1 + raw_u, 1);
+	raw_v = modf(p.y, &integer_part);
+	// FIXME: No need to check? Just use the fmod?
 	if (raw_v >= 0)
-		v = fmod(raw_v, 1);
+		return (fmod(raw_v, 1));
 	else
-		v = fmod(1 + raw_v, 1);
+		return (fmod(1 + raw_v, 1));
+}
+
+t_uv_map	cylindrical_map(t_point p)
+{
+	double	u;
+	double	v;
+
+	u = get_u(p);
+	v = get_v(p);
 	return ((t_uv_map){u, v});
 }

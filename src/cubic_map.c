@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   planar_map.c                                       :+:      :+:    :+:   */
+/*   cubic_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 18:27:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:57:05 by anpollan         ###   ########.fr       */
+/*   Created: 2025/12/26 20:21:43 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/26 21:06:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_uv_map	planar_map(t_point p)
+t_uv_ptrn	uv_align_check(void)
 {
-	double	u;
-	double	v;
-	double	raw_u;
-	double	raw_v;
-	double	integer_part;
+	t_uv_ptrn uv;
 
-	raw_u = modf(p.x, &integer_part);
-	raw_v = modf(p.z, &integer_part);
-	// FIXME: No need to check? Just use the fmod without raw_u and raw_v?
-	if (raw_u >= 0)
-		u = fmod(raw_u, 1);
-	else
-		u = fmod(1 + raw_u, 1);
-	if (raw_v >= 0)
-		v = fmod(raw_v, 1);
-	else
-		v = fmod(1 + raw_v, 1);
-	return ((t_uv_map){u, v});
+	uv.a = color(DBL_MIN, DBL_MIN, DBL_MIN);
+	uv.b = color(DBL_MIN, DBL_MIN, DBL_MIN);
+	uv.width = 0;
+	uv.height = 0;
+	uv.type = ALIGN_CHECK;
+	uv.align.main = color(1, 1, 1);
+	uv.align.ul = color(1, 0, 0);
+	uv.align.ur = color(1, 1, 0);
+	uv.align.bl = color(0, 1, 0);
+	uv.align.br = color(0, 1, 1);
+	return (uv);
 }
