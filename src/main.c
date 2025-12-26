@@ -49,8 +49,8 @@ int	main(int ac, char **av)
 	//if (ac != 2)
 		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	// app = initialize_app();
-	// test_render();
-	run_tests();
+	test_render();
+	// run_tests();
 	// parse_rt_file(av, app);
 	// test_parsing();
 	// launch_render(app);

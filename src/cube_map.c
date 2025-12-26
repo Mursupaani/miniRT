@@ -59,10 +59,28 @@ t_uv_ptrn	uv_align_check(void)
 	uv.width = 0;
 	uv.height = 0;
 	uv.type = ALIGN_CHECK;
-	uv.align.main = color(1, 1, 1);
-	uv.align.ul = color(1, 0, 0);
-	uv.align.ur = color(1, 1, 0);
-	uv.align.bl = color(0, 1, 0);
-	uv.align.br = color(0, 1, 1);
+	uv.align[0].main = color(1, 1, 1);
+	uv.align[0].ul = color(1, 0, 0);
+	uv.align[0].ur = color(1, 1, 0);
+	uv.align[0].bl = color(0, 1, 0);
+	uv.align[0].br = color(0, 1, 1);
+	return (uv);
+}
+
+t_uv_ptrn	cube_map(t_cube_align cube_align)
+{
+	t_uv_ptrn uv;
+
+	uv.a = color(DBL_MIN, DBL_MIN, DBL_MIN);
+	uv.b = color(DBL_MIN, DBL_MIN, DBL_MIN);
+	uv.width = 0;
+	uv.height = 0;
+	uv.type = UV_CUBE;
+	uv.align[UP] = cube_align.up;
+	uv.align[DOWN] = cube_align.down;
+	uv.align[LEFT] = cube_align.left;
+	uv.align[RIGHT] = cube_align.right;
+	uv.align[FRONT] = cube_align.front;
+	uv.align[BACK] = cube_align.back;
 	return (uv);
 }

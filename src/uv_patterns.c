@@ -47,7 +47,7 @@ t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v)
 	int	v2;
 
 	if (ptrn.type == ALIGN_CHECK)
-		return (handle_align_check(ptrn.align, u, v));
+		return (handle_align_check(ptrn.align[0], u, v));
 	u2 = floor(u * ptrn.width);
 	v2 = floor(v * ptrn.height);
 	if ((int)(u2 + v2) % 2 == 0)
@@ -56,11 +56,33 @@ t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v)
 		return (ptrn.b);
 }
 
+t_uv_map get_uv_cube_map(t_point p)
+{
+	t_cube_face	face;
+
+	face = face_from_point(p);
+	if (face == LEFT)
+		return (cube_uv_left(p));
+	else if (face == RIGHT)
+		return (cube_uv_right(p));
+	else if (face == FRONT)
+		return (cube_uv_front(p));
+	else if (face == BACK)
+		return (cube_uv_back(p));
+	else if (face == UP)
+		return (cube_uv_up(p));
+	else
+		return (cube_uv_down(p));
+}
+
 t_color	handle_uv_pattern(t_pattern ptrn, t_point ptrn_point)
 {
 	t_uv_map	map;
 
-	map = ptrn.texture_map.uv_map(ptrn_point);
+	if (ptrn.texture_map.pattern.type == UV_CUBE)
+		map = get_uv_cube_map(ptrn_point);
+	else
+		map = ptrn.texture_map.uv_map(ptrn_point);
 	return (uv_pattern_at(ptrn.texture_map.pattern, map.u, map.v));
 	// if (ptrn.texture_map.pattern.type == ALIGN_CHECK)
 	// 	return (uv_pattern_at(ptrn.texture_map.pattern, map.u, map.v));

@@ -58,20 +58,14 @@ void	build_chapter7_world(t_app *app)
 	add_transform(cone, translation_matrix4(0, 1, 0));
 	add_object_to_world(cone, w);
 
-	// t_object *cube = cube_new();
-	// cube->material.color = color(0.5, 0.5, 0.5);
-	// cube->material.diffuse = 0.1;
-	// cube->material.specular = 0.3;
+	t_object *cube = cube_new();
+	cube->material.color = color(0.5, 0.5, 0.5);
+	cube->material.diffuse = 0.1;
+	cube->material.specular = 0.3;
 	// cube->material.reflective = 0.9;
-	// cube->material.transparency = 0.9;
-	// cube->material.refractive_index = 1.2;
-	// // m = translation_matrix4(-10, 5, 0.5);
-	// m = rotation_x(M_PI / 4);
-	// // m = rotation_y(M_PI / 4);
-	// set_transform(cube, m);
-	// // m = rotation_x(M_PI / 4);
-	// // set_transform(cube, m);
-	// add_object_to_world(cube, w);
+	m = rotation_x(M_PI / 4);
+	set_transform(cube, m);
+	add_object_to_world(cube, w);
 	//
 	// t_object *middle = glass_sphere();
 	// middle->material.color = color(0.5, 0.5, 0.5);

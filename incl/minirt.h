@@ -205,6 +205,7 @@ typedef enum s_uv_ptrn_type
 {
 	UV_CHECKERS,
 	ALIGN_CHECK,
+	UV_CUBE,
 }	t_uv_ptrn_type;
 
 typedef struct s_light
@@ -220,7 +221,7 @@ typedef struct s_uv_ptrn
 	double			height;
 	t_color			a;
 	t_color			b;
-	t_uv_align		align;
+	t_uv_align		align[6];
 	t_uv_ptrn_type	type;
 }	t_uv_ptrn;
 
