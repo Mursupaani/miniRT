@@ -51,6 +51,7 @@ t_pattern	create_pattern(int type, t_color a, t_color b)
 {
 	t_pattern	pattern;
 
+	pattern.class = PATTERN_3D;
 	pattern.a = a;
 	pattern.b = b;
 	pattern.transform = matrix4_identity();

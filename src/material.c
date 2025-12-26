@@ -16,7 +16,7 @@ static t_pattern	no_pattern(void)
 {
 	t_pattern	empty;
 
-	empty.type = NONE;
+	empty.class = NONE;
 	empty.a = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
 	empty.b = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
 	empty.transform = matrix4_identity();

@@ -161,9 +161,15 @@ typedef enum s_object_type
 	CONE,
 }	t_object_type;
 
-typedef enum s_pattern_type
+typedef enum s_pattern_class
 {
 	NONE,
+	PATTERN_3D,
+	PATTERN_UV
+}	t_pattern_class;
+
+typedef enum s_pattern_type
+{
 	STRIPE,
 	GRADIENT,
 	RING,
@@ -181,6 +187,7 @@ typedef struct s_light
 typedef struct s_pattern
 {
 	t_pattern_type	type;
+	t_pattern_class	class;
 	t_color			a;
 	t_color			b;
 	t_matrix4		transform;
