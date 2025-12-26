@@ -50,7 +50,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  spherical_map.c pattern_checkers.c reflections.c plane.c \
 				  prepare_computations.c prepare_computations_utils.c \
 				  refraction.c cube.c cube_utils.c cylinder.c cone.c \
-				  planar_map.c cylindrical_map.c cubic_map.c cubic_map2.c \
+				  planar_map.c cylindrical_map.c cube_map.c cube_map2.c \
 				  \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c \
