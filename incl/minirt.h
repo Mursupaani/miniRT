@@ -221,7 +221,7 @@ typedef struct s_uv_ptrn
 	double			height;
 	t_color			a;
 	t_color			b;
-	t_uv_align		align[6];
+	t_uv_align		sides[6];
 	t_uv_ptrn_type	type;
 }	t_uv_ptrn;
 
@@ -612,12 +612,14 @@ t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
 t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
 // t_uv_ptrn	uv_align_check(t_uv_align a);
-t_uv_ptrn	uv_align_check(void);
+t_uv_align	uv_align_check(t_color main, t_color ul, t_color ur, t_color bl, t_color br);
+t_uv_ptrn	uv_align_check_pattern(void);
 t_uv_map	spherical_map(t_point p);
 t_uv_map	planar_map(t_point p);
 t_uv_map	cylindrical_map(t_point p);
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
-t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+// t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
+t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v, int face);
 t_cube_face	face_from_point(t_point p);
 t_uv_map	cube_uv_up(t_point p);
 t_uv_map	cube_uv_down(t_point p);

@@ -35,27 +35,27 @@ static void	test1()
 	print_uv_pattern(pattern);
 	double u = 0;
 	double v = 0;
-	t_color c = uv_pattern_at(pattern, u, v);
+	t_color c = uv_pattern_at(pattern, u, v, 0);
 	printf("\n");
 	print_color(c);
 	u = 0.5;
 	v = 0;
-	c = uv_pattern_at(pattern, u, v);
+	c = uv_pattern_at(pattern, u, v, 0);
 	printf("\n");
 	print_color(c);
 	u = 0;
 	v = 0.5;
-	c = uv_pattern_at(pattern, u, v);
+	c = uv_pattern_at(pattern, u, v, 0);
 	printf("\n");
 	print_color(c);
 	u = 0.5;
 	v = 0.5;
-	c = uv_pattern_at(pattern, u, v);
+	c = uv_pattern_at(pattern, u, v, 0);
 	printf("\n");
 	print_color(c);
 	u = 1;
 	v = 1;
-	c = uv_pattern_at(pattern, u, v);
+	c = uv_pattern_at(pattern, u, v, 0);
 	printf("\n");
 	print_color(c);
 }
@@ -325,27 +325,21 @@ static void	test6()
     | 0.1  | 0.1  | bl       |\n\
     | 0.9  | 0.1  | br       |\n");
 	t_color c;
-	// t_uv_align a;
-	// a.main = color(1, 1, 1);
-	// a.ul = color(1, 0, 0);
-	// a.ur = color(1, 1, 0);
-	// a.bl = color(0, 1, 0);
-	// a.br = color(0, 1, 1);
-	t_uv_ptrn pattern = uv_align_check();
+	t_uv_ptrn pattern = uv_align_check_pattern();
 	printf("1:\n");
-	c = uv_pattern_at(pattern, 0.5, 0.5);
+	c = uv_pattern_at(pattern, 0.5, 0.5, 0);
 	print_color(c);
 	printf("2:\n");
-	c = uv_pattern_at(pattern, 0.1, 0.9);
+	c = uv_pattern_at(pattern, 0.1, 0.9, 0);
 	print_color(c);
 	printf("3:\n");
-	c = uv_pattern_at(pattern, 0.9, 0.9);
+	c = uv_pattern_at(pattern, 0.9, 0.9, 0);
 	print_color(c);
 	printf("4:\n");
-	c = uv_pattern_at(pattern, 0.1, 0.1);
+	c = uv_pattern_at(pattern, 0.1, 0.1, 0);
 	print_color(c);
 	printf("5:\n");
-	c = uv_pattern_at(pattern, 0.9, 0.1);
+	c = uv_pattern_at(pattern, 0.9, 0.1, 0);
 	print_color(c);
 }
 
@@ -535,6 +529,168 @@ Scenario Outline: UV mapping the lower face of a cube\n\
 	print_uv_map(uv);
 }
 
+static void	test9()
+{
+	printf("TEST 9:\n");
+	printf("Scenario Outline: Finding the colors on a mapped cube\n\
+  When red ← color(1, 0, 0)\n\
+    And yellow ← color(1, 1, 0)\n\
+    And brown ← color(1, 0.5, 0)\n\
+    And green ← color(0, 1, 0)\n\
+    And cyan ← color(0, 1, 1)\n\
+    And blue ← color(0, 0, 1)\n\
+    And purple ← color(1, 0, 1)\n\
+    And white ← color(1, 1, 1)\n\
+    And left ← uv_align_check(yellow, cyan, red, blue, brown)\n\
+    And front ← uv_align_check(cyan, red, yellow, brown, green)\n\
+    And right ← uv_align_check(red, yellow, purple, green, white)\n\
+    And back ← uv_align_check(green, purple, cyan, white, blue)\n\
+    And up ← uv_align_check(brown, cyan, purple, red, yellow)\n\
+    And down ← uv_align_check(purple, brown, green, blue, white)\n\
+    And pattern ← cube_map(left, front, right, back, up, down)\n\
+  Then pattern_at(pattern, <point>) = <color>\n");
+	t_color red = color(1, 0, 0);
+	t_color yellow = color(1, 1, 0);
+	t_color brown = color(1, 0.5, 0);
+	t_color green = color(0, 1, 0);
+	t_color cyan = color(0, 1, 1);
+	t_color blue = color(0, 0, 1);
+	t_color purple = color(1, 0, 1);
+	t_color white = color(1, 1, 1);
+	t_pattern cube_pattern;
+	cube_pattern.type = MAP;
+	cube_pattern.texture_map.pattern.type = UV_CUBE;
+	cube_pattern.texture_map.pattern.sides[LEFT] = uv_align_check(yellow, cyan, red, blue, brown);
+	cube_pattern.texture_map.pattern.sides[FRONT] = uv_align_check(cyan, red, yellow, brown, green);
+	cube_pattern.texture_map.pattern.sides[RIGHT] = uv_align_check(red, yellow, purple, green, white);
+	cube_pattern.texture_map.pattern.sides[BACK] = uv_align_check(green, purple, cyan, white, blue);
+	cube_pattern.texture_map.pattern.sides[UP] = uv_align_check(brown, cyan, purple, red, yellow);
+	cube_pattern.texture_map.pattern.sides[DOWN] = uv_align_check(purple, brown, green, blue, white);
+	t_point	p;
+	t_color	c;
+	printf("\n");
+	printf("L 1:\n");
+	p = point(-1, 0, 0);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("L 2:\n");
+	p = point(-1, 0.9, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("L 3:\n");
+	p = point(-1, 0.9, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("L 4:\n");
+	p = point(-1, -0.9, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("L 5:\n");
+	p = point(-1, -0.9, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("F 1:\n");
+	p = point(0, 0, 1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("F 2:\n");
+	p = point(-0.9, 0.9, 1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("F 3:\n");
+	p = point(0.9, 0.9, 1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("F 4:\n");
+	p = point(-0.9, -0.9, 1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("F 5:\n");
+	p = point(0.9, -0.9, 1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("R 1:\n");
+	p = point(1, 0, 0);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("R 2:\n");
+	p = point(1, 0.9, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("R 3:\n");
+	p = point(1, 0.9, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("R 4:\n");
+	p = point(1, -0.9, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("R 5:\n");
+	p = point(1, -0.9, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("B 1:\n");
+	p = point(0, 0, -1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("B 2:\n");
+	p = point(0.9, 0.9, -1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("B 3:\n");
+	p = point(-0.9, 0.9, -1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("B 4:\n");
+	p = point(0.9, -0.9, -1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("B 5:\n");
+	p = point(-0.9, -0.9, -1);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("U 1:\n");
+	p = point(0, 1, 0);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("U 2:\n");
+	p = point(-0.9, 1, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("U 3:\n");
+	p = point(0.9, 1, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("U 4:\n");
+	p = point(-0.9, 1, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("U 5:\n");
+	p = point(0.9, 1, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("D 1:\n");
+	p = point(0, -1, 0);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("D 2:\n");
+	p = point(-0.9, -1, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("D 3:\n");
+	p = point(0.9, -1, 0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("D 4:\n");
+	p = point(-0.9, -1, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+	printf("D 5:\n");
+	p = point(0.9, -1, -0.9);
+	c = pattern_at(cube_pattern, p);
+	print_color(c);
+}
+
 void	test_uv_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -557,6 +713,8 @@ void	test_uv_patterns(void)
 	test7();
 	printf("_____________________________________________\n");
 	test8();
+	printf("_____________________________________________\n");
+	test9();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");
