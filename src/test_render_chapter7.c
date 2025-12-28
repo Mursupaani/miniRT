@@ -87,7 +87,7 @@ void	build_chapter7_world(t_app *app)
 	add_transform(cube, rotation_y(M_PI / 4));
 	add_transform(cube, translation_matrix4(0, 2, -2));
 	add_object_to_world(cube, w);
-	//
+
 	// t_object *middle = glass_sphere();
 	// middle->material.color = color(0.5, 0.5, 0.5);
 	// middle->material.diffuse = 0.1;
