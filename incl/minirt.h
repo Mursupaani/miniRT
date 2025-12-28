@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 23:28:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/28 16:35:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,9 +204,21 @@ typedef enum s_pattern_type
 typedef enum s_uv_ptrn_type
 {
 	UV_CHECKERS,
-	ALIGN_CHECK,
-	UV_CUBE,
+	UV_ALIGN_CHECK,
+	UV_ALIGN_CUBE,
 }	t_uv_ptrn_type;
+
+typedef enum s_uv_map_type
+{
+	UV_TEXTURE,
+	UV_PATTERN,
+}	t_uv_map_type;
+
+typedef enum s_uv_txtr_type
+{
+	UV_CUBE_TEXTURE,
+	UV_SINGLE_TEXTURE,
+}	t_uv_txtr_type;
 
 typedef struct s_light
 {
@@ -214,6 +226,12 @@ typedef struct s_light
 	t_point			position;
 	// t_color_255		color_255;
 }	t_light;
+
+typedef struct s_uv_txtr
+{
+	t_uv_txtr_type	texture_type;
+	mlx_texture_t	*texture[6];
+}	t_uv_txtr;
 
 typedef struct s_uv_ptrn
 {
@@ -233,8 +251,10 @@ typedef struct s_uv_map
 
 typedef struct s_texture_map
 {
-	t_uv_ptrn	pattern;
-	t_uv_map	(*uv_map)(t_point);
+	t_uv_ptrn		uv_ptrn;
+	t_uv_txtr		texture;
+	t_uv_map_type	uv_map_type;
+	t_uv_map		(*uv_map)(t_point);
 }	t_texture_map;
 
 typedef struct s_pattern
@@ -571,6 +591,7 @@ void		free_object_array(t_object **objs);
 t_color		color(double r, double g, double b);
 t_color255	color255(
 		unsigned char r, unsigned char g, unsigned char b);
+t_color		color_from_hex_color(uint32_t hex_color);
 t_color		color_mix(t_color color_obj, t_color color_light);
 t_color		color_multiply(t_color color, double multiplier);
 t_color		color_sum(t_color color1, t_color color2);
@@ -582,6 +603,7 @@ int			color_hex_from_color(t_color color);
 t_color		shade_hit(t_world *w, t_computations comps, int recursions);
 t_color		color_at(t_world *w, t_ray r, int recursions);
 bool		is_shadowed(t_world *w, t_point p);
+t_color		pixel_at(mlx_texture_t *texture, int x, int y);
 
 // Reflections:
 t_color		reflected_color(t_world *w, t_computations comps, int recursions);
@@ -607,9 +629,9 @@ t_color		pattern_at(t_pattern ptrn, t_point ptrn_point);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 
 // UV Patterns:
-// t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map uv_map);
-// t_texture_map	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map));
 t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
+// t_pattern	uv_image(mlx_texture_t	*texture);
+t_uv_ptrn	uv_image(mlx_texture_t	*texture);
 t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
 // t_uv_ptrn	uv_align_check(t_uv_align a);
 t_uv_align	uv_align_check(t_color main, t_color ul, t_color ur, t_color bl, t_color br);
@@ -617,6 +639,8 @@ t_uv_ptrn	uv_align_check_pattern(void);
 t_uv_map	spherical_map(t_point p);
 t_uv_map	planar_map(t_point p);
 t_uv_map	cylindrical_map(t_point p);
+t_uv_map	cubic_map(t_point p);
+
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
 // t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
 t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v, int face);

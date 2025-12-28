@@ -4,21 +4,18 @@
    ...
    fun:_dlerror_run
 }
-
 {
    <_dl_catcn_exception>
    Memcheck:Leak
    ...
    fun:_dl_catch_exception
 }
-
 {
    <_dl_open>
    Memcheck:Leak
    ...
    fun:_dl_open
 }
-
 {
    <_dl_init>
    Memcheck:Leak
@@ -26,58 +23,213 @@
    ...
    fun:_dl_init
 }
-
 {
    <glfwInit>
    Memcheck:Leak
    ...
    fun:glfwInit
 }
-
 {
    <dlopen@@GLIBC_2.34>
    Memcheck:Leak
    ...
    fun:dlopen@@GLIBC_2.34
 }
-
 {
    <XrmGetStringDatabase>
    Memcheck:Leak
    ...
    fun:XrmGetStringDatabase
 }
-
 {
    <generateCodeForModuleEPNS>
    Memcheck:Cond
    ...
    fun:_ZN4llvm5MCJIT21generateCodeForModuleEPNS_6ModuleE
 }
-
 {
    <_XrmInitParseInfo>
    Memcheck:Leak
    ...
    fun:_XrmInitParseInfo
 }
-
 {
    <StandardInstrumentations>
    Memcheck:Leak
    ...
    fun:_ZN4llvm24StandardInstrumentationsC1ERNS_11LLVMContextEbbNS_16PrintPassOptionsE
 }
-
 {
    <glfwCreateWindow>
    Memcheck:Leak
    ...
    fun:glfwCreateWindow
 }
-
 {
    <ignore_radeon_driver_race>
    Helgrind:Race
    obj:*/radeonsi_dri.so
+}
+{
+   <process_item>
+   Memcheck:Leak
+   ...
+   fun:process_item
+}
+{
+   <FT_Load_Glyph>
+   Memcheck:Leak
+   ...
+   fun:FT_Load_Glyph
+}
+{
+   <g_thread_proxy>
+   Memcheck:Leak
+   ...
+   fun:g_thread_proxy
+}
+{
+   <signal_emit_unlocked>
+   Memcheck:Leak
+   ...
+   fun:signal_emit_unlocked_R.isra.0
+}
+{
+   <signal_emit_valist_unlocked>
+   Memcheck:Leak
+   ...
+   fun:signal_emit_valist_unlocked
+}
+{
+   <settings_update_theme>
+   Memcheck:Leak
+   ...
+   fun:settings_update_theme
+}
+{
+   <g_objecd_new_internal>
+   Memcheck:Leak
+   ...
+   fun:g_object_new_internal.part.0
+}
+{
+   <default_display_notify>
+   Memcheck:Leak
+   ...
+   fun:default_display_notify_cb
+}
+{
+   <ffi_call>
+   Memcheck:Leak
+   ...
+   fun:ffi_call
+}
+{
+   <gtk_image_get_content_size>
+   Memcheck:Leak
+   ...
+   fun:gtk_image_get_content_size
+}
+{
+   <gdk_pixbuf_loader_close>
+   Memcheck:Leak
+   ...
+   fun:gdk_pixbuf_loader_close
+}
+{
+   <gtk_widget_get_preferred_width>
+   Memcheck:Leak
+   ...
+   fun:gtk_widget_get_preferred_width
+}
+{
+   <gtk_widget_get_preferred_height_and_baseline_for_width>
+   Memcheck:Leak
+   ...
+   fun:gtk_widget_get_preferred_height_and_baseline_for_width
+}
+{
+   <update_xft_settings>
+   Memcheck:Leak
+   ...
+   fun:update_xft_settings.lto_priv.0
+}
+{
+   <complete_in_idle_cb>
+   Memcheck:Leak
+   ...
+   fun:complete_in_idle_cb
+}
+{
+   <g_task_return_now>
+   Memcheck:Leak
+   ...
+   fun:g_task_return_now
+}
+{
+   <gtk_css_provider_load_internal>
+   Memcheck:Leak
+   ...
+   fun:gtk_css_provider_load_internal
+}
+{
+   <_gtk_style_property_lookup>
+   Memcheck:Leak
+   ...
+   fun:_gtk_style_property_lookup
+}
+{
+   <gtk_widget_query_size_for_orientation>
+   Memcheck:Leak
+   ...
+   fun:gtk_widget_query_size_for_orientation
+}
+{
+   <gtk_label_get_preferred_width>
+   Memcheck:Leak
+   match-leak-kinds: indirect
+   ...
+   fun:gtk_label_get_preferred_width.lto_priv.0
+}
+{
+   <gtk_label_get_preferred_height_and_baseline_for_width>
+   Memcheck:Leak
+   ...
+   fun:gtk_label_get_preferred_height_and_baseline_for_width.lto_priv.0
+}
+{
+   <settings_update_xsetting>
+   Memcheck:Leak
+   ...
+   fun:settings_update_xsetting.isra.0
+}
+{
+   <g_settings_get_double>
+   Memcheck:Leak
+   ...
+   fun:g_settings_get_double
+}
+{
+   <g_dbus_connection_send_message_with_reply>
+   Memcheck:Leak
+   ...
+   fun:g_dbus_connection_send_message_with_reply
+}
+{
+   <clone>
+   Memcheck:Leak
+   ...
+   fun:clone
+}
+{
+   <gtk_css_custom_gadget_get_preferred_size>
+   Memcheck:Leak
+   ...
+   fun:gtk_css_custom_gadget_get_preferred_size
+}
+{
+   <gtk_css_gadget_get_preferred_size>
+   Memcheck:Leak
+   ...
+   fun:gtk_css_gadget_get_preferred_size
 }

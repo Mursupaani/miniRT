@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:05:39 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/28 16:39:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	build_chapter7_world(t_app *app)
 	cube_pattern = texture_map(cube_uv, spherical_map);
 	t_object *cube = cube_new();
 	cube->material.pattern = cube_pattern;
-	cube->material.pattern.texture_map.pattern.type = UV_CUBE;
+	cube->material.pattern.texture_map.uv_ptrn.type = UV_ALIGN_CUBE;
 	cube->material.color = color(0.5, 0.5, 0.5);
 	cube->material.diffuse = 0.1;
 	cube->material.specular = 0.3;
