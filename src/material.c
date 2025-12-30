@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minirt.h"
 
 t_pattern	test_pattern()
@@ -30,12 +31,8 @@ static t_pattern	no_pattern(void)
 {
 	t_pattern	empty;
 
+	ft_bzero(&empty, sizeof(t_pattern));
 	empty.type = NONE;
-	empty.a = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
-	empty.b = (t_color){DBL_MIN, DBL_MIN, DBL_MIN};
-	empty.transform = matrix4_identity();
-	empty.inverse_transform = empty.transform;
-	empty.inverse_transpose = empty.transform;
 	return (empty);
 }
 

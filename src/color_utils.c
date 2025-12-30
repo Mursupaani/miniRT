@@ -6,11 +6,12 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 15:26:47 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:16:36 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/28 13:10:01 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdint.h>
 
 int	color_hex_from_color255(t_color255 color255)
 {
@@ -45,4 +46,14 @@ t_color	color_from_color255(t_color255 color_255)
 	color.g = color_255.g / 255.0f;
 	color.b = color_255.b / 255.0f;
 	return (color);
+}
+
+t_color	color_from_hex_color(uint32_t hex_color)
+{
+	t_color	c;
+
+	c.r = ((hex_color >> 24) & 255) / 255.0f;
+	c.g = ((hex_color >> 16) & 255) / 255.0f;
+	c.b = ((hex_color >> 8) & 255) / 255.0f;
+	return (c);
 }

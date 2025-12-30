@@ -41,5 +41,5 @@ t_uv_map	spherical_map(t_point p)
 
 	u = get_u(p);
 	v = get_v(p);
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, UP});
 }

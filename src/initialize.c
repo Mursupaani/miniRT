@@ -29,8 +29,8 @@ t_app	*initialize_app(void)
 	// app->monitor_height = 640;
 
 	// NOTE: Uncomment two lines below for testing with Valgrind.
-	// app->monitor_width = 20;
-	// app->monitor_height = 20;
+	app->monitor_width = THREADS;
+	app->monitor_height = THREADS;
 
 	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
 	app->img = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);

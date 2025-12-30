@@ -5,26 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 20:21:43 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:06:08 by anpollan         ###   ########.fr       */
+/*   Created: 2025/12/28 16:31:14 by anpollan          #+#    #+#             */
+/*   Updated: 2025/12/28 16:35:47 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_uv_ptrn	uv_align_check(void)
+t_cube_face	face_from_point(t_point p)
 {
-	t_uv_ptrn uv;
+	double	coord;
 
-	uv.a = color(DBL_MIN, DBL_MIN, DBL_MIN);
-	uv.b = color(DBL_MIN, DBL_MIN, DBL_MIN);
-	uv.width = 0;
-	uv.height = 0;
-	uv.type = ALIGN_CHECK;
-	uv.align.main = color(1, 1, 1);
-	uv.align.ul = color(1, 0, 0);
-	uv.align.ur = color(1, 1, 0);
-	uv.align.bl = color(0, 1, 0);
-	uv.align.br = color(0, 1, 1);
-	return (uv);
+	coord = max_absolute_coord_component(p.x, p.y, p.z);
+	if (coord == p.x)
+		return (RIGHT);
+	else if (coord == -p.x)
+		return (LEFT);
+	else if (coord == p.y)
+		return (UP);
+	else if (coord == -p.y)
+		return (DOWN);
+	else if (coord == p.z)
+		return (FRONT);
+	return (BACK);
+}
+
+t_uv_map	cubic_map(t_point p)
+{
+	t_cube_face	face;
+
+	face = face_from_point(p);
+	if (face == UP)
+		return (cube_uv_up(p));
+	else if (face == DOWN)
+		return (cube_uv_down(p));
+	else if (face == LEFT)
+		return (cube_uv_left(p));
+	else if (face == RIGHT)
+		return (cube_uv_right(p));
+	else if (face == FRONT)
+		return (cube_uv_front(p));
+	else
+		return (cube_uv_back(p));
 }

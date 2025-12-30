@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 21:04:30 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:59:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	test_render()
 	t_app	*app;
 
 	app = initialize_app();
-	build_chapter7_world(app);
-	// build_test_render(app);
+	// build_chapter7_world(app);
+	build_test_render(app);
 	// christmas_tree(app);
 	launch_render(app);
 	mlx_image_to_window(app->mlx, app->img, 0, 0);

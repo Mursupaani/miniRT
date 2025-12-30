@@ -31,5 +31,5 @@ t_uv_map	planar_map(t_point p)
 		v = fmod(raw_v, 1);
 	else
 		v = fmod(1 + raw_v, 1);
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, UP});
 }

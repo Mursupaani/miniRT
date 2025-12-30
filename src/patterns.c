@@ -45,6 +45,7 @@ t_pattern	create_pattern(int type, t_color a, t_color b)
 {
 	t_pattern	pattern;
 
+	ft_bzero(&pattern, sizeof(pattern));
 	pattern.a = a;
 	pattern.b = b;
 	pattern.transform = matrix4_identity();
