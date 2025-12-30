@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/28 16:35:13 by anpollan         ###   ########.fr       */
+/*   Updated: 2025/12/30 18:53:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,61 @@
 # endif
 
 # ifndef RECURSIONS
-#  define RECURSIONS 5
+#  define RECURSIONS 7
 # endif
+
+typedef enum s_exit_value
+{
+	SUCCESS,
+	ERROR_NO_INPUT_FILE,
+	ERROR_MLX_INIT,
+	ERROR_MLX_IMG_INIT,
+	ERROR_INVALID_FILE_TYPE,
+	ERROR_OPEN,
+	ERROR_WORLD,
+	ERROR_PARSING,
+	ERROR_THREADS,
+	
+}	t_exit_value;
+
+typedef enum s_object_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER,
+	CUBE,
+	CONE,
+}	t_object_type;
+
+typedef enum s_cube_face
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	FRONT,
+	BACK,
+}	t_cube_face;
+
+typedef enum s_pattern_type
+{
+	NONE,
+	STRIPE,
+	GRADIENT,
+	RING,
+	CHECKERS,
+	TEST,
+	MAP,
+}	t_pattern_type;
+
+typedef enum s_uv_pattern_type
+{
+	UV_CHECKERS,
+	UV_ALIGN_CHECK,
+	UV_ALIGN_CUBE,
+	UV_TEXTURE,
+	UV_CUBE_TEXTURE,
+}	t_uv_pattern_type;
 
 typedef struct s_thread_data t_thread_data;
 
@@ -157,69 +210,6 @@ typedef struct	s_cube_align
 	t_uv_align	back;
 }	t_cube_align;
 
-typedef enum s_exit_value
-{
-	SUCCESS,
-	ERROR_NO_INPUT_FILE,
-	ERROR_MLX_INIT,
-	ERROR_MLX_IMG_INIT,
-	ERROR_INVALID_FILE_TYPE,
-	ERROR_OPEN,
-	ERROR_WORLD,
-	ERROR_PARSING,
-	ERROR_THREADS,
-	
-}	t_exit_value;
-
-typedef enum s_object_type
-{
-	SPHERE,
-	PLANE,
-	CYLINDER,
-	CUBE,
-	CONE,
-}	t_object_type;
-
-typedef enum s_cube_face
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	FRONT,
-	BACK,
-}	t_cube_face;
-
-typedef enum s_pattern_type
-{
-	NONE,
-	STRIPE,
-	GRADIENT,
-	RING,
-	CHECKERS,
-	TEST,
-	MAP,
-}	t_pattern_type;
-
-typedef enum s_uv_ptrn_type
-{
-	UV_CHECKERS,
-	UV_ALIGN_CHECK,
-	UV_ALIGN_CUBE,
-}	t_uv_ptrn_type;
-
-typedef enum s_uv_map_type
-{
-	UV_TEXTURE,
-	UV_PATTERN,
-}	t_uv_map_type;
-
-typedef enum s_uv_txtr_type
-{
-	UV_CUBE_TEXTURE,
-	UV_SINGLE_TEXTURE,
-}	t_uv_txtr_type;
-
 typedef struct s_light
 {
 	t_color			intensity;
@@ -227,35 +217,22 @@ typedef struct s_light
 	// t_color_255		color_255;
 }	t_light;
 
-typedef struct s_uv_txtr
-{
-	t_uv_txtr_type	texture_type;
-	mlx_texture_t	*texture[6];
-}	t_uv_txtr;
-
-typedef struct s_uv_ptrn
-{
-	double			width;
-	double			height;
-	t_color			a;
-	t_color			b;
-	t_uv_align		sides[6];
-	t_uv_ptrn_type	type;
-}	t_uv_ptrn;
-
 typedef struct s_uv_map
 {
-	double	u;
-	double	v;
+	double		u;
+	double		v;
+	t_cube_face	face;
 }	t_uv_map;
 
-typedef struct s_texture_map
+typedef struct s_uv_pattern
 {
-	t_uv_ptrn		uv_ptrn;
-	t_uv_txtr		texture;
-	t_uv_map_type	uv_map_type;
+	t_uv_pattern_type	type;
+	double			width;
+	double			height;
+	t_uv_align		align_cube_sides[6];
+	mlx_texture_t	*textures[6];
 	t_uv_map		(*uv_map)(t_point);
-}	t_texture_map;
+}	t_uv_pattern;
 
 typedef struct s_pattern
 {
@@ -265,7 +242,7 @@ typedef struct s_pattern
 	t_matrix4		transform;
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
-	t_texture_map	texture_map;
+	t_uv_pattern	uv_pattern;
 }	t_pattern;
 
 typedef struct s_material
@@ -464,6 +441,7 @@ t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector ey
 t_computations	prepare_computations_old(t_intersection x, t_ray r);
 
 // Debug
+t_pattern	uv_align_cube_pattern(void);
 void		print_tuple(t_tuple tuple);
 void		print_ray(t_ray r);
 void		print_matrix2(t_matrix2 matrix);
@@ -481,7 +459,7 @@ void		print_computations(t_computations comps);
 void		print_camera(t_camera *camera);
 void		print_pattern(t_pattern pattern);
 void		print_uv_map(t_uv_map uv);
-void		print_uv_pattern(t_uv_ptrn pattern);
+void		print_image_details(mlx_texture_t *image);
 
 // App initialize and management:
 t_app		*initialize_app(void);
@@ -629,21 +607,21 @@ t_color		pattern_at(t_pattern ptrn, t_point ptrn_point);
 t_color		pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 
 // UV Patterns:
-t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point));
-// t_pattern	uv_image(mlx_texture_t	*texture);
-t_uv_ptrn	uv_image(mlx_texture_t	*texture);
-t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b);
-// t_uv_ptrn	uv_align_check(t_uv_align a);
+t_pattern	texture_map(t_pattern ptrn, t_uv_map (*uv_map)(t_point));
+t_pattern	uv_image(mlx_texture_t	*texture);
+t_pattern	uv_image_cube(mlx_texture_t *textures[6]);
+t_pattern	uv_image_cube_same_texture(mlx_texture_t *texture);
+t_pattern	uv_checkers(double w, double h, t_color a, t_color b);
 t_uv_align	uv_align_check(t_color main, t_color ul, t_color ur, t_color bl, t_color br);
-t_uv_ptrn	uv_align_check_pattern(void);
+t_pattern	uv_align_cube_pattern(void);
+t_pattern	uv_align_check_pattern(void);
 t_uv_map	spherical_map(t_point p);
 t_uv_map	planar_map(t_point p);
 t_uv_map	cylindrical_map(t_point p);
 t_uv_map	cubic_map(t_point p);
 
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
-// t_color		uv_pattern_at(t_uv_ptrn ptrn, double u, double v);
-t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v, int face);
+t_color	uv_pattern_at(t_pattern ptrn, t_uv_map uv);
 t_cube_face	face_from_point(t_point p);
 t_uv_map	cube_uv_up(t_point p);
 t_uv_map	cube_uv_down(t_point p);

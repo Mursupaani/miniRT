@@ -23,10 +23,10 @@ void	build_chapter7_world(t_app *app)
 	t_matrix4 c_trans = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0));
 	set_camera_transform(c, c_trans);
 
-	t_uv_ptrn uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
+	t_pattern uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
 
 	t_object *floor = plane_new();
-	t_uv_ptrn align = uv_align_check_pattern();
+	t_pattern align = uv_align_check_pattern();
 	t_matrix4 m = scaling_matrix4(10, 0.01, 10);
 	floor->material.color = color(0.1, 0.1, 0.1);
 	floor->material.specular = 0.1;
@@ -46,6 +46,7 @@ void	build_chapter7_world(t_app *app)
 	// cylinder->material.transparency = 0.9;
 	// cylinder->material.refractive_index = 1.5;
 	set_transform(cylinder, scaling_matrix4(1, 3.1415, 1));
+	add_transform(cylinder, scaling_matrix4(0.5, 0.5, 0.5));
 	add_object_to_world(cylinder, w);
 
 	t_object *cone = cone_new();
@@ -55,37 +56,19 @@ void	build_chapter7_world(t_app *app)
 	cone->material.transparency = 0.5;
 	cone->material.refractive_index = 1.5;
 	set_transform(cone, rotation_z(M_PI/2));
-	add_transform(cone, translation_matrix4(0, 1, 0));
+	add_transform(cone, scaling_matrix4(0.3, 0.3, 0.3));
+	add_transform(cone, translation_matrix4(0.5, 1, -4));
 	add_object_to_world(cone, w);
 
-	t_color red = color(1, 0, 0);
-	t_color yellow = color(1, 1, 0);
-	t_color brown = color(1, 0.5, 0);
-	t_color green = color(0, 1, 0);
-	t_color cyan = color(0, 1, 1);
-	t_color blue = color(0, 0, 1);
-	t_color purple = color(1, 0, 1);
-	t_color white = color(1, 1, 1);
-	t_pattern cube_pattern;
-	t_uv_ptrn cube_uv;
-	cube_uv.sides[LEFT] = uv_align_check(yellow, cyan, red, blue, brown);
-	cube_uv.sides[FRONT] = uv_align_check(cyan, red, yellow, brown, green);
-	cube_uv.sides[RIGHT] = uv_align_check(red, yellow, purple, green, white);
-	cube_uv.sides[BACK] = uv_align_check(green, purple, cyan, white, blue);
-	cube_uv.sides[UP] = uv_align_check(brown, cyan, purple, red, yellow);
-	cube_uv.sides[DOWN] = uv_align_check(purple, brown, green, blue, white);
-	cube_pattern = texture_map(cube_uv, spherical_map);
+
 	t_object *cube = cube_new();
-	cube->material.pattern = cube_pattern;
-	cube->material.pattern.texture_map.uv_ptrn.type = UV_ALIGN_CUBE;
-	cube->material.color = color(0.5, 0.5, 0.5);
-	cube->material.diffuse = 0.1;
-	cube->material.specular = 0.3;
-	// cube->material.reflective = 0.9;
-	m = rotation_x(M_PI / 4);
-	set_transform(cube, m);
+	cube->material.pattern = texture_map(uv_align_cube_pattern(), cubic_map);
+	cube->material.transparency = 0.5;
+	cube->material.refractive_index = 4.5;
+	add_transform(cube, scaling_matrix4(0.4, 0.4, 0.4));
+	add_transform(cube, rotation_x(M_PI / 4));
 	add_transform(cube, rotation_y(M_PI / 4));
-	add_transform(cube, translation_matrix4(0, 2, -2));
+	add_transform(cube, translation_matrix4(-1, 1, -2));
 	add_object_to_world(cube, w);
 
 	// t_object *middle = glass_sphere();

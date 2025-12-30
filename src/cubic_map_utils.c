@@ -19,7 +19,7 @@ t_uv_map	cube_uv_front(t_point p)
 
 	u = fmod(p.x + 1, 2) / 2;
 	v = fmod(p.y + 1, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, FRONT});
 }
 
 t_uv_map	cube_uv_back(t_point p)
@@ -29,7 +29,7 @@ t_uv_map	cube_uv_back(t_point p)
 
 	u = fmod(1 - p.x, 2) / 2;
 	v = fmod(p.y + 1, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, BACK});
 }
 
 t_uv_map	cube_uv_left(t_point p)
@@ -39,7 +39,7 @@ t_uv_map	cube_uv_left(t_point p)
 
 	u = fmod(p.z + 1, 2) / 2;
 	v = fmod(p.y + 1, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, LEFT});
 }
 
 t_uv_map	cube_uv_right(t_point p)
@@ -49,5 +49,5 @@ t_uv_map	cube_uv_right(t_point p)
 
 	u = fmod(1 - p.z, 2) / 2;
 	v = fmod(p.y + 1, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, RIGHT});
 }

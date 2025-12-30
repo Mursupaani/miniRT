@@ -10,18 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "minirt.h"
-#include <math.h>
 
-t_pattern	texture_map(t_uv_ptrn ptrn, t_uv_map (*uv_map)(t_point))
+t_pattern	texture_map(t_pattern ptrn, t_uv_map (*uv_map)(t_point))
 {
-	t_pattern	map;
-
-	map = create_pattern(MAP, (t_color){0, 0, 0}, (t_color){0, 0, 0});
-	map.texture_map.uv_ptrn = ptrn;
-	map.texture_map.uv_map = uv_map;
-	return (map);
+	ptrn.uv_pattern.uv_map = uv_map;
+	return (ptrn);
 }
 
 static t_color	handle_align_check(t_uv_align align, double u, double v)
@@ -43,7 +37,7 @@ static t_color	handle_align_check(t_uv_align align, double u, double v)
 	return (align.main);
 }
 
-static t_color	handle_uv_texture(mlx_texture_t *texture, double u, double v)
+static t_color	uv_texture_at(mlx_texture_t *texture, double u, double v)
 {
 	int	x;
 	int	y;
@@ -54,64 +48,35 @@ static t_color	handle_uv_texture(mlx_texture_t *texture, double u, double v)
 	return (pixel_at(texture, x, y));
 }
 
-static t_color	handle_generic_uv_texture(t_uv_ptrn ptrn, double u, double v)
+static t_color	handle_uv_checkers_texture(t_pattern ptrn, double u, double v)
 {
 	int	u2;
 	int	v2;
 
-	u2 = floor(u * ptrn.width);
-	v2 = floor(v * ptrn.height);
-	if ((int)(u2 + v2) % 2 == 0)
+	u2 = floor(u * ptrn.uv_pattern.width);
+	v2 = floor(v * ptrn.uv_pattern.height);
+	if ((u2 + v2) % 2 == 0)
 		return (ptrn.a);
 	else
 		return (ptrn.b);
 }
 
-t_color	uv_pattern_at(t_uv_ptrn ptrn, double u, double v, int face)
+t_color	uv_pattern_at(t_pattern ptrn, t_uv_map uv)
 {
-	if (ptrn.type == UV_ALIGN_CHECK)
-		return (handle_align_check(ptrn.sides[UP], u, v));
-	else if (ptrn.type == UV_ALIGN_CUBE)
-		return (handle_align_check(ptrn.sides[face], u, v));
-	else if (ptrn.type == UV_TEXTURE)
-		return handle_uv_texture(ptrn.texture[face], u, v);
+	if (ptrn.uv_pattern.type != UV_CHECKERS)
+		return (handle_align_check(ptrn.uv_pattern.align_cube_sides[uv.face], uv.u, uv.v));
 	else
-		return (handle_generic_uv_texture(ptrn, u, v));
-}
-
-t_uv_map get_uv_cube_map(t_point p, int *face_ptr)
-{
-	t_cube_face	face;
-
-	face = face_from_point(p);
-	*face_ptr = face;
-	if (face == LEFT)
-		return (cube_uv_left(p));
-	else if (face == RIGHT)
-		return (cube_uv_right(p));
-	else if (face == FRONT)
-		return (cube_uv_front(p));
-	else if (face == BACK)
-		return (cube_uv_back(p));
-	else if (face == UP)
-		return (cube_uv_up(p));
-	else
-		return (cube_uv_down(p));
+		return (handle_uv_checkers_texture(ptrn, uv.u, uv.v));
 }
 
 t_color	handle_uv_pattern(t_pattern ptrn, t_point ptrn_point)
 {
-	t_uv_map	map;
-	int			face;
+	t_uv_map	uv;
 
-	face = 0;
-	if (ptrn.texture_map.uv_ptrn.type == UV_ALIGN_CUBE)
-		map = get_uv_cube_map(ptrn_point, &face);
+	uv = ptrn.uv_pattern.uv_map(ptrn_point);
+	if (ptrn.uv_pattern.type == UV_TEXTURE
+		|| ptrn.uv_pattern.type == UV_CUBE_TEXTURE)
+		return (uv_texture_at(ptrn.uv_pattern.textures[uv.face], uv.u, uv.v));
 	else
-		map = ptrn.texture_map.uv_map(ptrn_point);
-	return (uv_pattern_at(ptrn.texture_map.uv_ptrn, map.u, map.v, face));
-	// if (ptrn.texture_map.pattern.type == ALIGN_CHECK)
-	// 	return (uv_pattern_at(ptrn.texture_map.pattern, map.u, map.v));
-	// else
-	// 	return (uv_pattern_at(ptrn.texture_map.pattern, map.u, map.v));
+		return (uv_pattern_at(ptrn, uv));
 }

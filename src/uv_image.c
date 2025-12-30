@@ -12,25 +12,56 @@
 
 #include "minirt.h"
 
-t_uv_ptrn	uv_image(mlx_texture_t	*image)
+t_pattern	uv_image_cube_same_texture(mlx_texture_t *texture)
 {
-	t_uv_ptrn	uv_pattern;;
+	t_pattern	ptrn;;
 
-	uv_pattern.type = UV_TEXTURE;
-	uv_pattern.texture = image;
-	uv_pattern.width = image->width;
-	uv_pattern.height = image->height;
-	uv_pattern.a = color(DBL_MIN, DBL_MIN, DBL_MIN);
-	uv_pattern.b = color(DBL_MIN, DBL_MIN, DBL_MIN);
-	return (uv_pattern);
+	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
+	ptrn.uv_pattern.type = UV_TEXTURE;
+	ptrn.uv_pattern.textures[UP] = texture;
+	ptrn.uv_pattern.textures[DOWN] = texture;
+	ptrn.uv_pattern.textures[LEFT] = texture;
+	ptrn.uv_pattern.textures[RIGHT] = texture;
+	ptrn.uv_pattern.textures[FRONT] = texture;
+	ptrn.uv_pattern.textures[BACK] = texture;
+	return (ptrn);
+}
+
+t_pattern	uv_image_cube(mlx_texture_t *textures[6])
+{
+	t_pattern	ptrn;;
+
+	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
+	ptrn.uv_pattern.type = UV_TEXTURE;
+	ptrn.uv_pattern.textures[UP] = textures[UP];
+	ptrn.uv_pattern.textures[DOWN] = textures[DOWN];
+	ptrn.uv_pattern.textures[LEFT] = textures[LEFT];
+	ptrn.uv_pattern.textures[RIGHT] = textures[RIGHT];
+	ptrn.uv_pattern.textures[FRONT] = textures[FRONT];
+	ptrn.uv_pattern.textures[BACK] = textures[BACK];
+	return (ptrn);
+}
+
+t_pattern	uv_image(mlx_texture_t *image)
+{
+	t_pattern	ptrn;;
+
+	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
+	ptrn.uv_pattern.type = UV_TEXTURE;
+	ptrn.uv_pattern.textures[UP] = image;
+	ptrn.uv_pattern.width = image->width;
+	ptrn.uv_pattern.height = image->height;
+	return (ptrn);
 }
 
 t_color	pixel_at(mlx_texture_t *texture, int x, int y)
 {
 	int			offset;
-	uint32_t	hex_color;
+	t_color255	c255;
 
 	offset = y * texture->bytes_per_pixel * texture->width + x * texture->bytes_per_pixel;
-	hex_color = (uint32_t)(texture->pixels[offset]);
-	return (color_from_hex_color(hex_color));
+	c255.r = (uint32_t)(texture->pixels[offset]);
+	c255.g =(uint32_t)(texture->pixels[offset + 1]);
+	c255.b =(uint32_t)(texture->pixels[offset + 2]);
+	return (color_from_color255(c255));
 }

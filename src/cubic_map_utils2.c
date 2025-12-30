@@ -20,7 +20,7 @@ t_uv_map	cube_uv_up(t_point p)
 	// FIXME: Not like in book but gives correct test output
 	u = fmod(p.x + 1, 2) / 2;
 	v = fmod(1 - p.z, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, UP});
 }
 
 t_uv_map	cube_uv_down(t_point p)
@@ -31,5 +31,5 @@ t_uv_map	cube_uv_down(t_point p)
 	// FIXME: Not like in book but gives correct test output
 	u = fmod(p.x + 1, 2) / 2;
 	v = fmod(p.z + 1, 2) / 2;
-	return ((t_uv_map){u, v});
+	return ((t_uv_map){u, v, DOWN});
 }

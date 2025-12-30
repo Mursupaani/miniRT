@@ -17,7 +17,7 @@ static t_color	white;
 
 static void	test1()
 {
-	t_uv_ptrn	pattern;
+	t_pattern	pattern;
 
 	printf("TEST 1:\n");
 	printf("Scenario Outline: Checker pattern in 2D\n\
@@ -32,32 +32,42 @@ static void	test1()
     | 0.5 | 0.5 | black    |\n\
     | 1.0 | 1.0 | black    |\n");
 	pattern = uv_checkers(2, 2, black, white);
-	print_uv_pattern(pattern);
+	// print_pattern(pattern);
 	double u = 0;
 	double v = 0;
-	t_color c = uv_pattern_at(pattern, u, v, 0);
-	printf("\n");
-	print_color(c);
+	t_color c = uv_pattern_at(pattern, (t_uv_map){u, v, UP});
+	if (c.r == 0 && c.g == 0 && c.b == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 	u = 0.5;
 	v = 0;
-	c = uv_pattern_at(pattern, u, v, 0);
-	printf("\n");
-	print_color(c);
+	c = uv_pattern_at(pattern, (t_uv_map){u, v, UP});
+	if (c.r == 1 && c.g == 1 && c.b == 1)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 	u = 0;
 	v = 0.5;
-	c = uv_pattern_at(pattern, u, v, 0);
-	printf("\n");
-	print_color(c);
+	c = uv_pattern_at(pattern, (t_uv_map){u, v, UP});
+	if (c.r == 1 && c.g == 1 && c.b == 1)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 	u = 0.5;
 	v = 0.5;
-	c = uv_pattern_at(pattern, u, v, 0);
-	printf("\n");
-	print_color(c);
+	c = uv_pattern_at(pattern, (t_uv_map){u, v, UP});
+	if (c.r == 0 && c.g == 0 && c.b == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 	u = 1;
 	v = 1;
-	c = uv_pattern_at(pattern, u, v, 0);
-	printf("\n");
-	print_color(c);
+	c = uv_pattern_at(pattern, (t_uv_map){u, v, UP});
+	if (c.r == 0 && c.g == 0 && c.b == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 }
 
 static void	test2()
@@ -123,7 +133,7 @@ static void	test3()
     | point(-0.7652, 0.2175, 0.6060)   | black |\n");
 	t_point	p;
 	t_color c;
-	t_uv_ptrn checkers = uv_checkers(16, 8, black, white);
+	t_pattern checkers = uv_checkers(16, 8, black, white);
 	t_pattern pattern = texture_map(checkers, spherical_map);
 	printf("\n");
 	printf("1:\n");
@@ -325,21 +335,21 @@ static void	test6()
     | 0.1  | 0.1  | bl       |\n\
     | 0.9  | 0.1  | br       |\n");
 	t_color c;
-	t_uv_ptrn pattern = uv_align_check_pattern();
+	t_pattern pattern = uv_align_check_pattern();
 	printf("1:\n");
-	c = uv_pattern_at(pattern, 0.5, 0.5, 0);
+	c = uv_pattern_at(pattern, (t_uv_map){0.5, 0.5, UP});
 	print_color(c);
 	printf("2:\n");
-	c = uv_pattern_at(pattern, 0.1, 0.9, 0);
+	c = uv_pattern_at(pattern, (t_uv_map){0.1, 0.9, UP});
 	print_color(c);
 	printf("3:\n");
-	c = uv_pattern_at(pattern, 0.9, 0.9, 0);
+	c = uv_pattern_at(pattern, (t_uv_map){0.9, 0.9, UP});
 	print_color(c);
 	printf("4:\n");
-	c = uv_pattern_at(pattern, 0.1, 0.1, 0);
+	c = uv_pattern_at(pattern, (t_uv_map){0.1, 0.1, UP});
 	print_color(c);
 	printf("5:\n");
-	c = uv_pattern_at(pattern, 0.9, 0.1, 0);
+	c = uv_pattern_at(pattern, (t_uv_map){0.9, 0.1, UP});
 	print_color(c);
 }
 
@@ -559,13 +569,14 @@ static void	test9()
 	t_color white = color(1, 1, 1);
 	t_pattern cube_pattern;
 	cube_pattern.type = MAP;
-	cube_pattern.texture_map.pattern.type = UV_CUBE;
-	cube_pattern.texture_map.pattern.sides[LEFT] = uv_align_check(yellow, cyan, red, blue, brown);
-	cube_pattern.texture_map.pattern.sides[FRONT] = uv_align_check(cyan, red, yellow, brown, green);
-	cube_pattern.texture_map.pattern.sides[RIGHT] = uv_align_check(red, yellow, purple, green, white);
-	cube_pattern.texture_map.pattern.sides[BACK] = uv_align_check(green, purple, cyan, white, blue);
-	cube_pattern.texture_map.pattern.sides[UP] = uv_align_check(brown, cyan, purple, red, yellow);
-	cube_pattern.texture_map.pattern.sides[DOWN] = uv_align_check(purple, brown, green, blue, white);
+	cube_pattern.uv_pattern.type = UV_ALIGN_CUBE;
+	cube_pattern.uv_pattern.align_cube_sides[LEFT] = uv_align_check(yellow, cyan, red, blue, brown);
+	cube_pattern.uv_pattern.align_cube_sides[FRONT] = uv_align_check(cyan, red, yellow, brown, green);
+	cube_pattern.uv_pattern.align_cube_sides[RIGHT] = uv_align_check(red, yellow, purple, green, white);
+	cube_pattern.uv_pattern.align_cube_sides[BACK] = uv_align_check(green, purple, cyan, white, blue);
+	cube_pattern.uv_pattern.align_cube_sides[UP] = uv_align_check(brown, cyan, purple, red, yellow);
+	cube_pattern.uv_pattern.align_cube_sides[DOWN] = uv_align_check(purple, brown, green, blue, white);
+	cube_pattern = texture_map(cube_pattern, cubic_map);
 	t_point	p;
 	t_color	c;
 	printf("\n");
@@ -691,6 +702,22 @@ static void	test9()
 	print_color(c);
 }
 
+static void	test10(void)
+{
+	t_object *floor = plane_new();
+	mlx_texture_t *image = mlx_load_png("./Textures/honey.png");
+	print_image_details(image);
+	floor->material.color = color(1, 1, 1);
+	floor->material.diffuse = 0.7;
+	floor->material.specular = 0.3;
+	floor->material.reflective = 0.5;
+	floor->material.pattern = uv_image(image);
+	floor->material.pattern = texture_map(uv_image(image), planar_map);
+	t_color c;
+	c = pattern_at(floor->material.pattern, point(500, 0 ,0));
+	print_color(c);
+}
+
 void	test_uv_patterns(void)
 {
 	black = color(0, 0, 0);
@@ -715,6 +742,8 @@ void	test_uv_patterns(void)
 	test8();
 	printf("_____________________________________________\n");
 	test9();
+	printf("_____________________________________________\n");
+	test10();
 	printf("_____________________________________________\n");
 	printf("--------- TESTING PATTERNS FINISHED ---------\n");
 	printf("\n");

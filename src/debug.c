@@ -277,13 +277,40 @@ void	print_camera(t_camera *camera)
 void	print_pattern(t_pattern pattern)
 {
 	printf("--------------------\n");
-	printf("PATTERN:\n");
-	printf("\n");
-	printf("A ");
-	print_color(pattern.a);
-	printf("\n");
-	printf("B ");
-	print_color(pattern.b);
+	if (pattern.type != MAP)
+	{
+		printf("PATTERN:\n");
+		printf("\n");
+		printf("A ");
+		print_color(pattern.a);
+		printf("\n");
+		printf("B ");
+		print_color(pattern.b);
+	}
+	else
+	{
+		printf("--------------------\n");
+		printf("UV ");
+		if (pattern.uv_pattern.type == UV_ALIGN_CHECK)
+			printf("ALIGN CHECK:\n");
+		else if (pattern.uv_pattern.type == UV_ALIGN_CUBE)
+			printf("ALIGN CUBE:\n");
+		else if (pattern.uv_pattern.type == UV_CHECKERS)
+			printf("ALIGN CHECKERS:\n");
+		else if (pattern.uv_pattern.type == UV_CUBE_TEXTURE)
+			printf("CUBE TEXTURE:\n");
+		else if (pattern.uv_pattern.type == UV_TEXTURE)
+			printf("SINGLE TEXTURE:\n");
+		printf("\n");
+		printf("A ");
+		print_color(pattern.a);
+		printf("\n");
+		printf("B ");
+		print_color(pattern.b);
+		printf("\n");
+		printf("Width:\t%lf\n", pattern.uv_pattern.width);
+		printf("Height:\t%lf\n", pattern.uv_pattern.height);
+	}
 }
 
 void	print_uv_map(t_uv_map uv)
@@ -294,17 +321,12 @@ void	print_uv_map(t_uv_map uv)
 	printf(" V = %lf\n", uv.v);
 }
 
-void	print_uv_pattern(t_uv_ptrn pattern)
+void	print_image_details(mlx_texture_t *image)
 {
 	printf("--------------------\n");
-	printf("UV PATTERN:\n");
+	printf("IMAGE:\n");
 	printf("\n");
-	printf("A ");
-	print_color(pattern.a);
-	printf("\n");
-	printf("B ");
-	print_color(pattern.b);
-	printf("\n");
-	printf("Width:\t%lf\n", pattern.width);
-	printf("Height:\t%lf\n", pattern.height);
+	printf(" Width:\t\t%d\n", image->width);
+	printf(" Height:\t%d\n", image->height);
+	printf(" BPP:\t\t%d\n", image->bytes_per_pixel);
 }

@@ -1,5 +1,16 @@
 #include "minirt.h"
-#include <math.h>
+
+static void	free_textures(mlx_texture_t *textures[6])
+{
+	int	i;
+
+	i = -1;
+	while (textures[++i])
+	{
+		mlx_delete_texture(textures[i]);
+		textures[i] = NULL;
+	}
+}
 
 void	free_object_array(t_object **objs)
 {
@@ -10,6 +21,8 @@ void	free_object_array(t_object **objs)
 	i = -1;
 	while (objs[++i])
 	{
+		if (objs[i]->material.pattern.type == MAP)
+			free_textures(objs[i]->material.pattern.uv_pattern.textures);
 		free(objs[i]);
 		objs[i] = NULL;
 	}

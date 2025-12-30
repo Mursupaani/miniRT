@@ -12,14 +12,13 @@
 
 #include "minirt.h"
 
-t_uv_ptrn	uv_checkers(double w, double h, t_color a, t_color b)
+t_pattern	uv_checkers(double w, double h, t_color a, t_color b)
 {
-	t_uv_ptrn	ptrn;
+	t_pattern		ptrn;
 
-	ptrn.width = w;
-	ptrn.height = h;
-	ptrn.a = a;
-	ptrn.b = b;
-	ptrn.type = UV_CHECKERS;
+	ptrn = create_pattern(MAP, a, b);
+	ptrn.uv_pattern.type = UV_CHECKERS;
+	ptrn.uv_pattern.width = w;
+	ptrn.uv_pattern.height = h;
 	return (ptrn);
 }
