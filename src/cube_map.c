@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <float.h>
 
 t_uv_align	uv_align_check(t_color main, t_color ul, t_color ur, t_color bl, t_color br)
 {
@@ -64,21 +63,3 @@ t_pattern	uv_align_cube_pattern(void)
 	cube_pattern.uv_pattern.align_cube_sides[DOWN] = uv_align_check(purple, brown, green, blue, white);
 	return (cube_pattern);
 }
-//
-// t_pattern	cube_map(t_cube_align cube_align)
-// {
-// 	t_uv_ptrn uv;
-//
-// 	uv.a = color(DBL_MIN, DBL_MIN, DBL_MIN);
-// 	uv.b = color(DBL_MIN, DBL_MIN, DBL_MIN);
-// 	uv.width = 0;
-// 	uv.height = 0;
-// 	uv.type = UV_ALIGN_CUBE;
-// 	uv.sides[UP] = cube_align.up;
-// 	uv.sides[DOWN] = cube_align.down;
-// 	uv.sides[LEFT] = cube_align.left;
-// 	uv.sides[RIGHT] = cube_align.right;
-// 	uv.sides[FRONT] = cube_align.front;
-// 	uv.sides[BACK] = cube_align.back;
-// 	return (uv);
-// }

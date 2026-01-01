@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/30 18:53:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/01 17:16:10 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,12 @@ typedef struct	s_cube_align
 	t_uv_align	back;
 }	t_cube_align;
 
+typedef struct s_face_layout
+{
+	int	col;
+	int	row;
+}	t_face_layout;
+
 typedef struct s_light
 {
 	t_color			intensity;
@@ -258,6 +264,22 @@ typedef struct s_material
 	t_pattern		pattern;
 }	t_material;
 
+typedef struct s_bump_map
+{
+	bool		has_bump_map;
+	float		step_u;
+	float		step_v;
+	float		slope_u;
+	float		slope_v;
+	t_color		sample_hit;
+	t_color		sample_step_u;
+	t_color		sample_step_v;
+	t_vector	tangent;
+	t_vector	bitangent;
+	t_uv_map	(*uv_map)(t_point);
+	mlx_texture_t *bump_map;
+}	t_bump_map;
+
 typedef struct s_object
 {
 	t_object_type	type;
@@ -272,12 +294,14 @@ typedef struct s_object
 	double			minimum;
 	double			maximum;
 	bool			closed;
+	// Bump mapping
+	t_bump_map		bump_map;
 }	t_object;
 
 typedef struct s_camera
 {
-	// t_point	view_point;
 	// t_vector	orientation;
+	t_point	view_point;
 	double		fov;
 	int			hsize;
 	int			vsize;
@@ -429,6 +453,7 @@ void		test_cubes();
 void		test_cylinders();
 void		test_cones();
 void		test_uv_patterns(void);
+void	test_bump_maps(void);
 
 // Old functions / unused?:
 t_color			lighting_old(t_object *obj, t_light *light, t_point point, t_vector eyev);
@@ -619,6 +644,8 @@ t_uv_map	spherical_map(t_point p);
 t_uv_map	planar_map(t_point p);
 t_uv_map	cylindrical_map(t_point p);
 t_uv_map	cubic_map(t_point p);
+t_uv_map	cubic_atlas_map(t_point p);
+int			calculate_pixel_offset(int x, int y, mlx_texture_t *texture);
 
 t_color		handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
 t_color	uv_pattern_at(t_pattern ptrn, t_uv_map uv);
@@ -676,6 +703,10 @@ t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 // Cylinder
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
+
+// Bump map
+void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point local_point);
+
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

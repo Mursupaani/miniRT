@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 12:47:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/28 15:56:00 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/01 16:06:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ t_color	pixel_at(mlx_texture_t *texture, int x, int y)
 	int			offset;
 	t_color255	c255;
 
-	offset = y * texture->bytes_per_pixel * texture->width + x * texture->bytes_per_pixel;
+	offset = calculate_pixel_offset(x, y, texture);
 	c255.r = (uint32_t)(texture->pixels[offset]);
-	c255.g =(uint32_t)(texture->pixels[offset + 1]);
-	c255.b =(uint32_t)(texture->pixels[offset + 2]);
+	c255.g = (uint32_t)(texture->pixels[offset + 1]);
+	c255.b = (uint32_t)(texture->pixels[offset + 2]);
 	return (color_from_color255(c255));
 }

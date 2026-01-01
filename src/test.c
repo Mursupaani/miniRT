@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 20:55:12 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/25 13:30:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/01 17:16:23 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	run_tests()
 	// test_cubes();
 	// test_cylinders();
 	// test_cones();
-	test_uv_patterns();
+	// test_uv_patterns();
+	test_bump_maps();
 }
