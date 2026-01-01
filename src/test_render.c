@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:04:16 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/30 19:06:23 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/01 17:48:35 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,37 @@ void	build_test_render(t_app *app)
 	mlx_texture_t *pattern = mlx_load_png("./Textures/pattern.png");
 	mlx_texture_t *space = mlx_load_png("./Textures/space.png");
 	mlx_texture_t *honey = mlx_load_png("./Textures/honey.png");
+	mlx_texture_t *bump	 = mlx_load_png("./Textures/bump.png");
+	mlx_texture_t *cube	 = mlx_load_png("./Textures/minecraft.png");
+	mlx_texture_t *cube_bump = mlx_load_png("./Textures/minecraft_bump.png");
+	// mlx_texture_t *cube	 = mlx_load_png("./Textures/stone.png");
+	// mlx_texture_t *cube_bump = mlx_load_png("./Textures/stone_bump.png");
+	// mlx_texture_t *cube	 = mlx_load_png("./Textures/cube2.png");
+	// mlx_texture_t *cube_bump = mlx_load_png("./Textures/cube2_bump.png");
 
 	t_object *cubenew = cube_new();
+	ft_bzero(&cubenew->bump_map, sizeof(t_bump_map));
+	cubenew->bump_map.has_bump_map = true;
+	cubenew->bump_map.bump_map = cube_bump;
+	cubenew->bump_map.uv_map = cubic_atlas_map;
 	// cubenew->material.transparency = 0.5;
 	// cubenew->material.refractive_index = 1.5;
 	// cubenew->material.pattern = uv_align_cube_pattern();
-	mlx_texture_t *cube[6];
-	cube[UP] = mlx_load_png("./Textures/Storforsen4/posy.png");
-	cube[DOWN] = mlx_load_png("./Textures/Storforsen4/negy.png");
-	cube[LEFT] = mlx_load_png("./Textures/Storforsen4/negx.png");
-	cube[RIGHT] = mlx_load_png("./Textures/Storforsen4/posx.png");
-	cube[FRONT] = mlx_load_png("./Textures/Storforsen4/posz.png");
-	cube[BACK] = mlx_load_png("./Textures/Storforsen4/negz.png");
-	cubenew->material.pattern = uv_image_cube(cube);
-	cubenew->material.pattern = texture_map(cubenew->material.pattern, cubic_map);
-	add_transform(cubenew, rotation_y(-M_PI / 4));
-	add_transform(cubenew, rotation_x(M_PI / 4));
+	// mlx_texture_t *cube[6];
+	// cube[UP] = mlx_load_png("./Textures/Storforsen4/posy.png");
+	// cube[DOWN] = mlx_load_png("./Textures/Storforsen4/negy.png");
+	// cube[LEFT] = mlx_load_png("./Textures/Storforsen4/negx.png");
+	// cube[RIGHT] = mlx_load_png("./Textures/Storforsen4/posx.png");
+	// cube[FRONT] = mlx_load_png("./Textures/Storforsen4/posz.png");
+	// cube[BACK] = mlx_load_png("./Textures/Storforsen4/negz.png");
+	// cubenew->material.pattern = uv_image_cube(cube);
+	cubenew->material.pattern = uv_image(cube);
+	cubenew->material.pattern = texture_map(cubenew->material.pattern, cubic_atlas_map);
+	cubenew->material.reflective = 0.2;
+	// cubenew->material.transparency = 1;
+	// cubenew->material.refractive_index = 1.5;
+	add_transform(cubenew, rotation_x(-M_PI / 2));
+	add_transform(cubenew, rotation_y(-M_PI / 5));
 	add_transform(cubenew, translation_matrix4(3, 2, 0));
 	add_object_to_world(cubenew, w);
 
@@ -51,9 +66,26 @@ void	build_test_render(t_app *app)
 	// sphere->material.refractive_index = 1.5;
 	sphere->material.pattern = uv_image(earth);
 	sphere->material.pattern = texture_map(sphere->material.pattern, spherical_map);
+	ft_bzero(&sphere->bump_map, sizeof(t_bump_map));
+	sphere->bump_map.has_bump_map = true;
+	sphere->material.transparency = 0.8;
+	sphere->material.refractive_index = 1.5;
+	sphere->bump_map.bump_map = bump;
+	sphere->bump_map.uv_map = spherical_map;
 	add_transform(sphere, rotation_y(1.9));
 	add_transform(sphere, translation_matrix4(-3, 2, 0));
 	add_object_to_world(sphere, w);
+
+	// t_object *sphere2 = sphere_new();
+	// // sphere->material.transparency = 0.5;
+	// // sphere->material.refractive_index = 1.5;
+	// ft_bzero(&sphere2->bump_map, sizeof(t_bump_map));
+	// sphere2->bump_map.has_bump_map = true;
+	// sphere2->bump_map.bump_map = bump;
+	// sphere2->bump_map.uv_map = spherical_map;
+	// add_transform(sphere2, rotation_y(1.9));
+	// add_transform(sphere2, translation_matrix4(-3, 2, -1));
+	// add_object_to_world(sphere2, w);
 
 	t_object *floor = plane_new();
 	floor->material.color = color(1, 1, 1);

@@ -76,7 +76,8 @@ t_color	handle_uv_pattern(t_pattern ptrn, t_point ptrn_point)
 	uv = ptrn.uv_pattern.uv_map(ptrn_point);
 	if (ptrn.uv_pattern.type == UV_TEXTURE
 		|| ptrn.uv_pattern.type == UV_CUBE_TEXTURE)
-		return (uv_texture_at(ptrn.uv_pattern.textures[uv.face], uv.u, uv.v));
+		// return (uv_texture_at(ptrn.uv_pattern.textures[uv.face], uv.u, uv.v));
+		return (uv_texture_at(ptrn.uv_pattern.textures[UP], uv.u, uv.v));
 	else
 		return (uv_pattern_at(ptrn, uv));
 }

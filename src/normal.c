@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:41:48 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:37:51 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/01 17:21:30 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ t_vector	normal_at(t_object *obj, t_point world_point)
 	local_point = matrix4_and_tuple_multiply(
 			obj->inverse_transform, world_point);
 	local_normal = local_normal_at(obj, local_point);
+	if (obj->bump_map.has_bump_map)
+		apply_bump_map_on_normal(obj, &local_normal, local_point);
 	world_normal = matrix4_and_tuple_multiply(
 			obj->inverse_transpose, local_normal);
 	world_normal.w = 0;
