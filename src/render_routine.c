@@ -76,7 +76,7 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 		data->j = -1;
 		while (data->x < data->app->img->width)
 		{
-			if (data->app->restart_render)
+			if (data->app->go_back)
 			{
 				data->ready = false;
 				return ;
@@ -118,7 +118,7 @@ void	render_full_resolution(t_thread_data *data)
 		x = 0;
 		while (x < data->app->img->width && *data->keep_rendering)
 		{
-			if (data->app->restart_render)
+			if (data->app->go_back)
 			{
 				data->ready = false;
 				return ;
@@ -138,9 +138,6 @@ void	*render_routine(void *arg)
 
  	data = (t_thread_data *)arg;
 
-	// FIXME: Add pixelate flag logic to hooks
-	data->app->pixelate = false;
-
 	while (*data->keep_rendering)
 	{
 		if (data->app->pixelate)
@@ -149,8 +146,9 @@ void	*render_routine(void *arg)
 			render_full_resolution(data);
 		if (data->ready == false)
 			data->ready = true;
-		while (*data->keep_rendering && data->app->restart_render == true)
+		while (*data->keep_rendering && data->app->restart_render == false)
 			usleep(50);
+		printf("restart\n");
 	}
 	return (NULL);
 }

@@ -13,6 +13,7 @@
 #include "MLX42/MLX42.h"
 #include "libft.h"
 #include "minirt.h"
+#include <stdbool.h>
 
 static void	close_window_mouse(void *param)
 {
@@ -35,9 +36,9 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 	}
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 	{
-		app->pixelate = !app->pixelate;
-		printf("%d\n", app->pixelate);
-		app->restart_render = true;
+		// app->pixelate = !app->pixelate;
+		app->restart_render = false;
+		app->go_back = true;
 		int i = -1;
 		while (++i < THREADS)
 		{
@@ -47,7 +48,9 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 				continue; ;
 			}
 		}
-		app->restart_render = false;
+		app->go_back = false;
+		app->restart_render = true;
+		printf("command restart render\n");
 	}
 }
 

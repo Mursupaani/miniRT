@@ -340,6 +340,7 @@ typedef struct s_app
 	atomic_int		keep_rendering;
 	atomic_int		pixelate;
 	atomic_int		restart_render;
+	atomic_int		go_back;
 	bool			parsing_success;
 }	t_app;
 
