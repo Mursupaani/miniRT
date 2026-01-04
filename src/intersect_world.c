@@ -59,6 +59,7 @@ t_intersections *intersect_world(t_world *w, t_ray r)
 
 	if (!w)
 		return (NULL);
+	// change to calloc?
 	xs = malloc(sizeof(t_intersections));
 	if (!xs)
 		return (NULL);

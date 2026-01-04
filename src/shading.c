@@ -58,7 +58,7 @@ t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 	return (color_sum(color_sum(surface, reflected), refracted));
 }
 
-t_color	color_at(t_world *w, t_ray r, int reflections)
+t_color	color_at(t_world *w, t_ray r, int recursions)
 {
 	t_intersections	*xs;
 	t_intersection	x;
@@ -73,5 +73,5 @@ t_color	color_at(t_world *w, t_ray r, int reflections)
 	}
 	comps = prepare_computations(x, r, xs);
 	free_intersections(&xs);
-	return (shade_hit(w, comps, reflections));
+	return (shade_hit(w, comps, recursions));
 }

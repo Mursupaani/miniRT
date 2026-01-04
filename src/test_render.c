@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:04:16 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/01 17:48:35 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/02 15:44:06 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	build_test_render(t_app *app)
 	w = world();
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
-	t_matrix4 c_trans = view_transform(point(0, 3, -10), point(0, 3, 0), vector(0, 1, 0));
+	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0));
 	set_camera_transform(c, c_trans);
 
 	mlx_texture_t *earth = mlx_load_png("./Textures/earthmap1k.png");
 	mlx_texture_t *pattern = mlx_load_png("./Textures/pattern.png");
-	mlx_texture_t *space = mlx_load_png("./Textures/space.png");
-	mlx_texture_t *honey = mlx_load_png("./Textures/honey.png");
+	// mlx_texture_t *space = mlx_load_png("./Textures/space.png");
+	mlx_texture_t *space_sphere = mlx_load_png("./Textures/space_sphere.png");
+	// mlx_texture_t *honey = mlx_load_png("./Textures/honey.png");
 	mlx_texture_t *bump	 = mlx_load_png("./Textures/bump.png");
 	mlx_texture_t *cube	 = mlx_load_png("./Textures/minecraft.png");
 	mlx_texture_t *cube_bump = mlx_load_png("./Textures/minecraft_bump.png");
@@ -34,6 +35,7 @@ void	build_test_render(t_app *app)
 	// mlx_texture_t *cube_bump = mlx_load_png("./Textures/stone_bump.png");
 	// mlx_texture_t *cube	 = mlx_load_png("./Textures/cube2.png");
 	// mlx_texture_t *cube_bump = mlx_load_png("./Textures/cube2_bump.png");
+
 
 	t_object *cubenew = cube_new();
 	ft_bzero(&cubenew->bump_map, sizeof(t_bump_map));
@@ -99,87 +101,88 @@ void	build_test_render(t_app *app)
 	add_object_to_world(floor, w);
 
 	t_object *sky_sphere = sphere_new();
-	sky_sphere->material.pattern = texture_map(uv_image(space), spherical_map);
+	sky_sphere->material.pattern = texture_map(uv_image(space_sphere), spherical_map);
 	sky_sphere->material.ambient = 1;
 	sky_sphere->material.diffuse = 0;
 	sky_sphere->material.specular = 0;
-	set_transform(sky_sphere, scaling_matrix4(1000, 1000, 1000));
+	add_transform(sky_sphere, rotation_y(-M_PI / 3));
+	add_transform(sky_sphere, scaling_matrix4(5000, 5000, 5000));
 	add_transform(sky_sphere, c->transform);
 	add_object_to_world(sky_sphere, w);
 
-	t_object *cylinder = cylinder_new();
-	cylinder->material.pattern = texture_map(uv_image(honey), cylindrical_map);
-	set_transform(cylinder, scaling_matrix4(1, 3.1415, 1));
-	add_transform(cylinder, translation_matrix4(0, 0, 8));
-	add_object_to_world(cylinder, w);
+	// t_object *cylinder = cylinder_new();
+	// cylinder->material.pattern = texture_map(uv_image(honey), cylindrical_map);
+	// set_transform(cylinder, scaling_matrix4(1, 3.1415, 1));
+	// add_transform(cylinder, translation_matrix4(0, 0, 8));
+	// add_object_to_world(cylinder, w);
+	//
+	// t_object *cone = cone_new();
+	// cone->material.pattern = texture_map(uv_image(honey), cylindrical_map);
+	// set_transform(cone, scaling_matrix4(1, 3.1415, 1));
+	// add_transform(cone, translation_matrix4(0, 0, 8));
+	// add_object_to_world(cone, w);
 
-	t_object *cone = cone_new();
-	cone->material.pattern = texture_map(uv_image(honey), cylindrical_map);
-	set_transform(cone, scaling_matrix4(1, 3.1415, 1));
-	add_transform(cone, translation_matrix4(0, 0, 8));
-	add_object_to_world(cone, w);
+	t_object *base = cone_new();
+	base->minimum = -1;
+	base->maximum = 0;
+	base->material.color = color(0.1, 0.1, 0.1);
+	base->material.transparency = 0.9;
+	base->material.reflective = 0.9;
+	base->material.refractive_index = 1.5;
+	add_transform(base, scaling_matrix4(1, 0.2, 1));
+	add_transform(base, translation_matrix4(0, 0.2, 0));
+	add_object_to_world(base, w);
 
-// 	t_object *base = cone_new();
-// 	base->minimum = -1;
-// 	base->maximum = 0;
-// 	base->material.color = color(0.1, 0.1, 0.1);
-// 	base->material.transparency = 0.9;
-// 	base->material.reflective = 0.9;
-// 	base->material.refractive_index = 1.5;
-// 	add_transform(base, scaling_matrix4(1, 0.2, 1));
-// 	add_transform(base, translation_matrix4(0, 0.2, 0));
-// 	add_object_to_world(base, w);
-//
-// 	t_object *stem = cylinder_new();
-// 	stem->minimum = 0.2;
-// 	stem->maximum = 1.35;
-// 	stem->material.color = color(0.1, 0.1, 0.1);
-// 	stem->material.transparency = 0.9;
-// 	stem->material.reflective = 0.9;
-// 	stem->material.refractive_index = 1.5;
-// 	add_transform(stem, scaling_matrix4(0.1, 1, 0.1));
-// 	add_object_to_world(stem, w);
-//
-// 	t_object *glass = cone_new();
-// 	glass->minimum = 2;
-// 	glass->maximum = 3;
-// 	glass->closed = true;
-// 	glass->material.color = color(0.1, 0.1, 0.1);
-// 	glass->material.transparency = 0.9;
-// 	glass->material.reflective = 0.9;
-// 	glass->material.refractive_index = 1.5;
-// 	add_transform(glass, scaling_matrix4(0.5, 0.5, 0.5));
-// 	add_transform(glass, translation_matrix4(0, 1.2, 0));
-// 	add_object_to_world(glass, w);
-//
-// 	t_object *liquid = cone_new();
-// 	liquid->minimum = 0.2;
-// 	liquid->maximum = 2;
-// 	liquid->closed = true;
-// 	liquid->material.color = color(0.1, 0.1, 0.1);
-// 	liquid->material.transparency = 1;
-// 	liquid->material.reflective = 0.9;
-// 	liquid->material.refractive_index = 1.33;
-// 	add_transform(liquid, scaling_matrix4(0.5, 0.5, 0.5));
-// 	add_transform(liquid, translation_matrix4(0, 1.2, 0));
-// 	add_object_to_world(liquid, w);
-//
-// 	t_object *olive = sphere_new();
-// 	olive->material.color = color(0.1, 0.6, 0.2);
-// 	olive->material.reflective = 0.3;
-// 	add_transform(olive, scaling_matrix4(0.2, 0.3, 0.2));
-// 	add_transform(olive, rotation_z(M_PI / 3));
-// 	add_transform(olive, translation_matrix4(0, 2.1, 0));
-// 	add_object_to_world(olive, w);
-//
-// 	t_object *stick = cylinder_new();
-// 	stick->minimum = 0;
-// 	stick->maximum = 2;
-// 	stick->material.color = color(0.6, 0.5, 0.4);
-// 	add_transform(stick, scaling_matrix4(0.01, 1, 0.01));
-// 	add_transform(stick, rotation_z(-M_PI / 3));
-// 	add_transform(stick, translation_matrix4(0, 2.1, 0));
-// 	add_object_to_world(stick, w);
+	t_object *stem = cylinder_new();
+	stem->minimum = 0.2;
+	stem->maximum = 1.35;
+	stem->material.color = color(0.1, 0.1, 0.1);
+	stem->material.transparency = 0.9;
+	stem->material.reflective = 0.9;
+	stem->material.refractive_index = 1.5;
+	add_transform(stem, scaling_matrix4(0.1, 1, 0.1));
+	add_object_to_world(stem, w);
+
+	t_object *glass = cone_new();
+	glass->minimum = 2;
+	glass->maximum = 3;
+	glass->closed = false;
+	glass->material.color = color(0.1, 0.1, 0.1);
+	glass->material.transparency = 0.9;
+	glass->material.reflective = 0.9;
+	glass->material.refractive_index = 1.5;
+	add_transform(glass, scaling_matrix4(0.5, 0.5, 0.5));
+	add_transform(glass, translation_matrix4(0, 1.2, 0));
+	add_object_to_world(glass, w);
+
+	t_object *liquid = cone_new();
+	liquid->minimum = 0.2;
+	liquid->maximum = 2;
+	liquid->closed = true;
+	liquid->material.color = color(0.1, 0.1, 0.1);
+	liquid->material.transparency = 1;
+	liquid->material.reflective = 0.9;
+	liquid->material.refractive_index = 1.33;
+	add_transform(liquid, scaling_matrix4(0.5, 0.5, 0.5));
+	add_transform(liquid, translation_matrix4(0, 1.2, 0));
+	add_object_to_world(liquid, w);
+
+	t_object *olive = sphere_new();
+	olive->material.color = color(0.1, 0.6, 0.2);
+	olive->material.reflective = 0.3;
+	add_transform(olive, scaling_matrix4(0.2, 0.3, 0.2));
+	add_transform(olive, rotation_z(M_PI / 3));
+	add_transform(olive, translation_matrix4(0, 2.1, 0));
+	add_object_to_world(olive, w);
+
+	t_object *stick = cylinder_new();
+	stick->minimum = 0;
+	stick->maximum = 2;
+	stick->material.color = color(0.6, 0.5, 0.4);
+	add_transform(stick, scaling_matrix4(0.01, 1, 0.01));
+	add_transform(stick, rotation_z(-M_PI / 3));
+	add_transform(stick, translation_matrix4(0, 2.1, 0));
+	add_object_to_world(stick, w);
 //
 // 	t_object *cube = cube_new();
 // 	cube->material.color = color(0.5, 0.5, 0.5);

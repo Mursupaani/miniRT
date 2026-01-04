@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/01 17:16:10 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/02 16:33:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@
 
 # ifndef RECURSIONS
 #  define RECURSIONS 7
+# endif
+
+# ifndef PIXELATE_SCALING
+#  define PIXELATE_SCALING 128
 # endif
 
 typedef enum s_exit_value
@@ -301,7 +305,7 @@ typedef struct s_object
 typedef struct s_camera
 {
 	// t_vector	orientation;
-	t_point	view_point;
+	t_point		view_point;
 	double		fov;
 	int			hsize;
 	int			vsize;
@@ -310,6 +314,7 @@ typedef struct s_camera
 	double		half_width;
 	double		half_height;
 	double		pixel_size;
+	double		aspect_ratio;
 }	t_camera;
 
 typedef struct s_world
@@ -331,6 +336,8 @@ typedef struct s_app
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;
+	atomic_int		pixelate;
+	atomic_int		restart_render;
 	bool			parsing_success;
 }	t_app;
 
@@ -353,7 +360,10 @@ typedef struct s_thread_data
 	unsigned int	end_row;
 	t_app			*app;
 	pthread_t		thread_handle;
+	unsigned int	pixelate_x_scale;
+	unsigned int	pixelate_y_scale;
 	atomic_int		*keep_rendering;
+	atomic_int		ready;
 }	t_thread_data;
 
 /**
@@ -601,8 +611,8 @@ t_color		color_sum(t_color color1, t_color color2);
 t_color		color_subtract(t_color color1, t_color color2);
 t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
-int			color_hex_from_color255(t_color255 color255);
-int			color_hex_from_color(t_color color);
+uint		color_hex_from_color255(t_color255 color255);
+uint		color_hex_from_color(t_color color);
 t_color		shade_hit(t_world *w, t_computations comps, int recursions);
 t_color		color_at(t_world *w, t_ray r, int recursions);
 bool		is_shadowed(t_world *w, t_point p);
@@ -707,6 +717,8 @@ t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
 // Bump map
 void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point local_point);
 
+// Interact world
+t_object	*select_object(t_app *app);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

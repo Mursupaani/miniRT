@@ -15,19 +15,18 @@
 static	double pixel_size(t_camera *camera)
 {
 	double	half_view;
-	double	aspect_ratio;
 
 	half_view = tan(camera->fov / 2);
-	aspect_ratio = (double)camera->hsize / camera->vsize;
-	if (aspect_ratio >= 1)
+	camera->aspect_ratio = (double)camera->hsize / camera->vsize;
+	if (camera->aspect_ratio >= 1)
 	{
 		camera->half_width = half_view;
-		camera->half_height = camera->half_width / aspect_ratio;
+		camera->half_height = camera->half_width / camera->aspect_ratio;
 	}
 	else
 	{
 		camera->half_height = half_view;
-		camera->half_width = camera->half_height / aspect_ratio;
+		camera->half_width = camera->half_height / camera->aspect_ratio;
 	}
 	return (camera->half_width * 2) / camera->hsize;
 }
