@@ -57,8 +57,8 @@
 #  define RECURSIONS 7
 # endif
 
-# ifndef PIXELATE_SCALING
-#  define PIXELATE_SCALING 128
+# ifndef PIXELATE_SCALE
+#  define PIXELATE_SCALE 32
 # endif
 
 typedef enum s_exit_value
@@ -329,6 +329,8 @@ typedef struct s_world
 
 typedef struct s_app
 {
+	// FIXME: Use bitmask to track app status?
+	atomic_int		bitmask;
 	int				monitor_width;
 	int				monitor_height;
 	mlx_t			*mlx;
@@ -353,18 +355,6 @@ typedef struct s_app
  *
  * @see launch_render()
  */
-typedef struct s_thread_data
-{
-	int				id;
-	unsigned int	start_row;
-	unsigned int	end_row;
-	t_app			*app;
-	pthread_t		thread_handle;
-	unsigned int	pixelate_x_scale;
-	unsigned int	pixelate_y_scale;
-	atomic_int		*keep_rendering;
-	atomic_int		ready;
-}	t_thread_data;
 
 /**
  * @struct t_ray
@@ -379,6 +369,26 @@ typedef struct	s_ray
 	t_point 	origin;
 	t_vector	direction;
 }	t_ray;
+
+typedef struct s_thread_data
+{
+	int				id;
+	unsigned int	start_row;
+	unsigned int	end_row;
+	t_app			*app;
+	pthread_t		thread_handle;
+	unsigned int	pixelate_scale;
+	atomic_int		*keep_rendering;
+	atomic_int		ready;
+	// Rendering
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	y_offset;
+	t_ray			ray;
+	t_color			color;
+}	t_thread_data;
 
 /**
  * @struct t_intersection
@@ -718,7 +728,7 @@ t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
 void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point local_point);
 
 // Interact world
-t_object	*select_object(t_app *app);
+t_object	*select_object_from_screen(t_app *app);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

@@ -30,20 +30,14 @@ static int	init_threads(t_app *app)
 			app->threads[i].end_row = app->monitor_height;
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
-		// FIXME: Move calculation elsewhere?
-		app->threads[i].pixelate_y_scale = 32;
-		app->threads[i].pixelate_x_scale = 32;
+		app->threads[i].pixelate_scale = PIXELATE_SCALE;
 		app->threads[i].ready = false;
-		// app->threads[i].pixelate_y_scale = app->img->height / (app->img->height / 2);
-		// app->threads[i].pixelate_x_scale = 
-		// 	(app->threads[i].pixelate_y_scale) / (app->scene->camera->aspect_ratio);
-		// app->threads[i].ready = false;
 		i++;
 	}
 	return (0);
 }
 
-int	pixelate_render(unsigned int *x, unsigned int *y, t_thread_data *data, t_color c)
+int	write_pixelated_section(unsigned int *x, unsigned int *y, t_thread_data *data, t_color c)
 {
 	unsigned int i;
 	unsigned int j;
@@ -53,10 +47,10 @@ int	pixelate_render(unsigned int *x, unsigned int *y, t_thread_data *data, t_col
 	local_x = *x;
 	local_y = *y;
 	i = -1;
-	while (++i < data->pixelate_y_scale && local_y < data->end_row)
+	while (++i < data->pixelate_scale && local_y < data->end_row)
 	{
 		j = -1;
-		while (++j < data->pixelate_x_scale && local_x < data->app->img->width)
+		while (++j < data->pixelate_scale && local_x < data->app->img->width)
 			mlx_put_pixel(data->app->img, local_x++, local_y, color_hex_from_color(c));
 		local_x -= j;
 		local_y++;
@@ -65,37 +59,49 @@ int	pixelate_render(unsigned int *x, unsigned int *y, t_thread_data *data, t_col
 	return (i);
 }
 
+void	loop_image_by_pixelation_scale(t_thread_data *data)
+{
+	// unsigned int	x;
+	// unsigned int	y;
+	// unsigned int	y_offset;
+	// t_ray			ray;
+	// t_color			color;
+
+	data->i = -1;
+	data->y = data->start_row;
+	while (data->y < data->end_row && *data->keep_rendering)
+	{
+		++data->i;
+		data->x = 0;
+		data->j = -1;
+		while (data->x < data->app->img->width)
+		{
+			if (data->app->restart_render)
+			{
+				data->ready = false;
+				return ;
+			}
+			++data->j;
+			if (data->i % 2 == 0 && data->j % 2 == 0 && data->pixelate_scale != PIXELATE_SCALE)
+			{
+				data->x += data->pixelate_scale;
+				continue;
+			}
+			data->ray = ray_for_pixel(data->app->scene->camera, data->x, data->y);
+			data->color = color_at(data->app->scene, data->ray, RECURSIONS);
+			data->y_offset = write_pixelated_section(&data->x, &data->y, data, data->color);
+		}
+		data->y += data->y_offset;
+	}
+}
+
 void	render_pixelated(t_thread_data *data)
 {
-	unsigned int	x;
-	unsigned int	y;
-	unsigned int	y_offset;
-	t_ray			ray;
-	t_color			color;
-	
-	y = data->start_row;
-	while (data->pixelate_y_scale > 0)
+	data->pixelate_scale = PIXELATE_SCALE;
+	while (data->pixelate_scale > 0 && *data->keep_rendering)
 	{
-		y = data->start_row;
-		while (y < data->end_row && *data->keep_rendering)
-		{
-			x = 0;
-			while (x < data->app->img->width)
-			{
-				ray = ray_for_pixel(data->app->scene->camera, x, y);
-				color = color_at(data->app->scene, ray, RECURSIONS);
-				y_offset = pixelate_render(&x, &y, data, color);
-				if (data->app->restart_render)
-				{
-					data->ready = false;
-					y -= y_offset;
-					break;
-				}
-			}
-			y += y_offset;
-		}
-		data->pixelate_y_scale /= 2;
-		data->pixelate_x_scale /= 2;
+		loop_image_by_pixelation_scale(data);
+		data->pixelate_scale /= 2;
 	}
 }
 
@@ -112,18 +118,15 @@ void	render_full_resolution(t_thread_data *data)
 		x = 0;
 		while (x < data->app->img->width && *data->keep_rendering)
 		{
+			if (data->app->restart_render)
+			{
+				data->ready = false;
+				return ;
+			}
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
 			color = color_at(data->app->scene, ray, RECURSIONS);
 			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;
-			if (data->app->restart_render)
-			{
-				break;
-			}
-		}
-		if (data->app->restart_render)
-		{
-			
 		}
 		y++;
 	}
@@ -136,12 +139,19 @@ void	*render_routine(void *arg)
  	data = (t_thread_data *)arg;
 
 	// FIXME: Add pixelate flag logic to hooks
-	data->app->pixelate = true;
+	data->app->pixelate = false;
 
-	if (data->app->pixelate)
-		render_pixelated(data);
-	else
-		render_full_resolution(data);
+	while (*data->keep_rendering)
+	{
+		if (data->app->pixelate)
+			render_pixelated(data);
+		else
+			render_full_resolution(data);
+		if (data->ready == false)
+			data->ready = true;
+		while (*data->keep_rendering && data->app->restart_render == true)
+			usleep(50);
+	}
 	return (NULL);
 }
 

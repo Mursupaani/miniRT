@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
+#include "libft.h"
 #include "minirt.h"
 
 static void	close_window_mouse(void *param)
@@ -31,20 +33,18 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 		app->keep_rendering = false;
 		exit_and_free_memory(EXIT_SUCCESS, app);
 	}
-	if (keydata.key == MLX_KEY_SPACE)
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 	{
 		app->pixelate = !app->pixelate;
+		printf("%d\n", app->pixelate);
 		app->restart_render = true;
-		while (true)
+		int i = -1;
+		while (++i < THREADS)
 		{
-			int i = -1;
-			while (++i < THREADS)
+			if (app->threads[i].ready == false)
 			{
-				if (app->threads[i].ready == false)
-				{
-					i = -1;
-					break ;
-				}
+				i = -1;
+				continue; ;
 			}
 		}
 		app->restart_render = false;
@@ -57,13 +57,11 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 	t_object *selected;
 
 	app = (t_app *)param;
-	if (mouse_key == MLX_MOUSE_BUTTON_LEFT)
+	if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
-		selected = select_object(app);
+		selected = select_object_from_screen(app);
 		if (!selected)
 			return ;
-		add_transform(selected, translation_matrix4(1, 0, 0));
-		launch_render(app);
 	}
 	(void)action;
 	(void)modifier_key;

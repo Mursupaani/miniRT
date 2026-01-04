@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_object	*select_object(t_app *app)
+t_object	*select_object_from_screen(t_app *app)
 {
 	t_intersections	*xs;
 	int				x;
@@ -24,5 +24,5 @@ t_object	*select_object(t_app *app)
 	xs = intersect_world(app->scene, r);
 	if (!xs || xs->count == 0)
 		return (NULL);
-	return (xs->arr[0].object);
+	return (hit(xs).object);
 }

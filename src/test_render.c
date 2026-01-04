@@ -60,6 +60,7 @@ void	build_test_render(t_app *app)
 	// cubenew->material.refractive_index = 1.5;
 	add_transform(cubenew, rotation_x(-M_PI / 2));
 	add_transform(cubenew, rotation_y(-M_PI / 5));
+	add_transform(cubenew, rotation_z(M_PI));
 	add_transform(cubenew, translation_matrix4(3, 2, 0));
 	add_object_to_world(cubenew, w);
 
