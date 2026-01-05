@@ -172,6 +172,8 @@ void	print_object(t_object *o)
 		printf(" TYPE:\tCylinder\n\n");
 	else if (o->type == CUBE)
 		printf(" TYPE:\tCube\n\n");
+	else if (o->type == CONE)
+		printf(" TYPE:\tCone\n\n");
 	else
 		printf(" TYPE:\tundefined\n\n");
 	print_material(o->material);

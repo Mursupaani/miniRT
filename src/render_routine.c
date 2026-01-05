@@ -30,36 +30,127 @@ static int	init_threads(t_app *app)
 			app->threads[i].end_row = app->monitor_height;
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
+		app->threads[i].pixelate_scale = PIXELATE_SCALE;
+		app->threads[i].ready = false;
 		i++;
 	}
 	return (0);
 }
 
-void	*render_routine(void *arg)
+int	write_pixelated_section(unsigned int *x, unsigned int *y, t_thread_data *data, t_color c)
 {
-	t_thread_data	*data;
+	unsigned int i;
+	unsigned int j;
+	unsigned int local_x;
+	unsigned int local_y;
+
+	local_x = *x;
+	local_y = *y;
+	i = -1;
+	while (++i < data->pixelate_scale && local_y < data->end_row)
+	{
+		j = -1;
+		while (++j < data->pixelate_scale && local_x < data->app->img->width)
+			mlx_put_pixel(data->app->img, local_x++, local_y, color_hex_from_color(c));
+		local_x -= j;
+		local_y++;
+	}
+	*x += j;
+	return (i);
+}
+
+void	loop_image_by_pixelation_scale(t_thread_data *data)
+{
+	// unsigned int	x;
+	// unsigned int	y;
+	// unsigned int	y_offset;
+	// t_ray			ray;
+	// t_color			color;
+
+	data->i = -1;
+	data->y = data->start_row;
+	while (data->y < data->end_row && *data->keep_rendering)
+	{
+		++data->i;
+		data->x = 0;
+		data->j = -1;
+		while (data->x < data->app->img->width)
+		{
+			if (data->app->go_back)
+			{
+				data->ready = false;
+				return ;
+			}
+			++data->j;
+			if (data->i % 2 == 0 && data->j % 2 == 0 && data->pixelate_scale != PIXELATE_SCALE)
+			{
+				data->x += data->pixelate_scale;
+				continue;
+			}
+			data->ray = ray_for_pixel(data->app->scene->camera, data->x, data->y);
+			data->color = color_at(data->app->scene, data->ray, RECURSIONS);
+			data->y_offset = write_pixelated_section(&data->x, &data->y, data, data->color);
+		}
+		data->y += data->y_offset;
+	}
+}
+
+void	render_pixelated(t_thread_data *data)
+{
+	data->pixelate_scale = PIXELATE_SCALE;
+	while (data->pixelate_scale > 0 && *data->keep_rendering)
+	{
+		loop_image_by_pixelation_scale(data);
+		data->pixelate_scale /= 2;
+	}
+}
+
+void	render_full_resolution(t_thread_data *data)
+{
 	unsigned int	x;
 	unsigned int	y;
 	t_ray			ray;
 	t_color			color;
 
- 	data = (t_thread_data *)arg;
- 	y = data->start_row;
- 	while (y < data->end_row && *data->keep_rendering)
+	y = data->start_row;
+	while (y < data->end_row && *data->keep_rendering)
 	{
 		x = 0;
-		while (x < data->app->img->width)
+		while (x < data->app->img->width && *data->keep_rendering)
 		{
+			if (data->app->go_back)
+			{
+				data->ready = false;
+				return ;
+			}
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
 			color = color_at(data->app->scene, ray, RECURSIONS);
-			// FIXME: No need for this?
-			// if (pixel_fits_image(x, y, data->app))
 			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;
 		}
 		y++;
 	}
- 	return (NULL);
+}
+
+void	*render_routine(void *arg)
+{
+	t_thread_data	*data;
+
+ 	data = (t_thread_data *)arg;
+
+	while (*data->keep_rendering)
+	{
+		if (data->app->pixelate)
+			render_pixelated(data);
+		else
+			render_full_resolution(data);
+		if (data->ready == false)
+			data->ready = true;
+		while (*data->keep_rendering && data->app->restart_render == false)
+			usleep(50);
+		printf("restart\n");
+	}
+	return (NULL);
 }
 
 void	launch_render(t_app *app)
