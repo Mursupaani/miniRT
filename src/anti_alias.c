@@ -1,23 +1,17 @@
 #include "minirt.h"
 
-static t_ray	ray_for_pixel_aa(t_camera *c, double px, double py)
+static t_ray	ray_for_pixel_aa(t_camera *camera, double px, double py)
 {
 	double		x;
 	double		y;
-	t_point		pixel;
-	t_point		origin;
-	t_vector	direction;
+	double		world_x;
+	double		world_y;
 
-	x = px * c->pixel_size;
-	y = py * c->pixel_size;
-	x = c->half_width - x;
-	y = c->half_height - y;
-	pixel = matrix4_and_tuple_multiply(
-			c->inverse_transform, point(x, y, -1));
-	origin = matrix4_and_tuple_multiply(
-			c->inverse_transform, point(0, 0, 0));
-	direction = normalize(tuple_subtract(pixel, origin));
-	return (ray(origin, direction));
+	x = px * camera->pixel_size;
+	y = py * camera->pixel_size;
+	world_x = camera->half_width - x;
+	world_y = camera->half_height - y;
+	return (calculate_ray(camera, world_x, world_y));
 }
 
 static t_color	sample_pixel(t_thread_data *data, double px, double py)
@@ -44,8 +38,6 @@ static void	accumulate_samples(t_thread_data *data, t_color *acc)
 	*acc = color_sum(*acc, sample_pixel(data,
 			data->x + sub_px, data->y + sub_py));
 }
-
-
 
 t_color	get_aa_color(t_thread_data *data)
 {

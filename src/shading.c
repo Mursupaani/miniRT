@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:35:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 16:49:56 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 	t_color		reflected;
 	t_color		refracted;
 	t_color		sum;
-	double	reflectance;
+	double		reflectance;
 
 	if (!w)
 		return (t_color){0, 0, 0};

@@ -47,7 +47,7 @@ t_camera	*camera(int hsize, int vsize, double fov)
 	return (camera);
 }
 
-static t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
+t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
 {
 	t_point		pixel;
 	t_point		origin;

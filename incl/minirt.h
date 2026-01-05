@@ -605,6 +605,7 @@ t_ray		ray(t_point origin, t_vector direction);
 t_point		ray_position(t_ray ray, double t);
 t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
 t_vector	reflect(t_vector in, t_vector normal);
+t_ray		calculate_ray(t_camera *c, double world_x, double world_y);
 t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
