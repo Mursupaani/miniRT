@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 15:49:17 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:24:37 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,6 +335,8 @@ typedef struct s_app
 	int				monitor_height;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	mlx_image_t		*temp_img[2];
+	int				temp_img_index;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;

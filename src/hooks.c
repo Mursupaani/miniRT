@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 17:04:12 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:17:09 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 		selected = select_object_from_screen(app);
 		if (!selected)
 			return ;
-		add_transform(selected, translation_matrix4(0.1, 0, 0));
 		restart_render(app);
 	}
 	(void)modifier_key;
