@@ -55,13 +55,13 @@ void	build_test_render(t_app *app)
 	// cubenew->material.pattern = uv_image_cube(cube);
 	cubenew->material.pattern = uv_image(cube);
 	cubenew->material.pattern = texture_map(cubenew->material.pattern, cubic_atlas_map);
-	cubenew->material.reflective = 0.2;
-	// cubenew->material.transparency = 1;
+	cubenew->material.reflective = 0.5;
+	cubenew->material.transparency = 0.5;
 	// cubenew->material.refractive_index = 1.5;
 	add_transform(cubenew, rotation_x(-M_PI / 2));
 	add_transform(cubenew, rotation_y(-M_PI / 5));
 	add_transform(cubenew, rotation_z(M_PI));
-	add_transform(cubenew, translation_matrix4(3, 2, 0));
+	add_transform(cubenew, translation_matrix4(3, 2, 1));
 	add_object_to_world(cubenew, w);
 
 	t_object *sphere = sphere_new();

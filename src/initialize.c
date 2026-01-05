@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:41:10 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:52:07 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_app	*initialize_app(void)
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
 
 	// NOTE: Uncomment two lines below for testing with different resolution.
-	app->monitor_width = 640;
-	app->monitor_height = 640;
+	// app->monitor_width = 640;
+	// app->monitor_height = 640;
 
 	// NOTE: Uncomment two lines below for testing with Valgrind.
 	// app->monitor_width = THREADS;
@@ -39,6 +39,6 @@ t_app	*initialize_app(void)
 	initialize_hooks(app);
 	app->keep_rendering = true;
 	app->pixelate = true;
-	app->go_back = false;
+	app->go_wait = false;
 	return (app);
 }

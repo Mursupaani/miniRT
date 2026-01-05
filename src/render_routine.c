@@ -31,7 +31,7 @@ static int	init_threads(t_app *app)
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
 		app->threads[i].pixelate_scale = PIXELATE_SCALE;
-		app->threads[i].ready = false;
+		app->threads[i].ready_for_instuctions = false;
 		i++;
 	}
 	return (0);
@@ -67,8 +67,6 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 	// t_ray			ray;
 	// t_color			color;
 
-	data->i = -1;
-	data->y = data->start_row;
 	while (data->y < data->end_row && *data->keep_rendering)
 	{
 		++data->i;
@@ -76,9 +74,9 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 		data->j = -1;
 		while (data->x < data->app->img->width)
 		{
-			if (data->app->go_back)
+			if (data->app->go_wait)
 			{
-				data->ready = false;
+				data->ready_for_instuctions = false;
 				return ;
 			}
 			++data->j;
@@ -100,6 +98,8 @@ void	render_pixelated(t_thread_data *data)
 	data->pixelate_scale = PIXELATE_SCALE;
 	while (data->pixelate_scale > 0 && *data->keep_rendering)
 	{
+		data->i = -1;
+		data->y = data->start_row;
 		loop_image_by_pixelation_scale(data);
 		data->pixelate_scale /= 2;
 	}
@@ -118,9 +118,9 @@ void	render_full_resolution(t_thread_data *data)
 		x = 0;
 		while (x < data->app->img->width && *data->keep_rendering)
 		{
-			if (data->app->go_back)
+			if (data->app->go_wait)
 			{
-				data->ready = false;
+				data->ready_for_instuctions = false;
 				return ;
 			}
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
@@ -144,11 +144,15 @@ void	*render_routine(void *arg)
 			render_pixelated(data);
 		else
 			render_full_resolution(data);
-		if (data->ready == false)
-			data->ready = true;
-		while (*data->keep_rendering && data->app->restart_render == false)
+		if (data->ready_for_instuctions == false)
+			data->ready_for_instuctions = true;
+		while (*data->keep_rendering)
+		{
+			if (data->app->restart_render == true)
+				break ;
 			usleep(50);
-		printf("restart\n");
+		}
+		data->ready_for_instuctions = false;
 	}
 	return (NULL);
 }

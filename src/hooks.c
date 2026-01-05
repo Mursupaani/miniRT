@@ -6,14 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 16:37:59 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:04:12 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
-#include "libft.h"
 #include "minirt.h"
-#include <stdbool.h>
 
 static void	close_window_mouse(void *param)
 {
@@ -36,21 +33,8 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 	}
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 	{
-		// app->pixelate = !app->pixelate;
-		app->restart_render = false;
-		app->go_back = true;
-		int i = -1;
-		while (++i < THREADS)
-		{
-			if (app->threads[i].ready == false)
-			{
-				i = -1;
-				continue; ;
-			}
-		}
-		app->go_back = false;
-		app->restart_render = true;
-		printf("command restart render\n");
+		app->pixelate = !app->pixelate;
+		restart_render(app);
 	}
 }
 
@@ -65,8 +49,9 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 		selected = select_object_from_screen(app);
 		if (!selected)
 			return ;
+		add_transform(selected, translation_matrix4(0.1, 0, 0));
+		restart_render(app);
 	}
-	(void)action;
 	(void)modifier_key;
 }
 
