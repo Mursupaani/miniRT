@@ -25,8 +25,8 @@ t_app	*initialize_app(void)
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
 
 	// NOTE: Uncomment two lines below for testing with different resolution.
-	app->monitor_width = 640;
-	app->monitor_height = 640;
+	// app->monitor_width = 640;
+	// app->monitor_height = 640;
 
 	// NOTE: Uncomment two lines below for testing with Valgrind.
 	// app->monitor_width = THREADS;
@@ -39,6 +39,6 @@ t_app	*initialize_app(void)
 	initialize_hooks(app);
 	app->keep_rendering = true;
 	app->pixelate = true;
-	app->go_back = false;
+	app->go_wait = false;
 	return (app);
 }

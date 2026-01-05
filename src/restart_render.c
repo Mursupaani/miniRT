@@ -14,9 +14,9 @@
 
 void	signal_threads_to_go_wait(t_app *app)
 {
-	app->go_back = true;
+	app->go_wait = true;
 	wait_for_threads_to_be_ready(app);
-	app->go_back = false;
+	app->go_wait = false;
 }
 
 void	wait_for_threads_to_be_ready(t_app *app)
@@ -26,7 +26,22 @@ void	wait_for_threads_to_be_ready(t_app *app)
 	i = -1;
 	while (++i < THREADS)
 	{
-		if (app->threads[i].ready == false)
+		if (app->threads[i].ready_for_instuctions == false)
+		{
+			i = -1;
+			continue; ;
+		}
+	}
+}
+
+void	wait_for_threads_to_start_render(t_app *app)
+{
+	int i;
+
+	i = -1;
+	while (++i < THREADS)
+	{
+		if (app->threads[i].ready_for_instuctions == true)
 		{
 			i = -1;
 			continue; ;
@@ -36,7 +51,9 @@ void	wait_for_threads_to_be_ready(t_app *app)
 
 void	restart_render(t_app *app)
 {
-	app->restart_render = true;
+	app->restart_render = false;
 	signal_threads_to_go_wait(app);
+	app->restart_render = true;
+	wait_for_threads_to_start_render(app);
 	app->restart_render = false;
 }

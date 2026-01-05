@@ -340,7 +340,7 @@ typedef struct s_app
 	atomic_int		keep_rendering;
 	atomic_int		pixelate;
 	atomic_int		restart_render;
-	atomic_int		go_back;
+	atomic_int		go_wait;
 	bool			parsing_success;
 }	t_app;
 
@@ -380,7 +380,7 @@ typedef struct s_thread_data
 	pthread_t		thread_handle;
 	unsigned int	pixelate_scale;
 	atomic_int		*keep_rendering;
-	atomic_int		ready;
+	atomic_int		ready_for_instuctions;
 	// Rendering
 	unsigned int	i;
 	unsigned int	j;
