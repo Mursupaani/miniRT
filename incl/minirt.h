@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 16:33:38 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:49:17 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -510,6 +510,9 @@ void		print_image_details(mlx_texture_t *image);
 // App initialize and management:
 t_app		*initialize_app(void);
 void		initialize_hooks(t_app *app);
+void		wait_for_threads_to_be_ready(t_app *app);
+void		signal_threads_to_go_wait(t_app *app);
+void		restart_render(t_app *app);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);

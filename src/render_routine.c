@@ -67,8 +67,6 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 	// t_ray			ray;
 	// t_color			color;
 
-	data->i = -1;
-	data->y = data->start_row;
 	while (data->y < data->end_row && *data->keep_rendering)
 	{
 		++data->i;
@@ -100,6 +98,8 @@ void	render_pixelated(t_thread_data *data)
 	data->pixelate_scale = PIXELATE_SCALE;
 	while (data->pixelate_scale > 0 && *data->keep_rendering)
 	{
+		data->i = -1;
+		data->y = data->start_row;
 		loop_image_by_pixelation_scale(data);
 		data->pixelate_scale /= 2;
 	}

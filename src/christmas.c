@@ -117,7 +117,7 @@ void	christmas_tree(t_app *app)
 	add_object_to_world(layer0, w);
 
 	t_object *stem = cylinder_new();
-	stem->minimum = 0.2;
+	stem->minimum = 0;
 	stem->maximum = 1.35;
 	stem->closed = true;
 	stem->material.color = color(0.4, 0.3, 0.2);
@@ -134,7 +134,7 @@ void	christmas_tree(t_app *app)
 	present->material.reflective = 0.2;
 	add_transform(present, scaling_matrix4(0.33, 0.33, 0.33));
 	add_transform(present, rotation_y(M_PI / 3));
-	add_transform(present, translation_matrix4(-1, 0, 1));
+	add_transform(present, translation_matrix4(-1, 0.5, 1));
 	add_object_to_world(present, w);
 
 	t_object *back_wall = plane_new();
@@ -148,6 +148,18 @@ void	christmas_tree(t_app *app)
 	// back_wall->material.pattern = ring_pattern(color(1, 1, 1), color(0.33, 0.29, 0));
 	// set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(7, 7, 7));
 	add_object_to_world(back_wall, w);
+
+	t_object *floor = plane_new();
+	// m = rotation_x(M_PI / 2);
+	// m = matrix4_multiply(translation_matrix4(0, 0, 8), m);
+	// set_transform(floor, m);
+	floor->material.color = color(0.33, 0.29, 0);
+	floor->material.diffuse = 0.7;
+	// floor->material.specular = 0.3;
+	// floor->material.reflective = 1;
+	// back_wall->material.pattern = ring_pattern(color(1, 1, 1), color(0.33, 0.29, 0));
+	// set_pattern_transform(&back_wall->material.pattern, scaling_matrix4(7, 7, 7));
+	add_object_to_world(floor, w);
 
 	t_object *ring = sphere_new();
 	ring->material.color = color(1, 1, 1);
