@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:41:10 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:41:10 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_app	*initialize_app(void)
 	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
 
 	// NOTE: Uncomment two lines below for testing with different resolution.
-	app->monitor_width = 640;
-	app->monitor_height = 640;
+	// app->monitor_width = 640;
+	// app->monitor_height = 640;
 
 	// NOTE: Uncomment two lines below for testing with Valgrind.
 	// app->monitor_width = THREADS;
@@ -38,7 +38,7 @@ t_app	*initialize_app(void)
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	initialize_hooks(app);
 	app->keep_rendering = true;
-	app->pixelate = true;
+	app->pixelate = false;
 	app->go_back = false;
 	return (app);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 16:21:29 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:42:36 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	test_render()
 
 	app = initialize_app();
 	// build_chapter7_world(app);
-	build_test_render(app);
-	// christmas_tree(app);
+	// build_test_render(app);
+	christmas_tree(app);
 	launch_render(app);
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
 	mlx_loop(app->mlx);

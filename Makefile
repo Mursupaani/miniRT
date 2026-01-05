@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2026/01/02 15:50:44 by anpollan         ###   ########.fr        #
+#    Updated: 2026/01/05 15:56:17 by juhana           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \
 				  test_patterns.c test_reflections.c test_transparency.c \
 				  test_cubes.c test_cylinder.c test_parsing.c test_cones.c \
-				  test_render.c christmas.c test_uv_patterns.c test_bump_map.c
+				  test_render.c christmas.c test_uv_patterns.c test_bump_map.c \
+				  anti_alias.c pseudo_random.c
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

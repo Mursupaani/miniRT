@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 16:33:38 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/05 16:09:20 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@
 
 # ifndef PIXELATE_SCALE
 #  define PIXELATE_SCALE 32
+# endif
+
+# ifndef AA_SAMPLES
+#  define AA_SAMPLES 4
 # endif
 
 typedef enum s_exit_value
@@ -385,6 +389,7 @@ typedef struct s_thread_data
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	x;
+	unsigned int	x_offset;
 	unsigned int	y;
 	unsigned int	y_offset;
 	t_ray			ray;
@@ -750,6 +755,10 @@ void		parse_plane(char *line, t_app *app);
 void		parse_cylinder(char *line, t_app *app);
 t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
 t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
-t_object *create_cylinder_object(t_specs s);
+t_object 	*create_cylinder_object(t_specs s);
+
+// Anti-aliasing 
+double		pseudo_random(unsigned int x, unsigned int y, unsigned int s);
+t_color		get_aa_color(t_thread_data *data);
 
 #endif

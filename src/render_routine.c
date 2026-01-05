@@ -107,28 +107,23 @@ void	render_pixelated(t_thread_data *data)
 
 void	render_full_resolution(t_thread_data *data)
 {
-	unsigned int	x;
-	unsigned int	y;
-	t_ray			ray;
-	t_color			color;
-
-	y = data->start_row;
-	while (y < data->end_row && *data->keep_rendering)
+	data->y = data->start_row;
+	while (data->y < data->end_row && *data->keep_rendering)
 	{
-		x = 0;
-		while (x < data->app->img->width && *data->keep_rendering)
+		data->x = 0;
+		while (data->x < data->app->img->width && *data->keep_rendering)
 		{
 			if (data->app->go_back)
 			{
 				data->ready = false;
 				return ;
 			}
-			ray = ray_for_pixel(data->app->scene->camera, x, y);
-			color = color_at(data->app->scene, ray, RECURSIONS);
-			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
-			x++;
+			data->color = get_aa_color(data);
+			mlx_put_pixel(data->app->img, data->x, data->y,
+				color_hex_from_color(data->color));
+			data->x++;
 		}
-		y++;
+		data->y++;
 	}
 }
 
