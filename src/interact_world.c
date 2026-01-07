@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
+#include "MLX42/MLX42_Int.h"
 #include "minirt.h"
 
 t_object	*select_object_from_screen(t_app *app)
@@ -25,4 +27,32 @@ t_object	*select_object_from_screen(t_app *app)
 	if (!xs || xs->count == 0)
 		return (NULL);
 	return (hit(xs).object);
+}
+
+void	move_in_space(t_app *app, keys_t key)
+{
+	t_camera *c;
+	c = app->scene->camera;
+	if (key == MLX_KEY_UP)
+	{
+		c->from = tuple_sum(c->from, point(0, 0, 0.1));
+		c->to = tuple_sum(c->to, point(0, 0, 0.1));
+	}
+	else if (key == MLX_KEY_DOWN)
+	{
+		c->from = tuple_sum(c->from, point(0, 0, -0.1));
+		c->to = tuple_sum(c->to, point(0, 0, -0.1));
+	}
+	else if (key == MLX_KEY_LEFT)
+	{
+		c->from = tuple_sum(c->from, point(-0.1, 0, 0));
+		c->to = tuple_sum(c->to, point(-0.1, 0, 0));
+	}
+	else if (key == MLX_KEY_RIGHT)
+	{
+		c->from = tuple_sum(c->from, point(0.1, 0, 0));
+		c->to = tuple_sum(c->to, point(0.1, 0, 0));
+	}
+	set_camera_transform(c, view_transform(c->from, c->to, c->up, c));
+	restart_render(app);
 }

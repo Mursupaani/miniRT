@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:04:16 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 15:44:06 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:46:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	build_test_render(t_app *app)
 	w = world();
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
-	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0));
+	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0), c);
+	print_tuple(c->from);
+	print_tuple(c->to);
+	print_tuple(c->up);
 	set_camera_transform(c, c_trans);
 
 	mlx_texture_t *earth = mlx_load_png("./Textures/earthmap1k.png");

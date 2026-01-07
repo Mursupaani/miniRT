@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 17:25:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/07 13:50:26 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_app	*initialize_app(void)
 	app->keep_rendering = true;
 	app->pixelate = true;
 	app->go_wait = false;
+	app->left_mouse_down = false;
 	return (app);
 }

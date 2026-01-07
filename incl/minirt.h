@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 17:24:37 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:15:01 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@
 
 # ifndef PIXELATE_SCALE
 #  define PIXELATE_SCALE 32
+# endif
+
+# ifndef BUMP_MAP_SCALE
+#  define BUMP_MAP_SCALE 0.0004
 # endif
 
 typedef enum s_exit_value
@@ -305,7 +309,9 @@ typedef struct s_object
 typedef struct s_camera
 {
 	// t_vector	orientation;
-	t_point		view_point;
+	t_point		from;
+	t_point		to;
+	t_vector	up;
 	double		fov;
 	int			hsize;
 	int			vsize;
@@ -331,6 +337,8 @@ typedef struct s_app
 {
 	// FIXME: Use bitmask to track app status?
 	atomic_int		bitmask;
+	bool			left_mouse_down;
+	t_object		*selected_object;
 	int				monitor_width;
 	int				monitor_height;
 	mlx_t			*mlx;
@@ -703,7 +711,8 @@ t_object	**add_object_to_world(t_object *obj, t_world *w);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
-t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+// t_matrix4	view_transform(t_point from, t_point to, t_vector up);
+t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 
 // Sphere
@@ -735,6 +744,7 @@ void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point loc
 
 // Interact world
 t_object	*select_object_from_screen(t_app *app);
+void	move_in_space(t_app *app, keys_t key);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

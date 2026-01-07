@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_render.c                                      :+:      :+:    :+:   */
+/*   christmas.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:04:16 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/23 12:04:18 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:13:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	christmas_tree(t_app *app)
 	w = world();
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
-	t_matrix4 c_trans = view_transform(point(0, 3, -7), point(0, 2, 0), vector(0, 1, 0));
+	t_matrix4 c_trans = view_transform(point(0, 3, -7), point(0, 2, 0), vector(0, 1, 0), c);
 	set_camera_transform(c, c_trans);
 
 	p = gradient_pattern(color(0.1, 0.5, 0.1), color(0.4, 0.8, 0.2));

@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 17:33:57 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 13:19:01 by jjaaskel         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:13:18 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_camera(char *line, t_app *app)
 	if (!app->scene->camera)
 		exit_and_free_memory(ERROR_PARSING, app);
 	app->scene->camera->transform = view_transform(pos, point(pos.x + ornt.x,
-		pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0));
+		pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0), app->scene->camera);
 }
 
 void	parse_light(char *line, t_app *app)
