@@ -9,6 +9,7 @@
  *
  */
 #include "minirt.h"
+#include <stdbool.h>
 
 static int	init_threads(t_app *app)
 {
@@ -26,12 +27,15 @@ static int	init_threads(t_app *app)
 		app->threads[i].start_row = i * rows_per_thread;
 		app->threads[i].app = app;
 		app->threads[i].keep_rendering = &app->keep_rendering;
+		app->threads[i].start_next_frame = &app->start_next_frame;
 		if (i == THREADS - 1)
 			app->threads[i].end_row = app->monitor_height;
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
 		app->threads[i].pixelate_scale = PIXELATE_SCALE;
-		app->threads[i].ready_for_instuctions = false;
+		app->threads[i].render_done = false;
+		app->threads[i].frame_done = false;
+		app->threads[i].new_frame_started = false;
 		i++;
 	}
 	return (0);
@@ -76,7 +80,7 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 		{
 			if (data->app->go_wait)
 			{
-				data->ready_for_instuctions = false;
+				data->render_done = false;
 				return ;
 			}
 			++data->j;
@@ -102,6 +106,18 @@ void	render_pixelated(t_thread_data *data)
 		data->y = data->start_row;
 		loop_image_by_pixelation_scale(data);
 		data->pixelate_scale /= 2;
+		if (data->frame_done == false)
+			data->frame_done = true;
+		if (data->new_frame_started == true)
+			data->new_frame_started = false;
+		while (*data->keep_rendering)
+		{
+			if (*data->start_next_frame || data->app->go_wait)
+				break ;
+			usleep(10);
+		}
+		data->frame_done = false;
+		data->new_frame_started = true;
 	}
 }
 
@@ -120,7 +136,7 @@ void	render_full_resolution(t_thread_data *data)
 		{
 			if (data->app->go_wait)
 			{
-				data->ready_for_instuctions = false;
+				data->render_done = false;
 				return ;
 			}
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
@@ -144,15 +160,15 @@ void	*render_routine(void *arg)
 			render_pixelated(data);
 		else
 			render_full_resolution(data);
-		if (data->ready_for_instuctions == false)
-			data->ready_for_instuctions = true;
+		if (data->render_done == false)
+			data->render_done = true;
 		while (*data->keep_rendering)
 		{
 			if (data->app->restart_render == true)
 				break ;
 			usleep(50);
 		}
-		data->ready_for_instuctions = false;
+		data->render_done = false;
 	}
 	return (NULL);
 }

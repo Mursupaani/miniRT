@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/07 13:50:26 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/08 13:00:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ t_app	*initialize_app(void)
 	app->temp_img_index = 0;
 	app->img = app->temp_img[app->temp_img_index];
 	initialize_hooks(app);
+	app->pixel_count = app->img->width * app->img->height * sizeof(int);
 	app->keep_rendering = true;
 	app->pixelate = true;
 	app->go_wait = false;
 	app->left_mouse_down = false;
+	app->start_next_frame = false;
 	return (app);
 }

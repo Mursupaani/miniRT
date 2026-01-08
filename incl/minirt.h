@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/07 15:15:01 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:59:41 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@
 
 # ifndef BUMP_MAP_SCALE
 #  define BUMP_MAP_SCALE 0.0004
+# endif
+
+# ifndef MOVEMENT_SPEED
+#  define MOVEMENT_SPEED 0.2
 # endif
 
 typedef enum s_exit_value
@@ -337,6 +341,7 @@ typedef struct s_app
 {
 	// FIXME: Use bitmask to track app status?
 	atomic_int		bitmask;
+	// FIXME: Use bitmask to track app status?
 	bool			left_mouse_down;
 	t_object		*selected_object;
 	int				monitor_width;
@@ -344,6 +349,7 @@ typedef struct s_app
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*temp_img[2];
+	size_t			pixel_count;
 	int				temp_img_index;
 	t_world			*scene;
 	t_thread_data	*threads;
@@ -351,6 +357,7 @@ typedef struct s_app
 	atomic_int		pixelate;
 	atomic_int		restart_render;
 	atomic_int		go_wait;
+	atomic_int		start_next_frame;
 	bool			parsing_success;
 }	t_app;
 
@@ -390,7 +397,10 @@ typedef struct s_thread_data
 	pthread_t		thread_handle;
 	unsigned int	pixelate_scale;
 	atomic_int		*keep_rendering;
-	atomic_int		ready_for_instuctions;
+	atomic_int		*start_next_frame;
+	atomic_int		new_frame_started;
+	atomic_int		render_done;
+	atomic_int		frame_done;
 	// Rendering
 	unsigned int	i;
 	unsigned int	j;
@@ -523,6 +533,10 @@ void		initialize_hooks(t_app *app);
 void		wait_for_threads_to_be_ready(t_app *app);
 void		signal_threads_to_go_wait(t_app *app);
 void		restart_render(t_app *app);
+void		display_finished_frame(t_app *app);
+bool		all_threads_finished_frame(t_app *app);
+bool		all_threads_started_new_frame(t_app *app);
+void		empty_image_buffer(struct mlx_image *img, size_t pixel_count);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
