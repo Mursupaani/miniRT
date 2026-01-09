@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 16:40:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:52:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <float.h>
 # include <stdatomic.h>
+#include <stdint.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -312,10 +313,11 @@ typedef struct s_object
 
 typedef struct s_camera
 {
-	// t_vector	orientation;
 	t_point		from;
 	t_point		to;
 	t_vector	up;
+	double		yaw;
+	double		pitch;
 	double		fov;
 	int			hsize;
 	int			vsize;
@@ -345,6 +347,8 @@ typedef struct s_app
 	bool			left_mouse_down;
 	bool			right_mouse_down;
 	bool			moving;
+	int32_t			prev_mouse_x;
+	int32_t			prev_mouse_y;
 	t_object		*selected_object;
 	int				monitor_width;
 	int				monitor_height;
@@ -760,8 +764,9 @@ void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point loc
 
 // Interact world
 t_object	*select_object_from_screen(t_app *app);
-void	handle_movement(t_app *app);
-void	move_in_space(t_app *app, keys_t key);
+void		handle_movement(t_app *app);
+void		move_in_space(t_app *app, keys_t key);
+void		handle_looking_around(t_app *app);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

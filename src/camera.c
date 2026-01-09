@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:30:52 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:36:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:02:25 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_camera	*camera(int hsize, int vsize, double fov)
 	camera->transform = matrix4_identity();
 	camera->inverse_transform = camera->transform;
 	camera->pixel_size = pixel_size(camera);
+	camera->yaw = 0;
+	camera->pitch = 0;
 	return (camera);
 }
 
