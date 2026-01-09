@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/08 11:16:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:35:20 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,7 @@ static void	per_frame_loop(void *param)
 	t_app	*app;
 
 	app = (t_app *)param;
-	if (mlx_is_key_down(app->mlx, MLX_KEY_UP))
-		move_in_space(app, MLX_KEY_UP);
-	if (mlx_is_key_down(app->mlx, MLX_KEY_DOWN))
-		move_in_space(app, MLX_KEY_DOWN);
-	if (mlx_is_key_down(app->mlx, MLX_KEY_RIGHT))
-		move_in_space(app, MLX_KEY_RIGHT);
-	if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT))
-		move_in_space(app, MLX_KEY_LEFT);
-	if (all_threads_finished_frame(app) && app->start_next_frame == false)
-		display_finished_frame(app);
-	if (all_threads_started_new_frame(app))
-		app->start_next_frame = false;
+	handle_movement(app);
 }
 
 static void	close_window_mouse(void *param)
@@ -66,14 +55,20 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 	{
 		app->left_mouse_down = true;
 		app->selected_object = select_object_from_screen(app);
-		// printf("pressed\n");
 	}
 	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
 		app->left_mouse_down = false;
 		if (app->selected_object)
 			app->selected_object = NULL;
-		// printf("released\n");
+	}
+	else if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
+	{
+		app->right_mouse_down = true;
+	}
+	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
+	{
+		app->right_mouse_down = false;
 	}
 	(void)modifier_key;
 }

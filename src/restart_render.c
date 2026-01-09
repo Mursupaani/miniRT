@@ -49,15 +49,6 @@ void	wait_for_threads_to_start_render(t_app *app)
 	}
 }
 
-void	empty_image_buffer(struct mlx_image *img, size_t pixel_count)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < pixel_count)
-		img->pixels[i] = 0;
-}
-
 void	restart_render(t_app *app)
 {
 	app->restart_render = false;

@@ -53,11 +53,23 @@ void	copy_image_data_to_new_buffer(struct mlx_image *from, struct mlx_image *to,
 		to->pixels[i] = from->pixels[i];
 }
 
+void	empty_image_buffer(struct mlx_image *img, size_t pixel_count)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < pixel_count)
+		img->pixels[i] = 0;
+}
+
 void	display_finished_frame(t_app *app)
 {
 	mlx_image_to_window(app->mlx, app->img, 0, 0);
 	app->temp_img_index = !app->temp_img_index;
-	copy_image_data_to_new_buffer(app->img, app->temp_img[app->temp_img_index], app->pixel_count);
+	if (app->moving == false)
+		copy_image_data_to_new_buffer(app->img, app->temp_img[app->temp_img_index], app->pixel_count);
+	else
+		empty_image_buffer(app->temp_img[app->temp_img_index], app->pixel_count);
 	app->img = app->temp_img[app->temp_img_index];
 	app->start_next_frame = true;
 }

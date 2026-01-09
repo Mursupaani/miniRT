@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 15:41:46 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 15:56:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:36:52 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_object	*select_object_from_screen(t_app *app)
 void	move_in_space(t_app *app, keys_t key)
 {
 	t_camera *c;
+
+	app->moving = true;
 	c = app->scene->camera;
 	if (key == MLX_KEY_UP)
 	{

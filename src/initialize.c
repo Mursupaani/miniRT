@@ -45,6 +45,8 @@ t_app	*initialize_app(void)
 	app->pixelate = true;
 	app->go_wait = false;
 	app->left_mouse_down = false;
+	app->right_mouse_down = false;
 	app->start_next_frame = false;
+	app->moving = false;
 	return (app);
 }

@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/08 12:59:41 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:40:04 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,8 @@ typedef struct s_app
 	atomic_int		bitmask;
 	// FIXME: Use bitmask to track app status?
 	bool			left_mouse_down;
+	bool			right_mouse_down;
+	bool			moving;
 	t_object		*selected_object;
 	int				monitor_width;
 	int				monitor_height;
@@ -758,6 +760,7 @@ void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point loc
 
 // Interact world
 t_object	*select_object_from_screen(t_app *app);
+void	handle_movement(t_app *app);
 void	move_in_space(t_app *app, keys_t key);
 
 // Parsing
