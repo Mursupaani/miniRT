@@ -96,8 +96,8 @@ void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point loc
 	sample_bump_map(&bm, uv);
 	calculate_slopes(&bm);
 	get_tangent_and_bitangent(obj->type, *local_normal, &bm);
-	bump_u = tuple_scale_multiply(bm.tangent, bm.slope_u * 0.0003);
-	bump_v = tuple_scale_multiply(bm.bitangent, bm.slope_v * 0.0003);
+	bump_u = tuple_scale_multiply(bm.tangent, bm.slope_u * BUMP_MAP_SCALE);
+	bump_v = tuple_scale_multiply(bm.bitangent, bm.slope_v * BUMP_MAP_SCALE);
 	*local_normal = normalize(
 		tuple_subtract(tuple_subtract(*local_normal, bump_u), bump_v));
 }

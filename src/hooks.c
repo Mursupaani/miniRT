@@ -6,11 +6,19 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 17:04:12 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:35:20 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static void	per_frame_loop(void *param)
+{
+	t_app	*app;
+
+	app = (t_app *)param;
+	handle_movement(app);
+}
 
 static void	close_window_mouse(void *param)
 {
@@ -31,7 +39,7 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 		app->keep_rendering = false;
 		exit_and_free_memory(EXIT_SUCCESS, app);
 	}
-	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 	{
 		app->pixelate = !app->pixelate;
 		restart_render(app);
@@ -41,16 +49,26 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modifier_key modifier_key, void *param)
 {
 	t_app	*app;
-	t_object *selected;
 
 	app = (t_app *)param;
 	if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
-		selected = select_object_from_screen(app);
-		if (!selected)
-			return ;
-		add_transform(selected, translation_matrix4(0.1, 0, 0));
-		restart_render(app);
+		app->left_mouse_down = true;
+		app->selected_object = select_object_from_screen(app);
+	}
+	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_LEFT)
+	{
+		app->left_mouse_down = false;
+		if (app->selected_object)
+			app->selected_object = NULL;
+	}
+	else if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
+	{
+		app->right_mouse_down = true;
+	}
+	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
+	{
+		app->right_mouse_down = false;
 	}
 	(void)modifier_key;
 }
@@ -60,4 +78,5 @@ void	initialize_hooks(t_app *app)
 	mlx_close_hook(app->mlx, close_window_mouse, app);
 	mlx_key_hook(app->mlx, handle_keypress, app);
 	mlx_mouse_hook(app->mlx, handle_mouse, app);
+	mlx_loop_hook(app->mlx, per_frame_loop, app);
 }

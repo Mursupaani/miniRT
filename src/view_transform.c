@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:30 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/11 14:36:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:12:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,19 @@ static t_matrix4	add_orientation_values(
 	return (orientation);
 }
 
-t_matrix4	view_transform(t_point from, t_point to, t_vector up)
+t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c)
 {
 	t_vector	forward;
 	t_vector	left;
 	t_vector	true_up;
 	t_matrix4	orientation;
 
+	if (c)
+	{
+		c->from = from;
+		c->to = to;
+		c->up = up;
+	}
 	forward = normalize(tuple_subtract(to, from));
 	left = cross(forward, normalize(up));
 	true_up = cross(left, forward);
