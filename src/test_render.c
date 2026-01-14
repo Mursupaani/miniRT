@@ -21,6 +21,7 @@ void	build_test_render(t_app *app)
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
 	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0), c);
+	init_camera_yaw_and_pitch(c);
 	set_camera_transform(c, c_trans);
 
 	mlx_texture_t *earth = mlx_load_png("./Textures/earthmap1k.png");

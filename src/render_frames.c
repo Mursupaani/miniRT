@@ -64,12 +64,11 @@ void	empty_image_buffer(struct mlx_image *img, size_t pixel_count)
 
 void	display_finished_frame(t_app *app)
 {
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
-	app->temp_img_index = !app->temp_img_index;
+	app->img_buffers[app->bg_img_index]->instances->enabled = true;
+	app->bg_img_index = !app->bg_img_index;
+	app->img_buffers[app->bg_img_index]->instances->enabled = false;
 	if (app->moving == false)
-		copy_image_data_to_new_buffer(app->img, app->temp_img[app->temp_img_index], app->pixel_count);
-	else
-		empty_image_buffer(app->temp_img[app->temp_img_index], app->pixel_count);
-	app->img = app->temp_img[app->temp_img_index];
+		copy_image_data_to_new_buffer(app->img, app->img_buffers[app->bg_img_index], app->pixel_count);
+	app->img = app->img_buffers[app->bg_img_index];
 	app->start_next_frame = true;
 }

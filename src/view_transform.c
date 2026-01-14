@@ -33,21 +33,18 @@ static t_matrix4	add_orientation_values(
 
 t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c)
 {
-	t_vector	forward;
-	t_vector	left;
+	// t_vector	forward;
+	// t_vector	left;
 	t_vector	true_up;
 	t_matrix4	orientation;
 
-	if (c)
-	{
-		c->from = from;
-		c->to = to;
-		c->up = up;
-	}
-	forward = normalize(tuple_subtract(to, from));
-	left = cross(forward, normalize(up));
-	true_up = cross(left, forward);
-	orientation = add_orientation_values(left, true_up, forward);
+	c->from = from;
+	c->to = to;
+	c->up = up;
+	c->forward = normalize(tuple_subtract(to, from));
+	c->left = cross(c->forward, normalize(up));
+	true_up = cross(c->left, c->forward);
+	orientation = add_orientation_values(c->left, true_up, c->forward);
 	return  (matrix4_multiply(orientation,
 				translation_matrix4(-from.x, -from.y, -from.z)));
 }

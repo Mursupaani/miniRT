@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 16:40:04 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:52:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <float.h>
 # include <stdatomic.h>
+#include <stdint.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -67,6 +68,10 @@
 
 # ifndef MOVEMENT_SPEED
 #  define MOVEMENT_SPEED 0.2
+# endif
+
+# ifndef MOUSE_SPEED
+#  define MOUSE_SPEED 0.01
 # endif
 
 typedef enum s_exit_value
@@ -312,10 +317,13 @@ typedef struct s_object
 
 typedef struct s_camera
 {
-	// t_vector	orientation;
 	t_point		from;
 	t_point		to;
 	t_vector	up;
+	t_vector	forward;
+	t_vector	left;
+	double		yaw;
+	double		pitch;
 	double		fov;
 	int			hsize;
 	int			vsize;
@@ -345,14 +353,16 @@ typedef struct s_app
 	bool			left_mouse_down;
 	bool			right_mouse_down;
 	bool			moving;
+	int32_t			prev_mouse_x;
+	int32_t			prev_mouse_y;
 	t_object		*selected_object;
 	int				monitor_width;
 	int				monitor_height;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	mlx_image_t		*temp_img[2];
+	mlx_image_t		*img_buffers[2];
 	size_t			pixel_count;
-	int				temp_img_index;
+	int				bg_img_index;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;
@@ -360,6 +370,7 @@ typedef struct s_app
 	atomic_int		restart_render;
 	atomic_int		go_wait;
 	atomic_int		start_next_frame;
+	atomic_int		data_changed;
 	bool			parsing_success;
 }	t_app;
 
@@ -727,6 +738,7 @@ t_object	**add_object_to_world(t_object *obj, t_world *w);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
+void		init_camera_yaw_and_pitch(t_camera *c);
 // t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);
@@ -760,8 +772,9 @@ void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point loc
 
 // Interact world
 t_object	*select_object_from_screen(t_app *app);
-void	handle_movement(t_app *app);
-void	move_in_space(t_app *app, keys_t key);
+void		handle_movement(t_app *app);
+void		move_in_space(t_app *app, keys_t key);
+void		handle_looking_around(t_app *app);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);
