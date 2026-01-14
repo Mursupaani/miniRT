@@ -9,7 +9,6 @@
  *
  */
 #include "minirt.h"
-#include <stdbool.h>
 
 static int	init_threads(t_app *app)
 {
@@ -114,6 +113,12 @@ void	render_pixelated(t_thread_data *data)
 		{
 			if (*data->start_next_frame || data->app->go_wait)
 				break ;
+			if (data->app->go_wait)
+			{
+				data->render_done = false;
+				data->frame_done = false;
+				return ;
+			}
 			usleep(10);
 		}
 		data->frame_done = false;

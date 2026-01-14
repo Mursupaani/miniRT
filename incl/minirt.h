@@ -70,6 +70,10 @@
 #  define MOVEMENT_SPEED 0.2
 # endif
 
+# ifndef MOUSE_SPEED
+#  define MOUSE_SPEED 0.01
+# endif
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -316,6 +320,8 @@ typedef struct s_camera
 	t_point		from;
 	t_point		to;
 	t_vector	up;
+	t_vector	forward;
+	t_vector	left;
 	double		yaw;
 	double		pitch;
 	double		fov;
@@ -354,9 +360,9 @@ typedef struct s_app
 	int				monitor_height;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	mlx_image_t		*temp_img[2];
+	mlx_image_t		*img_buffers[2];
 	size_t			pixel_count;
-	int				temp_img_index;
+	int				bg_img_index;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		keep_rendering;
@@ -364,6 +370,7 @@ typedef struct s_app
 	atomic_int		restart_render;
 	atomic_int		go_wait;
 	atomic_int		start_next_frame;
+	atomic_int		data_changed;
 	bool			parsing_success;
 }	t_app;
 
@@ -731,6 +738,7 @@ t_object	**add_object_to_world(t_object *obj, t_world *w);
 
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
+void		init_camera_yaw_and_pitch(t_camera *c);
 // t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);

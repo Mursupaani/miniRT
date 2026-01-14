@@ -43,10 +43,10 @@ void	free_app_memory(t_app *app)
 	join_threads(app->threads, THREADS);
 	if (app->img)
 		mlx_delete_image(app->mlx, app->img);
-	if (app->temp_img[0])
-		mlx_delete_image(app->mlx, app->temp_img[0]);
-	if (app->temp_img[1])
-		mlx_delete_image(app->mlx, app->temp_img[1]);
+	if (app->img_buffers[0])
+		mlx_delete_image(app->mlx, app->img_buffers[0]);
+	if (app->img_buffers[1])
+		mlx_delete_image(app->mlx, app->img_buffers[1]);
 	if (app->mlx)
 	{
 		mlx_close_window(app->mlx);

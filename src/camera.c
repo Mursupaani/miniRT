@@ -12,6 +12,12 @@
 
 #include "minirt.h"
 
+void	init_camera_yaw_and_pitch(t_camera *c)
+{
+	c->yaw = atan2(c->forward.z, c->forward.x) * (180 / M_PI);
+	c->pitch = asin(c->forward.y) * (180 / M_PI);
+}
+
 static	double pixel_size(t_camera *camera)
 {
 	double	half_view;

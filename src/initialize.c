@@ -33,12 +33,16 @@ t_app	*initialize_app(void)
 	// app->monitor_height = THREADS;
 
 	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
-	app->temp_img[0] = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
-	app->temp_img[1] = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
-	if (!app->temp_img[0] || !app->temp_img[1])
+	app->img_buffers[0] = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
+	app->img_buffers[1] = mlx_new_image(app->mlx, app->monitor_width, app->monitor_height);
+	if (!app->img_buffers[0] || !app->img_buffers[1])
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
-	app->temp_img_index = 0;
-	app->img = app->temp_img[app->temp_img_index];
+	mlx_image_to_window(app->mlx, app->img_buffers[0], 0, 0);
+	mlx_image_to_window(app->mlx, app->img_buffers[1], 0, 0);
+	app->img_buffers[0]->instances[0].enabled = false;
+	app->img_buffers[1]->instances[0].enabled = true;
+	app->bg_img_index = 0;
+	app->img = app->img_buffers[app->bg_img_index];
 	initialize_hooks(app);
 	app->pixel_count = app->img->width * app->img->height * sizeof(int);
 	app->keep_rendering = true;
@@ -48,5 +52,6 @@ t_app	*initialize_app(void)
 	app->right_mouse_down = false;
 	app->start_next_frame = false;
 	app->moving = false;
+	app->data_changed = false;
 	return (app);
 }
