@@ -24,6 +24,8 @@ static void	per_frame_loop(void *param)
 	handle_movement(app);
 	if (app->right_mouse_down)
 		handle_looking_around(app);
+	if (app->left_mouse_down)
+		move_oject_on_screen(app);
 	if (app->data_changed)
 	{
 		restart_render(app);
@@ -66,13 +68,12 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 	if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
 		app->left_mouse_down = true;
-		app->selected_object = select_object_from_screen(app);
+		select_object_from_screen(app);
 	}
 	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
 		app->left_mouse_down = false;
-		if (app->selected_object)
-			app->selected_object = NULL;
+		app->selected_object = NULL;
 	}
 	else if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
 	{
