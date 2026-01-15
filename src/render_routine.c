@@ -99,16 +99,20 @@ void	render_pixelated(t_thread_data *data)
 		data->y = data->start_row;
 		loop_image_by_pixelation_scale(data);
 		data->pixelate_scale /= 2;
+		if (data->frame_done == false)
+			data->frame_done = true;
 		if (data->new_frame_started == true)
 			data->new_frame_started = false;
 		while (*data->keep_rendering)
 		{
-			if (data->app->go_wait)
-				return ;
-			if (data->frame_done == false)
-				data->frame_done = true;
-			if (*data->start_next_frame)
+			if (*data->start_next_frame || data->app->go_wait)
 				break ;
+			if (data->app->go_wait)
+			{
+				data->render_done = false;
+				data->frame_done = false;
+				return ;
+			}
 			usleep(10);
 		}
 		data->frame_done = false;
