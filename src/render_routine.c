@@ -64,12 +64,6 @@ int	write_pixelated_section(unsigned int *x, unsigned int *y, t_thread_data *dat
 
 void	loop_image_by_pixelation_scale(t_thread_data *data)
 {
-	// unsigned int	x;
-	// unsigned int	y;
-	// unsigned int	y_offset;
-	// t_ray			ray;
-	// t_color			color;
-
 	while (data->y < data->end_row && *data->keep_rendering)
 	{
 		++data->i;
@@ -105,20 +99,16 @@ void	render_pixelated(t_thread_data *data)
 		data->y = data->start_row;
 		loop_image_by_pixelation_scale(data);
 		data->pixelate_scale /= 2;
-		if (data->frame_done == false)
-			data->frame_done = true;
 		if (data->new_frame_started == true)
 			data->new_frame_started = false;
 		while (*data->keep_rendering)
 		{
-			if (*data->start_next_frame || data->app->go_wait)
-				break ;
 			if (data->app->go_wait)
-			{
-				data->render_done = false;
-				data->frame_done = false;
 				return ;
-			}
+			if (data->frame_done == false)
+				data->frame_done = true;
+			if (*data->start_next_frame)
+				break ;
 			usleep(10);
 		}
 		data->frame_done = false;

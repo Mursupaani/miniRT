@@ -6,7 +6,7 @@
 #    By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2026/01/15 13:20:43 by anpollan         ###   ########.fr        #
+#    Updated: 2026/01/15 16:12:37 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  bump_map.c uv_utils.c interact_world.c \
 				  restart_render.c move_objects.c render_frames.c \
 				  movement.c look_controls.c transform_selected_object.c \
-				  \
+				  transform_light.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \

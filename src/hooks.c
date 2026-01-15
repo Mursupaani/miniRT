@@ -6,13 +6,12 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 14:07:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:20:31 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/MLX42.h"
 #include "minirt.h"
-#include <math.h>
 
 static void	per_frame_loop(void *param)
 {
@@ -95,6 +94,8 @@ static void	handle_mouse_scroll(double xdelta, double ydelta, void *param)
 	t_app	*app;
 
 	app = (t_app *)param;
+	if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_CONTROL))
+		transform_light(app, ydelta);
 	if (app->selected_object)
 	{
 		if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_SHIFT))
@@ -103,7 +104,6 @@ static void	handle_mouse_scroll(double xdelta, double ydelta, void *param)
 			resize_selected_object(app, ydelta);
 	}
 	(void)xdelta;
-	
 }
 
 void	initialize_hooks(t_app *app)
