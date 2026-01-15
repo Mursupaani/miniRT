@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 17:52:44 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:04:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,6 +356,8 @@ typedef struct s_app
 	int32_t			prev_mouse_x;
 	int32_t			prev_mouse_y;
 	t_object		*selected_object;
+	double			selected_object_t;
+	t_vector		selected_object_offset;
 	int				monitor_width;
 	int				monitor_height;
 	mlx_t			*mlx;
@@ -771,7 +773,10 @@ t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
 void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point local_point);
 
 // Interact world
-t_object	*select_object_from_screen(t_app *app);
+void		select_object_from_screen(t_app *app);
+void		move_oject_on_screen(t_app *app);
+void		resize_selected_object(t_app *app, double ydelta);
+void		rotate_selected_object(t_app *app, double ydelta);
 void		handle_movement(t_app *app);
 void		move_in_space(t_app *app, keys_t key);
 void		handle_looking_around(t_app *app);

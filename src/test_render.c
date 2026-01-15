@@ -72,7 +72,7 @@ void	build_test_render(t_app *app)
 	sphere->material.pattern = texture_map(sphere->material.pattern, spherical_map);
 	ft_bzero(&sphere->bump_map, sizeof(t_bump_map));
 	sphere->bump_map.has_bump_map = true;
-	sphere->material.transparency = 0.8;
+	sphere->material.transparency = 1;
 	sphere->material.refractive_index = 1.5;
 	sphere->bump_map.bump_map = bump;
 	sphere->bump_map.uv_map = spherical_map;

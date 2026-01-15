@@ -12,13 +12,6 @@
 
 #include "minirt.h"
 
-void	signal_threads_to_go_wait(t_app *app)
-{
-	app->go_wait = true;
-	wait_for_threads_to_be_ready(app);
-	app->go_wait = false;
-}
-
 // bool	all_threads_ready_for_instructions(t_app *app)
 // {
 // 	int i;
@@ -31,6 +24,13 @@ void	signal_threads_to_go_wait(t_app *app)
 // 	}
 // 	return (true);
 // }
+
+void	signal_threads_to_go_wait(t_app *app)
+{
+	app->go_wait = true;
+	wait_for_threads_to_be_ready(app);
+	app->go_wait = false;
+}
 
 void	wait_for_threads_to_be_ready(t_app *app)
 {
