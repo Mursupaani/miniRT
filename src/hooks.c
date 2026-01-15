@@ -6,11 +6,13 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 17:11:07 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:07:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
 #include "minirt.h"
+#include <math.h>
 
 static void	per_frame_loop(void *param)
 {
@@ -68,13 +70,11 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 	if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_LEFT)
 	{
 		app->left_mouse_down = true;
+		mlx_get_mouse_pos(app->mlx, &app->prev_mouse_x, &app->prev_mouse_y);
 		select_object_from_screen(app);
 	}
 	else if (action == MLX_RELEASE && mouse_key == MLX_MOUSE_BUTTON_LEFT)
-	{
 		app->left_mouse_down = false;
-		app->selected_object = NULL;
-	}
 	else if (action == MLX_PRESS && mouse_key == MLX_MOUSE_BUTTON_RIGHT)
 	{
 		app->right_mouse_down = true;
@@ -90,10 +90,27 @@ static void	handle_mouse(enum mouse_key mouse_key, enum action action, enum modi
 	(void)modifier_key;
 }
 
+static void	handle_mouse_scroll(double xdelta, double ydelta, void *param)
+{
+	t_app	*app;
+
+	app = (t_app *)param;
+	if (app->selected_object)
+	{
+		if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_SHIFT))
+			rotate_selected_object(app, ydelta);
+		else
+			resize_selected_object(app, ydelta);
+	}
+	(void)xdelta;
+	
+}
+
 void	initialize_hooks(t_app *app)
 {
 	mlx_close_hook(app->mlx, close_window_mouse, app);
 	mlx_key_hook(app->mlx, handle_keypress, app);
 	mlx_mouse_hook(app->mlx, handle_mouse, app);
+	mlx_scroll_hook(app->mlx, handle_mouse_scroll, app);
 	mlx_loop_hook(app->mlx, per_frame_loop, app);
 }

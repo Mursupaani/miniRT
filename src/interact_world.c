@@ -42,6 +42,8 @@ void	move_oject_on_screen(t_app *app)
 		return ;
 	c = app->scene->camera;
 	mlx_get_mouse_pos(app->mlx, &x, &y);
+	if (doubles_are_equal(app->prev_mouse_x, x) && doubles_are_equal(app->prev_mouse_y, y))
+		return ;
 	r = ray_for_pixel(app->scene->camera, x, y);
 	new_pos.x = c->from.x + (r.direction.x * app->selected_object_t);
 	new_pos.y = c->from.y + (r.direction.y * app->selected_object_t);
