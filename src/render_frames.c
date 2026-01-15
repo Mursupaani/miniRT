@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:59:42 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/08 13:00:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:01:29 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	empty_image_buffer(struct mlx_image *img, size_t pixel_count)
 
 void	display_finished_frame(t_app *app)
 {
+	app->img_buffers[!app->bg_img_index]->instances->enabled = false;
 	app->img_buffers[app->bg_img_index]->instances->enabled = true;
 	app->bg_img_index = !app->bg_img_index;
-	app->img_buffers[app->bg_img_index]->instances->enabled = false;
 	if (app->moving == false)
 		copy_image_data_to_new_buffer(app->img, app->img_buffers[app->bg_img_index], app->pixel_count);
 	app->img = app->img_buffers[app->bg_img_index];

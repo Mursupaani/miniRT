@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 14:04:11 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:13:58 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -777,6 +777,7 @@ void		select_object_from_screen(t_app *app);
 void		move_oject_on_screen(t_app *app);
 void		resize_selected_object(t_app *app, double ydelta);
 void		rotate_selected_object(t_app *app, double ydelta);
+void		transform_light(t_app *app, double ydelta);
 void		handle_movement(t_app *app);
 void		move_in_space(t_app *app, keys_t key);
 void		handle_looking_around(t_app *app);
