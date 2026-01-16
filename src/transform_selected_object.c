@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static t_matrix4	store_pos_and_set_pos_to_origin(t_object *obj)
@@ -44,8 +45,10 @@ void	resize_selected_object(t_app *app, double ydelta)
 		add_transform(app->selected_object, scaling_matrix4(scale_factor, 1, 1));
 	else if (mlx_is_key_down(app->mlx, MLX_KEY_Z))
 		add_transform(app->selected_object, scaling_matrix4(1, 1, scale_factor));
-	else if (mlx_is_key_down(app->mlx, MLX_KEY_Y))
+	else if (mlx_is_key_down(app->mlx, MLX_KEY_Y) || (mlx_is_key_down(app->mlx, MLX_KEY_H)))
 		add_transform(app->selected_object, scaling_matrix4(1, scale_factor, 1));
+	else if (mlx_is_key_down(app->mlx, MLX_KEY_W))
+		add_transform(app->selected_object, scaling_matrix4(scale_factor, 1, scale_factor));
 	else
 		add_transform(app->selected_object, scaling_matrix4(scale_factor, scale_factor, scale_factor));
 	set_obj_back_to_original_pos(app->selected_object, orig_pos);
