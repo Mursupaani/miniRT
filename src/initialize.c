@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 18:03:55 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:46:11 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ t_app	*initialize_app(void)
 	app->start_next_frame = false;
 	app->moving = false;
 	app->data_changed = false;
+	app->show_hud = true;
 	return (app);
 }

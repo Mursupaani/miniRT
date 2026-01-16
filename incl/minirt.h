@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 16:13:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:46:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # endif
 
 # ifndef FOV_CHANGE
-#  define FOV_CHANGE 5
+#  define FOV_CHANGE 1
 # endif
 
 typedef enum s_exit_value
@@ -357,6 +357,7 @@ typedef struct s_app
 	bool			left_mouse_down;
 	bool			right_mouse_down;
 	bool			moving;
+	bool			show_hud;
 	int32_t			prev_mouse_x;
 	int32_t			prev_mouse_y;
 	t_object		*selected_object;
@@ -367,6 +368,7 @@ typedef struct s_app
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];
+	mlx_image_t		*hud;
 	size_t			pixel_count;
 	int				bg_img_index;
 	t_world			*scene;
@@ -556,6 +558,7 @@ void		display_finished_frame(t_app *app);
 bool		all_threads_finished_frame(t_app *app);
 bool		all_threads_started_new_frame(t_app *app);
 void		empty_image_buffer(struct mlx_image *img, size_t pixel_count);
+void		print_hud(t_app *app);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);

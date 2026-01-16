@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 16:26:48 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:45:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	per_frame_loop(void *param)
 	t_app	*app;
 
 	app = (t_app *)param;
+	if (app->show_hud)
+		print_hud(app);
 	if (all_threads_finished_frame(app))
 		display_finished_frame(app);
 	if (all_threads_started_new_frame(app))
@@ -58,6 +60,17 @@ static void	handle_keypress(mlx_key_data_t keydata, void *param)
 	{
 		app->pixelate = !app->pixelate;
 		restart_render(app);
+	}
+	else if (keydata.key == MLX_KEY_H && keydata.action == MLX_PRESS)
+	{
+		app->show_hud = !app->show_hud;
+		printf("hud %p\n", app->hud);
+		if (!app->show_hud && app->hud)
+		{
+			mlx_delete_image(app->mlx, app->hud);
+			app->hud = NULL;
+		}
+		printf("hud %p\n", app->hud);
 	}
 }
 
