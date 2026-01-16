@@ -74,6 +74,10 @@
 #  define MOUSE_SPEED 0.01
 # endif
 
+# ifndef FOV_CHANGE
+#  define FOV_CHANGE 5
+# endif
+
 typedef enum s_exit_value
 {
 	SUCCESS,
@@ -237,6 +241,8 @@ typedef struct s_light
 {
 	t_color			intensity;
 	t_point			position;
+	t_color			ambient_color;
+	double			ambient_ratio;
 	// t_color_255		color_255;
 }	t_light;
 
@@ -341,8 +347,6 @@ typedef struct s_world
 	t_light			*light;
 	t_object		**objects;
 	int				object_count;
-	double			ambient_ratio;
-	t_color			ambient_color;
 }	t_world;
 
 typedef struct s_app
@@ -741,6 +745,7 @@ t_object	**add_object_to_world(t_object *obj, t_world *w);
 // Camera and view
 t_camera	*camera(int hsize, int vsize, double fov);
 void		init_camera_yaw_and_pitch(t_camera *c);
+double		pixel_size(t_camera *camera);
 // t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c);
 void		set_camera_transform(t_camera *camera, t_matrix4 transform);
@@ -781,6 +786,7 @@ void		transform_light(t_app *app, double ydelta);
 void		handle_movement(t_app *app);
 void		move_in_space(t_app *app, keys_t key);
 void		handle_looking_around(t_app *app);
+void		change_camera_fov(t_app *app, double ydelta);
 
 // Parsing
 void		parse_rt_file(char **av, t_app *app);

@@ -24,10 +24,10 @@ void	parse_ambient(char *line, t_app *app)
 	skip_whitespace(&line);
 	if (!parse_color(&line, &color))
 		parse_error("Invalid ambient lighting color", app);
-	if (app->scene->ambient_ratio > 0.0)
+	if (app->scene->light->ambient_ratio > 0.0)
 		parse_error("Multiple ambient lighting definitions", app);
-	app->scene->ambient_ratio = ratio;
-	app->scene->ambient_color = color;
+	app->scene->light->ambient_ratio = ratio;
+	app->scene->light->ambient_color = color;
 }
 
 void	parse_camera(char *line, t_app *app)
@@ -56,6 +56,8 @@ void	parse_camera(char *line, t_app *app)
 		exit_and_free_memory(ERROR_PARSING, app);
 	app->scene->camera->transform = view_transform(pos, point(pos.x + ornt.x,
 		pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0), app->scene->camera);
+	// FIXME: init yaw and pitch for looking around
+	init_camera_yaw_and_pitch(app->scene->camera);
 }
 
 void	parse_light(char *line, t_app *app)
