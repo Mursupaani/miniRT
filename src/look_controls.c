@@ -19,7 +19,6 @@ void	change_camera_fov(t_app *app, double ydelta)
 	fov_change = ydelta * FOV_CHANGE * (M_PI / 180);
 	app->scene->camera->fov -= fov_change;
 	app->scene->camera->pixel_size = pixel_size(app->scene->camera);
-	printf("fov: %lf\n", app->scene->camera->fov);
 	app->data_changed = true;
 }
 

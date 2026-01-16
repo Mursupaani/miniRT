@@ -223,5 +223,4 @@ void	build_test_render(t_app *app)
 //
 	app->scene = w;
 	app->scene->camera = c;
-	printf("fov: %lf\n", app->scene->camera->fov);
 }
