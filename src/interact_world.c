@@ -6,32 +6,33 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 15:41:46 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 16:37:27 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 19:27:39 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
- static void	set_object_new_position(t_app *app, t_camera *c, t_ray r)
+static void	set_object_new_position(t_app *app, t_camera *c, t_ray r)
 {
 	t_vector	new_pos;
 
 	new_pos.x = c->from.x + (r.direction.x * app->selected_object_t);
 	new_pos.y = c->from.y + (r.direction.y * app->selected_object_t);
 	new_pos.z = c->from.z + (r.direction.z * app->selected_object_t);
-	app->selected_object->transform.data[0][3] =
-		new_pos.x + app->selected_object_offset.x;
-	app->selected_object->transform.data[1][3] =
-		new_pos.y + app->selected_object_offset.y;
-	app->selected_object->transform.data[2][3] =
-		new_pos.z + app->selected_object_offset.z;
+	app->selected_object->transform.data[0][3] = new_pos.x
+		+ app->selected_object_offset.x;
+	app->selected_object->transform.data[1][3] = new_pos.y
+		+ app->selected_object_offset.y;
+	app->selected_object->transform.data[2][3] = new_pos.z
+		+ app->selected_object_offset.z;
 	set_transform(app->selected_object, app->selected_object->transform);
 }
 
-static t_vector	get_selected_object_offest(t_app *app, t_ray r, t_intersection hit)
+static t_vector	get_selected_object_offest(
+		t_app *app, t_ray r, t_intersection hit)
 {
-	t_point	hit_point;
-	t_point	obj_origin;
+	t_point		hit_point;
+	t_point		obj_origin;
 	t_camera	*c;
 
 	c = app->scene->camera;

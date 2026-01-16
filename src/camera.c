@@ -6,36 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:30:52 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/09 18:02:25 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:33:37 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-void	init_camera_yaw_and_pitch(t_camera *c)
-{
-	c->yaw = atan2(c->forward.z, c->forward.x) * (180 / M_PI);
-	c->pitch = asin(c->forward.y) * (180 / M_PI);
-}
-
-double pixel_size(t_camera *camera)
-{
-	double	half_view;
-
-	half_view = tan(camera->fov / 2);
-	camera->aspect_ratio = (double)camera->hsize / camera->vsize;
-	if (camera->aspect_ratio >= 1)
-	{
-		camera->half_width = half_view;
-		camera->half_height = camera->half_width / camera->aspect_ratio;
-	}
-	else
-	{
-		camera->half_height = half_view;
-		camera->half_width = camera->half_height / camera->aspect_ratio;
-	}
-	return (camera->half_width * 2) / camera->hsize;
-}
 
 t_camera	*camera(int hsize, int vsize, double fov)
 {
@@ -60,21 +35,12 @@ static t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
 	t_point		pixel;
 	t_point		origin;
 	t_vector	direction;
-	// t_matrix4	inverse_camera_transform;
 
 	pixel = matrix4_and_tuple_multiply(
 			c->inverse_transform, point(world_x, world_y, -1));
 	origin = matrix4_and_tuple_multiply(
 			c->inverse_transform, point(0, 0, 0));
 	direction = normalize(tuple_subtract(pixel, origin));
-	// FIXME: Backup. Started using set_camera_transform() so every pixel doesn't have
-	// to recalculate inversce_transform.
-	// inverse_camera_transform = matrix4_invert(c->transform);
-	// pixel = matrix4_and_tuple_multiply(
-			// inverse_camera_transform, point(world_x, world_y, -1));
-	// origin = matrix4_and_tuple_multiply(
-			// inverse_camera_transform, point(0, 0, 0));
-	// direction = normalize(tuple_subtract(pixel, origin));
 	return (ray(origin, direction));
 }
 
