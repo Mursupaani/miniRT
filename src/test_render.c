@@ -18,7 +18,9 @@ void	build_test_render(t_app *app)
 	t_world		*w;
 
 	w = world();
-	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
+	w->light = point_light(point(-20, 10, -20), color(0, 1, 1));
+	w->light->ambient_color = color (1, 0, 0);
+	w->light->ambient_ratio = 0.1;
 	c = camera(app->img->width, app->img->height, M_PI / 3);
 	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0), c);
 	init_camera_yaw_and_pitch(c);
@@ -72,6 +74,7 @@ void	build_test_render(t_app *app)
 	sphere->material.pattern = texture_map(sphere->material.pattern, spherical_map);
 	ft_bzero(&sphere->bump_map, sizeof(t_bump_map));
 	sphere->bump_map.has_bump_map = true;
+	sphere->material.reflective = 0.5;
 	sphere->material.transparency = 1;
 	sphere->material.refractive_index = 1.5;
 	sphere->bump_map.bump_map = bump;
@@ -105,7 +108,7 @@ void	build_test_render(t_app *app)
 	t_object *sky_sphere = sphere_new();
 	sky_sphere->material.pattern = texture_map(uv_image(space_sphere), spherical_map);
 	sky_sphere->material.ambient = 1;
-	sky_sphere->material.diffuse = 0;
+	sky_sphere->material.diffuse = 1;
 	sky_sphere->material.specular = 0;
 	add_transform(sky_sphere, rotation_y(-M_PI / 3));
 	add_transform(sky_sphere, scaling_matrix4(5000, 5000, 5000));
@@ -220,4 +223,5 @@ void	build_test_render(t_app *app)
 //
 	app->scene = w;
 	app->scene->camera = c;
+	printf("fov: %lf\n", app->scene->camera->fov);
 }

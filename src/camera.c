@@ -18,7 +18,7 @@ void	init_camera_yaw_and_pitch(t_camera *c)
 	c->pitch = asin(c->forward.y) * (180 / M_PI);
 }
 
-static	double pixel_size(t_camera *camera)
+double pixel_size(t_camera *camera)
 {
 	double	half_view;
 

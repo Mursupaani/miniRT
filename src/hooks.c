@@ -96,6 +96,8 @@ static void	handle_mouse_scroll(double xdelta, double ydelta, void *param)
 	app = (t_app *)param;
 	if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_CONTROL))
 		transform_light(app, ydelta);
+	else if (mlx_is_key_down(app->mlx, MLX_KEY_F))
+		change_camera_fov(app, ydelta);
 	else if (app->selected_object)
 	{
 		if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_SHIFT))

@@ -21,5 +21,7 @@ t_light	*point_light(t_point position, t_color intensity)
 		return (NULL);
 	point_light->intensity = intensity;
 	point_light->position = position;
+	point_light->ambient_color = color(1, 1, 1);
+	point_light->ambient_ratio = AMBIENT;
 	return (point_light);
 }
