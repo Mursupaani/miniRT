@@ -15,7 +15,7 @@
 double	matrix3_minor(t_matrix3 matrix, int row, int column)
 {
 	t_matrix2	submatrix;
-	double	minor;
+	double		minor;
 
 	if (row > 2 || row < 0 || column > 2 || column < 0)
 	{
@@ -41,7 +41,7 @@ double	matrix3_cofactor(t_matrix3 matrix, int row, int column)
 double	matrix4_minor(t_matrix4 matrix, int row, int column)
 {
 	t_matrix3	submatrix;
-	double	minor;
+	double		minor;
 
 	if (row > 3 || row < 0 || column > 3 || column < 0)
 	{

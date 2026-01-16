@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reflections.c                                      :+:      :+:    :+:   */
+/*   texture_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 11:35:34 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 20:49:55 by anpollan         ###   ########.fr       */
+/*   Created: 2026/01/16 20:35:47 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/16 20:35:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	reflected_color(t_world *w, t_computations comps, int reflections)
+t_pattern	texture_map(t_pattern ptrn, t_uv_map (*uv_map)(t_point))
 {
-	t_ray	reflect_ray;
-	t_color	color;
-
-	if (comps.object->material.reflective == 0 || reflections <= 0)
-		return ((t_color){0, 0, 0});
-	reflect_ray = ray(comps.over_point, comps.reflectv);
-	color = color_at(w, reflect_ray, --reflections);
-	return (color_multiply(color, comps.object->material.reflective));
+	ptrn.uv_pattern.uv_map = uv_map;
+	return (ptrn);
 }

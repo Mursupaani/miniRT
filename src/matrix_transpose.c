@@ -15,8 +15,8 @@
 t_matrix4	matrix4_transpose(t_matrix4 matrix)
 {
 	t_matrix4	result;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (i < 4)

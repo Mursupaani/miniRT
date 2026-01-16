@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:39:44 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/08 11:00:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:43:29 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	signal_threads_to_go_wait(t_app *app)
 
 void	wait_for_threads_to_be_ready(t_app *app)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < THREADS)
@@ -42,14 +42,14 @@ void	wait_for_threads_to_be_ready(t_app *app)
 		if (app->threads[i].render_done == false)
 		{
 			i = -1;
-			continue; ;
+			continue ;
 		}
 	}
 }
 
 void	wait_for_threads_to_start_render(t_app *app)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < THREADS)
@@ -57,7 +57,7 @@ void	wait_for_threads_to_start_render(t_app *app)
 		if (app->threads[i].render_done == true)
 		{
 			i = -1;
-			continue; ;
+			continue ;
 		}
 	}
 }

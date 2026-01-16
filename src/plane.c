@@ -1,19 +1,8 @@
 #include "minirt.h"
 
-t_object	*plane_new()
+t_object	*plane_new(void)
 {
 	return (object_new(PLANE));
-	// t_object	*plane;
-	//
-	// plane = ft_calloc(1, sizeof(t_object));
-	// if (!plane)
-	// 	return (NULL);
-	// plane->type = PLANE;
-	// plane->transform = matrix4_identity();
-	// plane->inverse_transform = matrix4_identity();
-	// plane->inverse_transpose = matrix4_identity();
-	// plane->material = material();
-	// return (plane);
 }
 
 t_intersections	*intersect_plane(t_object *plane, t_ray local_ray)

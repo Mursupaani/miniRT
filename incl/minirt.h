@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 19:07:59 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:25:50 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,14 @@ typedef enum s_uv_pattern_type
 }	t_uv_pattern_type;
 
 typedef struct s_thread_data t_thread_data;
+
+typedef struct s_look
+{
+	int32_t		x;
+	int32_t		y;
+	double		dx;
+	double		dy;
+}	t_look;
 
 typedef struct s_tuple
 {
@@ -326,6 +334,7 @@ typedef struct s_camera
 	t_point		from;
 	t_point		to;
 	t_vector	up;
+	t_vector	relative_up;
 	t_vector	forward;
 	t_vector	left;
 	double		yaw;
@@ -748,6 +757,11 @@ t_material		material_change_color(t_material material, t_color color);
 // Normal
 t_vector	normal_at(t_object *obj, t_point point);
 t_vector	local_normal_at(t_object *obj, t_point local_point);
+t_vector	plane_normal_at(t_object *plane, t_point local_point);
+t_vector	sphere_normal_at(t_object *sphere, t_point local_point);
+t_vector	cylinder_normal_at(t_object *cylinder, t_point local_point);
+t_vector	cone_normal_at(t_object *cone, t_point local_point);
+t_vector	cube_normal_at(t_object * obj, t_point world_point);
 
 // World
 t_world		*world();
@@ -784,7 +798,6 @@ double			min_of_max_t(double xtmin, double ytmin, double ztmin);
 double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
 void   	 		swap_doubles(double *tmin, double *tmax);
 double 	 		max_absolute_coord_component(double x, double y, double z);
-t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 // Cylinder
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
@@ -804,7 +817,6 @@ void		resize_selected_object(t_app *app, double ydelta);
 void		rotate_selected_object(t_app *app, double ydelta);
 void		transform_light(t_app *app, double ydelta);
 void		handle_movement(t_app *app);
-void		move_in_space(t_app *app, keys_t key);
 void		handle_looking_around(t_app *app);
 void		change_camera_fov(t_app *app, double ydelta);
 

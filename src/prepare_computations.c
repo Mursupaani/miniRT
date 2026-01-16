@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 14:33:45 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:55:45 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:52:51 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static	void	add_item(t_intersection *x, t_intersection **containers)
 	containers[i + 1] = NULL;
 }
 
-static	void remove_item(int i, t_intersection **containers, int containers_items)
+static void	remove_item(
+		int i, t_intersection **containers, int containers_items)
 {
 	containers[i] = NULL;
 	while (++i < containers_items)
@@ -33,7 +34,9 @@ static	void remove_item(int i, t_intersection **containers, int containers_items
 	}
 }
 
-static void	handle_item_in_container(t_intersections *xs, t_intersection **containers, int *containers_items, int i)
+static void	handle_item_in_container(
+	t_intersections *xs, t_intersection **containers,
+	int *containers_items, int i)
 {
 	int		j;
 	bool	found;
@@ -43,7 +46,8 @@ static void	handle_item_in_container(t_intersections *xs, t_intersection **conta
 	while (containers[++j])
 	{
 		if (xs->arr[i].object->type == containers[j]->object->type
-			&& matrix4s_are_equal(xs->arr[i].object->transform, containers[j]->object->transform))
+			&& matrix4s_are_equal(
+				xs->arr[i].object->transform, containers[j]->object->transform))
 		{
 			found = true;
 			break ;
@@ -75,10 +79,10 @@ static bool	get_n1_and_n2(
 	i = -1;
 	while (++i < xs->count)
 	{
-		if (xs->arr[i].object->type == x.object->type && xs->arr[i].t == x.t )
+		if (xs->arr[i].object->type == x.object->type && xs->arr[i].t == x.t)
 			handle_n1(comps, containers);
 		handle_item_in_container(xs, containers, &containers_items, i);
-		if (xs->arr[i].object->type == x.object->type && xs->arr[i].t == x.t )
+		if (xs->arr[i].object->type == x.object->type && xs->arr[i].t == x.t)
 		{
 			handle_n2(comps, containers);
 			break ;
@@ -92,14 +96,13 @@ t_computations	prepare_computations(
 			t_intersection x, t_ray r, t_intersections *xs)
 {
 	t_computations	comps;
-	
+
 	comps.t = x.t;
 	comps.object = x.object;
 	comps.point = ray_position(r, comps.t);
 	comps.eyev = tuple_negate(r.direction);
 	comps.normalv = normal_at(comps.object, comps.point);
 	comps.reflectv = reflect(r.direction, comps.normalv);
-	// If malloc fails in get_n1_and_n2?
 	get_n1_and_n2(x, xs, &comps);
 	if (dot(comps.normalv, comps.eyev) < 0)
 	{
@@ -108,8 +111,10 @@ t_computations	prepare_computations(
 	}
 	else
 		comps.inside = false;
-	comps.over_point = tuple_sum(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
-	comps.under_point = tuple_subtract(comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.over_point = tuple_sum(
+			comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
+	comps.under_point = tuple_subtract(
+			comps.point, tuple_scale_multiply(comps.normalv, EPSILON));
 	comps.shadowed = false;
 	return (comps);
 }

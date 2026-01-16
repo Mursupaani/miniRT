@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:00:05 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:35:14 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:42:54 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_shadowed(t_world *w, t_point p)
 	t_ray			r;
 	t_intersections	*xs;
 	t_intersection	h;
-	
+
 	v = tuple_subtract(w->light->position, p);
 	distance = vector_magnitude(v);
 	r = ray(p, normalize(v));
@@ -38,17 +38,17 @@ t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 	t_color		reflected;
 	t_color		refracted;
 	t_color		sum;
-	double	reflectance;
+	double		reflectance;
 
 	if (!w)
-		return (t_color){0, 0, 0};
+		return ((t_color){0, 0, 0});
 	if (is_shadowed(w, comps.over_point) == true)
 		comps.shadowed = true;
 	surface = lighting(comps, w->light);
 	reflected = reflected_color(w, comps, recursions);
 	refracted = refracted_color(w, comps, recursions);
 	if (comps.object->material.reflective > 0
-			&& comps.object->material.transparency > 0)
+		&& comps.object->material.transparency > 0)
 	{
 		reflectance = schlick(comps);
 		sum = color_sum(surface, color_multiply(reflected, reflectance));

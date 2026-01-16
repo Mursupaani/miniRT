@@ -39,24 +39,23 @@ t_vector	get_direction_from_angles(double yaw, double pitch)
 
 void	handle_looking_around(t_app *app)
 {
-	int32_t		x;
-	int32_t		y;
-	double		dx;
-	double		dy;
+	t_look		look;
 	t_camera	*c;
 	t_matrix4	view;
 
 	c = app->scene->camera;
 	mlx_set_cursor_mode(app->mlx, MLX_MOUSE_DISABLED);
-	mlx_get_mouse_pos(app->mlx, &x, &y);
-	if (doubles_are_equal(x, app->prev_mouse_x) && doubles_are_equal(y, app->prev_mouse_y))
+	mlx_get_mouse_pos(app->mlx, &look.x, &look.y);
+	if (doubles_are_equal(
+			look.x, app->prev_mouse_x)
+		&& doubles_are_equal(look.y, app->prev_mouse_y))
 		return ;
-	dx = x - app->prev_mouse_x;
-	dy = y - app->prev_mouse_y;
-	app->prev_mouse_x = x;
-	app->prev_mouse_y = y;
-	c->yaw -= (dx * MOUSE_SPEED);
-	c->pitch -= (dy * MOUSE_SPEED);
+	look.dx = look.x - app->prev_mouse_x;
+	look.dy = look.y - app->prev_mouse_y;
+	app->prev_mouse_x = look.x;
+	app->prev_mouse_y = look.y;
+	c->yaw -= (look.dx * MOUSE_SPEED);
+	c->pitch -= (look.dy * MOUSE_SPEED);
 	c->forward = get_direction_from_angles(c->yaw, c->pitch);
 	c->left = cross(c->up, c->forward);
 	view = view_transform(c->from, tuple_sum(c->from, c->forward), c->up, c);
