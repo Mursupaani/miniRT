@@ -6,7 +6,7 @@
 #    By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2026/01/15 16:12:37 by anpollan         ###   ########.fr        #
+#    Updated: 2026/01/16 19:30:41 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,28 +34,28 @@ MLX				= $(MLX_DIR)libmlx42.a
 # C-files
 C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  tuple.c tuple_math.c tuple_utils.c vector_math.c \
-				  rendering_utils.c matrix_utils.c \
-				  matrix_multiplication.c matrix_transpose.c \
-				  matrix_determinant.c submatrices.c hooks.c\
-				  matrix_minor_and_cofactor.c matrix_inversion.c \
-				  transformation.c rotations.c render_routine.c \
-				  intersect.c sphere.c intersection.c ray.c objects.c normal.c \
-				  reflect.c lighting.c color.c color_utils.c material.c \
-				  world.c intersect_world.c intersect_utils.c shading.c \
-				  view_transform.c camera.c patterns.c pattern_stripe.c \
-				  color_math.c pattern_gradient.c pattern_ring.c \
-				  parse_dispatcher.c parse_numbers.c parse_tuple.c \
-				  parse_utils.c parse_light_and_camera.c parse_objects.c \
-				  parse_objects_utils.c uv_patterns.c uv_checkers.c \
-				  spherical_map.c pattern_checkers.c reflections.c plane.c \
-				  prepare_computations.c prepare_computations_utils.c \
-				  refraction.c cube.c cube_utils.c cylinder.c cone.c \
+				  rendering_utils.c matrix_utils.c matrix_multiplication.c \
+				  matrix_transpose.c matrix_determinant.c submatrices.c \
+				  hooks.c matrix_minor_and_cofactor.c matrix_inversion.c \
+				  transformation.c rotations.c render_routine.c intersect.c \
+				  sphere.c intersection.c ray.c objects.c normal.c reflect.c \
+				  lighting.c color.c color_utils.c material.c world.c \
+				  intersect_world.c intersect_utils.c shading.c \
+				  view_transform.c camera.c camera_utils.c patterns.c \
+				  pattern_stripe.c color_math.c pattern_gradient.c \
+				  pattern_ring.c parse_dispatcher.c parse_numbers.c \
+				  parse_tuple.c parse_utils.c parse_light_and_camera.c \
+				  parse_objects.c parse_objects_utils.c uv_patterns.c \
+				  uv_checkers.c spherical_map.c pattern_checkers.c \
+				  reflections.c plane.c prepare_computations.c \
+				  prepare_computations_utils.c refraction.c cube.c \
+				  cube_utils.c cylinder.c cylinder_utils.c cone.c cone_utils.c \
 				  planar_map.c cylindrical_map.c cube_map.c uv_image.c \
-				  cubic_map.c cubic_map_utils.c cubic_map_utils2.c \
-				  bump_map.c uv_utils.c interact_world.c \
+				  cubic_map.c cubic_map_utils.c cubic_map_utils2.c bump_map.c \
+				  bump_map_utils.c uv_utils.c interact_world.c \
 				  restart_render.c move_objects.c render_frames.c \
 				  movement.c look_controls.c transform_selected_object.c \
-				  transform_light.c \
+				  transform_light.c hud.c quick_sort_intersections.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \
@@ -65,6 +65,9 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
+
+TEST_DIR		= ./src/tests/
+SRCS			= $(addprefix $(TEST_DIR), $(C_FILES))
 
 # OBJ-files
 OBJ_DIR			= ./obj/
@@ -91,6 +94,10 @@ $(MLX):
 	$(MAKE) -C $(MLX_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBFT_HEADER) $(MINIRT_HEADER) $(MLX)
+	mkdir -p $(OBJ_DIR)
+	cc $(C_FLAGS) $(INCL) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(TEST_DIR)%.c $(LIBFT_HEADER) $(MINIRT_HEADER) $(MLX)
 	mkdir -p $(OBJ_DIR)
 	cc $(C_FLAGS) $(INCL) -c $< -o $@
 

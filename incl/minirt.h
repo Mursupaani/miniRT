@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 16:13:58 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 19:07:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # endif
 
 # ifndef FOV_CHANGE
-#  define FOV_CHANGE 5
+#  define FOV_CHANGE 1
 # endif
 
 typedef enum s_exit_value
@@ -357,6 +357,7 @@ typedef struct s_app
 	bool			left_mouse_down;
 	bool			right_mouse_down;
 	bool			moving;
+	bool			show_hud;
 	int32_t			prev_mouse_x;
 	int32_t			prev_mouse_y;
 	t_object		*selected_object;
@@ -367,6 +368,7 @@ typedef struct s_app
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];
+	mlx_image_t		*hud;
 	size_t			pixel_count;
 	int				bg_img_index;
 	t_world			*scene;
@@ -556,6 +558,16 @@ void		display_finished_frame(t_app *app);
 bool		all_threads_finished_frame(t_app *app);
 bool		all_threads_started_new_frame(t_app *app);
 void		empty_image_buffer(struct mlx_image *img, size_t pixel_count);
+void		print_hud(t_app *app);
+
+// Hooks:
+void	handle_mouse_scroll(double xdelta, double ydelta, void *param);
+void	handle_mouse(
+	enum mouse_key key, enum action action,
+	enum modifier_key mod_key, void *param);
+void	handle_keypress(mlx_key_data_t keydata, void *param);
+void	close_window_mouse(void *param);
+void	per_frame_loop(void *param);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
@@ -762,6 +774,9 @@ t_intersections	*intersect_plane(t_object *plane, t_ray ray);
 t_object		*cone_new(void);
 t_intersections	*intersect_cone(t_object *cylinder, t_ray local_ray);
 t_coefs			calculate_cone_coefs(t_ray local_ray);
+t_intersections	*intersect_cone_caps(
+		t_object *cone, t_ray local_ray, t_intersections *xs);
+bool	check_cone_cap(t_ray local_ray, double t, double limit);
 
 // Cube
 t_intersections	*intersect_cube(t_object *cube, t_ray ray);
@@ -773,9 +788,14 @@ t_vector		cube_normal_at(t_object * obj, t_point world_point);
 
 // Cylinder
 t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
+t_intersections *intersect_cylinder_caps(
+		t_object *cylinder, t_ray local_ray, t_intersections *xs);
+bool	check_cylinder_cap(t_ray local_ray, double t);
 
 // Bump map
 void	apply_bump_map_on_normal(t_object *obj, t_vector *local_normal, t_point local_point);
+void	get_tangent_and_bitangent(
+		t_object_type obj_type, t_vector local_normal, t_bump_map *bm);
 
 // Interact world
 void		select_object_from_screen(t_app *app);

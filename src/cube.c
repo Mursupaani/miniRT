@@ -6,17 +6,19 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:27:07 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:45:48 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:55:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_intersections	*calculate_min_and_max(t_loc_intersect xt, t_loc_intersect yt, t_loc_intersect zt, t_object *cube)
+static t_intersections	*calculate_min_and_max(
+		t_loc_intersect xt, t_loc_intersect yt,
+		t_loc_intersect zt, t_object *cube)
 {
 	t_intersections		*xs;
-	double	tmin;
-	double	tmax;
+	double				tmin;
+	double				tmax;
 
 	tmin = max_of_min_t(xt.min, yt.min, zt.min);
 	tmax = min_of_max_t(xt.max, yt.max, zt.max);
@@ -34,7 +36,7 @@ t_intersections	*calculate_min_and_max(t_loc_intersect xt, t_loc_intersect yt, t
 	return (xs);
 }
 
-t_loc_intersect	check_axis(double origin, double direction)
+static t_loc_intersect	check_axis(double origin, double direction)
 {
 	double				tmin_numerator;
 	double				tmax_numerator;
@@ -73,19 +75,4 @@ t_intersections	*intersect_cube(t_object *cube, t_ray local_ray)
 t_object	*cube_new(void)
 {
 	return (object_new(CUBE));
-	// t_object	*cube;
-	//
-	// cube = ft_calloc(1, sizeof(t_object));
-	// if (!cube)
-	// 	return (NULL);
-	// cube->type = CUBE;
-	// cube->center = point(0, 0, 0);
-	// cube->transform = matrix4_identity();
-	// cube->inverse_transform = cube->transform;
-	// cube->inverse_transpose = cube->transform;
-	// cube->material = material();
-	// // FIXME: Cube dimensions?
-	// cube->height = 1;
-	// cube->diameter = 1;
-	// return (cube);
 }
