@@ -1,34 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/16 20:26:45 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/16 20:28:56 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
-
-static void	free_textures(mlx_texture_t *textures[6])
-{
-	int	i;
-
-	i = -1;
-	while (textures[++i])
-	{
-		mlx_delete_texture(textures[i]);
-		textures[i] = NULL;
-	}
-}
-
-void	free_object_array(t_object **objs)
-{
-	int	i;
-
-	if (!objs)
-		return ;
-	i = -1;
-	while (objs[++i])
-	{
-		if (objs[i]->material.pattern.type == MAP)
-			free_textures(objs[i]->material.pattern.uv_pattern.textures);
-		free(objs[i]);
-		objs[i] = NULL;
-	}
-	free(objs);
-	objs = NULL;
-}
 
 void	add_transform(t_object *object, t_matrix4 transform)
 {
@@ -48,6 +30,22 @@ void	set_transform(t_object *object, t_matrix4 transform)
 	object->inverse_transpose = matrix4_transpose(object->inverse_transform);
 }
 
+static void	set_min_max_closed(t_object *obj, t_object_type type)
+{
+	if (type == CYLINDER || type == CONE)
+	{
+		obj->minimum = -INFINITY;
+		obj->maximum = INFINITY;
+		obj->closed = false;
+	}
+	else
+	{
+		obj->minimum = 0;
+		obj->maximum = 0;
+		obj->closed = true;
+	}
+}
+
 t_object	*object_new(t_object_type type)
 {
 	t_object	*obj;
@@ -63,17 +61,6 @@ t_object	*object_new(t_object_type type)
 	obj->transform = matrix4_identity();
 	obj->inverse_transform = obj->transform;
 	obj->inverse_transpose = obj->transform;
-	if (type == CYLINDER || type == CONE)
-	{
-		obj->minimum = -INFINITY;
-		obj->maximum = INFINITY;
-		obj->closed = false;
-	}
-	else
-	{
-		obj->minimum = 0;
-		obj->maximum = 0;
-		obj->closed = true;
-	}
+	set_min_max_closed(obj, type);
 	return (obj);
 }

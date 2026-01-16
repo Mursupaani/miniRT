@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 12:47:12 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/01 16:06:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:36:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_pattern	uv_image_cube_same_texture(mlx_texture_t *texture)
 {
-	t_pattern	ptrn;;
+	t_pattern	ptrn;
 
 	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
 	ptrn.uv_pattern.type = UV_TEXTURE;
@@ -29,7 +29,7 @@ t_pattern	uv_image_cube_same_texture(mlx_texture_t *texture)
 
 t_pattern	uv_image_cube(mlx_texture_t *textures[6])
 {
-	t_pattern	ptrn;;
+	t_pattern	ptrn;
 
 	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
 	ptrn.uv_pattern.type = UV_TEXTURE;
@@ -44,7 +44,7 @@ t_pattern	uv_image_cube(mlx_texture_t *textures[6])
 
 t_pattern	uv_image(mlx_texture_t *image)
 {
-	t_pattern	ptrn;;
+	t_pattern	ptrn;
 
 	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
 	ptrn.uv_pattern.type = UV_TEXTURE;

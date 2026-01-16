@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:30 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/07 14:12:34 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:34:32 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static t_matrix4	add_orientation_values(
 
 t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c)
 {
-	// t_vector	forward;
-	// t_vector	left;
 	t_vector	true_up;
 	t_matrix4	orientation;
 
@@ -45,6 +43,7 @@ t_matrix4	view_transform(t_point from, t_point to, t_vector up, t_camera *c)
 	c->left = cross(c->forward, normalize(up));
 	true_up = cross(c->left, c->forward);
 	orientation = add_orientation_values(c->left, true_up, c->forward);
-	return  (matrix4_multiply(orientation,
-				translation_matrix4(-from.x, -from.y, -from.z)));
+	c->relative_up = cross(c->left, c->forward);
+	return (matrix4_multiply(orientation,
+			translation_matrix4(-from.x, -from.y, -from.z)));
 }

@@ -39,8 +39,8 @@ static double	get_row_column_product(
 t_matrix4	matrix4_multiply(t_matrix4 m1, t_matrix4 m2)
 {
 	t_matrix4	result;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = 0;
 	ft_bzero(&result, sizeof(result));

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_routine.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/16 20:44:06 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/16 20:47:20 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file render_routine.c
  * @brief This file handles thread creation and rendering the image
@@ -9,12 +21,13 @@
  *
  */
 #include "minirt.h"
+#include <stdint.h>
 
 static int	init_threads(t_app *app)
 {
 	int	i;
 	int	rows_per_thread;
-	
+
 	i = 0;
 	app->threads = malloc(sizeof(t_thread_data) * THREADS);
 	if (!app->threads)
@@ -40,12 +53,13 @@ static int	init_threads(t_app *app)
 	return (0);
 }
 
-int	write_pixelated_section(unsigned int *x, unsigned int *y, t_thread_data *data, t_color c)
+int	write_pixelated_section(
+		unsigned int *x, unsigned int *y, t_thread_data *data, t_color c)
 {
-	unsigned int i;
-	unsigned int j;
-	unsigned int local_x;
-	unsigned int local_y;
+	uint32_t	i;
+	uint32_t	j;
+	uint32_t	local_x;
+	uint32_t	local_y;
 
 	local_x = *x;
 	local_y = *y;
@@ -54,7 +68,8 @@ int	write_pixelated_section(unsigned int *x, unsigned int *y, t_thread_data *dat
 	{
 		j = -1;
 		while (++j < data->pixelate_scale && local_x < data->app->img->width)
-			mlx_put_pixel(data->app->img, local_x++, local_y, color_hex_from_color(c));
+			mlx_put_pixel(
+				data->app->img, local_x++, local_y, color_hex_from_color(c));
 		local_x -= j;
 		local_y++;
 	}
@@ -77,10 +92,11 @@ void	loop_image_by_pixelation_scale(t_thread_data *data)
 				return ;
 			}
 			++data->j;
-			if (data->i % 2 == 0 && data->j % 2 == 0 && data->pixelate_scale != PIXELATE_SCALE)
+			if (data->i % 2 == 0 && data->j % 2 == 0
+				&& data->pixelate_scale != PIXELATE_SCALE)
 			{
 				data->x += data->pixelate_scale;
-				continue;
+				continue ;
 			}
 			data->ray = ray_for_pixel(data->app->scene->camera, data->x, data->y);
 			data->color = color_at(data->app->scene, data->ray, RECURSIONS);
@@ -151,8 +167,7 @@ void	*render_routine(void *arg)
 {
 	t_thread_data	*data;
 
- 	data = (t_thread_data *)arg;
-
+	data = (t_thread_data *)arg;
 	while (*data->keep_rendering)
 	{
 		if (data->app->pixelate)
@@ -182,7 +197,7 @@ void	launch_render(t_app *app)
 	while (i < THREADS)
 	{
 		if (pthread_create(&app->threads[i].thread_handle, NULL, render_routine,
-			&app->threads[i]) != 0)
+				&app->threads[i]) != 0)
 		{
 			join_threads(app->threads, i);
 			exit_and_free_memory(ERROR_THREADS, app);

@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:31:20 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/18 15:46:32 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:49:39 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ double	schlick(t_computations comps)
 	return (r0 + (1 - r0) * pow((1 - cos), 5));
 }
 
-static t_color calculate_refracted_color(t_world *w, t_computations comps, int recursions)
+static t_color	calculate_refracted_color(
+		t_world *w, t_computations comps, int recursions)
 {
 	t_refraction	r;
 	t_vector		direction;
@@ -48,7 +49,8 @@ static t_color calculate_refracted_color(t_world *w, t_computations comps, int r
 		return ((t_color){0, 0, 0});
 	r.cos_t = sqrt(1 - r.sin2_t);
 	direction = tuple_subtract(
-			tuple_scale_multiply(comps.normalv, (r.n_ratio * r.cos_i - r.cos_t)),
+			tuple_scale_multiply(comps.normalv,
+				(r.n_ratio * r.cos_i - r.cos_t)),
 			tuple_scale_multiply(comps.eyev, r.n_ratio));
 	refract_ray = ray(comps.under_point, direction);
 	c = color_at(w, refract_ray, recursions - 1);

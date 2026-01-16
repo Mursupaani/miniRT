@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 13:20:12 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/15 15:48:32 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:40:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,25 @@ static void	set_obj_back_to_original_pos(t_object *obj, t_matrix4 orig_pos)
 
 void	resize_selected_object(t_app *app, double ydelta)
 {
-	double	scale_factor;
+	double		scale_factor;
 	t_matrix4	orig_pos;
+	t_object	*selected;
 
-	orig_pos = store_pos_and_set_pos_to_origin(app->selected_object);
+	selected = app->selected_object;
+	orig_pos = store_pos_and_set_pos_to_origin(selected);
 	scale_factor = 1 + (0.01 * ydelta);
 	if (mlx_is_key_down(app->mlx, MLX_KEY_X))
-		add_transform(app->selected_object, scaling_matrix4(scale_factor, 1, 1));
+		add_transform(selected, scaling_matrix4(scale_factor, 1, 1));
 	else if (mlx_is_key_down(app->mlx, MLX_KEY_Z))
-		add_transform(app->selected_object, scaling_matrix4(1, 1, scale_factor));
-	else if (mlx_is_key_down(app->mlx, MLX_KEY_Y) || (mlx_is_key_down(app->mlx, MLX_KEY_H)))
-		add_transform(app->selected_object, scaling_matrix4(1, scale_factor, 1));
-	else if (mlx_is_key_down(app->mlx, MLX_KEY_W))
-		add_transform(app->selected_object, scaling_matrix4(scale_factor, 1, scale_factor));
+		add_transform(selected, scaling_matrix4(1, 1, scale_factor));
+	else if (mlx_is_key_down(app->mlx, MLX_KEY_Y))
+		add_transform(selected, scaling_matrix4(1, scale_factor, 1));
+	else if (mlx_is_key_down(app->mlx, MLX_KEY_C))
+		add_transform(selected, scaling_matrix4(scale_factor, 1, scale_factor));
 	else
-		add_transform(app->selected_object, scaling_matrix4(scale_factor, scale_factor, scale_factor));
-	set_obj_back_to_original_pos(app->selected_object, orig_pos);
+		add_transform(selected,
+			scaling_matrix4(scale_factor, scale_factor, scale_factor));
+	set_obj_back_to_original_pos(selected, orig_pos);
 	app->data_changed = true;
 }
 

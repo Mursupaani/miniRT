@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 12:06:15 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 19:25:10 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:32:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_color	pattern_at(t_pattern ptrn, t_point ptrn_point)
 	else
 		return ((t_color){DBL_MIN, DBL_MIN, DBL_MIN});
 }
-
 
 t_color	pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p)
 {

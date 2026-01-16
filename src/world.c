@@ -6,13 +6,14 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:31:17 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/12 14:20:30 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:33:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_object	**copy_objects_to_array(t_object **old_arr, t_object **new_arr, t_object *new)
+static t_object	**copy_objects_to_array(
+		t_object **old_arr, t_object **new_arr, t_object *new)
 {
 	int	i;
 
@@ -48,7 +49,7 @@ t_object	**add_object_to_world(t_object *obj, t_world *w)
 	return (w->objects);
 }
 
-t_world	*world()
+t_world	*world(void)
 {
 	t_world	*w;
 
@@ -59,10 +60,10 @@ t_world	*world()
 	return (w);
 }
 
-t_world	*default_world()
+t_world	*default_world(void)
 {
-	t_world	*w;
-	t_matrix4 transform;
+	t_world		*w;
+	t_matrix4	transform;
 
 	w = world();
 	if (!w)

@@ -21,6 +21,7 @@ void	build_chapter7_world(t_app *app)
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
 	t_matrix4 c_trans = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0), c);
+	init_camera_yaw_and_pitch(c);
 	set_camera_transform(c, c_trans);
 
 	t_pattern uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));

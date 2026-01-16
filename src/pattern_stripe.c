@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:55:11 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/16 17:35:29 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:32:37 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 t_pattern	stripe_pattern(t_color a, t_color b)
 {
 	return (create_pattern(STRIPE, a, b));
-	// t_pattern	ptrn;
-	//
-	// ptrn.type = STRIPE;
-	// ptrn.a = a;
-	// ptrn.b = b;
-	// ptrn.transform = matrix4_identity();
-	// ptrn.inverse_transform = ptrn.transform;
-	// ptrn.inverse_transpose = ptrn.transform;
-	// return (ptrn);
 }
 
 t_color	stripe_at(t_pattern stripe, t_point p)
@@ -44,9 +35,9 @@ t_color	stripe_at(t_pattern stripe, t_point p)
 	}
 }
 
+//FIXME: Used only in testing?
 t_color	stripe_at_object(t_pattern ptrn, t_object *obj, t_point p)
 {
-	//FIXME: Used only in testing?
 	t_point	obj_point;
 	t_point	ptrn_point;
 
