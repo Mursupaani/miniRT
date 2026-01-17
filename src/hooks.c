@@ -6,35 +6,11 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 19:08:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:27:35 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-void	per_frame_loop(void *param)
-{
-	t_app	*app;
-
-	app = (t_app *)param;
-	if (app->show_hud)
-		print_hud(app);
-	if (all_threads_finished_frame(app))
-		display_finished_frame(app);
-	if (all_threads_started_new_frame(app))
-		app->start_next_frame = false;
-	handle_movement(app);
-	if (app->right_mouse_down)
-		handle_looking_around(app);
-	if (app->left_mouse_down)
-		move_oject_on_screen(app);
-	if (app->data_changed)
-	{
-		restart_render(app);
-		app->data_changed = false;
-		app->moving = false;
-	}
-}
 
 void	close_window_mouse(void *param)
 {
@@ -63,13 +39,11 @@ void	handle_keypress(mlx_key_data_t keydata, void *param)
 	else if (keydata.key == MLX_KEY_H && keydata.action == MLX_PRESS)
 	{
 		app->show_hud = !app->show_hud;
-		printf("hud %p\n", app->hud);
 		if (!app->show_hud && app->hud)
 		{
 			mlx_delete_image(app->mlx, app->hud);
 			app->hud = NULL;
 		}
-		printf("hud %p\n", app->hud);
 	}
 }
 

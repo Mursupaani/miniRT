@@ -45,7 +45,7 @@ static void	loop_image_by_pixelation_scale(t_thread_data *data)
 		data->j = -1;
 		while (data->x < data->app->img->width)
 		{
-			if (data->app->go_wait)
+			if (data->pixelate_scale != PIXELATE_SCALE && data->app->go_wait)
 				return ;
 			++data->j;
 			if (data->i % 2 == 0 && data->j % 2 == 0
