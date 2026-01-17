@@ -37,7 +37,10 @@ t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
 		return (NULL);
 	xs->arr = malloc(sizeof(t_intersection) * 2);
 	if (!xs->arr)
+	{
+		free(xs);
 		return (NULL);
+	}
 	xs->arr[0] = intersection((-abc[1] - sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->arr[1] = intersection((-abc[1] + sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->count = 2;

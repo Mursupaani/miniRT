@@ -12,7 +12,27 @@
 
 #include "minirt.h"
 
-static void	set_object_new_position(t_app *app, t_camera *c, t_ray r)
+static void	move_object_in_depth(t_app *app, t_camera *c, t_look look)
+{
+	t_vector	new_pos;
+
+	look.dy = app->prev_mouse_y - look.y;
+	app->prev_mouse_y = look.y;
+	if (look.dy == 0)
+		return ;
+	new_pos.x = app->selected_object->transform.data[0][3]
+		+ (c->forward.x * (look.dy * 0.005));
+	new_pos.y = app->selected_object->transform.data[1][3]
+		+ (c->forward.y * (look.dy * 0.005));
+	new_pos.z = app->selected_object->transform.data[2][3]
+		+ (c->forward.z * (look.dy * 0.005));
+	app->selected_object->transform.data[0][3] = new_pos.x;
+	app->selected_object->transform.data[1][3] = new_pos.y;
+	app->selected_object->transform.data[2][3] = new_pos.z;
+	set_transform(app->selected_object, app->selected_object->transform);
+}
+
+static void	move_object_in_x_y(t_app *app, t_camera *c, t_ray r)
 {
 	t_vector	new_pos;
 
@@ -55,13 +75,18 @@ void	move_oject_on_screen(t_app *app)
 
 	if (!app->selected_object)
 		return ;
-	c = app->scene->camera;
 	mlx_get_mouse_pos(app->mlx, &look.x, &look.y);
 	if (mouse_not_moved(app, look))
 		return ;
+	c = app->scene->camera;
 	app->moving = true;
-	r = ray_for_pixel(c, look.x, look.y);
-	set_object_new_position(app, c, r);
+	if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_ALT))
+		move_object_in_depth(app, c, look);
+	else
+	{
+		r = ray_for_pixel(c, look.x, look.y);
+		move_object_in_x_y(app, c, r);
+	}
 	app->data_changed = true;
 }
 

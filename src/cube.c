@@ -29,7 +29,10 @@ static t_intersections	*calculate_min_and_max(
 		return (NULL);
 	xs->arr = malloc(sizeof(t_intersection) * 2);
 	if (!xs->arr)
+	{
+		free(xs);
 		return (NULL);
+	}
 	xs->count = 2;
 	xs->arr[0] = intersection(tmin, cube);
 	xs->arr[1] = intersection(tmax, cube);
