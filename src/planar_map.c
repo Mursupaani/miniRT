@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:27:23 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 18:57:05 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:31:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_uv_map	planar_map(t_point p)
 
 	raw_u = modf(p.x, &integer_part);
 	raw_v = modf(p.z, &integer_part);
-	// FIXME: No need to check? Just use the fmod without raw_u and raw_v?
 	if (raw_u >= 0)
 		u = fmod(raw_u, 1);
 	else
