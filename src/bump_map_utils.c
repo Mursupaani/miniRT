@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 18:20:49 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 18:25:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:32:35 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	get_plane_tangent_and_bitangent(t_bump_map *bm)
 	bm->bitangent = vector(0, 0, 1);
 }
 
+// NOTE: Cylinder caps are not yet implemented
 void	get_tangent_and_bitangent(
 		t_object_type obj_type, t_vector local_normal, t_bump_map *bm)
 {
-	// fix cylinder caps
 	if (obj_type == SPHERE || obj_type == CYLINDER)
 		get_sphere_tangent_bitangent(local_normal, bm);
 	else if (obj_type == PLANE || obj_type == CUBE)

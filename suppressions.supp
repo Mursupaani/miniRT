@@ -233,3 +233,25 @@
    ...
    fun:gtk_css_gadget_get_preferred_size
 }
+{
+   <dlopen_doit>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlopen_doit
+}
+{
+   <_dl_catch_error>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_catch_error
+}
+{
+   </usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so
+}
+

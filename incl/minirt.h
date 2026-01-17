@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 20:25:50 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:30:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -647,6 +647,7 @@ bool		pixel_fits_image(double x, double y, t_app *app);
 void		*render_routine(void *arg);
 void		launch_render(t_app *app);
 void		join_threads(t_thread_data *thread_data, int thread_count);
+void		render_pixelated(t_thread_data *data);
 
 // Intersections:
 t_intersection	intersection(double t, t_object *object);
