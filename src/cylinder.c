@@ -26,6 +26,20 @@ static bool	intersection_within_limits(
 	return (false);
 }
 
+static t_intersections	*malloc_xs_array(t_intersections **xs, int xs_count)
+{
+	*xs = malloc(sizeof(t_intersections));
+	if (!(*xs))
+		return (false);
+	(*xs)->arr = malloc(sizeof(t_intersection) * xs_count);
+	if (!(*xs)->arr)
+	{
+		free(*xs);
+		return (NULL);
+	}
+	return (*xs);
+}
+
 static t_intersections	*calculate_hit_points(
 		t_object *cylinder, double t0, double t1, t_ray local_ray)
 {
@@ -40,10 +54,8 @@ static t_intersections	*calculate_hit_points(
 	add_t1 = intersection_within_limits(cylinder, t1, local_ray, &xs_count);
 	if (add_t0 == false && add_t1 == false)
 		return (intersect_cylinder_caps(cylinder, local_ray, NULL));
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
+	if (malloc_xs_array(&xs, xs_count) == NULL)
 		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * xs_count);
 	xs->count = xs_count;
 	i = 0;
 	if (add_t0)

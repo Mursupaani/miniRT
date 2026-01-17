@@ -139,6 +139,7 @@ void	build_test_render(t_app *app)
 	add_object_to_world(base, w);
 
 	t_object *stem = cylinder_new();
+	stem->closed = true;
 	stem->minimum = 0.2;
 	stem->maximum = 1.35;
 	stem->material.color = color(0.1, 0.1, 0.1);

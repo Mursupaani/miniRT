@@ -53,7 +53,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  planar_map.c cylindrical_map.c cube_map.c uv_image.c \
 				  cubic_map.c cubic_map_utils.c cubic_map_utils2.c bump_map.c \
 				  bump_map_utils.c uv_utils.c select_and_move_object.c \
-				  restart_render.c move_objects.c display_finished_frame.c \
+				  restart_render.c display_finished_frame.c \
 				  movement.c look_controls.c transform_selected_object.c \
 				  transform_light.c hud.c quick_sort_intersections.c \
 				  normal_utils.c free_memory.c texture_map.c \
