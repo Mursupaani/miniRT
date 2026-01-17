@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_color	sample_hit(mlx_texture_t *bump_map, uint x, uint y)
+t_color	sample_hit(mlx_texture_t *bump_map, uint32_t x, uint32_t y)
 {
 	int			offset;
 	t_color255	sample;
@@ -42,13 +42,13 @@ void	calculate_slopes(t_bump_map *bm)
 
 void	sample_bump_map(t_bump_map *bm, t_uv_map uv)
 {
-	uint		x;
-	uint		y;
-	uint		x_offset;
-	uint		y_offset;
+	uint32_t		x;
+	uint32_t		y;
+	uint32_t		x_offset;
+	uint32_t		y_offset;
 
-	x = (uint)(uv.u * (bm->bump_map->width - 1));
-	y = (uint)((1 - uv.v) * (bm->bump_map->height - 1));
+	x = (uint32_t)(uv.u * (bm->bump_map->width - 1));
+	y = (uint32_t)((1 - uv.v) * (bm->bump_map->height - 1));
 	x_offset = (x + 1) % bm->bump_map->width;
 	y_offset = (y + 1) % bm->bump_map->width;
 	bm->sample_hit = sample_hit(bm->bump_map, x, y);
