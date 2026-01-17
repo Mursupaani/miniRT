@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/07 14:13:35 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:09:46 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	build_chapter7_world(t_app *app)
 
 	t_object *cube = cube_new();
 	cube->material.pattern = texture_map(uv_align_cube_pattern(), cubic_map);
+	cube->material.reflective = 0.5;
 	cube->material.transparency = 0.5;
 	cube->material.refractive_index = 4.5;
 	add_transform(cube, scaling_matrix4(0.4, 0.4, 0.4));

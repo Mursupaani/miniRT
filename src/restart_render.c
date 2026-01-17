@@ -12,6 +12,9 @@
 
 #include "minirt.h"
 
+	// app->bg_img_index = !app->bg_img_index;
+	// app->img = app->img_buffers[app->bg_img_index];
+
 // bool	all_threads_ready_for_instructions(t_app *app)
 // {
 // 	int i;
@@ -24,13 +27,7 @@
 // 	}
 // 	return (true);
 // }
-
-void	signal_threads_to_go_wait(t_app *app)
-{
-	app->go_wait = true;
-	wait_for_threads_to_be_ready(app);
-	app->go_wait = false;
-}
+//
 
 void	wait_for_threads_to_be_ready(t_app *app)
 {
@@ -41,10 +38,17 @@ void	wait_for_threads_to_be_ready(t_app *app)
 	{
 		if (app->threads[i].render_done == false)
 		{
+			usleep(100);
 			i = -1;
-			continue ;
 		}
 	}
+}
+
+void	signal_threads_to_go_wait(t_app *app)
+{
+	app->go_wait = true;
+	wait_for_threads_to_be_ready(app);
+	app->go_wait = false;
 }
 
 void	wait_for_threads_to_start_render(t_app *app)
@@ -56,8 +60,8 @@ void	wait_for_threads_to_start_render(t_app *app)
 	{
 		if (app->threads[i].render_done == true)
 		{
+			usleep(100);
 			i = -1;
-			continue ;
 		}
 	}
 }
@@ -66,9 +70,10 @@ void	restart_render(t_app *app)
 {
 	app->restart_render = false;
 	signal_threads_to_go_wait(app);
-	app->bg_img_index = !app->bg_img_index;
-	app->img = app->img_buffers[app->bg_img_index];
-	app->restart_render = true;
-	wait_for_threads_to_start_render(app);
-	app->restart_render = false;
+	if (app->go_wait == false)
+	{
+		app->restart_render = true;
+		wait_for_threads_to_start_render(app);
+		app->restart_render = false;
+	}
 }

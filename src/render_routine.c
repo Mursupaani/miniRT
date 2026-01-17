@@ -95,6 +95,7 @@ void	*render_routine(void *arg)
 				break ;
 			usleep(50);
 		}
+		data->frame_done = false;
 		data->render_done = false;
 	}
 	return (NULL);

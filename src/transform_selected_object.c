@@ -6,11 +6,10 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 13:20:12 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 20:40:44 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:29:45 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static t_matrix4	store_pos_and_set_pos_to_origin(t_object *obj)
@@ -41,6 +40,7 @@ void	resize_selected_object(t_app *app, double ydelta)
 	t_object	*selected;
 
 	selected = app->selected_object;
+	app->moving = true;
 	orig_pos = store_pos_and_set_pos_to_origin(selected);
 	scale_factor = 1 + (0.01 * ydelta);
 	if (mlx_is_key_down(app->mlx, MLX_KEY_X))
@@ -63,6 +63,7 @@ void	rotate_selected_object(t_app *app, double ydelta)
 	t_matrix4	orig_pos;
 
 	orig_pos = store_pos_and_set_pos_to_origin(app->selected_object);
+	app->moving = true;
 	if (mlx_is_key_down(app->mlx, MLX_KEY_X))
 		add_transform(app->selected_object, rotation_x(ydelta * (M_PI / 180)));
 	else if (mlx_is_key_down(app->mlx, MLX_KEY_Y))

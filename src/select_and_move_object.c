@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interact_world.c                                   :+:      :+:    :+:   */
+/*   select_and_move_object.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 15:41:46 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 19:27:39 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:36:04 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,18 @@ static t_vector	get_selected_object_offest(
 
 void	move_oject_on_screen(t_app *app)
 {
-	int			x;
-	int			y;
+	t_look		look;
 	t_ray		r;
 	t_camera	*c;
 
 	if (!app->selected_object)
 		return ;
 	c = app->scene->camera;
-	mlx_get_mouse_pos(app->mlx, &x, &y);
-	if (doubles_are_equal(app->prev_mouse_x, x)
-		&& doubles_are_equal(app->prev_mouse_y, y))
+	mlx_get_mouse_pos(app->mlx, &look.x, &look.y);
+	if (mouse_not_moved(app, look))
 		return ;
-	r = ray_for_pixel(c, x, y);
+	app->moving = true;
+	r = ray_for_pixel(c, look.x, look.y);
 	set_object_new_position(app, c, r);
 	app->data_changed = true;
 }

@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 16:30:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:24:34 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include "libft.h"
 # include <pthread.h>
+# include <sys/time.h>
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
@@ -76,6 +77,10 @@
 
 # ifndef FOV_CHANGE
 #  define FOV_CHANGE 1
+# endif
+
+# ifndef TARGET_FRAME_TIME
+#  define TARGET_FRAME_TIME 125
 # endif
 
 typedef enum s_exit_value
@@ -367,6 +372,7 @@ typedef struct s_app
 	bool			right_mouse_down;
 	bool			moving;
 	bool			show_hud;
+	uint64_t		last_frame_time;
 	int32_t			prev_mouse_x;
 	int32_t			prev_mouse_y;
 	t_object		*selected_object;
@@ -577,6 +583,7 @@ void	handle_mouse(
 void	handle_keypress(mlx_key_data_t keydata, void *param);
 void	close_window_mouse(void *param);
 void	per_frame_loop(void *param);
+bool	mouse_not_moved(t_app *app, t_look look);
 
 // Memory handling and exit:
 void		free_app_memory(t_app *app);
