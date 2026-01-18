@@ -347,6 +347,7 @@ typedef struct s_camera
 	t_point		from;
 	t_point		to;
 	t_vector	up;
+	t_vector	world_up;
 	t_vector	relative_up;
 	t_vector	forward;
 	t_vector	left;
@@ -664,6 +665,8 @@ bool	tuples_are_equal(t_tuple a, t_tuple b);
 
 // Math utils:
 bool		doubles_are_equal(double a, double b);
+double		rad_to_deg(double rad);
+double		deg_to_rad(double deg);
 
 // Rendering utils
 bool		pixel_fits_image(double x, double y, t_app *app);
