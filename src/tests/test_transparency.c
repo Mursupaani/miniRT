@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minirt.h"
 
 t_object	*glass_sphere()
@@ -83,17 +82,17 @@ And comps.n2 = <n2>\n");
 	xs->arr[4] = (t_intersection){5.25, c};
 	xs->arr[5] = (t_intersection){6, a};
 	xs->count = 6;
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
 	printf("[0]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
-	comps = prepare_computations(xs->arr[1], r, xs);
+	comps = prepare_computations(xs->arr[1], r, xs, NULL);
 	printf("[1]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
-	comps = prepare_computations(xs->arr[2], r, xs);
+	comps = prepare_computations(xs->arr[2], r, xs, NULL);
 	printf("[2]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
-	comps = prepare_computations(xs->arr[3], r, xs);
+	comps = prepare_computations(xs->arr[3], r, xs, NULL);
 	printf("[3]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
-	comps = prepare_computations(xs->arr[4], r, xs);
+	comps = prepare_computations(xs->arr[4], r, xs, NULL);
 	printf("[4]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
-	comps = prepare_computations(xs->arr[5], r, xs);
+	comps = prepare_computations(xs->arr[5], r, xs, NULL);
 	printf("[5]: | n1 = %f |\t| n2 = %f |\n", comps.n1, comps.n2);
 }
 
@@ -117,7 +116,7 @@ And comps.point.z < comps.under_point.z\n");
 	xs->arr = malloc(sizeof(t_intersection));
 	xs->arr[0] = i;
 	xs->count = 1;
-	t_computations	comps = prepare_computations(i, r, xs);
+	t_computations	comps = prepare_computations(i, r, xs, NULL);
 	printf("%f > %f\n", comps.under_point.z, EPSILON / 2);
 	printf("%f < %f\n", comps.point.z, comps.under_point.z);
 }
@@ -141,8 +140,8 @@ Then c = color(0, 0, 0)\n");
 	xs->count = 2;
 	xs->arr[0] = (t_intersection){4, shape};
 	xs->arr[1] = (t_intersection){6, shape};
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
-	t_color c = refracted_color(w, comps, 5);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
+	t_color c = refracted_color(w, comps, 5, NULL);
 	print_color(c);
 }
 
@@ -170,8 +169,8 @@ Then c = color(0, 0, 0)\n");
 	xs->count = 2;
 	xs->arr[0] = (t_intersection){4, shape};
 	xs->arr[1] = (t_intersection){6, shape};
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
-	t_color c = refracted_color(w, comps, 0);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
+	t_color c = refracted_color(w, comps, 0, NULL);
 	print_color(c);
 }
 
@@ -201,8 +200,8 @@ Then c = color(0, 0, 0)\n");
 	xs->count = 2;
 	xs->arr[0] = (t_intersection){-sqrt(2) / 2, shape};
 	xs->arr[1] = (t_intersection){sqrt(2) / 2, shape};
-	t_computations comps = prepare_computations(xs->arr[1], r, xs);
-	t_color c = refracted_color(w, comps, 5);
+	t_computations comps = prepare_computations(xs->arr[1], r, xs, NULL);
+	t_color c = refracted_color(w, comps, 5, NULL);
 	print_color(c);
 }
 
@@ -239,8 +238,8 @@ Then c = color(0, 0.99888, 0.04725)\n");
 	xs->arr[1] = (t_intersection){-0.4899, b};
 	xs->arr[2] = (t_intersection){0.4899, b};
 	xs->arr[3] = (t_intersection){0.9899, b};
-	t_computations comps = prepare_computations(xs->arr[2], r, xs);
-	t_color c = refracted_color(w, comps, 5);
+	t_computations comps = prepare_computations(xs->arr[2], r, xs, NULL);
+	t_color c = refracted_color(w, comps, 5, NULL);
 	print_color(c);
 }
 
@@ -280,8 +279,8 @@ Then color = color(0.93642, 0.68642, 0.68642)\n");
 	xs->arr = malloc(sizeof(t_intersection) * 2);
 	xs->count = 1;
 	xs->arr[0] = (t_intersection){sqrt(2), floor};
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
-	t_color c = shade_hit(w, comps, 5);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
+	t_color c = shade_hit(w, comps, 5, NULL);
 	print_color(c);
 }
 
@@ -302,7 +301,7 @@ Then reflectance = 1.0\n");
 	xs->count = 2;
 	xs->arr[0] = (t_intersection){-sqrt(2) / 2, shape};
 	xs->arr[1] = (t_intersection){sqrt(2) / 2, shape};
-	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	t_computations comps = prepare_computations(xs->arr[1], r, xs, NULL);
 	double reflectance = schlick(comps);
 	printf("%f\n", reflectance);
 }
@@ -324,7 +323,7 @@ Then reflectance = 0.04\n");
 	xs->count = 2;
 	xs->arr[0] = (t_intersection){-1, shape};
 	xs->arr[1] = (t_intersection){1, shape};
-	t_computations comps = prepare_computations(xs->arr[1], r, xs);
+	t_computations comps = prepare_computations(xs->arr[1], r, xs, NULL);
 	double reflectance = schlick(comps);
 	printf("%f\n", reflectance);
 }
@@ -345,7 +344,7 @@ Then reflectance = 0.48873\n");
 	xs->arr = ft_calloc(1, sizeof(t_intersection) * 1);
 	xs->count = 1;
 	xs->arr[0] = (t_intersection){1.8589, shape};
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
 	double reflectance = schlick(comps);
 	printf("%f\n", reflectance);
 }
@@ -388,8 +387,8 @@ Then color = color(0.93391, 0.69643, 0.69243)\n");
 	xs->arr = ft_calloc(1, sizeof(t_intersection) * 1);
 	xs->count = 1;
 	xs->arr[0] = (t_intersection){sqrt(2), floor};
-	t_computations comps = prepare_computations(xs->arr[0], r, xs);
-	t_color	c = shade_hit(w, comps, 5);
+	t_computations comps = prepare_computations(xs->arr[0], r, xs, NULL);
+	t_color	c = shade_hit(w, comps, 5, NULL);
 	print_color(c);
 }
 

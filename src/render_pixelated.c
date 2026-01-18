@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	write_pixelated_section(t_thread_data *data, t_color c)
+static void	write_pixelated_section(t_thread_data *data, t_color c)
 {
 	uint32_t	i;
 	uint32_t	j;
@@ -33,10 +33,9 @@ static int	write_pixelated_section(t_thread_data *data, t_color c)
 	}
 	data->x += j;
 	data->y_offset = i;
-	return (i);
 }
 
-static void	loop_image_by_pixelation_scale(t_thread_data *data)
+static void	loop_image_by_pixelation_scale(t_thread_data *data, t_camera *c)
 {
 	while (data->y < data->end_row && *data->keep_rendering)
 	{
@@ -54,9 +53,11 @@ static void	loop_image_by_pixelation_scale(t_thread_data *data)
 				data->x += data->pixelate_scale;
 				continue ;
 			}
-			data->ray = ray_for_pixel(
-					data->app->scene->camera, data->x, data->y);
-			data->color = color_at(data->app->scene, data->ray, RECURSIONS);
+			data->ray = ray_for_pixel(c, data->x, data->y);
+			data->color = color_at(
+					data->app->scene, data->ray, RECURSIONS, &data->error);
+			if (data->error)
+				return ;
 			write_pixelated_section(data, data->color);
 		}
 		data->y += data->y_offset;
@@ -70,7 +71,7 @@ void	render_pixelated(t_thread_data *data)
 	{
 		data->i = -1;
 		data->y = data->start_row;
-		loop_image_by_pixelation_scale(data);
+		loop_image_by_pixelation_scale(data, data->app->scene->camera);
 		data->pixelate_scale /= 2;
 		if (data->frame_done == false)
 			data->frame_done = true;

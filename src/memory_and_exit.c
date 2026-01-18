@@ -12,6 +12,12 @@
 
 #include "minirt.h"
 
+void	*memory_alloc_error(atomic_int *err)
+{
+	*err = 1;
+	return (NULL);
+}
+
 void	exit_and_free_memory(int exit_code, t_app *app)
 {
 	if (exit_code == ERROR_NO_INPUT_FILE)
@@ -30,6 +36,10 @@ void	exit_and_free_memory(int exit_code, t_app *app)
 		ft_fprintf(STDERR_FILENO, "Error\nFailed to parse file contents\n");
 	else if (exit_code == ERROR_THREADS)
 		ft_fprintf(STDERR_FILENO, "Error\nThread creation failed\n");
+	else if (exit_code == ERROR_UI)
+		ft_fprintf(STDERR_FILENO, "Error\nUI failure\n");
+	else if (exit_code == ERROR_THREAD_MEMORY)
+		ft_fprintf(STDERR_FILENO, "Error\nThread memory error\n");
 	else if (exit_code != 0)
 		ft_fprintf(STDERR_FILENO, "Error\n");
 	if (app)

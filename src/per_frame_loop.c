@@ -20,8 +20,36 @@ static uint64_t	get_time_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+static bool	thread_error(t_app *app)
+{
+	int	i;
+
+	i = -1;
+	while (++i < THREADS)
+	{
+		if (app->threads[i].error)
+			return (true);
+	}
+	return (false);
+}
+
+static void	check_if_error_occurred(t_app *app)
+{
+	if (app->error)
+	{
+		app->keep_rendering = false;
+		exit_and_free_memory(ERROR_UI, app);
+	}
+	if (app->error || thread_error(app))
+	{
+		app->keep_rendering = false;
+		exit_and_free_memory(ERROR_THREAD_MEMORY, app);
+	}
+}
+
 static void	update_state(t_app *app, uint64_t current_time)
 {
+	check_if_error_occurred(app);
 	app->last_frame_time = current_time;
 	if (all_threads_started_new_frame(app))
 		app->start_next_frame = false;

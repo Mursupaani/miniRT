@@ -90,7 +90,7 @@ void	move_oject_on_screen(t_app *app)
 	app->data_changed = true;
 }
 
-void	select_object_from_screen(t_app *app)
+void	select_object_from_screen(t_app *app, atomic_int *err)
 {
 	t_intersections	*xs;
 	t_intersection	ray_hit;
@@ -100,7 +100,7 @@ void	select_object_from_screen(t_app *app)
 
 	mlx_get_mouse_pos(app->mlx, &x, &y);
 	r = ray_for_pixel(app->scene->camera, x, y);
-	xs = intersect_world(app->scene, r);
+	xs = intersect_world(app->scene, r, err);
 	if (!xs || xs->count == 0)
 		return ;
 	ray_hit = hit(xs);

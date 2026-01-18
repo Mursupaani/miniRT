@@ -68,7 +68,9 @@ void	render_full_resolution(t_thread_data *data)
 				return ;
 			}
 			ray = ray_for_pixel(data->app->scene->camera, x, y);
-			color = color_at(data->app->scene, ray, RECURSIONS);
+			color = color_at(data->app->scene, ray, RECURSIONS, &data->error);
+			if (data->error)
+				return ;
 			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;
 		}
@@ -87,6 +89,8 @@ void	*render_routine(void *arg)
 			render_pixelated(data);
 		else
 			render_full_resolution(data);
+		if (data->error)
+			return (NULL);
 		if (data->render_done == false)
 			data->render_done = true;
 		while (*data->keep_rendering)

@@ -59,6 +59,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  normal_utils.c free_memory.c texture_map.c \
 				  render_pixelated.c per_frame_loop.c \
 				  \
+				  old.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c \
 				  test_camera.c test_render_chapter7.c test_shadows.c \

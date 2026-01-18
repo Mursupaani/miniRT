@@ -58,7 +58,7 @@ void	handle_mouse(
 	{
 		app->left_mouse_down = true;
 		mlx_get_mouse_pos(app->mlx, &app->prev_mouse_x, &app->prev_mouse_y);
-		select_object_from_screen(app);
+		select_object_from_screen(app, &app->error);
 	}
 	else if (action == MLX_RELEASE && key == MLX_MOUSE_BUTTON_LEFT)
 		app->left_mouse_down = false;

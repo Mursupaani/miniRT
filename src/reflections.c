@@ -12,7 +12,8 @@
 
 #include "minirt.h"
 
-t_color	reflected_color(t_world *w, t_computations comps, int reflections)
+t_color	reflected_color(
+		t_world *w, t_computations comps, int reflections, atomic_int *err)
 {
 	t_ray	reflect_ray;
 	t_color	color;
@@ -20,6 +21,6 @@ t_color	reflected_color(t_world *w, t_computations comps, int reflections)
 	if (comps.object->material.reflective == 0 || reflections <= 0)
 		return ((t_color){0, 0, 0});
 	reflect_ray = ray(comps.over_point, comps.reflectv);
-	color = color_at(w, reflect_ray, --reflections);
+	color = color_at(w, reflect_ray, --reflections, err);
 	return (color_multiply(color, comps.object->material.reflective));
 }
