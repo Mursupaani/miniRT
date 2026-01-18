@@ -13,22 +13,22 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+// FIXME: no need / included in "libft.h"
+// # include <unistd.h>
+// # include <stdlib.h>
+// # include <string.h>
+// # include <stdio.h>
+// # include "MLX42/MLX42_Int.h"
+// # include <stdint.h>
+
+# include "libft.h"
 # include <math.h>
 # include <fcntl.h>
 # include <float.h>
 # include <stdatomic.h>
-# include <stdint.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <stdio.h>
-# include "libft.h"
 # include <pthread.h>
 # include <sys/time.h>
 # include "MLX42/MLX42.h"
-# include "MLX42/MLX42_Int.h"
-
-// FIXME: Find best value for epsilon! 0.00001 doesn't work like in guide
 
 # ifndef THREADS
 #  define THREADS 4
@@ -68,7 +68,7 @@
 # endif
 
 # ifndef MOVEMENT_SPEED
-#  define MOVEMENT_SPEED 0.2
+#  define MOVEMENT_SPEED 0.3
 # endif
 
 # ifndef MOUSE_SPEED
@@ -258,10 +258,10 @@ typedef struct s_face_layout
 
 typedef struct s_light
 {
-	t_color			intensity;
-	t_point			position;
-	t_color			ambient_color;
-	double			ambient_ratio;
+	t_color	intensity;
+	t_point	position;
+	t_color	ambient_color;
+	double	ambient_ratio;
 }	t_light;
 
 typedef struct s_uv_map
@@ -294,15 +294,15 @@ typedef struct s_pattern
 
 typedef struct s_material
 {
-	double			ambient;
-	double			diffuse;
-	double			specular;
-	double			shininess;
-	double			reflective;
-	double			transparency;
-	double			refractive_index;
-	t_color			color;
-	t_pattern		pattern;
+	double		ambient;
+	double		diffuse;
+	double		specular;
+	double		shininess;
+	double		reflective;
+	double		transparency;
+	double		refractive_index;
+	t_color		color;
+	t_pattern	pattern;
 }	t_material;
 
 typedef struct s_bump_map
@@ -363,10 +363,10 @@ typedef struct s_camera
 
 typedef struct s_world
 {
-	t_camera		*camera;
-	t_light			*light;
-	t_object		**objects;
-	int				object_count;
+	t_camera	*camera;
+	t_light		*light;
+	t_object	**objects;
+	int			object_count;
 }	t_world;
 
 typedef struct s_thread_data	t_thread_data;
@@ -392,8 +392,8 @@ typedef struct s_app
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];
 	mlx_image_t		*hud;
-	size_t			pixel_count;
 	int				bg_img_index;
+	size_t			pixel_count;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		error;
