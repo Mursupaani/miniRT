@@ -30,7 +30,7 @@ static int	string_to_buf(char *str, char *buf, int i, int size)
 static int	fov_to_buffer(t_camera *c, char *hud, int i, int size)
 {
 	i = string_to_buf("FOV: ", hud, i, size);
-	i += ft_itoa_to_buf(roundf(c->fov * 180 / M_PI), &hud[i], size - i);
+	i += ft_itoa_to_buf(roundf(rad_to_deg(c->fov)), &hud[i], size - i);
 	i = string_to_buf("\n", hud, i, size);
 	return (i);
 }

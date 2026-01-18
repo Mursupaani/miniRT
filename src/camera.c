@@ -27,6 +27,7 @@ t_camera	*camera(int hsize, int vsize, double fov)
 	camera->pixel_size = pixel_size(camera);
 	camera->yaw = 0;
 	camera->pitch = 0;
+	camera->world_up = vector(0, 1, 0);
 	return (camera);
 }
 

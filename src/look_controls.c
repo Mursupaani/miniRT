@@ -18,6 +18,10 @@ void	change_camera_fov(t_app *app, double ydelta)
 
 	fov_change = ydelta * FOV_CHANGE * (M_PI / 180);
 	app->scene->camera->fov -= fov_change;
+	if (app->scene->camera->fov < 0)
+		app->scene->camera->fov = 0;
+	else if (app->scene->camera->fov > M_PI)
+		app->scene->camera->fov = M_PI;
 	app->scene->camera->pixel_size = pixel_size(app->scene->camera);
 	app->moving = true;
 	app->data_changed = true;
@@ -44,6 +48,20 @@ bool	mouse_not_moved(t_app *app, t_look look)
 		&& doubles_are_equal(look.y, app->prev_mouse_y));
 }
 
+static void	update_pitch_and_yaw(t_look look, t_camera *c)
+{
+	c->yaw -= (look.dx * MOUSE_SPEED);
+	c->pitch -= (look.dy * MOUSE_SPEED);
+	if (c->pitch > 89.9)
+		c->pitch = 89.9;
+	else if (c->pitch < -89.9)
+		c->pitch = -89.9;
+	if (c->yaw > 360)
+		c->yaw -= 360;
+	else if (c->yaw < 0)
+		c->yaw += 360;
+}
+
 void	handle_looking_around(t_app *app)
 {
 	t_look		look;
@@ -60,10 +78,10 @@ void	handle_looking_around(t_app *app)
 	look.dy = look.y - app->prev_mouse_y;
 	app->prev_mouse_x = look.x;
 	app->prev_mouse_y = look.y;
-	c->yaw -= (look.dx * MOUSE_SPEED);
-	c->pitch -= (look.dy * MOUSE_SPEED);
+	update_pitch_and_yaw(look, c);
 	c->forward = get_direction_from_angles(c->yaw, c->pitch);
-	c->left = cross(c->up, c->forward);
+	c->left = cross(c->world_up, c->forward);
+	c->up = cross(c->forward, c->left);
 	view = view_transform(c->from, tuple_sum(c->from, c->forward), c->up, c);
 	set_camera_transform(c, view);
 	app->data_changed = true;
