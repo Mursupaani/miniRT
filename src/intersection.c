@@ -12,6 +12,22 @@
 
 #include "minirt.h"
 
+t_intersections	*malloc_intersections(int xs_count, atomic_int *err)
+{
+	t_intersections	*xs;
+
+	xs = malloc(sizeof(t_intersections));
+	if (!xs)
+		return (memory_alloc_error(err));
+	xs->arr = malloc(sizeof(t_intersection) * xs_count);
+	if (!xs->arr)
+	{
+		free(xs);
+		return (memory_alloc_error(err));
+	}
+	return (xs);
+}
+
 t_intersection	intersection(double t, t_object *object)
 {
 	t_intersection	intersection;

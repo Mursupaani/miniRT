@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdatomic.h>
 
 static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 {
@@ -22,7 +23,8 @@ static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 	*c = dot(sphere_to_ray, sphere_to_ray) - 1;
 }
 
-t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
+t_intersections	*intersect_sphere(
+		t_object *sphere, t_ray local_ray, atomic_int *err)
 {
 	double			abc[3];
 	double			disc;
@@ -32,15 +34,9 @@ t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
 	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (disc < 0)
 		return (NULL);
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
+	xs = malloc_intersections(2, err);
+	if (*err)
 		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * 2);
-	if (!xs->arr)
-	{
-		free(xs);
-		return (NULL);
-	}
 	xs->arr[0] = intersection((-abc[1] - sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->arr[1] = intersection((-abc[1] + sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->count = 2;

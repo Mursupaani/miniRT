@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdatomic.h>
 
-bool	is_shadowed(t_world *w, t_point p)
+bool	is_shadowed(t_world *w, t_point p, atomic_int *err)
 {
 	t_vector		v;
 	double			distance;
@@ -23,7 +24,7 @@ bool	is_shadowed(t_world *w, t_point p)
 	v = tuple_subtract(w->light->position, p);
 	distance = vector_magnitude(v);
 	r = ray(p, normalize(v));
-	xs = intersect_world(w, r);
+	xs = intersect_world(w, r, err);
 	h = hit(xs);
 	free_intersections(&xs);
 	if (h.t != DBL_MAX && h.t < distance)
@@ -32,7 +33,8 @@ bool	is_shadowed(t_world *w, t_point p)
 		return (false);
 }
 
-t_color	shade_hit(t_world *w, t_computations comps, int recursions)
+t_color	shade_hit(
+		t_world *w, t_computations comps, int recursions, atomic_int *err)
 {
 	t_color		surface;
 	t_color		reflected;
@@ -41,12 +43,15 @@ t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 	double		reflectance;
 
 	if (!w)
+	{
+		*err = 1;
 		return ((t_color){0, 0, 0});
-	if (is_shadowed(w, comps.over_point) == true)
+	}
+	if (is_shadowed(w, comps.over_point, err) == true)
 		comps.shadowed = true;
 	surface = lighting(comps, w->light);
-	reflected = reflected_color(w, comps, recursions);
-	refracted = refracted_color(w, comps, recursions);
+	reflected = reflected_color(w, comps, recursions, err);
+	refracted = refracted_color(w, comps, recursions, err);
 	if (comps.object->material.reflective > 0
 		&& comps.object->material.transparency > 0)
 	{
@@ -58,20 +63,27 @@ t_color	shade_hit(t_world *w, t_computations comps, int recursions)
 	return (color_sum(color_sum(surface, reflected), refracted));
 }
 
-t_color	color_at(t_world *w, t_ray r, int recursions)
+t_color	color_at(t_world *w, t_ray r, int recursions, atomic_int *err)
 {
 	t_intersections	*xs;
 	t_intersection	x;
 	t_computations	comps;
 
-	xs = intersect_world(w, r);
+	xs = intersect_world(w, r, err);
+	if (*err)
+		return ((t_color){DBL_MIN, DBL_MIN, DBL_MIN});
 	x = hit(xs);
 	if (x.object == NULL)
 	{
 		free_intersections(&xs);
 		return ((t_color){0, 0, 0});
 	}
-	comps = prepare_computations(x, r, xs);
+	comps = prepare_computations(x, r, xs, err);
+	if (*err)
+	{
+		free_intersections(&xs);
+		return ((t_color){DBL_MIN, DBL_MIN, DBL_MIN});
+	}
 	free_intersections(&xs);
-	return (shade_hit(w, comps, recursions));
+	return (shade_hit(w, comps, recursions, err));
 }

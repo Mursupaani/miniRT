@@ -28,8 +28,8 @@ static void	copy_intersections(
 	xs->count = count + 1;
 }
 
-t_intersections	*add_intersection_to_intersections(
-		t_intersection new, t_intersections *xs)
+t_intersections	*add_intersection_to_arr(
+		t_intersection new, t_intersections *xs, atomic_int *err)
 {
 	t_intersections	*temp;
 	int				count;
@@ -43,14 +43,14 @@ t_intersections	*add_intersection_to_intersections(
 	if (!xs)
 	{
 		free_intersections(&temp);
-		return (NULL);
+		return (memory_alloc_error(err));
 	}
 	xs->arr = malloc(sizeof(t_intersection) * (count + 1));
 	if (!xs->arr)
 	{
 		free_intersections(&temp);
 		free_intersections(&xs);
-		return (NULL);
+		return (memory_alloc_error(err));
 	}
 	copy_intersections(xs, temp, new, count);
 	free_intersections(&temp);

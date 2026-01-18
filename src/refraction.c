@@ -35,7 +35,7 @@ double	schlick(t_computations comps)
 }
 
 static t_color	calculate_refracted_color(
-		t_world *w, t_computations comps, int recursions)
+		t_world *w, t_computations comps, int recursions, atomic_int *err)
 {
 	t_refraction	r;
 	t_vector		direction;
@@ -53,15 +53,16 @@ static t_color	calculate_refracted_color(
 				(r.n_ratio * r.cos_i - r.cos_t)),
 			tuple_scale_multiply(comps.eyev, r.n_ratio));
 	refract_ray = ray(comps.under_point, direction);
-	c = color_at(w, refract_ray, recursions - 1);
+	c = color_at(w, refract_ray, recursions - 1, err);
 	return (color_multiply(c, comps.object->material.transparency));
 }
 
-t_color	refracted_color(t_world *w, t_computations comps, int recursions)
+t_color	refracted_color(
+		t_world *w, t_computations comps, int recursions, atomic_int *err)
 {
 	if (comps.object->material.transparency == 0)
 		return ((t_color){0, 0, 0});
 	if (recursions == 0)
 		return ((t_color){0, 0, 0});
-	return (calculate_refracted_color(w, comps, recursions));
+	return (calculate_refracted_color(w, comps, recursions, err));
 }

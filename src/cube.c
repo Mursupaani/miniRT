@@ -13,26 +13,19 @@
 #include "minirt.h"
 
 static t_intersections	*calculate_min_and_max(
-		t_loc_intersect xt, t_loc_intersect yt,
-		t_loc_intersect zt, t_object *cube)
+		t_loc_intersections loc_xs, t_object *cube, atomic_int *err)
 {
 	t_intersections		*xs;
 	double				tmin;
 	double				tmax;
 
-	tmin = max_of_min_t(xt.min, yt.min, zt.min);
-	tmax = min_of_max_t(xt.max, yt.max, zt.max);
+	tmin = max_of_min_t(loc_xs.xt.min, loc_xs.yt.min, loc_xs.zt.min);
+	tmax = min_of_max_t(loc_xs.xt.max, loc_xs.yt.max, loc_xs.zt.max);
 	if (tmin > tmax)
 		return (NULL);
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
+	xs = malloc_intersections(2, err);
+	if (*err)
 		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * 2);
-	if (!xs->arr)
-	{
-		free(xs);
-		return (NULL);
-	}
 	xs->count = 2;
 	xs->arr[0] = intersection(tmin, cube);
 	xs->arr[1] = intersection(tmax, cube);
@@ -63,16 +56,15 @@ static t_loc_intersect	check_axis(double origin, double direction)
 	return ((t_loc_intersect){tmin, tmax});
 }
 
-t_intersections	*intersect_cube(t_object *cube, t_ray local_ray)
+t_intersections	*intersect_cube(
+		t_object *cube, t_ray local_ray, atomic_int *err)
 {
-	t_loc_intersect	xt;
-	t_loc_intersect	yt;
-	t_loc_intersect	zt;
+	t_loc_intersections	loc_xs;
 
-	xt = check_axis(local_ray.origin.x, local_ray.direction.x);
-	yt = check_axis(local_ray.origin.y, local_ray.direction.y);
-	zt = check_axis(local_ray.origin.z, local_ray.direction.z);
-	return (calculate_min_and_max(xt, yt, zt, cube));
+	loc_xs.xt = check_axis(local_ray.origin.x, local_ray.direction.x);
+	loc_xs.yt = check_axis(local_ray.origin.y, local_ray.direction.y);
+	loc_xs.zt = check_axis(local_ray.origin.z, local_ray.direction.z);
+	return (calculate_min_and_max(loc_xs, cube, err));
 }
 
 t_object	*cube_new(void)

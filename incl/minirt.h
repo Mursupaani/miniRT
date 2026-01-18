@@ -94,6 +94,8 @@ typedef enum s_exit_value
 	ERROR_WORLD,
 	ERROR_PARSING,
 	ERROR_THREADS,
+	ERROR_UI,
+	ERROR_THREAD_MEMORY,
 	
 }	t_exit_value;
 
@@ -170,6 +172,12 @@ typedef struct s_matrix4
 {
 	double	data[4][4];
 }	t_matrix4;
+
+typedef struct s_t_vals
+{
+	double	t0;
+	double	t1;
+}	t_t_vals;
 
 typedef struct s_coefs
 {
@@ -388,6 +396,7 @@ typedef struct s_app
 	int				bg_img_index;
 	t_world			*scene;
 	t_thread_data	*threads;
+	atomic_int		error;
 	atomic_int		keep_rendering;
 	atomic_int		pixelate;
 	atomic_int		restart_render;
@@ -437,6 +446,7 @@ typedef struct s_thread_data
 	atomic_int		new_frame_started;
 	atomic_int		render_done;
 	atomic_int		frame_done;
+	atomic_int		error;
 	// Rendering
 	unsigned int	i;
 	unsigned int	j;
@@ -462,6 +472,13 @@ typedef struct s_local_intersect
 	double	min;
 	double	max;
 }	t_loc_intersect;
+
+typedef struct s_local_intersections
+{
+	t_loc_intersect	xt;
+	t_loc_intersect	yt;
+	t_loc_intersect	zt;
+}	t_loc_intersections;
 
 typedef struct	s_intersection
 {
@@ -589,6 +606,7 @@ bool	mouse_not_moved(t_app *app, t_look look);
 void		free_app_memory(t_app *app);
 void		exit_and_free_memory(int exit_code, t_app *app);
 void		free_world(t_world *w);
+void		*memory_alloc_error(atomic_int *err);
 // void		free_intersections(t_intersections *xs);
 void		free_intersections(t_intersections **xs);
 
@@ -658,15 +676,17 @@ void		render_pixelated(t_thread_data *data);
 
 // Intersections:
 t_intersection	intersection(double t, t_object *object);
-t_intersections	*intersect(t_object *obj, t_ray ray);
-t_intersections	*intersect_world(t_world *w, t_ray r);
+t_intersections	*intersect(t_object *obj, t_ray ray, atomic_int *err);
+t_intersections	*intersect_world(t_world *w, t_ray r, atomic_int *err);
 void			quick_sort_intersections(t_intersection *xs, int start, int end);
 t_intersection	hit(t_intersections *xs);
-t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs);
+t_intersections	*add_intersection_to_arr(
+		t_intersection new, t_intersections *xs, atomic_int *err);
+t_intersections	*malloc_intersections(int xs_count, atomic_int *err);
 
 // Prepare computations:
 t_computations	prepare_computations(
-			t_intersection x, t_ray r, t_intersections *xs);
+			t_intersection x, t_ray r, t_intersections *xs, atomic_int *err);
 void	handle_n1(t_computations *comps, t_intersection **containers);
 void	handle_n2(t_computations *comps, t_intersection **containers);
 
@@ -697,18 +717,18 @@ t_color		color_sum(t_color color1, t_color color2);
 t_color		color_subtract(t_color color1, t_color color2);
 t_color		color_from_color255(t_color255 color_255);
 t_color255	color255_from_color(t_color color);
-uint32_t		color_hex_from_color255(t_color255 color255);
-uint32_t		color_hex_from_color(t_color color);
-t_color		shade_hit(t_world *w, t_computations comps, int recursions);
-t_color		color_at(t_world *w, t_ray r, int recursions);
-bool		is_shadowed(t_world *w, t_point p);
+uint32_t	color_hex_from_color255(t_color255 color255);
+uint32_t	color_hex_from_color(t_color color);
+t_color		shade_hit(t_world *w, t_computations comps, int recursions, atomic_int *err);
+t_color		color_at(t_world *w, t_ray r, int recursions, atomic_int *err);
+bool		is_shadowed(t_world *w, t_point p, atomic_int *err);
 t_color		pixel_at(mlx_texture_t *texture, int x, int y);
 
 // Reflections:
-t_color		reflected_color(t_world *w, t_computations comps, int recursions);
+t_color		reflected_color(t_world *w, t_computations comps, int reflections, atomic_int *err);
 
 // Refractions:
-t_color	refracted_color(t_world *w, t_computations comps, int recursions);
+t_color	refracted_color(t_world *w, t_computations comps, int recursions, atomic_int *err);
 double	schlick(t_computations comps);
 
 // Patterns:
@@ -787,30 +807,30 @@ void		set_camera_transform(t_camera *camera, t_matrix4 transform);
 // Sphere
 t_object	*sphere_new(void);
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color);
-t_intersections	*intersect_sphere(t_object *sphere, t_ray ray);
+t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray, atomic_int *err);
 
 // Plane
-t_intersections	*intersect_plane(t_object *plane, t_ray ray);
+t_intersections	*intersect_plane(t_object *plane, t_ray local_ray, atomic_int *err);
 
 // Cone
 t_object		*cone_new(void);
-t_intersections	*intersect_cone(t_object *cylinder, t_ray local_ray);
+t_intersections	*intersect_cone(t_object *cone, t_ray local_ray, atomic_int *err);
 t_coefs			calculate_cone_coefs(t_ray local_ray);
 t_intersections	*intersect_cone_caps(
-		t_object *cone, t_ray local_ray, t_intersections *xs);
+		t_object *cone, t_ray local_ray, t_intersections *xs, atomic_int *err);
 bool	check_cone_cap(t_ray local_ray, double t, double limit);
 
 // Cube
-t_intersections	*intersect_cube(t_object *cube, t_ray ray);
+t_intersections	*intersect_cube(t_object *cube, t_ray local_ray, atomic_int *err);
 double			min_of_max_t(double xtmin, double ytmin, double ztmin);
 double 	 		max_of_min_t(double xtmin, double ytmin, double ztmin);
 void   	 		swap_doubles(double *tmin, double *tmax);
 double 	 		max_absolute_coord_component(double x, double y, double z);
 
 // Cylinder
-t_intersections	*intersect_cylinder(t_object *cylinder, t_ray ray);
-t_intersections *intersect_cylinder_caps(
-		t_object *cylinder, t_ray local_ray, t_intersections *xs);
+t_intersections	*intersect_cylinder(t_object *cylinder, t_ray local_ray, atomic_int *err);
+t_intersections	*intersect_cylinder_caps(
+		t_object *cylinder, t_ray local_ray, t_intersections *xs, atomic_int *err);
 bool	check_cylinder_cap(t_ray local_ray, double t);
 
 // Bump map
@@ -819,7 +839,7 @@ void	get_tangent_and_bitangent(
 		t_object_type obj_type, t_vector local_normal, t_bump_map *bm);
 
 // Interact world
-void		select_object_from_screen(t_app *app);
+void		select_object_from_screen(t_app *app, atomic_int *err);
 void		move_oject_on_screen(t_app *app);
 void		resize_selected_object(t_app *app, double ydelta);
 void		rotate_selected_object(t_app *app, double ydelta);

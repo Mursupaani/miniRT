@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdatomic.h>
 
 static	void	add_item(t_intersection *x, t_intersection **containers)
 {
@@ -66,16 +67,17 @@ static void	handle_item_in_container(
 }
 
 static bool	get_n1_and_n2(
-			t_intersection x, t_intersections *xs, t_computations *comps)
+			t_intersection x, t_intersections *xs,
+			t_computations *comps, atomic_int *err)
 {
 	t_intersection	**containers;
 	int				i;
 	int				containers_items;
 
 	containers = ft_calloc(1, sizeof(t_intersection *) * (xs->count + 1));
-	containers_items = 0;
 	if (!containers)
-		return (false);
+		return (memory_alloc_error(err));
+	containers_items = 0;
 	i = -1;
 	while (++i < xs->count)
 	{
@@ -93,7 +95,7 @@ static bool	get_n1_and_n2(
 }
 
 t_computations	prepare_computations(
-			t_intersection x, t_ray r, t_intersections *xs)
+			t_intersection x, t_ray r, t_intersections *xs, atomic_int *err)
 {
 	t_computations	comps;
 
@@ -103,7 +105,9 @@ t_computations	prepare_computations(
 	comps.eyev = tuple_negate(r.direction);
 	comps.normalv = normal_at(comps.object, comps.point);
 	comps.reflectv = reflect(r.direction, comps.normalv);
-	get_n1_and_n2(x, xs, &comps);
+	get_n1_and_n2(x, xs, &comps, err);
+	if (*err)
+		return (comps);
 	if (dot(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = true;

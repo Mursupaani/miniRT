@@ -23,7 +23,8 @@ bool	check_cylinder_cap(t_ray local_ray, double t)
 }
 
 t_intersections	*intersect_cylinder_caps(
-		t_object *cylinder, t_ray local_ray, t_intersections *xs)
+		t_object *cylinder, t_ray local_ray,
+		t_intersections *xs, atomic_int *err)
 {
 	double	t;
 
@@ -32,9 +33,9 @@ t_intersections	*intersect_cylinder_caps(
 		return (xs);
 	t = (cylinder->minimum - local_ray.origin.y) / local_ray.direction.y;
 	if (check_cylinder_cap(local_ray, t))
-		xs = add_intersection_to_intersections(intersection(t, cylinder), xs);
+		xs = add_intersection_to_arr(intersection(t, cylinder), xs, err);
 	t = (cylinder->maximum - local_ray.origin.y) / local_ray.direction.y;
 	if (check_cylinder_cap(local_ray, t))
-		xs = add_intersection_to_intersections(intersection(t, cylinder), xs);
+		xs = add_intersection_to_arr(intersection(t, cylinder), xs, err);
 	return (xs);
 }
