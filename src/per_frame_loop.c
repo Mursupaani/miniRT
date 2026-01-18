@@ -33,7 +33,7 @@ static bool	thread_error(t_app *app)
 	return (false);
 }
 
-static void	check_if_error_occurred(t_app *app)
+static void	check_for_errors(t_app *app)
 {
 	if (app->error)
 	{
@@ -49,7 +49,6 @@ static void	check_if_error_occurred(t_app *app)
 
 static void	update_state(t_app *app, uint64_t current_time)
 {
-	check_if_error_occurred(app);
 	app->last_frame_time = current_time;
 	if (all_threads_started_new_frame(app))
 		app->start_next_frame = false;
@@ -72,6 +71,7 @@ void	per_frame_loop(void *param)
 	uint64_t	current_time;
 
 	app = (t_app *)param;
+	check_for_errors(app);
 	current_time = get_time_ms();
 	if (app->show_hud)
 		print_hud(app);
