@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:37:01 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/01 15:51:52 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:50:30 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_color	calculate_color(
 		t_object *obj, t_light *light, t_vector eyev, t_lighting l)
 {
 	l.effective_color = color_mix(l.color_at_point, light->intensity);
-	l.ambient = color_multiply(l.effective_color, obj->material.ambient);
+	l.ambient = color_multiply(light->ambient_color, light->ambient_ratio);
 	if (l.light_dot_normal < 0)
 	{
 		l.diffuse = (t_color){0, 0, 0};
@@ -62,9 +62,9 @@ t_color	lighting(t_computations comps, t_light *light)
 		l.color_at_point = comps.object->material.color;
 	if (comps.shadowed == true)
 	{
-		l.effective_color = color_mix(l.color_at_point, light->intensity);
+		l.effective_color = color_mix(l.color_at_point, light->ambient_color);
 		l.ambient = color_multiply(
-				l.effective_color, comps.object->material.ambient);
+				l.effective_color, light->ambient_ratio);
 		return (l.ambient);
 	}
 	l.normalv = comps.normalv;
@@ -73,18 +73,13 @@ t_color	lighting(t_computations comps, t_light *light)
 	return (calculate_color(comps.object, light, comps.eyev, l));
 }
 
-t_color	lighting_old(t_object *obj, t_light *light, t_point position, t_vector eyev)
+t_color	lighting_old(
+		t_object *obj, t_light *light, t_point position, t_vector eyev)
 {
 	t_lighting	l;
 
 	if (!obj || !light)
 		return ((t_color){1, 1, 1});
-	// if (light->in_shadow == true)
-	// {
-	// 	l.effective_color = color_mix(obj->material.color, light->intensity);
-	// 	l.ambient = color_multiply(l.effective_color, obj->material.ambient);
-	// 	return (l.ambient);
-	// }
 	l.normalv = normal_at(obj, position);
 	l.lightv = normalize(tuple_subtract(light->position, position));
 	l.light_dot_normal = dot(l.lightv, l.normalv);

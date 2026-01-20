@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fprint_string.c                                    :+:      :+:    :+:   */
+/*   texture_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 12:45:24 by magebreh          #+#    #+#             */
-/*   Updated: 2025/09/25 16:26:51 by anpollan         ###   ########.fr       */
+/*   Created: 2026/01/16 20:35:47 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/16 20:35:59 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "minirt.h"
 
-int	fprint_string(va_list *args, int file)
+t_pattern	texture_map(t_pattern ptrn, t_uv_map (*uv_map)(t_point))
 {
-	int		i;
-	char	*str;
-
-	i = 0;
-	str = va_arg(*args, char *);
-	if (str == NULL)
-		return (write(file, "(null)", 6));
-	while (str[i])
-	{
-		write(file, &str[i], 1);
-		i++;
-	}
-	return (i);
+	ptrn.uv_pattern.uv_map = uv_map;
+	return (ptrn);
 }

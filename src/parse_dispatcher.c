@@ -5,6 +5,7 @@ static void	parse_line(char *line, t_app *app)
 	skip_whitespace(&line);
 	if (!*line || *line == '#')
 		return ;
+	// FIXME: AMBIENT LIGHT MOVED INSIDE LIGHT STRUCT. NEED TO MOVE THIS AFTLER PARSE_LIGHT?
 	if (*line == 'A' && ft_isspace(*(line + 1)))
 		parse_ambient(line, app);
 	else if (*line == 'C' && ft_isspace(*(line + 1)))

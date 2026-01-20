@@ -57,7 +57,7 @@ Then color = color(0, 0, 0)\n");
 	shape->material.ambient = 1;
 	t_intersection i = intersection(1, shape);
 	t_computations comps = prepare_computations_old(i, r);
-	t_color c = reflected_color(w, comps, 1);
+	t_color c = reflected_color(w, comps, 1, NULL);
 	print_color(c);
 	free(shape);
 }
@@ -85,7 +85,7 @@ Then color = color(0.19032, 0.2379, 0.14274)\n");
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
 	t_computations comps = prepare_computations_old(i, r);
-	t_color c = reflected_color(w, comps, 1);
+	t_color c = reflected_color(w, comps, 1, NULL);
 	print_color(c);
 	free(shape);
 }
@@ -112,7 +112,7 @@ Then color = color(0.87677, 0.92436, 0.82918)\n");
 	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2)/2, sqrt(2)/2));
 	t_intersection i = intersection(sqrt(2), shape);
 	t_computations comps = prepare_computations_old(i, r);
-	t_color c = shade_hit(w, comps, 1);
+	t_color c = shade_hit(w, comps, 1, NULL);
 	print_color(c);
 	free(shape);
 }
@@ -146,7 +146,7 @@ Then color_at(w, r) should terminate successfully\n");
 	add_object_to_world(upper, w);
 	print_world(w);
 	t_ray r = ray(point(0, 0, 0), vector(0, 1, 0));
-	t_color c = color_at(w, r, RECURSIONS);
+	t_color c = color_at(w, r, RECURSIONS, NULL);
 	print_color(c);
 	free(lower);
 	free(upper);

@@ -267,7 +267,7 @@ void	render_chapter_7_scene(t_app *app)
 			t_point	position = point(world_x, world_y, wall_z);
 			t_vector	direction = normalize(tuple_subtract(position, ray_origin));
 			t_ray	r = ray(ray_origin, direction);
-			t_intersections	*xs = intersect(sphere, r);
+			t_intersections	*xs = intersect(sphere, r, NULL);
 			if (xs && xs->count > 0)
 			{
 				// Inside the x/y loop in render_chapter_7_scene

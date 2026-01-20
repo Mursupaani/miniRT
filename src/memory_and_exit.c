@@ -6,53 +6,16 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:48:50 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/15 15:34:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:31:15 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	free_world(t_world *w)
+void	*memory_alloc_error(atomic_int *err)
 {
-	if (!w)
-		return ;
-	if (w->light)
-		free(w->light);
-	if (w->objects)
-		free_object_array(w->objects);
-	if (w->camera)
-		free(w->camera);
-	free(w);
-}
-
-void	free_intersections(t_intersections **xs)
-{
-	if (xs && *xs)
-	{
-		if ((*xs)->arr)
-			free((*xs)->arr);
-		free(*xs);
-		*xs = NULL;
-	}
-}
-
-void	free_app_memory(t_app *app)
-{
-	if (!app)
-		return ;
-	join_threads(app->threads, THREADS);
-	if (app->img)
-		mlx_delete_image(app->mlx, app->img);
-	if (app->mlx)
-	{
-		mlx_close_window(app->mlx);
-		mlx_terminate(app->mlx);
-	}
-	if (app->scene)
-		free_world(app->scene);
-	if (app->threads)
-		free(app->threads);
-	free(app);
+	*err = 1;
+	return (NULL);
 }
 
 void	exit_and_free_memory(int exit_code, t_app *app)
@@ -73,6 +36,10 @@ void	exit_and_free_memory(int exit_code, t_app *app)
 		ft_fprintf(STDERR_FILENO, "Error\nFailed to parse file contents\n");
 	else if (exit_code == ERROR_THREADS)
 		ft_fprintf(STDERR_FILENO, "Error\nThread creation failed\n");
+	else if (exit_code == ERROR_UI)
+		ft_fprintf(STDERR_FILENO, "Error\nUI failure\n");
+	else if (exit_code == ERROR_THREAD_MEMORY)
+		ft_fprintf(STDERR_FILENO, "Error\nThread memory error\n");
 	else if (exit_code != 0)
 		ft_fprintf(STDERR_FILENO, "Error\n");
 	if (app)

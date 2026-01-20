@@ -6,7 +6,7 @@
 /*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:56:21 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/28 16:39:15 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:09:46 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	build_chapter7_world(t_app *app)
 	w = world();
 	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
 	c = camera(app->img->width, app->img->height, M_PI / 3);
-	t_matrix4 c_trans = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0));
+	t_matrix4 c_trans = view_transform(point(0, 1.5, -7), point(0, 1, 0), vector(0, 1, 0), c);
+	init_camera_yaw_and_pitch(c);
 	set_camera_transform(c, c_trans);
 
 	t_pattern uv_check = uv_checkers(16, 8, color(0.5, 0, 1), color(0, 0.5, 0.2));
@@ -63,6 +64,7 @@ void	build_chapter7_world(t_app *app)
 
 	t_object *cube = cube_new();
 	cube->material.pattern = texture_map(uv_align_cube_pattern(), cubic_map);
+	cube->material.reflective = 0.5;
 	cube->material.transparency = 0.5;
 	cube->material.refractive_index = 4.5;
 	add_transform(cube, scaling_matrix4(0.4, 0.4, 0.4));

@@ -1,22 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/17 16:31:27 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/17 16:31:28 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-t_object	*plane_new()
+t_object	*plane_new(void)
 {
 	return (object_new(PLANE));
-	// t_object	*plane;
-	//
-	// plane = ft_calloc(1, sizeof(t_object));
-	// if (!plane)
-	// 	return (NULL);
-	// plane->type = PLANE;
-	// plane->transform = matrix4_identity();
-	// plane->inverse_transform = matrix4_identity();
-	// plane->inverse_transpose = matrix4_identity();
-	// plane->material = material();
-	// return (plane);
 }
 
-t_intersections	*intersect_plane(t_object *plane, t_ray local_ray)
+t_intersections	*intersect_plane(
+		t_object *plane, t_ray local_ray, atomic_int *err)
 {
 	t_intersections	*xs;
 	double			t;
@@ -26,13 +28,13 @@ t_intersections	*intersect_plane(t_object *plane, t_ray local_ray)
 	t = -local_ray.origin.y / local_ray.direction.y;
 	xs = ft_calloc(1, sizeof(t_intersections));
 	if (!xs)
-		return (NULL);
+		return (memory_alloc_error(err));
 	xs->count = 1;
 	xs->arr = ft_calloc(1, sizeof(t_intersection));
 	if (!xs->arr)
 	{
 		free(xs);
-		return (NULL);
+		return (memory_alloc_error(err));
 	}
 	xs->arr[0] = intersection(t, plane);
 	return (xs);

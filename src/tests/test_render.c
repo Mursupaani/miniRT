@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:04:16 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 15:44:06 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:10:37 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ void	build_test_render(t_app *app)
 	t_world		*w;
 
 	w = world();
-	w->light = point_light(point(-20, 10, -20), color(1, 1, 1));
+	w->light = point_light(point(-20, 10, -20), color(0, 1, 1));
+	w->light->ambient_color = color (1, 0, 0);
+	w->light->ambient_ratio = 0.1;
 	c = camera(app->img->width, app->img->height, M_PI / 3);
-	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0));
+	t_matrix4 c_trans = view_transform(point(0, 3, -11), point(0, 3, 0), vector(0, 1, 0), c);
+	init_camera_yaw_and_pitch(c);
 	set_camera_transform(c, c_trans);
 
 	mlx_texture_t *earth = mlx_load_png("./Textures/earthmap1k.png");
@@ -55,13 +58,13 @@ void	build_test_render(t_app *app)
 	// cubenew->material.pattern = uv_image_cube(cube);
 	cubenew->material.pattern = uv_image(cube);
 	cubenew->material.pattern = texture_map(cubenew->material.pattern, cubic_atlas_map);
-	cubenew->material.reflective = 0.2;
-	// cubenew->material.transparency = 1;
+	cubenew->material.reflective = 0.5;
+	cubenew->material.transparency = 0.5;
 	// cubenew->material.refractive_index = 1.5;
 	add_transform(cubenew, rotation_x(-M_PI / 2));
 	add_transform(cubenew, rotation_y(-M_PI / 5));
 	add_transform(cubenew, rotation_z(M_PI));
-	add_transform(cubenew, translation_matrix4(3, 2, 0));
+	add_transform(cubenew, translation_matrix4(3, 2, 1));
 	add_object_to_world(cubenew, w);
 
 	t_object *sphere = sphere_new();
@@ -71,7 +74,8 @@ void	build_test_render(t_app *app)
 	sphere->material.pattern = texture_map(sphere->material.pattern, spherical_map);
 	ft_bzero(&sphere->bump_map, sizeof(t_bump_map));
 	sphere->bump_map.has_bump_map = true;
-	sphere->material.transparency = 0.8;
+	sphere->material.reflective = 0.5;
+	sphere->material.transparency = 1;
 	sphere->material.refractive_index = 1.5;
 	sphere->bump_map.bump_map = bump;
 	sphere->bump_map.uv_map = spherical_map;
@@ -104,7 +108,7 @@ void	build_test_render(t_app *app)
 	t_object *sky_sphere = sphere_new();
 	sky_sphere->material.pattern = texture_map(uv_image(space_sphere), spherical_map);
 	sky_sphere->material.ambient = 1;
-	sky_sphere->material.diffuse = 0;
+	sky_sphere->material.diffuse = 1;
 	sky_sphere->material.specular = 0;
 	add_transform(sky_sphere, rotation_y(-M_PI / 3));
 	add_transform(sky_sphere, scaling_matrix4(5000, 5000, 5000));
@@ -135,6 +139,7 @@ void	build_test_render(t_app *app)
 	add_object_to_world(base, w);
 
 	t_object *stem = cylinder_new();
+	stem->closed = true;
 	stem->minimum = 0.2;
 	stem->maximum = 1.35;
 	stem->material.color = color(0.1, 0.1, 0.1);

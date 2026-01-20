@@ -6,11 +6,12 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 14:54:04 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/21 15:45:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:42:19 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdatomic.h>
 
 static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 {
@@ -22,7 +23,8 @@ static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 	*c = dot(sphere_to_ray, sphere_to_ray) - 1;
 }
 
-t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
+t_intersections	*intersect_sphere(
+		t_object *sphere, t_ray local_ray, atomic_int *err)
 {
 	double			abc[3];
 	double			disc;
@@ -32,13 +34,8 @@ t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
 	disc = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (disc < 0)
 		return (NULL);
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
-		// Exit and free if malloc fails?
-		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * 2);
-	if (!xs->arr)
-		// Exit and free if malloc fails?
+	xs = malloc_intersections(2, err);
+	if (*err)
 		return (NULL);
 	xs->arr[0] = intersection((-abc[1] - sqrt(disc)) / (2 * abc[0]), sphere);
 	xs->arr[1] = intersection((-abc[1] + sqrt(disc)) / (2 * abc[0]), sphere);
@@ -50,20 +47,6 @@ t_intersections	*intersect_sphere(t_object *sphere, t_ray local_ray)
 t_object	*sphere_new(void)
 {
 	return (object_new(SPHERE));
-	// t_object	*sphere;
-	//
-	// sphere = ft_calloc(1, sizeof(t_object));
-	// if (!sphere)
-	// 	return (NULL);
-	// sphere->type = SPHERE;
-	// sphere->center = point(0, 0, 0);
-	// sphere->diameter = 1;
-	// sphere->height = 1;
-	// sphere->material = material();
-	// sphere->transform = matrix4_identity();
-	// sphere->inverse_transform = sphere->transform;
-	// sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
-	// return (sphere);
 }
 
 t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
@@ -83,9 +66,11 @@ t_object	*sphere_new_args(t_point center, double diameter, t_color255 color)
 	{
 		sphere->transform = matrix4_identity();
 		sphere->inverse_transform = sphere->transform;
-		sphere->inverse_transpose = matrix4_transpose(sphere->inverse_transform);
+		sphere->inverse_transpose = matrix4_transpose(
+				sphere->inverse_transform);
 	}
 	else
-		set_transform(sphere, translation_matrix4(center.x, center.y, center.z));
+		set_transform(
+			sphere, translation_matrix4(center.x, center.y, center.z));
 	return (sphere);
 }

@@ -10,21 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minirt.h"
 
-t_pattern	test_pattern()
+t_pattern	test_pattern(void)
 {
 	return (create_pattern(TEST, color(1, 1, 1), color(0, 0, 0)));
-	// t_pattern	test;
-	//
-	// test.type = TEST;
-	// test.a = (t_color){1, 1, 1};
-	// test.b = (t_color){0, 0, 0};
-	// test.transform = matrix4_identity();
-	// test.inverse_transform = test.transform;
-	// test.inverse_transpose = test.transform;
-	// return (test);
 }
 
 static t_pattern	no_pattern(void)

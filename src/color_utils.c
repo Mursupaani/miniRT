@@ -6,18 +6,18 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 15:26:47 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/02 17:26:42 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:36:51 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-uint	color_hex_from_color255(t_color255 color255)
+u_int32_t	color_hex_from_color255(t_color255 color255)
 {
-	return (color255.r << 24) + (color255.g << 16) + (color255.b << 8) + 255;
+	return ((color255.r << 24) + (color255.g << 16) + (color255.b << 8) + 255);
 }
 
-uint	color_hex_from_color(t_color color)
+u_int32_t	color_hex_from_color(t_color color)
 {
 	if (color.r > 1)
 		color.r = 1;
@@ -31,10 +31,10 @@ uint	color_hex_from_color(t_color color)
 		color.g = 0;
 	if (color.b < 0)
 		color.b = 0;
-	return ((int)(color.r * 255) << 24)
+	return (((int)(color.r * 255) << 24)
 	+ ((int)(color.g * 255) << 16)
 	+ ((int)(color.b * 255) << 8)
-	+ 255;
+	+ 255);
 }
 
 t_color	color_from_color255(t_color255 color_255)

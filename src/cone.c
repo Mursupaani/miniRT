@@ -6,38 +6,14 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:14:36 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 12:47:51 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:43:44 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	check_cap(t_ray local_ray, double t, double limit)
-{
-	double	x;
-	double	z;
-
-	x = local_ray.origin.x + t * local_ray.direction.x;
-	z = local_ray.origin.z + t * local_ray.direction.z;
-	return ((x * x + z * z) <= limit * limit);
-}
-
-static t_intersections *intersect_caps(t_object *cone, t_ray local_ray, t_intersections *xs)
-{
-	double	t;
-
-	if (cone->closed == false || doubles_are_equal(local_ray.direction.y, 0))
-		return (xs);
-	t = (cone->minimum - local_ray.origin.y) / local_ray.direction.y;
-	if (check_cap(local_ray, t, cone->minimum))
-		xs = add_intersection_to_intersections(intersection(t, cone), xs);
-	t = (cone->maximum - local_ray.origin.y) / local_ray.direction.y;
-	if (check_cap(local_ray, t, cone->maximum))
-		xs = add_intersection_to_intersections(intersection(t, cone), xs);
-	return (xs);
-}
-
-static bool	intersection_within_limits(t_object *cone, double t, t_ray local_ray, int *xs_count)
+static bool	intersection_within_limits(
+		t_object *cone, double t, t_ray local_ray, int *xs_count)
 {
 	double	y;
 
@@ -50,74 +26,74 @@ static bool	intersection_within_limits(t_object *cone, double t, t_ray local_ray
 	return (false);
 }
 
-static t_intersections	*calculate_single_hit(t_object *cone, double t, t_ray local_ray)
+static t_intersections	*calculate_single_hit(
+		t_object *cone, double t, t_ray local_ray, atomic_int *err)
 {
 	t_intersections	*xs;
-	int		xs_count;
-	bool	add_t;
+	int				xs_count;
+	bool			add_t;
 
 	xs_count = 0;
 	add_t = intersection_within_limits(cone, t, local_ray, &xs_count);
 	if (add_t == false)
-		return (intersect_caps(cone, local_ray, NULL));
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
+		return (intersect_cone_caps(cone, local_ray, NULL, err));
+	xs = malloc_intersections(xs_count, err);
+	if (*err)
 		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * 1);
 	xs->count = xs_count;
 	xs->arr[0] = intersection(t, cone);
-	return (intersect_caps(cone, local_ray, xs));
+	return (intersect_cone_caps(cone, local_ray, xs, err));
 }
 
-static t_intersections	*calculate_hit_points(t_object *cone, double t0, double t1, t_ray local_ray)
+static t_intersections	*calculate_hit_points(
+		t_object *cone, t_t_vals ts, t_ray local_ray, atomic_int *err)
 {
 	t_intersections	*xs;
-	int		xs_count;
-	bool	add_t0;
-	bool	add_t1;
-	int		i;
+	int				xs_count;
+	bool			add_t0;
+	bool			add_t1;
+	int				i;
 
 	xs_count = 0;
-	add_t0 = intersection_within_limits(cone, t0, local_ray, &xs_count);
-	add_t1 = intersection_within_limits(cone, t1, local_ray, &xs_count);
+	add_t0 = intersection_within_limits(cone, ts.t0, local_ray, &xs_count);
+	add_t1 = intersection_within_limits(cone, ts.t1, local_ray, &xs_count);
 	if (add_t0 == false && add_t1 == false)
-		return (intersect_caps(cone, local_ray, NULL));
-	xs = malloc(sizeof(t_intersections));
-	if (!xs)
+		return (intersect_cone_caps(cone, local_ray, NULL, err));
+	xs = malloc_intersections(xs_count, err);
+	if (*err)
 		return (NULL);
-	xs->arr = malloc(sizeof(t_intersection) * xs_count);
 	xs->count = xs_count;
 	i = 0;
 	if (add_t0)
-		xs->arr[i++] = intersection(t0, cone);
+		xs->arr[i++] = intersection(ts.t0, cone);
 	if (add_t1)
-		xs->arr[i] = intersection(t1, cone);
-	return (intersect_caps(cone, local_ray, xs));
+		xs->arr[i] = intersection(ts.t1, cone);
+	return (intersect_cone_caps(cone, local_ray, xs, err));
 }
 
-t_intersections	*intersect_cone(t_object *cone, t_ray local_ray)
+t_intersections	*intersect_cone(
+		t_object *cone, t_ray local_ray, atomic_int *err)
 {
-	t_coefs	coefs;
-	double	disc;
-	double	t0;
-	double	t1;
+	t_coefs		coefs;
+	double		disc;
+	t_t_vals	ts;
 
 	coefs = calculate_cone_coefs(local_ray);
 	if (doubles_are_equal(coefs.a, 0))
 	{
 		if (doubles_are_equal(coefs.b, 0))
-			return (intersect_caps(cone, local_ray, NULL));
-		t0 = -coefs.c / (2 * coefs.b);
-		return (calculate_single_hit(cone, t0, local_ray));
+			return (intersect_cone_caps(cone, local_ray, NULL, err));
+		ts.t0 = -coefs.c / (2 * coefs.b);
+		return (calculate_single_hit(cone, ts.t0, local_ray, err));
 	}
 	disc = pow(coefs.b, 2) - 4 * coefs.a * coefs.c;
 	if (disc < 0)
 		return (NULL);
-	t0 = (-coefs.b - sqrt(disc)) / (2 * coefs.a);
-	t1 = (-coefs.b + sqrt(disc)) / (2 * coefs.a);
-	if (t0 > t1)
-		swap_doubles(&t0, &t1);
-	return (calculate_hit_points(cone, t0, t1, local_ray));
+	ts.t0 = (-coefs.b - sqrt(disc)) / (2 * coefs.a);
+	ts.t1 = (-coefs.b + sqrt(disc)) / (2 * coefs.a);
+	if (ts.t0 > ts.t1)
+		swap_doubles(&ts.t0, &ts.t1);
+	return (calculate_hit_points(cone, ts, local_ray, err));
 }
 
 t_object	*cone_new(void)

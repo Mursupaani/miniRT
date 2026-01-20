@@ -6,60 +6,32 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 18:36:56 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/22 12:52:09 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 19:41:24 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	swap_intersections(t_intersection *x1, t_intersection *x2)
+static void	copy_intersections(
+		t_intersections *xs, t_intersections *temp,
+		t_intersection new, int count)
 {
-	t_intersection	temp;
+	int	i;
 
-	temp = *x1;
-	*x1 = *x2;
-	*x2 = temp;
-}
-
-static int	partition(t_intersection *xs, int start, int end)
-{
-	double	pivot;
-	int		store_i;
-	int		i;
-
-	pivot = xs[end].t;
-	store_i = start - 1;
-	i = start;
-	while (i < end)
+	i = 0;
+	while (temp && i < count)
 	{
-		if (xs[i].t < pivot)
-		{
-			store_i++;
-			swap_intersections(&xs[i], &xs[store_i]);
-		}
+		xs->arr[i] = temp->arr[i];
 		i++;
 	}
-	swap_intersections(&xs[store_i + 1], &xs[end]);
-	return (store_i + 1);
+	xs->arr[i] = new;
+	xs->count = count + 1;
 }
 
-void	quick_sort_intersections(t_intersection *xs, int start, int end)
-{
-	int	pivot;
-
-	if (start < end)
-	{
-		pivot = partition(xs, start, end);
-		quick_sort_intersections(xs, start, pivot - 1);
-		quick_sort_intersections(xs, pivot + 1, end);
-	}
-}
-
-
-t_intersections	*add_intersection_to_intersections(t_intersection new, t_intersections *xs)
+t_intersections	*add_intersection_to_arr(
+		t_intersection new, t_intersections *xs, atomic_int *err)
 {
 	t_intersections	*temp;
-	int				i;
 	int				count;
 
 	temp = xs;
@@ -71,23 +43,16 @@ t_intersections	*add_intersection_to_intersections(t_intersection new, t_interse
 	if (!xs)
 	{
 		free_intersections(&temp);
-		return (NULL);
+		return (memory_alloc_error(err));
 	}
 	xs->arr = malloc(sizeof(t_intersection) * (count + 1));
 	if (!xs->arr)
 	{
 		free_intersections(&temp);
 		free_intersections(&xs);
-		return (NULL);
+		return (memory_alloc_error(err));
 	}
-	i = 0;
-	while (temp && i < count)
-	{
-		xs->arr[i] = temp->arr[i];
-		i++;
-	}
-	xs->arr[i] = new;
-	xs->count = count + 1;
+	copy_intersections(xs, temp, new, count);
 	free_intersections(&temp);
 	return (xs);
 }
@@ -96,8 +61,13 @@ t_coefs	calculate_cone_coefs(t_ray local_ray)
 {
 	t_coefs	coefs;
 
-	coefs.a = pow(local_ray.direction.x, 2) - pow(local_ray.direction.y, 2) + pow(local_ray.direction.z, 2);
-	coefs.b = 2 * local_ray.origin.x * local_ray.direction.x - 2 * local_ray.origin.y * local_ray.direction.y + 2 * local_ray.origin.z * local_ray.direction.z;
-	coefs.c = (pow(local_ray.origin.x, 2) - pow(local_ray.origin.y, 2) + pow(local_ray.origin.z, 2));
+	coefs.a = pow(local_ray.direction.x, 2) - pow(local_ray.direction.y, 2)
+		+ pow(local_ray.direction.z, 2);
+	coefs.b = 2 * local_ray.origin.x * local_ray.direction.x
+		- 2 * local_ray.origin.y * local_ray.direction.y
+		+ 2 * local_ray.origin.z * local_ray.direction.z;
+	coefs.c = (pow(local_ray.origin.x, 2)
+			- pow(local_ray.origin.y, 2)
+			+ pow(local_ray.origin.z, 2));
 	return (coefs);
 }

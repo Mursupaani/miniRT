@@ -28,21 +28,21 @@ And xs[1].t = <t1>\n");
 	t_vector v = vector(0, 0, 1);
 	t_vector direction = normalize(v);
 	t_ray r = ray(origin, direction);
-	t_intersections *xs = intersect(cone, r);
+	t_intersections *xs = intersect(cone, r, NULL);
 	printf("1: count = %d\tt0 = %lf\t t1 = %lf\n", xs->count, xs->arr[0].t, xs->arr[1].t);
 	free_intersections(&xs);
 	origin = point(0, 0, -5);
 	v = vector(1, 1, 1);
 	direction = normalize(v);
 	r = ray(origin, direction);
-	xs = intersect(cone, r);
+	xs = intersect(cone, r, NULL);
 	printf("2: count = %d\tt0 = %lf\t t1 = %lf\n", xs->count, xs->arr[0].t, xs->arr[1].t);
 	free_intersections(&xs);
 	origin = point(1, 1, -5);
 	v = vector(-0.5, -1, 1);
 	direction = normalize(v);
 	r = ray(origin, direction);
-	xs = intersect(cone, r);
+	xs = intersect(cone, r, NULL);
 	printf("3: count = %d\tt0 = %lf\t t1 = %lf\n", xs->count, xs->arr[0].t, xs->arr[1].t);
 	free_intersections(&xs);
 	free(cone);
@@ -61,7 +61,7 @@ And xs[0].t = 0.35355\n");
 	t_object *cone = cone_new();
 	t_vector direction = normalize(vector(0, 1, 1));
 	t_ray r = ray(point(0, 0, -1), direction);
-	t_intersections *xs = intersect(cone, r);
+	t_intersections *xs = intersect(cone, r, NULL);
 	printf("xs->count = %d\n", xs->count);
 	printf("t0 = %lf\n", xs->arr[0].t);
 	free_intersections(&xs);
@@ -88,7 +88,7 @@ Then xs.count = <count>\n");
 	t_vector v = vector(0, 1, 0);
 	t_vector direction = normalize(v);
 	t_ray r = ray(origin, direction);
-	t_intersections *xs = intersect(cone, r);
+	t_intersections *xs = intersect(cone, r, NULL);
 	if (xs)
 		printf("1: count = %d\n", xs->count);
 	else
@@ -98,7 +98,7 @@ Then xs.count = <count>\n");
 	v = vector(0, 1, 1);
 	direction = normalize(v);
 	r = ray(origin, direction);
-	xs = intersect(cone, r);
+	xs = intersect(cone, r, NULL);
 	if (xs)
 		printf("2: count = %d\n", xs->count);
 	else
@@ -108,7 +108,7 @@ Then xs.count = <count>\n");
 	v = vector(0, 1, 0);
 	direction = normalize(v);
 	r = ray(origin, direction);
-	xs = intersect(cone, r);
+	xs = intersect(cone, r, NULL);
 	if (xs)
 		printf("3: count = %d\n", xs->count);
 	else

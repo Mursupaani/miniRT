@@ -6,13 +6,13 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 18:23:36 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/25 18:33:16 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:41:24 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static	double get_v(t_point p)
+static double	get_v(t_point p)
 {
 	t_vector	vec;
 	double		radius;
@@ -24,7 +24,7 @@ static	double get_v(t_point p)
 	return (1 - (phi / M_PI));
 }
 
-static	double get_u(t_point p)
+static double	get_u(t_point p)
 {
 	double	theta;
 	double	raw_u;

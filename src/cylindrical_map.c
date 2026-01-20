@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 19:02:42 by anpollan          #+#    #+#             */
-/*   Updated: 2025/12/26 20:39:10 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/16 19:03:56 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static double	get_v(t_point p)
 	double	integer_part;
 
 	raw_v = modf(p.y, &integer_part);
-	// FIXME: No need to check? Just use the fmod?
 	if (raw_v >= 0)
 		return (fmod(raw_v, 1));
 	else
