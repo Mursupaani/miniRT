@@ -19,7 +19,7 @@ static t_color	sample_pixel(t_thread_data *data, double px, double py)
 	t_ray	ray;
 
 	ray = ray_for_pixel_aa(data->app->scene->camera, px, py);
-	return (color_at(data->app->scene, ray, RECURSIONS));
+	return (color_at(data->app->scene, ray, RECURSIONS, &data->error));
 }
 
 static void	accumulate_samples(t_thread_data *data, t_color *acc)

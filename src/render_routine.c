@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_routine.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 20:44:06 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 16:31:17 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:23:45 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static int	init_threads(t_app *app)
 
 void	render_full_resolution(t_thread_data *data)
 {
+	t_ray	ray;
+	t_color	color;
+
 	data->y = data->start_row;
 	while (data->y < data->end_row && *data->keep_rendering)
 	{
@@ -62,12 +65,12 @@ void	render_full_resolution(t_thread_data *data)
 				data->render_done = false;
 				return ;
 			}
-			ray = ray_for_pixel(data->app->scene->camera, x, y);
+			ray = ray_for_pixel(data->app->scene->camera, data->x, data->y);
 			color = color_at(data->app->scene, ray, RECURSIONS, &data->error);
 			if (data->error)
 				return ;
-			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
-			x++;
+			mlx_put_pixel(data->app->img, data->x, data->y, color_hex_from_color(color));
+			data->x++;
 		}
 		data->y++;
 	}
