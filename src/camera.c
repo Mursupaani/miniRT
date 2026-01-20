@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:30:52 by anpollan          #+#    #+#             */
 /*   Updated: 2026/01/16 18:33:37 by anpollan         ###   ########.fr       */
@@ -31,7 +31,7 @@ t_camera	*camera(int hsize, int vsize, double fov)
 	return (camera);
 }
 
-static t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
+t_ray	calculate_ray(t_camera *c, double world_x, double world_y)
 {
 	t_point		pixel;
 	t_point		origin;

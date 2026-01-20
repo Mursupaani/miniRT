@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
 /*   Updated: 2026/01/17 19:24:34 by anpollan         ###   ########.fr       */
@@ -61,6 +61,10 @@
 
 # ifndef PIXELATE_SCALE
 #  define PIXELATE_SCALE 32
+# endif
+
+# ifndef AA_SAMPLES
+#  define AA_SAMPLES 4
 # endif
 
 # ifndef BUMP_MAP_SCALE
@@ -451,6 +455,7 @@ typedef struct s_thread_data
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	x;
+	unsigned int	x_offset;
 	unsigned int	y;
 	unsigned int	y_offset;
 	t_ray			ray;
@@ -697,11 +702,12 @@ void			handle_n1(t_computations *comps, t_intersection **containers);
 void			handle_n2(t_computations *comps, t_intersection **containers);
 
 // Rays:
-t_ray			ray(t_point origin, t_vector direction);
-t_point			ray_position(t_ray ray, double t);
-t_ray			ray_transform(t_ray ray, t_matrix4 matrix);
-t_vector		reflect(t_vector in, t_vector normal);
-t_ray			ray_for_pixel(t_camera *c, int px, int py);
+t_ray		ray(t_point origin, t_vector direction);
+t_point		ray_position(t_ray ray, double t);
+t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
+t_vector	reflect(t_vector in, t_vector normal);
+t_ray		calculate_ray(t_camera *c, double world_x, double world_y);
+t_ray		ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
 t_object		*object_new(t_object_type type);
@@ -869,26 +875,28 @@ void			handle_looking_around(t_app *app);
 void			change_camera_fov(t_app *app, double ydelta);
 
 // Parsing
-void			parse_rt_file(char **av, t_app *app);
-void			skip_whitespace(char **str);
-bool			filetype_is_valid(char *filename);
-void			parse_error(char *message, t_app *app);
-bool			parse_double(char **str, double *result);
-bool			parse_int(char **str, int *result);
-double			ft_strtod(const char *str, char **endptr, int *i);
-bool			parse_vector(char **str, t_vector *vec);
-bool			parse_point(char **str, t_point *point);
-bool			parse_color(char **str, t_color *color);
-void			parse_ambient(char *line, t_app *app);
-void			parse_camera(char *line, t_app *app);
-void			parse_light(char *line, t_app *app);
-void			parse_sphere(char *line, t_app *app);
-void			parse_plane(char *line, t_app *app);
-void			parse_cylinder(char *line, t_app *app);
-t_object		*create_sphere_object(
-					t_point pos, double diameter, t_color color);
-t_object		*create_plane_object(
-					t_point pos, t_vector normal, t_color color);
-t_object		*create_cylinder_object(t_specs s);
+void		parse_rt_file(char **av, t_app *app);
+void		skip_whitespace(char **str);
+bool		filetype_is_valid(char *filename);
+void		parse_error(char *message, t_app *app);
+bool		parse_double(char **str, double *result);
+bool		parse_int(char **str, int *result);
+double		ft_strtod(const char *str, char **endptr, int *i);
+bool		parse_vector(char **str, t_vector *vec);
+bool		parse_point(char **str, t_point *point);
+bool		parse_color(char **str, t_color *color);
+void		parse_ambient(char *line, t_app *app);
+void		parse_camera(char *line, t_app *app);
+void		parse_light(char *line, t_app *app);
+void		parse_sphere(char *line, t_app *app);
+void		parse_plane(char *line, t_app *app);
+void		parse_cylinder(char *line, t_app *app);
+t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
+t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
+t_object 	*create_cylinder_object(t_specs s);
+
+// Anti-aliasing 
+double		pseudo_random(unsigned int x, unsigned int y, unsigned int s);
+t_color		get_aa_color(t_thread_data *data);
 
 #endif

@@ -51,16 +51,11 @@ static int	init_threads(t_app *app)
 
 void	render_full_resolution(t_thread_data *data)
 {
-	unsigned int	x;
-	unsigned int	y;
-	t_ray			ray;
-	t_color			color;
-
-	y = data->start_row;
-	while (y < data->end_row && *data->keep_rendering)
+	data->y = data->start_row;
+	while (data->y < data->end_row && *data->keep_rendering)
 	{
-		x = 0;
-		while (x < data->app->img->width && *data->keep_rendering)
+		data->x = 0;
+		while (data->x < data->app->img->width && *data->keep_rendering)
 		{
 			if (data->app->go_wait)
 			{
@@ -74,7 +69,7 @@ void	render_full_resolution(t_thread_data *data)
 			mlx_put_pixel(data->app->img, x, y, color_hex_from_color(color));
 			x++;
 		}
-		y++;
+		data->y++;
 	}
 }
 

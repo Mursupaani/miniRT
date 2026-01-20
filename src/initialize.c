@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
 /*   Updated: 2026/01/17 16:47:55 by anpollan         ###   ########.fr       */
