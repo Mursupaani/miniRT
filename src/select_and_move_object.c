@@ -104,6 +104,8 @@ void	select_object_from_screen(t_app *app, atomic_int *err)
 	if (!xs || xs->count == 0)
 		return ;
 	ray_hit = hit(xs);
+	if (!ray_hit.object)
+		return ;
 	app->selected_object = ray_hit.object;
 	app->selected_object_t = ray_hit.t;
 	app->selected_object_offset = get_selected_object_offest(app, r, ray_hit);

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 19:52:51 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/21 13:42:54 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static void	intersect_world_objects(
 	int				old_xs_count;
 	int				i;
 
+	if (!w->objects)
+		return ;
 	i = -1;
 	while (w->objects[++i])
 	{

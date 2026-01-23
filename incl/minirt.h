@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 19:24:34 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/23 12:11:47 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -885,15 +885,36 @@ double		ft_strtod(const char *str, char **endptr, int *i);
 bool		parse_vector(char **str, t_vector *vec);
 bool		parse_point(char **str, t_point *point);
 bool		parse_color(char **str, t_color *color);
-void		parse_ambient(char *line, t_app *app);
+void		parse_ambient_component(char *line, t_app *app);
 void		parse_camera(char *line, t_app *app);
 void		parse_light(char *line, t_app *app);
 void		parse_sphere(char *line, t_app *app);
 void		parse_plane(char *line, t_app *app);
 void		parse_cylinder(char *line, t_app *app);
+void		parse_cube(char *line, t_app *app);
+void		parse_cone(char *line, t_app *app);
 t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
 t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
-t_object 	*create_cylinder_object(t_specs s);
+t_object	*create_cylinder_object(t_specs s);
+t_object	*create_cube_object(t_specs s);
+t_object	*create_cone_object(t_specs s);
+void		get_cylinder_data(char **line, t_specs *s, t_app *app);
+void		validate_normal_vector(t_vector normal, t_app *app);
+void		validate_orientation_vector(t_vector ornt, t_app *app);
+bool		is_valid_axis(t_vector v);
+
+// Texture parsing
+bool		parse_texture(char **str, mlx_texture_t **texture, t_app *app);
+bool		parse_cube_textures(char **str, mlx_texture_t *textures[6],
+				t_app *app);
+void		apply_texture_to_object(t_object *obj, char **line, t_app *app);
+
+// Bump map parsing
+bool		parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);
+void		apply_bump_map_to_object(t_object *obj, char **line, t_app *app);
+
+// Tests
+void		test_new_parsing(void);
 
 // Anti-aliasing 
 double		pseudo_random(unsigned int x, unsigned int y, unsigned int s);
