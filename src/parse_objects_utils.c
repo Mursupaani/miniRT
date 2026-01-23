@@ -48,3 +48,42 @@ t_object	*create_plane_object(t_point pos, t_vector normal, t_color color)
 	(void)normal;
 	return (plane);
 }
+
+t_object	*create_cube_object(t_specs s)
+{
+	t_object	*cube;
+	t_matrix4	rot;
+	t_matrix4	trans;
+	t_matrix4	scale;
+
+	cube = cube_new();
+	if (!cube)
+		return (NULL);
+	cube->material.color = s.color;
+	trans = translation_matrix4(s.position.x, s.position.y, s.position.z);
+	scale = scaling_matrix4(s.diameter / 2.0, s.height / 2.0, s.diameter / 2.0);
+	rot = rotation_matrix_from_orientation(s.axis);
+	set_transform(cube, matrix4_multiply(trans, matrix4_multiply(rot, scale)));
+	return (cube);
+}
+
+t_object	*create_cone_object(t_specs s)
+{
+	t_object	*cone;
+	t_matrix4	rot;
+	t_matrix4	trans;
+	t_matrix4	scale;
+
+	cone = cone_new();
+	if (!cone)
+		return (NULL);
+	cone->material.color = s.color;
+	cone->maximum = s.height / 2.0;
+	cone->minimum = -s.height / 2.0;
+	cone->closed = true;
+	trans = translation_matrix4(s.position.x, s.position.y, s.position.z);
+	scale = scaling_matrix4(s.diameter / 2.0, 1, s.diameter / 2.0);
+	rot = rotation_matrix_from_orientation(s.axis);
+	set_transform(cone, matrix4_multiply(trans, matrix4_multiply(rot, scale)));
+	return (cone);
+}

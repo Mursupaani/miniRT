@@ -20,6 +20,8 @@ void	parse_sphere(char *line, t_app *app)
 	sphere = create_sphere_object(center, diameter, color);
 	if (!sphere)
 		exit_and_free_memory(ERROR_PARSING, app);
+	apply_texture_to_object(sphere, &line, app);
+	apply_bump_map_to_object(sphere, &line, app);
 	app->scene->objects = add_object_to_world(sphere, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
@@ -39,44 +41,18 @@ void	parse_plane(char *line, t_app *app)
 	skip_whitespace(&line);
 	if (!parse_vector(&line, &normal))
 		parse_error("Invalid plane normal vector", app);
-	if (normal.x < -1.0 || normal.x > 1.0 ||
-		normal.y < -1.0 || normal.y > 1.0 ||
-		normal.z < -1.0 || normal.z > 1.0)
-		parse_error("Plane normal must be normalized [-1,1]", app);
+	validate_normal_vector(normal, app);
 	skip_whitespace(&line);
 	if (!parse_color(&line, &color))
 		parse_error("Invalid plane color", app);
 	plane = create_plane_object(position, normal, color);
 	if (!plane)
 		exit_and_free_memory(ERROR_PARSING, app);
+	apply_texture_to_object(plane, &line, app);
+	apply_bump_map_to_object(plane, &line, app);
 	app->scene->objects = add_object_to_world(plane, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
-}
-
-static bool	is_valid_axis(t_vector v)
-{
-	return (v.x >= -1.0 && v.x <= 1.0 && v.y >= -1.0 && v.y <= 1.0
-		&& v.z >= -1.0 && v.z <= 1.0);
-}
-
-static void	get_cylinder_data(char **line, t_specs *s, t_app *app)
-{
-	skip_whitespace(line);
-	if (!parse_point(line, &s->position))
-		parse_error("Invalid cylinder position", app);
-	skip_whitespace(line);
-	if (!parse_vector(line, &s->axis) || !is_valid_axis(s->axis))
-		parse_error("Invalid cylinder axis", app);
-	skip_whitespace(line);
-	if (!parse_double(line, &s->diameter) || s->diameter <= 0)
-		parse_error("Invalid cylinder diameter", app);
-	skip_whitespace(line);
-	if (!parse_double(line, &s->height) || s->height <= 0)
-		parse_error("Invalid cylinder height", app);
-	skip_whitespace(line);
-	if (!parse_color(line, &s->color))
-		parse_error("Invalid cylinder color", app);
 }
 
 void	parse_cylinder(char *line, t_app *app)
@@ -89,7 +65,43 @@ void	parse_cylinder(char *line, t_app *app)
 	cyl = create_cylinder_object(s);
 	if (!cyl)
 		exit_and_free_memory(ERROR_PARSING, app);
+	apply_texture_to_object(cyl, &line, app);
+	apply_bump_map_to_object(cyl, &line, app);
 	app->scene->objects = add_object_to_world(cyl, app->scene);
+	if (!app->scene->objects)
+		exit_and_free_memory(ERROR_PARSING, app);
+}
+
+void	parse_cube(char *line, t_app *app)
+{
+	t_specs		s;
+	t_object	*cube;
+
+	line += 2;
+	get_cylinder_data(&line, &s, app);
+	cube = create_cube_object(s);
+	if (!cube)
+		exit_and_free_memory(ERROR_PARSING, app);
+	apply_texture_to_object(cube, &line, app);
+	apply_bump_map_to_object(cube, &line, app);
+	app->scene->objects = add_object_to_world(cube, app->scene);
+	if (!app->scene->objects)
+		exit_and_free_memory(ERROR_PARSING, app);
+}
+
+void	parse_cone(char *line, t_app *app)
+{
+	t_specs		s;
+	t_object	*cone;
+
+	line += 2;
+	get_cylinder_data(&line, &s, app);
+	cone = create_cone_object(s);
+	if (!cone)
+		exit_and_free_memory(ERROR_PARSING, app);
+	apply_texture_to_object(cone, &line, app);
+	apply_bump_map_to_object(cone, &line, app);
+	app->scene->objects = add_object_to_world(cone, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }

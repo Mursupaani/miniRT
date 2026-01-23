@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:35:14 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/05 15:42:36 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/21 13:37:54 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,23 @@ int	main(int ac, char **av)
 {
 	t_app	*app;
 
-	(void)ac;
-	(void)av;
-	//if (ac != 2)
-		//exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
-	// app = initialize_app();
-	test_render();
+	// (void)ac;
+	// (void)av;
+	if (ac != 2)
+		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
+	// test_new_parsing();
+	app = initialize_app();
+	// test_render();
 	// run_tests();
-	// parse_rt_file(av, app);
+	parse_rt_file(av, app);
 	// test_parsing();
-	// launch_render(app);
-	// mlx_image_to_window(app->mlx, app->img, 0, 0);
-	// mlx_loop(app->mlx);
-	// join_threads(app->threads, THREADS);
-	// free_app_memory(app);
+	launch_render(app);
+	mlx_image_to_window(app->mlx, app->img, 0, 0);
+	mlx_loop(app->mlx);
+	join_threads(app->threads, THREADS);
+	free_app_memory(app);
 	return (0);
 	//FIXME: remove this
-	(void)app;
-	(void)av;
+	// (void)app;
+	// (void)av;
 }
