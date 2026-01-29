@@ -575,7 +575,7 @@ void			print_matrix3(t_matrix3 matrix);
 void			print_matrix4(t_matrix4 matrix);
 void			print_color(t_color color);
 void			print_color_255(t_color255 color);
-void			print_point_light(t_light *point_light);
+void			print_lights(t_light *point_light);
 void			print_material(t_material material);
 void			print_material(t_material material);
 void			print_intersections(t_intersections *xs);

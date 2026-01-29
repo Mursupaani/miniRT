@@ -135,7 +135,7 @@ void	print_color_255(t_color255 color)
 	printf (" HEX:\t%X\n", color_hex_from_color255(color));
 }
 
-void	print_point_light(t_light *point_light)
+void	print_lights(t_light *point_light)
 {
 	printf("POINT LIGHT:\n\n");
 	printf("POSITION ");
@@ -143,6 +143,12 @@ void	print_point_light(t_light *point_light)
 	printf("\n");
 	printf("INTENSITY ");
 	print_color(point_light->intensity);
+	printf("\nAMBIENT LIGHT:\n\n");
+	printf("INTENSITY ");
+	print_color(point_light->ambient_color);
+	printf("\n");
+	printf("RATIO ");
+	printf("%f\n", point_light->ambient_ratio);
 }
 
 void	print_material(t_material material)
@@ -205,7 +211,7 @@ void	print_world(t_world *world)
 	int	i;
 	printf("--------------------\n");
 	if (world->light)
-		print_point_light(world->light);
+		print_lights(world->light);
 	i = -1;
 	while (world->objects[++i])
 	{
