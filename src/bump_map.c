@@ -47,13 +47,13 @@ void	sample_bump_map(t_bump_map *bm, t_uv_map uv)
 	uint32_t		x_offset;
 	uint32_t		y_offset;
 
-	x = (uint32_t)(uv.u * (bm->bump_map->width - 1));
-	y = (uint32_t)((1 - uv.v) * (bm->bump_map->height - 1));
+	x = (uint32_t)(uv.u * (bm->bump_map->width)) % bm->bump_map->width;
+	y = (uint32_t)((1 - uv.v) * (bm->bump_map->height)) % bm->bump_map->height;
 	x_offset = (x + 1) % bm->bump_map->width;
-	y_offset = (y + 1) % bm->bump_map->width;
+	y_offset = (y + 1) % bm->bump_map->height;
 	bm->sample_hit = sample_hit(bm->bump_map, x, y);
-	bm->sample_step_u = sample_hit(bm->bump_map, x_offset, uv.v);
-	bm->sample_step_v = sample_hit(bm->bump_map, y_offset, uv.v);
+	bm->sample_step_u = sample_hit(bm->bump_map, x_offset, y);
+	bm->sample_step_v = sample_hit(bm->bump_map, x, y_offset);
 }
 
 void	apply_bump_map_on_normal(

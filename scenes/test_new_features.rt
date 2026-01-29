@@ -3,7 +3,9 @@ A 0.2 									255,255,255
 C 0,0,20 		0,0,-1 		70
 L -40,50,0 					0.6 		255,255,255
 
-sp 0,0,-20 					12.6 		10,0,255	texture:Textures/earthmap1k.png bump:Textures/minecraft_bump.png
+sp 0,0,-20 					12.6 		10,0,255	texture:Textures/earthmap1k.png bump:Textures/bump.png
+sp 0,0,-20 					12.6 		10,0,255	texture:Textures/earthmap1k.png 
+sp 0,0,-20 					12.6 		10,0,255	bump:Textures/bump.png
 pl 0,-10,0 		0,1,0 				255,255,255
 cy 10,0,-20 	0,1,0 		2.0 8.0 	0,255,0 	texture:Textures/pattern.png
 cu -10,0,-20 	0,1,0 		4.0 4.0 	200,100,50 	texture:Textures/cube2.png

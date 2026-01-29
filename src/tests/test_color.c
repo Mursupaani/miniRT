@@ -28,7 +28,7 @@ And light.intensity = intensity\n");
 	intensity = color(1, 1, 1);
 	position = point(0, 0, 0);
 	light = point_light(position, intensity);
-	print_point_light(light);
+	print_lights(light);
 	free(light);
 }
 
