@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/23 12:11:47 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/29 19:49:40 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,14 +515,16 @@ typedef struct s_computations
 	bool		shadowed;
 }	t_computations;
 
-// Cylinder specifications
 typedef struct s_specs
 {
+	t_point		center;
 	double		diameter;
-	double		height;
-	t_color		color;
-	t_vector	axis;
 	t_point		position;
+	t_vector	normal;
+	t_color		color;
+	t_object	*obj;
+	t_vector	axis;
+	double		height;
 }	t_specs;
 
 // Tests
