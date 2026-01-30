@@ -34,9 +34,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		exit_and_free_memory(ERROR_NO_INPUT_FILE, NULL);
 	app = initialize_app();
-	// parse_rt_file(av, app);
-	(void)av;
-	build_test_render(app);
+	parse_rt_file(av, app);
 	launch_render(app);
 	mlx_loop(app->mlx);
 	join_threads(app->threads, THREADS);
