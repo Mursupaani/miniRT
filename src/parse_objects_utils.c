@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_objects_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:52:19 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:52:34 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-t_object *create_cylinder_object(t_specs s)
+t_object	*create_cylinder_object(t_specs s)
 {
 	t_object	*cyl;
 	t_matrix4	rot;
@@ -21,7 +33,6 @@ t_object *create_cylinder_object(t_specs s)
 	return (cyl);
 }
 
-
 t_object	*create_sphere_object(t_point pos, double diameter, t_color color)
 {
 	t_object	*sphere;
@@ -31,8 +42,8 @@ t_object	*create_sphere_object(t_point pos, double diameter, t_color color)
 		return (NULL);
 	sphere->material.color = color;
 	set_transform(sphere, matrix4_multiply(
-		translation_matrix4(pos.x, pos.y, pos.z),
-		scaling_matrix4(diameter / 2.0, diameter / 2.0, diameter / 2.0)));
+			translation_matrix4(pos.x, pos.y, pos.z),
+			scaling_matrix4(diameter / 2.0, diameter / 2.0, diameter / 2.0)));
 	return (sphere);
 }
 

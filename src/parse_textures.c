@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 00:00:00 by juhana            #+#    #+#             */
-/*   Updated: 2026/01/21 11:37:42 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:51:53 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ bool	parse_texture(char **str, mlx_texture_t **texture, t_app *app)
 	return (true);
 }
 
-
-
 void	apply_texture_to_object(t_object *obj, char **line, t_app *app)
 {
 	mlx_texture_t	*texture;
@@ -63,14 +61,19 @@ void	apply_texture_to_object(t_object *obj, char **line, t_app *app)
 	{
 		obj->material.pattern = uv_image(texture);
 		if (obj->type == SPHERE)
-			obj->material.pattern = texture_map(obj->material.pattern, spherical_map);
+			obj->material.pattern = texture_map(
+					obj->material.pattern, spherical_map);
 		else if (obj->type == CUBE)
-			obj->material.pattern = texture_map(obj->material.pattern, cubic_atlas_map);
+			obj->material.pattern = texture_map(
+					obj->material.pattern, cubic_atlas_map);
 		else if (obj->type == CYLINDER)
-			obj->material.pattern = texture_map(obj->material.pattern, cylindrical_map);
+			obj->material.pattern = texture_map(
+					obj->material.pattern, cylindrical_map);
 		else if (obj->type == CONE)
-			obj->material.pattern = texture_map(obj->material.pattern, cylindrical_map);
+			obj->material.pattern = texture_map(
+					obj->material.pattern, cylindrical_map);
 		else if (obj->type == PLANE)
-			obj->material.pattern = texture_map(obj->material.pattern, planar_map);
+			obj->material.pattern = texture_map(
+					obj->material.pattern, planar_map);
 	}
 }
