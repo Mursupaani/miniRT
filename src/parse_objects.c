@@ -29,9 +29,9 @@ void	parse_sphere(char **line, t_app *app)
 	s.obj = create_sphere_object(s.center, s.diameter, s.color);
 	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
+	apply_light_behavior(s.obj, app, line);
 	apply_texture_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	apply_light_behavior(s.obj, app, line);
 	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
@@ -55,6 +55,7 @@ void	parse_plane(char **line, t_app *app)
 	s.obj = create_plane_object(s.position, s.normal, s.color);
 	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
+	apply_light_behavior(s.obj, app, line);
 	apply_texture_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
 	app->scene->objects = add_object_to_world(s.obj, app->scene);
@@ -65,16 +66,16 @@ void	parse_plane(char **line, t_app *app)
 void	parse_cylinder(char **line, t_app *app)
 {
 	t_specs		s;
-	t_object	*cyl;
 
 	(*line) += 2;
 	get_cylinder_data(line, &s, app);
-	cyl = create_cylinder_object(s);
-	if (!cyl)
+	s.obj = create_cylinder_object(s);
+	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
-	apply_texture_to_object(cyl, line, app);
-	apply_bump_map_to_object(cyl, line, app);
-	app->scene->objects = add_object_to_world(cyl, app->scene);
+	apply_light_behavior(s.obj, app, line);
+	apply_texture_to_object(s.obj, line, app);
+	apply_bump_map_to_object(s.obj, line, app);
+	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -82,16 +83,16 @@ void	parse_cylinder(char **line, t_app *app)
 void	parse_cube(char **line, t_app *app)
 {
 	t_specs		s;
-	t_object	*cube;
 
 	(*line) += 2;
 	get_cylinder_data(line, &s, app);
-	cube = create_cube_object(s);
-	if (!cube)
+	s.obj = create_cube_object(s);
+	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
-	apply_texture_to_object(cube, line, app);
-	apply_bump_map_to_object(cube, line, app);
-	app->scene->objects = add_object_to_world(cube, app->scene);
+	apply_light_behavior(s.obj, app, line);
+	apply_texture_to_object(s.obj, line, app);
+	apply_bump_map_to_object(s.obj, line, app);
+	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -99,16 +100,16 @@ void	parse_cube(char **line, t_app *app)
 void	parse_cone(char **line, t_app *app)
 {
 	t_specs		s;
-	t_object	*cone;
 
 	(*line) += 2;
 	get_cylinder_data(line, &s, app);
-	cone = create_cone_object(s);
-	if (!cone)
+	s.obj = create_cone_object(s);
+	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
-	apply_texture_to_object(cone, line, app);
-	apply_bump_map_to_object(cone, line, app);
-	app->scene->objects = add_object_to_world(cone, app->scene);
+	apply_light_behavior(s.obj, app, line);
+	apply_texture_to_object(s.obj, line, app);
+	apply_bump_map_to_object(s.obj, line, app);
+	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
