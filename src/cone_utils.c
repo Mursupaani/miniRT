@@ -19,7 +19,7 @@ bool	check_cone_cap(t_ray local_ray, double t, double limit)
 
 	x = local_ray.origin.x + t * local_ray.direction.x;
 	z = local_ray.origin.z + t * local_ray.direction.z;
-	return ((x * x + z * z) <= limit * limit);
+	return ((x * x + z * z) <= (limit * limit));
 }
 
 t_intersections	*intersect_cone_caps(
