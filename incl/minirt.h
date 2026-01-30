@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 20:11:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -920,7 +920,10 @@ bool			is_valid_axis(t_vector v);
 bool			parse_texture(char **str, mlx_texture_t **texture, t_app *app);
 bool			parse_cube_textures(char **str, mlx_texture_t *textures[6],
 					t_app *app);
-void			apply_texture_to_object(t_object *obj, char **line, t_app *app);
+void			apply_texture_or_pattern_to_object(t_object *obj, char **line, t_app *app);
+
+// Pattern parsing
+void	parse_pattern(t_object *obj, char **line, t_app *app);
 
 // Bump map parsing
 bool			parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);

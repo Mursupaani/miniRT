@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2026/01/30 14:56:18 by anpollan         ###   ########.fr        #
+#    Updated: 2026/01/30 20:10:14 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  normal_utils.c free_memory.c texture_map.c \
 				  render_pixelated.c per_frame_loop.c \
 				  parse_light_behavior.c parse_reflection_and_refraction.c \
-				  \
+				  parse_patterns.c \
 				  old.c \
 				  debug.c test_tuples.c test_matrices.c test_transformation.c \
 				  test_rays.c test.c test_normal.c test_color.c \
