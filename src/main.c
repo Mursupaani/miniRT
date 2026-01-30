@@ -56,7 +56,6 @@ int	main(int ac, char **av)
 	// test_parsing();
 	print_world(app->scene);
 	launch_render(app);
-	mlx_image_to_window(app->mlx, app->img, 0, 0);
 	mlx_loop(app->mlx);
 	join_threads(app->threads, THREADS);
 	free_app_memory(app);

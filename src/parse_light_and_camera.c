@@ -70,7 +70,7 @@ void	parse_camera(char *line, t_app *app)
 		parse_error("Invalid camera FOV (must be 0-180)", app);
 	if (app->scene->camera)
 		parse_error("Multiple cameras defined", app);
-	app->scene->camera = camera(app->monitor_width, app->monitor_height, fov * M_PI / 180.0);
+	app->scene->camera = camera(app->monitor_width, app->monitor_height, deg_to_rad(fov));
 	if (!app->scene->camera)
 		exit_and_free_memory(ERROR_PARSING, app);
 	app->scene->camera->transform = view_transform(pos, point(pos.x + ornt.x,
