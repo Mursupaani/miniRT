@@ -34,22 +34,25 @@ static void	parse_line(char *line, t_app *app)
 	if (!*line || *line == '#')
 		return ;
 	if (*line == 'A' && ft_isspace(*(line + 1)))
-		parse_ambient_component(line, app);
+		parse_ambient_component(&line, app);
 	else if (*line == 'C' && ft_isspace(*(line + 1)))
-		parse_camera(line, app);
+		parse_camera(&line, app);
 	else if (*line == 'L' && ft_isspace(*(line + 1)))
-		parse_light(line, app);
+		parse_light(&line, app);
 	else if (line[0] == 's' && line[1] == 'p' && ft_isspace(line[2]))
-		parse_sphere(line, app);
+		parse_sphere(&line, app);
 	else if (line[0] == 'p' && line[1] == 'l' && ft_isspace(line[2]))
-		parse_plane(line, app);
+		parse_plane(&line, app);
 	else if (line[0] == 'c' && line[1] == 'y' && ft_isspace(line[2]))
-		parse_cylinder(line, app);
+		parse_cylinder(&line, app);
 	else if (line[0] == 'c' && line[1] == 'u' && ft_isspace(line[2]))
-		parse_cube(line, app);
+		parse_cube(&line, app);
 	else if (line[0] == 'c' && line[1] == 'o' && ft_isspace(line[2]))
-		parse_cone(line, app);
+		parse_cone(&line, app);
 	else
+		parse_error("Unknown element type", app);
+	skip_whitespace(&line);
+	if (*line != '\0')
 		parse_error("Unknown element type", app);
 }
 

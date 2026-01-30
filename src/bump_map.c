@@ -36,8 +36,8 @@ void	calculate_steps(t_bump_map *bm)
 
 void	calculate_slopes(t_bump_map *bm)
 {
-	bm->slope_u = (bm->sample_hit.r - bm->sample_step_u.r) / bm->step_u;
-	bm->slope_v = (bm->sample_hit.r - bm->sample_step_v.r) / bm->step_v;
+	bm->slope_u = (bm->sample_step_u.r - bm->sample_hit.r ) / bm->step_u;
+	bm->slope_v = (bm->sample_step_v.r - bm->sample_hit.r ) / bm->step_v;
 }
 
 void	sample_bump_map(t_bump_map *bm, t_uv_map uv)

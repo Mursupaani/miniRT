@@ -40,7 +40,7 @@
 
 // Material default max values
 # ifndef AMBIENT
-#  define AMBIENT -1
+#  define AMBIENT 0.2
 # endif
 
 # ifndef DIFFUSE
@@ -68,7 +68,7 @@
 # endif
 
 # ifndef BUMP_MAP_SCALE
-#  define BUMP_MAP_SCALE 0.0004
+#  define BUMP_MAP_SCALE 0.005
 # endif
 
 # ifndef MOVEMENT_SPEED
@@ -888,14 +888,22 @@ double			ft_strtod(const char *str, char **endptr, int *i);
 bool			parse_vector(char **str, t_vector *vec);
 bool			parse_point(char **str, t_point *point);
 bool			parse_color(char **str, t_color *color);
-void			parse_ambient_component(char *line, t_app *app);
-void			parse_camera(char *line, t_app *app);
-void			parse_light(char *line, t_app *app);
-void			parse_sphere(char *line, t_app *app);
-void			parse_plane(char *line, t_app *app);
-void			parse_cylinder(char *line, t_app *app);
-void			parse_cube(char *line, t_app *app);
-void			parse_cone(char *line, t_app *app);
+// void			parse_ambient_component(char *line, t_app *app);
+void			parse_ambient_component(char **line, t_app *app);
+// void			parse_camera(char *line, t_app *app);
+void			parse_camera(char **line, t_app *app);
+// void			parse_light(char *line, t_app *app);
+void			parse_light(char **line, t_app *app);
+// void			parse_sphere(char *line, t_app *app);
+void			parse_sphere(char **line, t_app *app);
+// void			parse_plane(char *line, t_app *app);
+void			parse_plane(char **line, t_app *app);
+// void			parse_cylinder(char *line, t_app *app);
+void			parse_cylinder(char **line, t_app *app);
+// void			parse_cube(char *line, t_app *app);
+void			parse_cube(char **line, t_app *app);
+// void			parse_cone(char *line, t_app *app);
+void			parse_cone(char **line, t_app *app);
 t_object		*create_sphere_object(
 					t_point pos, double diameter, t_color color);
 t_object		*create_plane_object(
@@ -920,9 +928,11 @@ void			apply_bump_map_to_object(
 					t_object *obj, char **line, t_app *app);
 
 // Light behavior parsing
-void			apply_light_behavior(t_object *obj, t_app *app, char *line);
-void			apply_reflect_and_refract(
-					t_object *obj, t_app *app, char *line);
+// void			apply_light_behavior(t_object *obj, t_app *app, char *line);
+void			apply_light_behavior(t_object *obj, t_app *app, char **line);
+// void			apply_reflect_and_refract(
+// 					t_object *obj, t_app *app, char *line);
+void			apply_reflect_and_refract(t_object *obj, t_app *app, char **line);
 
 // Anti-aliasing 
 double			pseudo_random(unsigned int x, unsigned int y, unsigned int s);

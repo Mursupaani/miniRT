@@ -16,11 +16,15 @@ t_vector	cone_normal_at(t_object *cone, t_point local_point)
 {
 	double	dist;
 	double	y;
+	double	max_r;
+	double	min_r;
 
 	dist = pow(local_point.x, 2) + pow(local_point.z, 2);
-	if (dist < 1 && local_point.y >= cone->maximum - EPSILON)
+	max_r = fabs(cone->maximum);
+	min_r = fabs(cone->minimum);
+	if (dist < (max_r * max_r) && local_point.y >= cone->maximum - EPSILON)
 		return (vector(0, 1, 0));
-	else if (dist < 1 && local_point.y <= cone->minimum + EPSILON)
+	else if (dist < (min_r * min_r) && local_point.y <= cone->minimum + EPSILON)
 		return (vector(0, -1, 0));
 	y = sqrt(pow(local_point.x, 2) + pow(local_point.z, 2));
 	if (local_point.y > 0)
