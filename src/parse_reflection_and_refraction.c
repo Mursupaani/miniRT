@@ -36,24 +36,24 @@ static void	parse_object_reflect(char **line, t_object *obj, t_app *app)
 	skip_whitespace(line);
 }
 
-void	apply_reflect_and_refract(t_object *obj, t_app *app, char *line)
+void	apply_reflect_and_refract(t_object *obj, t_app *app, char **line)
 {
-	skip_whitespace(&line);
-	if (!*line || *line == '#')
+	skip_whitespace(line);
+	if (!**line || **line == '#')
 		return ;
-	if (ft_strncmp(line, "re:", 3) == 0)
+	if (ft_strncmp(*line, "re:", 3) == 0)
 	{
-		line += 3;
-		parse_object_reflect(&line, obj, app);
+		(*line) += 3;
+		parse_object_reflect(line, obj, app);
 	}
-	if (ft_strncmp(line, "tr:", 3) == 0)
+	if (ft_strncmp(*line, "tr:", 3) == 0)
 	{
-		line += 3;
-		parse_object_refract(&line, obj, app);
+		(*line) += 3;
+		parse_object_refract(line, obj, app);
 	}
-	if (ft_strncmp(line, "ri:", 3) == 0)
+	if (ft_strncmp(*line, "ri:", 3) == 0)
 	{
-		line += 3;
-		parse_object_refract_indx(&line, obj, app);
+		(*line) += 3;
+		parse_object_refract_indx(line, obj, app);
 	}
 }

@@ -44,30 +44,30 @@ static void	parse_object_ambient(char **line, t_object *obj, t_app *app)
 	skip_whitespace(line);
 }
 
-void	apply_light_behavior(t_object *obj, t_app *app, char *line)
+void	apply_light_behavior(t_object *obj, t_app *app, char **line)
 {
-	skip_whitespace(&line);
-	if (!*line || *line == '#')
+	skip_whitespace(line);
+	if (!**line || **line == '#')
 		return ;
-	if (ft_strncmp(line, "a:", 2) == 0)
+	if (ft_strncmp(*line, "a:", 2) == 0)
 	{
-		line += 2;
-		parse_object_ambient(&line, obj, app);
+		(*line) += 2;
+		parse_object_ambient(line, obj, app);
 	}
-	if (ft_strncmp(line, "d:", 2) == 0)
+	if (ft_strncmp(*line, "d:", 2) == 0)
 	{
-		line += 2;
-		parse_object_diffuse(&line, obj, app);
+		(*line) += 2;
+		parse_object_diffuse(line, obj, app);
 	}
-	if (ft_strncmp(line, "sp:", 3) == 0)
+	if (ft_strncmp(*line, "sp:", 3) == 0)
 	{
-		line += 3;
-		parse_object_specular(&line, obj, app);
+		(*line) += 3;
+		parse_object_specular(line, obj, app);
 	}
-	if (ft_strncmp(line, "sh:", 3) == 0)
+	if (ft_strncmp(*line, "sh:", 3) == 0)
 	{
-		line += 3;
-		parse_object_shininess(&line, obj, app);
+		(*line) += 3;
+		parse_object_shininess(line, obj, app);
 	}
 	apply_reflect_and_refract(obj, app, line);
 }

@@ -27,17 +27,17 @@ static void	create_or_update_light(t_point pos, t_color color, t_app *app)
 	}
 }
 
-void	parse_ambient_component(char *line, t_app *app)
+void	parse_ambient_component(char **line, t_app *app)
 {
 	double	ratio;
 	t_color	color;
 
-	line++;
-	skip_whitespace(&line);
-	if (!parse_double(&line, &ratio) || ratio < 0.0 || ratio > 1.0)
+	(*line)++;
+	skip_whitespace(line);
+	if (!parse_double(line, &ratio) || ratio < 0.0 || ratio > 1.0)
 		parse_error("Invalid ambient lighting ratio", app);
-	skip_whitespace(&line);
-	if (!parse_color(&line, &color))
+	skip_whitespace(line);
+	if (!parse_color(line, &color))
 		parse_error("Invalid ambient lighting color", app);
 	if (!app->scene->light)
 	{
@@ -51,22 +51,22 @@ void	parse_ambient_component(char *line, t_app *app)
 	app->scene->light->ambient_color = color;
 }
 
-void	parse_camera(char *line, t_app *app)
+void	parse_camera(char **line, t_app *app)
 {
 	t_point		pos;
 	t_vector	ornt;
 	double		fov;
 
-	line++;
-	skip_whitespace(&line);
-	if (!parse_point(&line, &pos))
+	(*line)++;
+	skip_whitespace(line);
+	if (!parse_point(line, &pos))
 		parse_error("Invalid camera pos", app);
-	skip_whitespace(&line);
-	if (!parse_vector(&line, &ornt))
+	skip_whitespace(line);
+	if (!parse_vector(line, &ornt))
 		parse_error("Invalid camera ornt", app);
 	validate_orientation_vector(ornt, app);
-	skip_whitespace(&line);
-	if (!parse_double(&line, &fov) || fov < 0 || fov > 180)
+	skip_whitespace(line);
+	if (!parse_double(line, &fov) || fov < 0 || fov > 180)
 		parse_error("Invalid camera FOV (must be 0-180)", app);
 	if (app->scene->camera)
 		parse_error("Multiple cameras defined", app);
@@ -80,22 +80,22 @@ void	parse_camera(char *line, t_app *app)
 	set_camera_transform(app->scene->camera, app->scene->camera->transform);
 }
 
-void	parse_light(char *line, t_app *app)
+void	parse_light(char **line, t_app *app)
 {
 	t_point		pos;
 	double		brightness;
 	t_color		color;
 
-	line++;
-	skip_whitespace(&line);
-	if (!parse_point(&line, &pos))
+	(*line)++;
+	skip_whitespace(line);
+	if (!parse_point(line, &pos))
 		parse_error("Invalid light pos", app);
-	skip_whitespace(&line);
-	if (!parse_double(&line, &brightness)
+	skip_whitespace(line);
+	if (!parse_double(line, &brightness)
 		|| brightness < 0.0 || brightness > 1.0)
 		parse_error("Invalid light brightness ratio", app);
-	skip_whitespace(&line);
-	if (!parse_color(&line, &color))
+	skip_whitespace(line);
+	if (!parse_color(line, &color))
 		parse_error("Invalid light color", app);
 	if (app->scene->light && app->scene->light->intensity.r > 0.0)
 		parse_error("Multiple lights defined", app);
