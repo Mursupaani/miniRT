@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static void	free_textures(mlx_texture_t *textures[6])
@@ -35,6 +36,8 @@ void	free_object_array(t_object **objs)
 	{
 		if (objs[i]->material.pattern.type == MAP)
 			free_textures(objs[i]->material.pattern.uv_pattern.textures);
+		if (objs[i]->bump_map.has_bump_map)
+			mlx_delete_texture(objs[i]->bump_map.bump_map);
 		free(objs[i]);
 		objs[i] = NULL;
 	}
