@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 15:11:12 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 18:24:08 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 20:34:47 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	calculate_steps(t_bump_map *bm)
 
 void	calculate_slopes(t_bump_map *bm)
 {
-	bm->slope_u = (bm->sample_step_u.r - bm->sample_hit.r ) / bm->step_u;
-	bm->slope_v = (bm->sample_step_v.r - bm->sample_hit.r ) / bm->step_v;
+	bm->slope_u = (bm->sample_step_u.r - bm->sample_hit.r) / bm->step_u;
+	bm->slope_v = (bm->sample_step_v.r - bm->sample_hit.r) / bm->step_v;
 }
 
 void	sample_bump_map(t_bump_map *bm, t_uv_map uv)
