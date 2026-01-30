@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 20:44:06 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 15:50:23 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	render_full_resolution(t_thread_data *data)
 			color = color_at(data->app->scene, ray, RECURSIONS, &data->error);
 			if (data->error)
 				return ;
-			mlx_put_pixel(data->app->img, data->x, data->y, color_hex_from_color(color));
+			mlx_put_pixel(
+				data->app->img, data->x, data->y, color_hex_from_color(color));
 			data->x++;
 		}
 		data->y++;

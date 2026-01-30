@@ -555,8 +555,11 @@ void			test_cylinders(void);
 void			test_cones(void);
 void			test_uv_patterns(void);
 void			test_bump_maps(void);
+void			test_new_parsing(void);
 
 // Old functions / unused?:
+t_uv_align		uv_align_check(t_color main, t_color ul,
+					t_color ur, t_color bl, t_color br);
 t_color			lighting_old(
 					t_object *obj, t_light *light,
 					t_point point, t_vector eyev);
@@ -704,12 +707,12 @@ void			handle_n1(t_computations *comps, t_intersection **containers);
 void			handle_n2(t_computations *comps, t_intersection **containers);
 
 // Rays:
-t_ray		ray(t_point origin, t_vector direction);
-t_point		ray_position(t_ray ray, double t);
-t_ray		ray_transform(t_ray ray, t_matrix4 matrix);
-t_vector	reflect(t_vector in, t_vector normal);
-t_ray		calculate_ray(t_camera *c, double world_x, double world_y);
-t_ray		ray_for_pixel(t_camera *c, int px, int py);
+t_ray			ray(t_point origin, t_vector direction);
+t_point			ray_position(t_ray ray, double t);
+t_ray			ray_transform(t_ray ray, t_matrix4 matrix);
+t_vector		reflect(t_vector in, t_vector normal);
+t_ray			calculate_ray(t_camera *c, double world_x, double world_y);
+t_ray			ray_for_pixel(t_camera *c, int px, int py);
 
 // Objects:
 t_object		*object_new(t_object_type type);
@@ -770,8 +773,6 @@ t_pattern		uv_image(mlx_texture_t	*texture);
 t_pattern		uv_image_cube(mlx_texture_t *textures[6]);
 t_pattern		uv_image_cube_same_texture(mlx_texture_t *texture);
 t_pattern		uv_checkers(double w, double h, t_color a, t_color b);
-t_uv_align		uv_align_check(t_color main, t_color ul,
-					t_color ur, t_color bl, t_color br);
 t_pattern		uv_align_cube_pattern(void);
 t_pattern		uv_align_check_pattern(void);
 t_uv_map		spherical_map(t_point p);
@@ -877,53 +878,54 @@ void			handle_looking_around(t_app *app);
 void			change_camera_fov(t_app *app, double ydelta);
 
 // Parsing
-void		parse_rt_file(char **av, t_app *app);
-void		skip_whitespace(char **str);
-bool		filetype_is_valid(char *filename);
-void		parse_error(char *message, t_app *app);
-bool		parse_double(char **str, double *result);
-bool		parse_int(char **str, int *result);
-double		ft_strtod(const char *str, char **endptr, int *i);
-bool		parse_vector(char **str, t_vector *vec);
-bool		parse_point(char **str, t_point *point);
-bool		parse_color(char **str, t_color *color);
-void		parse_ambient_component(char *line, t_app *app);
-void		parse_camera(char *line, t_app *app);
-void		parse_light(char *line, t_app *app);
-void		parse_sphere(char *line, t_app *app);
-void		parse_plane(char *line, t_app *app);
-void		parse_cylinder(char *line, t_app *app);
-void		parse_cube(char *line, t_app *app);
-void		parse_cone(char *line, t_app *app);
-t_object	*create_sphere_object(t_point pos, double diameter, t_color color);
-t_object	*create_plane_object(t_point pos, t_vector normal, t_color color);
-t_object	*create_cylinder_object(t_specs s);
-t_object	*create_cube_object(t_specs s);
-t_object	*create_cone_object(t_specs s);
-void		get_cylinder_data(char **line, t_specs *s, t_app *app);
-void		validate_normal_vector(t_vector normal, t_app *app);
-void		validate_orientation_vector(t_vector ornt, t_app *app);
-bool		is_valid_axis(t_vector v);
+void			parse_rt_file(char **av, t_app *app);
+void			skip_whitespace(char **str);
+bool			filetype_is_valid(char *filename);
+void			parse_error(char *message, t_app *app);
+bool			parse_double(char **str, double *result);
+bool			parse_int(char **str, int *result);
+double			ft_strtod(const char *str, char **endptr, int *i);
+bool			parse_vector(char **str, t_vector *vec);
+bool			parse_point(char **str, t_point *point);
+bool			parse_color(char **str, t_color *color);
+void			parse_ambient_component(char *line, t_app *app);
+void			parse_camera(char *line, t_app *app);
+void			parse_light(char *line, t_app *app);
+void			parse_sphere(char *line, t_app *app);
+void			parse_plane(char *line, t_app *app);
+void			parse_cylinder(char *line, t_app *app);
+void			parse_cube(char *line, t_app *app);
+void			parse_cone(char *line, t_app *app);
+t_object		*create_sphere_object(
+					t_point pos, double diameter, t_color color);
+t_object		*create_plane_object(
+					t_point pos, t_vector normal, t_color color);
+t_object		*create_cylinder_object(t_specs s);
+t_object		*create_cube_object(t_specs s);
+t_object		*create_cone_object(t_specs s);
+void			get_cylinder_data(char **line, t_specs *s, t_app *app);
+void			validate_normal_vector(t_vector normal, t_app *app);
+void			validate_orientation_vector(t_vector ornt, t_app *app);
+bool			is_valid_axis(t_vector v);
 
 // Texture parsing
-bool		parse_texture(char **str, mlx_texture_t **texture, t_app *app);
-bool		parse_cube_textures(char **str, mlx_texture_t *textures[6],
-				t_app *app);
-void		apply_texture_to_object(t_object *obj, char **line, t_app *app);
+bool			parse_texture(char **str, mlx_texture_t **texture, t_app *app);
+bool			parse_cube_textures(char **str, mlx_texture_t *textures[6],
+					t_app *app);
+void			apply_texture_to_object(t_object *obj, char **line, t_app *app);
 
 // Bump map parsing
-bool		parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);
-void		apply_bump_map_to_object(t_object *obj, char **line, t_app *app);
+bool			parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);
+void			apply_bump_map_to_object(
+					t_object *obj, char **line, t_app *app);
 
 // Light behavior parsing
-void		apply_light_behavior(t_object *obj, t_app *app, char *line);
-void		apply_reflect_and_refract(t_object *obj, t_app *app, char *line);
-
-// Tests
-void		test_new_parsing(void);
+void			apply_light_behavior(t_object *obj, t_app *app, char *line);
+void			apply_reflect_and_refract(
+					t_object *obj, t_app *app, char *line);
 
 // Anti-aliasing 
-double		pseudo_random(unsigned int x, unsigned int y, unsigned int s);
-t_color		get_aa_color(t_thread_data *data);
+double			pseudo_random(unsigned int x, unsigned int y, unsigned int s);
+t_color			get_aa_color(t_thread_data *data);
 
 #endif
