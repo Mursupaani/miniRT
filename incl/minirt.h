@@ -68,7 +68,7 @@
 # endif
 
 # ifndef BUMP_MAP_SCALE
-#  define BUMP_MAP_SCALE 0.005
+#  define BUMP_MAP_SCALE 0.007
 # endif
 
 # ifndef MOVEMENT_SPEED

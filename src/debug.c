@@ -277,6 +277,10 @@ void	print_camera(t_camera *camera)
 	printf(" Horizontal size:\t%d\n", camera->hsize);
 	printf(" Vertical size:\t\t%d\n", camera->vsize);
 	printf(" Field of view:\t\t%f\n", camera->fov);
+	printf("\n FROM:\n");
+	print_tuple(camera->from);
+	printf("\n TO:\n");
+	print_tuple(camera->to);
 	printf("\n");
 	printf(" TRANSFORMATION ");
 	print_matrix4(camera->transform);
