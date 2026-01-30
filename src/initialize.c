@@ -63,8 +63,8 @@ t_app	*initialize_app(void)
 		exit_and_free_memory(ERROR_MLX_INIT, app);
 	mlx_get_monitor_size(0, &app->scrn_w, &app->scrn_h);
 	// NOTE: Uncomment two lines below for testing with Valgrind.
-	// app->monitor_width = THREADS;
-	// app->monitor_height = THREADS;
+	app->scrn_w = THREADS;
+	app->scrn_h = THREADS;
 	init_images(app);
 	mlx_set_window_size(app->mlx, app->scrn_w, app->scrn_h);
 	initialize_hooks(app);
