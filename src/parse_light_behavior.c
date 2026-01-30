@@ -23,7 +23,7 @@ static void	parse_object_diffuse(char **line, t_object *obj, t_app *app)
 static void	parse_object_shininess(char **line, t_object *obj, t_app *app)
 {
 	if (!parse_double(line, &obj->material.shininess)
-		|| obj->material.shininess < 0 || obj->material.shininess > 1)
+		|| obj->material.shininess < 0)
 		parse_error("Invalid shininess light effect value", app);
 	skip_whitespace(line);
 }

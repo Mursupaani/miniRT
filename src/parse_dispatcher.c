@@ -53,7 +53,7 @@ static void	parse_line(char *line, t_app *app)
 		parse_error("Unknown element type", app);
 	skip_whitespace(&line);
 	if (*line != '\0')
-		parse_error("Unknown element type", app);
+		parse_error("Unexpted element order or type", app);
 }
 
 static void	parse_rt_file_lines(int fd, t_app *app)

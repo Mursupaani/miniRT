@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 00:00:00 by juhana            #+#    #+#             */
-/*   Updated: 2026/01/30 15:51:53 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 20:11:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,27 @@ bool	parse_texture(char **str, mlx_texture_t **texture, t_app *app)
 	return (true);
 }
 
-void	apply_texture_to_object(t_object *obj, char **line, t_app *app)
+static void	set_texture_and_mapping(t_object *obj, mlx_texture_t *tx)
+{
+	obj->material.pattern = uv_image(tx);
+	if (obj->type == SPHERE)
+		obj->material.pattern = texture_map(
+				obj->material.pattern, spherical_map);
+	else if (obj->type == CUBE)
+		obj->material.pattern = texture_map(
+				obj->material.pattern, cubic_atlas_map);
+	else if (obj->type == CYLINDER)
+		obj->material.pattern = texture_map(
+				obj->material.pattern, cylindrical_map);
+	else if (obj->type == CONE)
+		obj->material.pattern = texture_map(
+				obj->material.pattern, cylindrical_map);
+	else if (obj->type == PLANE)
+		obj->material.pattern = texture_map(obj->material.pattern, planar_map);
+}
+
+void	apply_texture_or_pattern_to_object(
+		t_object *obj, char **line, t_app *app)
 {
 	mlx_texture_t	*texture;
 
@@ -58,22 +78,7 @@ void	apply_texture_to_object(t_object *obj, char **line, t_app *app)
 	if (**line == '\0' || **line == '#')
 		return ;
 	if (parse_texture(line, &texture, app))
-	{
-		obj->material.pattern = uv_image(texture);
-		if (obj->type == SPHERE)
-			obj->material.pattern = texture_map(
-					obj->material.pattern, spherical_map);
-		else if (obj->type == CUBE)
-			obj->material.pattern = texture_map(
-					obj->material.pattern, cubic_atlas_map);
-		else if (obj->type == CYLINDER)
-			obj->material.pattern = texture_map(
-					obj->material.pattern, cylindrical_map);
-		else if (obj->type == CONE)
-			obj->material.pattern = texture_map(
-					obj->material.pattern, cylindrical_map);
-		else if (obj->type == PLANE)
-			obj->material.pattern = texture_map(
-					obj->material.pattern, planar_map);
-	}
+		set_texture_and_mapping(obj, texture);
+	else
+		parse_pattern(obj, line, app);
 }
