@@ -1,4 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_dispatcher.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:39:27 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:39:28 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+static void	set_scene_ambient_values(t_app *app)
+{
+	t_object	**objects;
+	double		ambient;
+	int			i;
+
+	objects = app->scene->objects;
+	ambient = app->scene->light->ambient_ratio;
+	i = -1;
+	while (objects[++i])
+	{
+		if (objects[i]->material.ambient == -1)
+			objects[i]->material.ambient = ambient;
+	}
+}
 
 static void	parse_line(char *line, t_app *app)
 {
@@ -64,4 +92,5 @@ void	parse_rt_file(char **av, t_app *app)
 	parse_rt_file_lines(fd, app);
 	close(fd);
 	validate_scene(app);
+	set_scene_ambient_values(app);
 }

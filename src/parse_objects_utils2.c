@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_objects_utils2.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:46:47 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:46:48 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 void	get_cylinder_data(char **line, t_specs *s, t_app *app)
@@ -27,16 +39,16 @@ bool	is_valid_axis(t_vector v)
 
 void	validate_normal_vector(t_vector normal, t_app *app)
 {
-	if (normal.x < -1.0 || normal.x > 1.0 ||
-		normal.y < -1.0 || normal.y > 1.0 ||
-		normal.z < -1.0 || normal.z > 1.0)
+	if (normal.x < -1.0 || normal.x > 1.0
+		|| normal.y < -1.0 || normal.y > 1.0
+		|| normal.z < -1.0 || normal.z > 1.0)
 		parse_error("Plane normal must be normalized [-1,1]", app);
 }
 
 void	validate_orientation_vector(t_vector ornt, t_app *app)
 {
-	if (ornt.x < -1.0 || ornt.x > 1.0 ||
-		ornt.y < -1.0 || ornt.y > 1.0 ||
-		ornt.z < -1.0 || ornt.z > 1.0)
+	if (ornt.x < -1.0 || ornt.x > 1.0
+		|| ornt.y < -1.0 || ornt.y > 1.0
+		|| ornt.z < -1.0 || ornt.z > 1.0)
 		parse_error("Camera ornt must be normalized [-1,1]", app);
 }

@@ -27,7 +27,7 @@ void	build_test_render(t_app *app)
 	set_camera_transform(c, c_trans);
 
 	mlx_texture_t *earth = mlx_load_png("./Textures/earthmap1k.png");
-	mlx_texture_t *pattern = mlx_load_png("./Textures/pattern.png");
+	// mlx_texture_t *pattern = mlx_load_png("./Textures/pattern.png");
 	mlx_texture_t *bump	 = mlx_load_png("./Textures/bump.png");
 
 
@@ -42,14 +42,14 @@ void	build_test_render(t_app *app)
 	add_transform(sphere, translation_matrix4(0, 0, -20));
 	add_object_to_world(sphere, w);
 
-	t_object *floor = plane_new();
-	floor->material.color = color(1, 1, 1);
-	floor->material.diffuse = 0.6;
-	floor->material.specular = 0.3;
-	floor->material.pattern = texture_map(uv_image(pattern), planar_map);
-	add_transform(floor, translation_matrix4(0, -10, 0));
-	set_pattern_transform(&floor->material.pattern, scaling_matrix4(10, 10, 10));
-	add_object_to_world(floor, w);
+	// t_object *floor = plane_new();
+	// floor->material.color = color(1, 1, 1);
+	// floor->material.diffuse = 0.6;
+	// floor->material.specular = 0.3;
+	// floor->material.pattern = texture_map(uv_image(pattern), planar_map);
+	// add_transform(floor, translation_matrix4(0, -10, 0));
+	// set_pattern_transform(&floor->material.pattern, scaling_matrix4(10, 10, 10));
+	// add_object_to_world(floor, w);
 
 	app->scene = w;
 	app->scene->camera = c;

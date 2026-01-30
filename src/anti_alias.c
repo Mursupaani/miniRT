@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   anti_alias.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:37:39 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:37:42 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static t_ray	ray_for_pixel_aa(t_camera *camera, double px, double py)
@@ -36,7 +48,7 @@ static void	accumulate_samples(t_thread_data *data, t_color *acc)
 	sub_py = (data->y_offset + pseudo_random(data->x, data->y,
 				sample_idx * 2 + 1)) / grid_size;
 	*acc = color_sum(*acc, sample_pixel(data,
-			data->x + sub_px, data->y + sub_py));
+				data->x + sub_px, data->y + sub_py));
 }
 
 t_color	get_aa_color(t_thread_data *data)

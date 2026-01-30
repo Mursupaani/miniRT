@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/23 12:11:47 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 // Material default max values
 # ifndef AMBIENT
-#  define AMBIENT 0.1
+#  define AMBIENT -1
 # endif
 
 # ifndef DIFFUSE
@@ -390,8 +390,8 @@ typedef struct s_app
 	t_object		*selected_object;
 	double			selected_object_t;
 	t_vector		selected_object_offset;
-	int				monitor_width;
-	int				monitor_height;
+	int				scrn_w;
+	int				scrn_h;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];
@@ -515,14 +515,16 @@ typedef struct s_computations
 	bool		shadowed;
 }	t_computations;
 
-// Cylinder specifications
 typedef struct s_specs
 {
+	t_point		center;
 	double		diameter;
-	double		height;
-	t_color		color;
-	t_vector	axis;
 	t_point		position;
+	t_vector	normal;
+	t_color		color;
+	t_object	*obj;
+	t_vector	axis;
+	double		height;
 }	t_specs;
 
 // Tests
@@ -912,6 +914,10 @@ void		apply_texture_to_object(t_object *obj, char **line, t_app *app);
 // Bump map parsing
 bool		parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);
 void		apply_bump_map_to_object(t_object *obj, char **line, t_app *app);
+
+// Light behavior parsing
+void		apply_light_behavior(t_object *obj, t_app *app, char *line);
+void		apply_reflect_and_refract(t_object *obj, t_app *app, char *line);
 
 // Tests
 void		test_new_parsing(void);

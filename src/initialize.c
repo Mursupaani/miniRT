@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:35:03 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 16:47:55 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	init_flags(t_app *app)
 static void	init_images(t_app *app)
 {
 	app->img_buffers[0] = mlx_new_image(
-			app->mlx, app->monitor_width, app->monitor_height);
+			app->mlx, app->scrn_w, app->scrn_h);
 	app->img_buffers[1] = mlx_new_image(
-			app->mlx, app->monitor_width, app->monitor_height);
+			app->mlx, app->scrn_w, app->scrn_h);
 	if (!app->img_buffers[0] || !app->img_buffers[1])
 		exit_and_free_memory(ERROR_MLX_IMG_INIT, app);
 	mlx_image_to_window(app->mlx, app->img_buffers[0], 0, 0);
@@ -61,16 +61,12 @@ t_app	*initialize_app(void)
 	app->mlx = mlx_init(1, 1, "miniRT", true);
 	if (!app->mlx)
 		exit_and_free_memory(ERROR_MLX_INIT, app);
-	mlx_get_monitor_size(0, &app->monitor_width, &app->monitor_height);
-	// NOTE: Uncomment two lines below for testing with different resolution.
-	// app->monitor_width = 640;
-	// app->monitor_height = 640;
-
+	mlx_get_monitor_size(0, &app->scrn_w, &app->scrn_h);
 	// NOTE: Uncomment two lines below for testing with Valgrind.
 	// app->monitor_width = THREADS;
 	// app->monitor_height = THREADS;
 	init_images(app);
-	mlx_set_window_size(app->mlx, app->monitor_width, app->monitor_height);
+	mlx_set_window_size(app->mlx, app->scrn_w, app->scrn_h);
 	initialize_hooks(app);
 	init_flags(app);
 	return (app);

@@ -1,56 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_objects.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:45:35 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:45:36 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 void	parse_sphere(char *line, t_app *app)
 {
-	t_point		center;
-	double		diameter;
-	t_color		color;
-	t_object	*sphere;
+	t_specs	s;
 
 	line += 2;
 	skip_whitespace(&line);
-	if (!parse_point(&line, &center))
+	if (!parse_point(&line, &s.center))
 		parse_error("Invalid sphere position", app);
 	skip_whitespace(&line);
-	if (!parse_double(&line, &diameter) || diameter <= 0)
+	if (!parse_double(&line, &s.diameter) || s.diameter <= 0)
 		parse_error("Invalid sphere diameter", app);
 	skip_whitespace(&line);
-	if (!parse_color(&line, &color))
+	if (!parse_color(&line, &s.color))
 		parse_error("Invalid sphere color", app);
-	sphere = create_sphere_object(center, diameter, color);
-	if (!sphere)
+	s.obj = create_sphere_object(s.center, s.diameter, s.color);
+	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
-	apply_texture_to_object(sphere, &line, app);
-	apply_bump_map_to_object(sphere, &line, app);
-	app->scene->objects = add_object_to_world(sphere, app->scene);
+	apply_texture_to_object(s.obj, &line, app);
+	apply_bump_map_to_object(s.obj, &line, app);
+	apply_light_behavior(s.obj, app, line);
+	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
 
 void	parse_plane(char *line, t_app *app)
 {
-	t_point		position;
-	t_vector	normal;
-	t_color		color;
-	t_object	*plane;
+	t_specs	s;
 
 	line += 2;
 	skip_whitespace(&line);
-	if (!parse_point(&line, &position))
+	if (!parse_point(&line, &s.position))
 		parse_error("Invalid plane position", app);
 	skip_whitespace(&line);
-	if (!parse_vector(&line, &normal))
+	if (!parse_vector(&line, &s.normal))
 		parse_error("Invalid plane normal vector", app);
-	validate_normal_vector(normal, app);
+	validate_normal_vector(s.normal, app);
 	skip_whitespace(&line);
-	if (!parse_color(&line, &color))
+	if (!parse_color(&line, &s.color))
 		parse_error("Invalid plane color", app);
-	plane = create_plane_object(position, normal, color);
-	if (!plane)
+	s.obj = create_plane_object(s.position, s.normal, s.color);
+	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
-	apply_texture_to_object(plane, &line, app);
-	apply_bump_map_to_object(plane, &line, app);
-	app->scene->objects = add_object_to_world(plane, app->scene);
+	apply_texture_to_object(s.obj, &line, app);
+	apply_bump_map_to_object(s.obj, &line, app);
+	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }

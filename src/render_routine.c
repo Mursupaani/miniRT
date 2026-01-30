@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 20:44:06 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/20 10:23:45 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	init_threads(t_app *app)
 	app->threads = ft_calloc(1, sizeof(t_thread_data) * THREADS);
 	if (!app->threads)
 		return (1);
-	rows_per_thread = app->monitor_height / THREADS;
+	rows_per_thread = app->scrn_h / THREADS;
 	while (i < THREADS)
 	{
 		app->threads[i].id = i;
@@ -40,7 +40,7 @@ static int	init_threads(t_app *app)
 		app->threads[i].keep_rendering = &app->keep_rendering;
 		app->threads[i].start_next_frame = &app->start_next_frame;
 		if (i == THREADS - 1)
-			app->threads[i].end_row = app->monitor_height;
+			app->threads[i].end_row = app->scrn_h;
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
 		app->threads[i].pixelate_scale = PIXELATE_SCALE;

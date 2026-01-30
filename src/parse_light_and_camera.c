@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 17:33:57 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/23 12:09:01 by juhana           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:45:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,12 @@ void	parse_camera(char *line, t_app *app)
 		parse_error("Invalid camera FOV (must be 0-180)", app);
 	if (app->scene->camera)
 		parse_error("Multiple cameras defined", app);
-	app->scene->camera = camera(app->monitor_width, app->monitor_height, fov * M_PI / 180.0);
+	app->scene->camera = camera(app->scrn_w, app->scrn_h, deg_to_rad(fov));
 	if (!app->scene->camera)
 		exit_and_free_memory(ERROR_PARSING, app);
 	app->scene->camera->transform = view_transform(pos, point(pos.x + ornt.x,
-		pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0), app->scene->camera);
+				pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0),
+			app->scene->camera);
 	init_camera_yaw_and_pitch(app->scene->camera);
 	set_camera_transform(app->scene->camera, app->scene->camera->transform);
 }
@@ -90,7 +91,8 @@ void	parse_light(char *line, t_app *app)
 	if (!parse_point(&line, &pos))
 		parse_error("Invalid light pos", app);
 	skip_whitespace(&line);
-	if (!parse_double(&line, &brightness) || brightness < 0.0 || brightness > 1.0)
+	if (!parse_double(&line, &brightness)
+		|| brightness < 0.0 || brightness > 1.0)
 		parse_error("Invalid light brightness ratio", app);
 	skip_whitespace(&line);
 	if (!parse_color(&line, &color))
