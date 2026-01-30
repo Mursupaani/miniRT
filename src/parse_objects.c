@@ -19,6 +19,7 @@ void	parse_sphere(char *line, t_app *app)
 		exit_and_free_memory(ERROR_PARSING, app);
 	apply_texture_to_object(s.obj, &line, app);
 	apply_bump_map_to_object(s.obj, &line, app);
+	apply_light_behavior(s.obj, app, line);
 	app->scene->objects = add_object_to_world(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);

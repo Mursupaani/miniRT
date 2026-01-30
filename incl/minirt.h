@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/29 19:49:40 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 14:57:47 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 // Material default max values
 # ifndef AMBIENT
-#  define AMBIENT 0.1
+#  define AMBIENT -1
 # endif
 
 # ifndef DIFFUSE
@@ -914,6 +914,10 @@ void		apply_texture_to_object(t_object *obj, char **line, t_app *app);
 // Bump map parsing
 bool		parse_bump_map(char **str, t_bump_map *bump_map, t_app *app);
 void		apply_bump_map_to_object(t_object *obj, char **line, t_app *app);
+
+// Light behavior parsing
+void		apply_light_behavior(t_object *obj, t_app *app, char *line);
+void		apply_reflect_and_refract(t_object *obj, t_app *app, char *line);
 
 // Tests
 void		test_new_parsing(void);
