@@ -61,7 +61,7 @@ void	apply_bump_map_to_object(t_object *obj, char **line, t_app *app)
 		if (obj->type == SPHERE)
 			obj->bump_map.uv_map = spherical_map;
 		else if (obj->type == CUBE)
-			obj->bump_map.uv_map = cubic_map;
+			obj->bump_map.uv_map = cubic_atlas_map;
 		else if (obj->type == CYLINDER)
 			obj->bump_map.uv_map = cylindrical_map;
 		else if (obj->type == CONE)

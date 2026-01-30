@@ -1,14 +1,14 @@
 A 0.1 									255,255,255
 
-C 0,1,20 		0,0,-1 		90
+C 0,1,10 		0,0,-1 		90
 L -40,50,0 					0.6 		255,255,255
 
-sp 0,0,-20 					12.6 		255,0,255	sp:0.5 re:0.5 tr:0.5 ri:1.5 texture:Textures/earthmap1k.png bump:Textures/bump.png
-sp 0,10,-20 					12.6 		10,0,255	
-pl 0,0,0 		0,1,0					255,255,255	 pattern:ring 0,0,0  bump:Textures/bump.png
-cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
-cu -10,0,-20 	0,1,0 		4.0 4.0 	255,255,255 sh:220	texture:Textures/cube2.png
-co 0, 0,-40 	0,1,0 		3.0 6.0 	255,255,0 pattern:check 75,15,10
+#sp 0,0,-20 					12.6 		150,150,255	sp:0.5 re:0.5 tr:0.5 ri:1.5 texture:Textures/earthmap1k.png bump:Textures/bump.png
+#sp 0,10,-20 					12.6 		10,0,255	
+#pl 0,0,0 		0,1,0					255,255,255	 pattern:ring 0,0,0  bump:Textures/bump.png
+#cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
+cu 0,0,0 	0,1,0 		4.0 4.0 	255,255,255 sh:220	texture:Textures/sky_box.png
+#co 0, 0,-40 	0,1,0 		3.0 6.0 	255,255,0 pattern:check 75,15,10
 
 # Examples with textures (commented out - require texture files)
 # sp 5,0,-15 5.0 255,0,0 texture:Textures/earth.png
