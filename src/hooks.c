@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:26:17 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 19:27:35 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	handle_mouse(
 		app->right_mouse_down = false;
 		mlx_set_cursor_mode(app->mlx, MLX_MOUSE_NORMAL);
 		mlx_set_mouse_pos(app->mlx,
-			(app->monitor_width / 2), (app->monitor_height / 2));
+			(app->scrn_w / 2), (app->scrn_h / 2));
 	}
 	(void)mod_key;
 }

@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 14:57:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/01/30 15:43:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,8 +390,8 @@ typedef struct s_app
 	t_object		*selected_object;
 	double			selected_object_t;
 	t_vector		selected_object_offset;
-	int				monitor_width;
-	int				monitor_height;
+	int				scrn_w;
+	int				scrn_h;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_dispatcher.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 15:39:27 by anpollan          #+#    #+#             */
+/*   Updated: 2026/01/30 15:39:28 by anpollan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static void	set_scene_ambient_values(t_app *app)
 {
 	t_object	**objects;
 	double		ambient;
-	int	i;
+	int			i;
 
 	objects = app->scene->objects;
 	ambient = app->scene->light->ambient_ratio;
