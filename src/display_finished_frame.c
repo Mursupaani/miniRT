@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:59:42 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 19:19:47 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:18:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,33 @@ bool	all_threads_finished_frame(t_app *app)
 	int	i;
 
 	i = -1;
+	app->threads_ready_count = 0;
 	while (++i < THREADS)
 	{
 		if (app->threads[i].frame_done == false)
 		{
 			i = -1;
+			app->frame_done = false;
 			return (false);
 		}
+		app->threads_ready_count++;
 	}
+	app->frame_done = true;
 	return (true);
 }
 
 void	copy_image_data_to_new_buffer(
-		struct mlx_image *from, struct mlx_image *to, size_t pixel_count)
+		struct mlx_image *from, struct mlx_image *to, size_t img_buffer_size)
 {
-	size_t	i;
-
-	i = -1;
-	while (++i < pixel_count)
-		to->pixels[i] = from->pixels[i];
+	ft_memcpy(to->pixels, from->pixels, img_buffer_size);
 }
 
-void	empty_image_buffer(struct mlx_image *img, size_t pixel_count)
+void	empty_image_buffer(struct mlx_image *img, size_t img_buffer_size)
 {
 	size_t	i;
 
 	i = -1;
-	while (++i < pixel_count)
+	while (++i < img_buffer_size)
 		img->pixels[i] = 0;
 }
 
@@ -70,7 +70,7 @@ void	display_finished_frame(t_app *app)
 	app->bg_img_index = !app->bg_img_index;
 	if (app->moving == false)
 		copy_image_data_to_new_buffer(
-			app->img, app->img_buffers[app->bg_img_index], app->pixel_count);
+			app->img, app->img_buffers[app->bg_img_index], app->img_buffer_size);
 	app->img = app->img_buffers[app->bg_img_index];
-	app->start_next_frame = true;
+	// app->start_next_frame = true;
 }

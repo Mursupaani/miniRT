@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 20:25:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:01:22 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,6 +384,7 @@ typedef struct s_app
 	bool			right_mouse_down;
 	bool			moving;
 	bool			show_hud;
+	bool			frame_done;
 	uint64_t		last_frame_time;
 	int32_t			prev_mouse_x;
 	int32_t			prev_mouse_y;
@@ -396,8 +397,11 @@ typedef struct s_app
 	mlx_image_t		*img;
 	mlx_image_t		*img_buffers[2];
 	mlx_image_t		*hud;
+	int				ready_percent;
+	int				threads_ready_count;
 	int				bg_img_index;
 	size_t			pixel_count;
+	size_t			img_buffer_size;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		error;
@@ -407,6 +411,7 @@ typedef struct s_app
 	atomic_int		go_wait;
 	atomic_int		start_next_frame;
 	atomic_int		data_changed;
+	atomic_int		current_pixelate_scale;
 	bool			parsing_success;
 }	t_app;
 
@@ -447,6 +452,7 @@ typedef struct s_thread_data
 	unsigned int	pixelate_scale;
 	atomic_int		*keep_rendering;
 	atomic_int		*start_next_frame;
+	atomic_int		*current_pixelate_scale;
 	atomic_int		new_frame_started;
 	atomic_int		render_done;
 	atomic_int		frame_done;
@@ -603,6 +609,7 @@ bool			all_threads_finished_frame(t_app *app);
 bool			all_threads_started_new_frame(t_app *app);
 void			empty_image_buffer(struct mlx_image *img, size_t pixel_count);
 void			print_hud(t_app *app);
+uint64_t		get_time_ms(void);
 
 // Hooks:
 void			handle_mouse_scroll(double xdelta, double ydelta, void *param);

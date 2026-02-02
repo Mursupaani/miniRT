@@ -78,6 +78,8 @@ void	move_oject_on_screen(t_app *app)
 	mlx_get_mouse_pos(app->mlx, &look.x, &look.y);
 	if (mouse_not_moved(app, look))
 		return ;
+	app->prev_mouse_x = look.x;
+	app->prev_mouse_y = look.y;
 	c = app->scene->camera;
 	app->moving = true;
 	if (mlx_is_key_down(app->mlx, MLX_KEY_LEFT_ALT))
