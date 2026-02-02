@@ -398,6 +398,7 @@ typedef struct s_app
 	mlx_image_t		*hud;
 	int				bg_img_index;
 	size_t			pixel_count;
+	size_t			img_buffer_size;
 	t_world			*scene;
 	t_thread_data	*threads;
 	atomic_int		error;

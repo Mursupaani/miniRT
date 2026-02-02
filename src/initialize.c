@@ -27,7 +27,8 @@ static void	init_flags(t_app *app)
 	app->img_buffers[1]->instances[0].enabled = true;
 	app->bg_img_index = 0;
 	app->img = app->img_buffers[app->bg_img_index];
-	app->pixel_count = app->img->width * app->img->height * sizeof(int);
+	app->pixel_count = app->img->width * app->img->height;
+	app->img_buffer_size = app->pixel_count * sizeof(int);
 	app->keep_rendering = true;
 	app->pixelate = true;
 	app->go_wait = false;
