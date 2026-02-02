@@ -75,6 +75,8 @@ void	render_full_resolution(t_thread_data *data)
 		}
 		data->y++;
 	}
+	if (data->frame_done == false)
+		data->frame_done = true;
 }
 
 void	*render_routine(void *arg)
