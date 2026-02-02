@@ -66,6 +66,8 @@ static void	loop_image_by_pixelation_scale(t_thread_data *data, t_camera *c)
 
 void	render_pixelated(t_thread_data *data)
 {
+	bool	printed = false;
+
 	data->pixelate_scale = PIXELATE_SCALE;
 	while (data->pixelate_scale > 0 && *data->keep_rendering)
 	{
@@ -79,6 +81,11 @@ void	render_pixelated(t_thread_data *data)
 			data->new_frame_started = false;
 		while (*data->keep_rendering)
 		{
+			if (!printed)
+			{
+				printf("%d\n", data->pixelate_scale);
+				printed = true;
+			}
 			if (*data->start_next_frame)
 				break ;
 			if (data->app->go_wait)
@@ -88,6 +95,7 @@ void	render_pixelated(t_thread_data *data)
 			}
 			usleep(10);
 		}
+		printed = false;
 		data->frame_done = false;
 		data->new_frame_started = true;
 	}
