@@ -6,7 +6,7 @@
 #    By: juhana <juhana@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/31 10:18:07 by anpollan          #+#    #+#              #
-#    Updated: 2026/01/30 20:10:14 by anpollan         ###   ########.fr        #
+#    Updated: 2026/02/02 20:57:43 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,25 +51,17 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  reflections.c plane.c prepare_computations.c \
 				  prepare_computations_utils.c refraction.c cube.c \
 				  cube_utils.c cylinder.c cylinder_utils.c cone.c cone_utils.c \
-				  planar_map.c cylindrical_map.c cube_map.c uv_image.c \
+				  planar_map.c cylindrical_map.c uv_image.c \
 				  cubic_map.c cubic_map_utils.c cubic_map_utils2.c bump_map.c \
 				  bump_map_utils.c uv_utils.c select_and_move_object.c \
 				  restart_render.c display_finished_frame.c \
 				  movement.c look_controls.c transform_selected_object.c \
 				  transform_light.c hud.c quick_sort_intersections.c \
 				  normal_utils.c free_memory.c texture_map.c \
-				  render_pixelated.c per_frame_loop.c \
+				  render_pixelated.c per_frame_loop.c per_frame_loop_utils.c \
 				  parse_light_behavior.c parse_reflection_and_refraction.c \
-				  parse_patterns.c \
-				  old.c \
-				  debug.c test_tuples.c test_matrices.c test_transformation.c \
-				  test_rays.c test.c test_normal.c test_color.c \
-				  test_camera.c test_render_chapter7.c test_shadows.c \
-				  test_patterns.c test_reflections.c test_transparency.c \
-				  test_cubes.c test_cylinder.c test_parsing.c test_cones.c \
-				  test_render.c christmas.c test_uv_patterns.c test_bump_map.c \
-				  test_new_parsing.c \
-				  anti_alias.c pseudo_random.c
+				  parse_patterns.c anti_alias.c pseudo_random.c \
+				  debug.c 
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
