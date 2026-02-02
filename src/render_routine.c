@@ -48,6 +48,34 @@ static int	init_threads(t_app *app)
 	}
 	return (0);
 }
+// void	render_full_resolution(t_thread_data *data)
+// {
+// 	t_color	color;
+//
+// 	data->y = data->start_row;
+// 	while (data->y < data->end_row && *data->keep_rendering)
+// 	{
+// 		data->x = 0;
+// 		while (data->x < data->app->img->width && *data->keep_rendering)
+// 		{
+// 			if (data->app->go_wait)
+// 			{
+// 				data->render_done = false;
+// 				return ;
+// 			}
+// 			color = get_aa_color(data);
+// 			if (data->error)
+// 				return ;
+// 			mlx_put_pixel(
+// 				data->app->img, data->x, data->y, color_hex_from_color(color));
+// 			data->x++;
+// 		}
+// 		data->y++;
+// 	}
+// 	if (data->frame_done == false)
+// 		data->frame_done = true;
+// }
+//
 
 void	render_full_resolution(t_thread_data *data)
 {
@@ -64,7 +92,9 @@ void	render_full_resolution(t_thread_data *data)
 				data->render_done = false;
 				return ;
 			}
-			color = get_aa_color(data);
+			t_ray	r = ray_for_pixel(data->app->scene->camera, data->x, data->y);
+			// color = get_aa_color(data);
+			color = color_at(data->app->scene, r, RECURSIONS, &data->error);
 			if (data->error)
 				return ;
 			mlx_put_pixel(
@@ -96,7 +126,7 @@ void	*render_routine(void *arg)
 		{
 			if (data->app->restart_render == true)
 				break ;
-			usleep(50);
+			usleep(1);
 		}
 		data->frame_done = false;
 		data->render_done = false;
