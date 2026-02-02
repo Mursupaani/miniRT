@@ -14,20 +14,28 @@
 
 static void	update_readiness_percent(t_app *app)
 {
-	int	threads_ready_with_current_percent;
-	int	iterations_ready;
-	int	total_iterations;
+	double	cur_iter_percent;
+	double	iters_ready;
+	double	total_iter;
 
 	if (app->current_pixelate_scale == 0)
 	{
 		app->ready_percent = 100;
 		return ;
 	}
-	total_iterations = log2(PIXELATE_SCALE);
-	iterations_ready = total_iterations - log2(app->current_pixelate_scale);
-	threads_ready_with_current_percent = app->threads_ready_count / THREADS;
-	app->ready_percent = iterations_ready / total_iterations
-		+ (threads_ready_with_current_percent * (1 / total_iterations));
+	cur_iter_percent = (double)app->threads_ready_count / THREADS * 100;
+	if (app->pixelate)
+	{
+		total_iter = log2(PIXELATE_SCALE) + 1;
+		iters_ready = total_iter - (log2(app->current_pixelate_scale) + 1);
+	}
+	else
+	{
+		total_iter = 1;
+		iters_ready = 0;
+	}
+	app->ready_percent = (((double)iters_ready / total_iter) * 100.0)
+		+ (cur_iter_percent / total_iter);
 }
 
 static bool	thread_error(t_app *app)
@@ -89,8 +97,8 @@ void	per_frame_loop(void *param)
 		app->current_pixelate_scale /= 2;
 	}
 	update_readiness_percent(app);
-	// if (app->show_hud)
-	// 	print_hud(app);
+	if (app->show_hud)
+		print_hud(app);
 	if (current_time - app->last_frame_time > TARGET_FRAME_TIME
 		|| app->frame_done)
 		update_state(app, current_time);

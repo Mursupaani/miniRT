@@ -34,13 +34,18 @@ static int	fov_to_buffer(t_camera *c, char *hud, int i, int size)
 	return (i);
 }
 
-static int	pixelate_scale_to_buffer(t_app *app, char *hud, int i, int size)
+static int	pixelation_and_aa_to_buffer(t_app *app, char *hud, int i, int size)
 {
-	if (app->current_pixelate_scale != 0)
+	if (app->pixelate)
 	{
-		i = string_to_buf("    Pixelation: ", hud, i, size - i);
-		i += ft_itoa_to_buf(app->current_pixelate_scale, &hud[i], size - i);
+		if (app->current_pixelate_scale != 0)
+		{
+			i = string_to_buf("    Pixelation: ", hud, i, size - i);
+			i += ft_itoa_to_buf(app->current_pixelate_scale, &hud[i], size - i);
+		}
 	}
+	else
+		i = string_to_buf("    Anti-aliasing", hud, i, size - i);
 	return (i);
 }
 
@@ -48,6 +53,7 @@ static int	ready_percent_to_buffer(t_app *app, char *hud, int i, int size)
 {
 	i = string_to_buf("    Ready: ", hud, i, size - i);
 	i += ft_itoa_to_buf(app->ready_percent, &hud[i], size - i);
+	i = string_to_buf("%", hud, i, size - i);
 	return (i);
 }
 
@@ -62,7 +68,7 @@ void	print_hud(t_app *app)
 	mlx = app->mlx;
 	i = 0;
 	i = fov_to_buffer(app->scene->camera, hud, i, 128);
-	i = pixelate_scale_to_buffer(app, hud, i, 128);
 	i = ready_percent_to_buffer(app, hud, i, 128);
+	i = pixelation_and_aa_to_buffer(app, hud, i, 128);
 	app->hud = mlx_put_string(mlx, hud, 10, 10);
 }
