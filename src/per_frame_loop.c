@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 19:07:04 by anpollan          #+#    #+#             */
-/*   Updated: 2026/02/02 21:13:33 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:33:18 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ void	per_frame_loop(void *param)
 	current_time = get_time_ms();
 	if (all_threads_finished_frame(app))
 	{
-		app->current_pixelate_scale /= 2;
 		display_finished_frame(app);
+		app->current_pixelate_scale /= 2;
 	}
 	update_readiness_percent(app);
-	if (app->show_hud)
-		print_hud(app);
+	// if (app->show_hud)
+	// 	print_hud(app);
 	if (current_time - app->last_frame_time > TARGET_FRAME_TIME
 		|| app->frame_done)
 		update_state(app, current_time);
