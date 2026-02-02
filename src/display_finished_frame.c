@@ -34,18 +34,15 @@ bool	all_threads_finished_frame(t_app *app)
 
 	i = -1;
 	app->threads_ready_count = 0;
+	app->frame_done = true;
 	while (++i < THREADS)
 	{
 		if (app->threads[i].frame_done == false)
-		{
-			i = -1;
 			app->frame_done = false;
-			return (false);
-		}
-		app->threads_ready_count++;
+		else
+			app->threads_ready_count++;
 	}
-	app->frame_done = true;
-	return (true);
+	return (app->frame_done);
 }
 
 void	copy_image_data_to_new_buffer(
