@@ -38,11 +38,8 @@ static int	pixelation_and_aa_to_buffer(t_app *app, char *hud, int i, int size)
 {
 	if (app->pixelate)
 	{
-		if (app->current_pixelate_scale != 0)
-		{
-			i = string_to_buf("    Pixelation: ", hud, i, size - i);
-			i += ft_itoa_to_buf(app->current_pixelate_scale, &hud[i], size - i);
-		}
+		i = string_to_buf("    Pixelation: ", hud, i, size - i);
+		i += ft_itoa_to_buf(app->current_pixelate_scale, &hud[i], size - i);
 	}
 	else
 		i = string_to_buf("    Anti-aliasing", hud, i, size - i);
@@ -54,6 +51,10 @@ static int	ready_percent_to_buffer(t_app *app, char *hud, int i, int size)
 	i = string_to_buf("    Ready: ", hud, i, size - i);
 	i += ft_itoa_to_buf(app->ready_percent, &hud[i], size - i);
 	i = string_to_buf("%", hud, i, size - i);
+	if (app->ready_percent == 0)
+		i = string_to_buf("  ", hud, i, size - i);
+	else if (app->ready_percent != 100)
+		i = string_to_buf(" ", hud, i, size - i);
 	return (i);
 }
 
