@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 20:44:06 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 15:50:23 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/02 13:36:46 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	init_threads(t_app *app)
 
 void	render_full_resolution(t_thread_data *data)
 {
-	t_ray	ray;
 	t_color	color;
 
 	data->y = data->start_row;
@@ -65,8 +64,7 @@ void	render_full_resolution(t_thread_data *data)
 				data->render_done = false;
 				return ;
 			}
-			ray = ray_for_pixel(data->app->scene->camera, data->x, data->y);
-			color = color_at(data->app->scene, ray, RECURSIONS, &data->error);
+			color = get_aa_color(data);
 			if (data->error)
 				return ;
 			mlx_put_pixel(
