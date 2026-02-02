@@ -6,7 +6,7 @@
 /*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:39:44 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 20:43:29 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:16:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	restart_render(t_app *app)
 	signal_threads_to_go_wait(app);
 	if (app->go_wait == false)
 	{
+		app->current_pixelate_scale = PIXELATE_SCALE;
+		app->ready_percent = 0;
 		app->restart_render = true;
 		wait_for_threads_to_start_render(app);
 		app->restart_render = false;

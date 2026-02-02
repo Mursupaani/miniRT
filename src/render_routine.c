@@ -44,6 +44,7 @@ static int	init_threads(t_app *app)
 		else
 			app->threads[i].end_row = (i + 1) * rows_per_thread;
 		app->threads[i].pixelate_scale = PIXELATE_SCALE;
+		app->threads[i].current_pixelate_scale = &app->current_pixelate_scale;
 		i++;
 	}
 	return (0);

@@ -38,6 +38,9 @@ static void	init_flags(t_app *app)
 	app->moving = false;
 	app->data_changed = false;
 	app->show_hud = true;
+	app->current_pixelate_scale = PIXELATE_SCALE;
+	app->frame_done = false;
+	app->ready_percent = 0;
 }
 
 static void	init_images(t_app *app)
