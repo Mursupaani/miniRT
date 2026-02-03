@@ -20,30 +20,12 @@ static uint64_t	get_time_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-static bool	thread_error(t_app *app)
-{
-	int	i;
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		if (app->threads[i].error)
-			return (true);
-	}
-	return (false);
-}
-
 static void	check_for_errors(t_app *app)
 {
 	if (app->error)
 	{
 		app->keep_rendering = false;
 		exit_and_free_memory(ERROR_UI, app);
-	}
-	if (app->error || thread_error(app))
-	{
-		app->keep_rendering = false;
-		exit_and_free_memory(ERROR_THREAD_MEMORY, app);
 	}
 }
 

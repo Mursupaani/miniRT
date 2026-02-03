@@ -37,7 +37,6 @@ int	main(int ac, char **av)
 	parse_rt_file(av, app);
 	launch_render(app);
 	mlx_loop(app->mlx);
-	join_threads(app->threads, THREADS);
 	free_app_memory(app);
 	return (0);
 }

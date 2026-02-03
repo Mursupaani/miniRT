@@ -73,7 +73,10 @@ void	free_app_memory(t_app *app)
 {
 	if (!app)
 		return ;
-	join_threads(app->threads, THREADS);
+	if (app->pool)
+		destroy_pool(app->pool);
+	if (app->threads)
+		free(app->threads);
 	if (app->img_buffers[0])
 		mlx_delete_image(app->mlx, app->img_buffers[0]);
 	if (app->img_buffers[1])
@@ -87,7 +90,5 @@ void	free_app_memory(t_app *app)
 	}
 	if (app->scene)
 		free_world(app->scene);
-	if (app->threads)
-		free(app->threads);
 	free(app);
 }

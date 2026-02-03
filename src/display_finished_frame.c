@@ -14,34 +14,17 @@
 
 bool	all_threads_started_new_frame(t_app *app)
 {
-	int	i;
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		if (app->threads[i].new_frame_started == false)
-		{
-			i = -1;
-			return (false);
-		}
-	}
-	return (true);
+	if (!app->pool)
+		return (true);
+	return (atomic_load(&app->pool->render_in_progress) > 0);
 }
 
 bool	all_threads_finished_frame(t_app *app)
 {
-	int	i;
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		if (app->threads[i].frame_done == false)
-		{
-			i = -1;
-			return (false);
-		}
-	}
-	return (true);
+	if (!app->pool)
+		return (false);
+	return (atomic_load(&app->pool->render_in_progress) == 0
+		&& atomic_load(&app->pool->next_row) >= (int)app->img->height);
 }
 
 void	copy_image_data_to_new_buffer(

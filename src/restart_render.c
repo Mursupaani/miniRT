@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   restart_render.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:39:44 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/16 20:43:29 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/03 13:11:48 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,8 @@
 
 void	wait_for_threads_to_be_ready(t_app *app)
 {
-	int	i;
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		if (app->threads[i].render_done == false)
-		{
-			usleep(100);
-			i = -1;
-		}
-	}
+	(void)app;
+	// Thread pool model: workers are always ready
 }
 
 void	signal_threads_to_go_wait(t_app *app)
@@ -53,27 +44,14 @@ void	signal_threads_to_go_wait(t_app *app)
 
 void	wait_for_threads_to_start_render(t_app *app)
 {
-	int	i;
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		if (app->threads[i].render_done == true)
-		{
-			usleep(100);
-			i = -1;
-		}
-	}
+	(void)app;
+	// Thread pool model: render is triggered on demand
 }
 
 void	restart_render(t_app *app)
 {
-	app->restart_render = false;
+	if (!app || !app->pool)
+		return ;
 	signal_threads_to_go_wait(app);
-	if (app->go_wait == false)
-	{
-		app->restart_render = true;
-		wait_for_threads_to_start_render(app);
-		app->restart_render = false;
-	}
+	app->start_next_frame = true;
 }

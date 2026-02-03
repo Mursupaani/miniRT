@@ -6,7 +6,7 @@
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:38:13 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 20:25:49 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/03 12:46:23 by juhana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,6 +363,10 @@ typedef struct s_camera
 	double		half_height;
 	double		pixel_size;
 	double		aspect_ratio;
+	t_point		original_from;
+	t_point		original_to;
+	t_vector	original_up;
+	double		original_fov;
 }	t_camera;
 
 typedef struct s_world
@@ -374,6 +378,7 @@ typedef struct s_world
 }	t_world;
 
 typedef struct s_thread_data	t_thread_data;
+typedef struct s_thread_pool	t_thread_pool;
 
 typedef struct s_app
 {
@@ -400,6 +405,7 @@ typedef struct s_app
 	size_t			pixel_count;
 	t_world			*scene;
 	t_thread_data	*threads;
+	t_thread_pool	*pool;
 	atomic_int		error;
 	atomic_int		keep_rendering;
 	atomic_int		pixelate;
@@ -527,6 +533,45 @@ typedef struct s_specs
 	double		height;
 }	t_specs;
 
+typedef struct s_job
+{
+	unsigned int		start_row;
+	unsigned int		end_row;
+	struct s_job		*next;
+}	t_job;
+
+typedef struct s_job_queue
+{
+	t_job				*head;
+	t_job				*tail;
+	pthread_mutex_t		lock;
+	pthread_cond_t		work_available;
+	pthread_cond_t		work_done;
+	atomic_int			active_jobs;
+	atomic_int			total_jobs;
+	atomic_int			completed_jobs;
+	bool				shutdown;
+}	t_job_queue;
+
+typedef struct s_worker_data
+{
+	int						thread_id;
+	struct s_thread_pool	*pool;
+}	t_worker_data;
+
+typedef struct s_thread_pool
+{
+	pthread_t			*workers;
+	t_worker_data		*worker_data;
+	int					num_threads;
+	t_job_queue			*queue;
+	t_app				*app;
+	atomic_int			active_threads;
+	atomic_int			next_row;
+	int					chunk_size;
+	atomic_int			render_in_progress;
+}	t_thread_pool;
+
 // Tests
 void			christmas_tree(t_app *app);
 void			free_object(t_object *object);
@@ -610,6 +655,10 @@ void			handle_mouse(
 					enum mouse_key key, enum action action,
 					enum modifier_key mod_key, void *param);
 void			handle_keypress(mlx_key_data_t keydata, void *param);
+void			handle_toggle_keys(mlx_key_data_t keydata, t_app *app);
+void			reset_camera_to_original(t_app *app);
+void			handle_mouse_press(t_app *app, enum mouse_key key);
+void			handle_mouse_release(t_app *app, enum mouse_key key);
 void			close_window_mouse(void *param);
 void			per_frame_loop(void *param);
 bool			mouse_not_moved(t_app *app, t_look look);
@@ -687,6 +736,7 @@ void			*render_routine(void *arg);
 void			launch_render(t_app *app);
 void			join_threads(t_thread_data *thread_data, int thread_count);
 void			render_pixelated(t_thread_data *data);
+void			render_with_pool(t_app *app, int chunk_size);
 
 // Intersections:
 t_intersection	intersection(double t, t_object *object);
@@ -943,4 +993,23 @@ void			apply_reflect_and_refract(
 double			pseudo_random(unsigned int x, unsigned int y, unsigned int s);
 t_color			get_aa_color(t_thread_data *data);
 
+// Job queue and thread pool
+t_job_queue		*create_queue(void);
+void			destroy_queue(t_job_queue *queue);
+bool			enque_job(t_job_queue *queue, unsigned int start,
+					unsigned int end);
+t_job			*deque_job(t_job_queue *queue);
+void			job_completed(t_job_queue *queue);
+t_thread_pool	*create_pool(t_app *app, int num_threads);
+void			destroy_pool(t_thread_pool *pool);
+void			submit_jobs(t_thread_pool *pool, int img_height,
+					int chunk_size);
+bool			init_workers(t_thread_pool *pool);
+bool			allocate_pool_resources(t_thread_pool *pool);
+void			*worker_thread(void *arg);
+void			wait_completion(t_job_queue *queue);
+void			render_job_range(t_app *app, unsigned int start_row,
+					unsigned int end_row);
+void			render_pixelated_range(t_app *app, unsigned int start_row,
+				unsigned int end_row);
 #endif
