@@ -61,7 +61,6 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 				  render_pixelated.c per_frame_loop.c per_frame_loop_utils.c \
 				  parse_light_behavior.c parse_reflection_and_refraction.c \
 				  parse_patterns.c anti_alias.c pseudo_random.c \
-				  debug.c 
 
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))

@@ -68,8 +68,6 @@ static void	check_for_errors(t_app *app)
 static void	update_state(t_app *app, uint64_t current_time)
 {
 	app->last_frame_time = current_time;
-	// if (all_threads_started_new_frame(app))
-	// 	app->start_next_frame = false;
 	handle_movement(app);
 	if (app->right_mouse_down)
 		handle_looking_around(app);
