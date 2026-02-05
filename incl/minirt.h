@@ -13,14 +13,6 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-// FIXME: no need / included in "libft.h"
-// # include <unistd.h>
-// # include <stdlib.h>
-// # include <string.h>
-// # include <stdio.h>
-// # include "MLX42/MLX42_Int.h"
-// # include <stdint.h>
-
 # include "libft.h"
 # include <math.h>
 # include <fcntl.h>
@@ -38,7 +30,6 @@
 #  define EPSILON 1e-8
 # endif
 
-// Material default max values
 # ifndef AMBIENT
 #  define AMBIENT 0.2
 # endif
@@ -377,9 +368,6 @@ typedef struct s_thread_data	t_thread_data;
 
 typedef struct s_app
 {
-	// FIXME: Use bitmask to track app status?
-	atomic_int		bitmask;
-	// FIXME: Use bitmask to track app status?
 	bool			left_mouse_down;
 	bool			right_mouse_down;
 	bool			moving;
@@ -436,6 +424,7 @@ typedef struct s_app
  * - t_point origin: start point of ray
  * - t_vector direction: direction of the ray
  */
+
 typedef struct s_ray
 {
 	t_point		origin;
@@ -457,7 +446,6 @@ typedef struct s_thread_data
 	atomic_int		render_done;
 	atomic_int		frame_done;
 	atomic_int		error;
-	// Rendering
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	x;
@@ -496,7 +484,6 @@ typedef struct s_intersection
 {
 	double		t;
 	t_object	*object;
-	// int			id;
 }	t_intersection;
 
 typedef struct s_intersections
@@ -536,8 +523,8 @@ typedef struct s_specs
 // App initialize and management:
 t_app			*initialize_app(void);
 void			initialize_hooks(t_app *app);
-void			wait_for_threads_to_be_ready(t_app *app);
-void			signal_threads_to_go_wait(t_app *app);
+// void			wait_for_threads_to_be_ready(t_app *app);
+// void			signal_threads_to_go_wait(t_app *app);
 void			restart_render(t_app *app);
 void			display_finished_frame(t_app *app);
 bool			all_threads_finished_frame(t_app *app);
