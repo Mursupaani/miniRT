@@ -50,7 +50,7 @@ static int	init_threads(t_app *app)
 	return (0);
 }
 
-void	render_full_resolution(t_thread_data *data)
+void	render_anti_alias(t_thread_data *data)
 {
 	t_color	color;
 
@@ -88,7 +88,7 @@ void	*render_routine(void *arg)
 		if (data->app->pixelate)
 			render_pixelated(data);
 		else
-			render_full_resolution(data);
+			render_anti_alias(data);
 		if (data->error)
 			return (NULL);
 		if (data->render_done == false)

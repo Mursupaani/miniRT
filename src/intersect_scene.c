@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersect_world.c                                  :+:      :+:    :+:   */
+/*   intersect_scene.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhana <juhana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:27 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/21 13:42:54 by juhana           ###   ########.fr       */
+/*   Updated: 2026/02/05 11:23:23 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_intersection	*add_intersection(
 	return (xs->arr);
 }
 
-static void	intersect_world_objects(
+static void	intersect_scene_objects(
 		t_scene *w, t_ray r, t_intersections *xs, atomic_int *err)
 {
 	t_intersections	*current;
@@ -100,7 +100,7 @@ static void	intersect_world_objects(
 	}
 }
 
-t_intersections	*intersect_world(t_scene *w, t_ray r, atomic_int *err)
+t_intersections	*intersect_scene(t_scene *w, t_ray r, atomic_int *err)
 {
 	t_intersections	*xs;
 
@@ -109,7 +109,7 @@ t_intersections	*intersect_world(t_scene *w, t_ray r, atomic_int *err)
 	xs = ft_calloc(1, sizeof(t_intersections));
 	if (!xs)
 		return (memory_alloc_error(err));
-	intersect_world_objects(w, r, xs, err);
+	intersect_scene_objects(w, r, xs, err);
 	if (*err)
 		return (NULL);
 	return (xs);

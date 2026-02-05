@@ -326,11 +326,9 @@ typedef struct s_object
 	t_matrix4		inverse_transform;
 	t_matrix4		inverse_transpose;
 	t_material		material;
-	// Cylinder and cone logic
 	double			minimum;
 	double			maximum;
 	bool			closed;
-	// Bump mapping
 	t_bump_map		bump_map;
 }	t_object;
 
@@ -612,7 +610,7 @@ void			render_pixelated(t_thread_data *data);
 // Intersections:
 t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray, atomic_int *err);
-t_intersections	*intersect_world(t_scene *w, t_ray r, atomic_int *err);
+t_intersections	*intersect_scene(t_scene *w, t_ray r, atomic_int *err);
 void			quick_sort_intersections(
 					t_intersection *xs, int start, int end);
 t_intersection	hit(t_intersections *xs);
@@ -648,7 +646,6 @@ void			free_object_array(t_object **objs);
 t_color			color(double r, double g, double b);
 t_color255		color255(
 					unsigned char r, unsigned char g, unsigned char b);
-t_color			color_from_hex_color(uint32_t hex_color);
 t_color			color_mix(t_color color_obj, t_color color_light);
 t_color			color_multiply(t_color color, double multiplier);
 t_color			color_sum(t_color color1, t_color color2);
@@ -676,7 +673,6 @@ double			schlick(t_computations comps);
 t_pattern		create_pattern(int type, t_color a, t_color b);
 t_pattern		stripe_pattern(t_color a, t_color b);
 t_color			stripe_at(t_pattern pattern, t_point p);
-t_color			stripe_at_object(t_pattern ptrn, t_object *obj, t_point p);
 t_pattern		gradient_pattern(t_color a, t_color b);
 t_color			gradient_at(t_pattern ptrn, t_point p);
 t_pattern		ring_pattern(t_color a, t_color b);
@@ -700,9 +696,7 @@ t_uv_map		cylindrical_map(t_point p);
 t_uv_map		cubic_map(t_point p);
 t_uv_map		cubic_atlas_map(t_point p);
 int				calculate_pixel_offset(int x, int y, mlx_texture_t *texture);
-
 t_color			handle_uv_pattern(t_pattern ptrn, t_point ptrn_point);
-t_color			uv_pattern_at(t_pattern ptrn, t_uv_map uv);
 t_cube_face		face_from_point(t_point p);
 t_uv_map		cube_uv_up(t_point p);
 t_uv_map		cube_uv_down(t_point p);
@@ -735,15 +729,12 @@ t_object		**add_object_to_scene(t_object *obj, t_scene *w);
 t_camera		*camera(int hsize, int vsize, double fov);
 void			init_camera_yaw_and_pitch(t_camera *c);
 double			pixel_size(t_camera *camera);
-// t_matrix4	view_transform(t_point from, t_point to, t_vector up);
 t_matrix4		view_transform(
 					t_point from, t_point to, t_vector up, t_camera *c);
 void			set_camera_transform(t_camera *camera, t_matrix4 transform);
 
 // Sphere
 t_object		*sphere_new(void);
-t_object		*sphere_new_args(
-					t_point center, double diameter, t_color255 color);
 t_intersections	*intersect_sphere(
 					t_object *sphere, t_ray local_ray, atomic_int *err);
 
@@ -804,21 +795,13 @@ double			ft_strtod(const char *str, char **endptr, int *i);
 bool			parse_vector(char **str, t_vector *vec);
 bool			parse_point(char **str, t_point *point);
 bool			parse_color(char **str, t_color *color);
-// void			parse_ambient_component(char *line, t_app *app);
 void			parse_ambient_component(char **line, t_app *app);
-// void			parse_camera(char *line, t_app *app);
 void			parse_camera(char **line, t_app *app);
-// void			parse_light(char *line, t_app *app);
 void			parse_light(char **line, t_app *app);
-// void			parse_sphere(char *line, t_app *app);
 void			parse_sphere(char **line, t_app *app);
-// void			parse_plane(char *line, t_app *app);
 void			parse_plane(char **line, t_app *app);
-// void			parse_cylinder(char *line, t_app *app);
 void			parse_cylinder(char **line, t_app *app);
-// void			parse_cube(char *line, t_app *app);
 void			parse_cube(char **line, t_app *app);
-// void			parse_cone(char *line, t_app *app);
 void			parse_cone(char **line, t_app *app);
 t_object		*create_sphere_object(
 					t_point pos, double diameter, t_color color);
@@ -848,10 +831,7 @@ void			apply_bump_map_to_object(
 					t_object *obj, char **line, t_app *app);
 
 // Light behavior parsing
-// void			apply_light_behavior(t_object *obj, t_app *app, char *line);
 void			apply_light_behavior(t_object *obj, t_app *app, char **line);
-// void			apply_reflect_and_refract(
-// 					t_object *obj, t_app *app, char *line);
 void			apply_reflect_and_refract(
 					t_object *obj, t_app *app, char **line);
 

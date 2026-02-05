@@ -12,6 +12,12 @@
 
 #include "minirt.h"
 
+int	calculate_pixel_offset(int x, int y, mlx_texture_t *texture)
+{
+	return (y * texture->bytes_per_pixel * texture->width
+		+ x * texture->bytes_per_pixel);
+}
+
 t_pattern	uv_image(mlx_texture_t *image)
 {
 	t_pattern	ptrn;

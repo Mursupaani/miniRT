@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static void	free_textures(mlx_texture_t *textures[6])
