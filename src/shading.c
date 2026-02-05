@@ -91,7 +91,8 @@ static t_color	calculate_color(
 		t_object *obj, t_light *light, t_vector eyev, t_lighting l)
 {
 	l.effective_color = color_mix(l.color_at_point, light->intensity);
-	l.ambient = color_multiply(light->ambient_color, obj->material.ambient);
+	l.ambient = color_multiply(color_mix(
+				l.color_at_point, light->ambient_color), obj->material.ambient);
 	if (l.light_dot_normal < 0)
 	{
 		l.diffuse = (t_color){0, 0, 0};
