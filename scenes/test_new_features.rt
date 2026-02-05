@@ -5,6 +5,7 @@ L -40,50,0 					0.6 		255,255,255
 
 sp 10,20,-20 					12.6 		150,150,255	sp:0.5 re:0.5 tr:0.5 ri:1.5 texture:Textures/earthmap1k.png bump:Textures/bump.png
 sp -10,10,-20 					12.6 		10,0,255	
+sp 0,10,-20 					6		255,255,255	pattern:test
 pl 0,0,0 		0,1,0					255,255,255	 pattern:ring 0,0,0  bump:Textures/bump.png
 #cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
 cu 0,0,0 	0,1,0 		4.0 4.0 	255,255,255 sh:220	texture:Textures/sky_box.png

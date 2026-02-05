@@ -702,6 +702,7 @@ t_pattern		gradient_pattern(t_color a, t_color b);
 t_color			gradient_at(t_pattern ptrn, t_point p);
 t_pattern		ring_pattern(t_color a, t_color b);
 t_color			ring_at(t_pattern gradient, t_point p);
+t_pattern		test_pattern(void);
 t_pattern		checkers_pattern(t_color a, t_color b);
 t_color			checkers_at(t_pattern gradient, t_point p);
 void			set_pattern_transform(t_pattern *ptrn, t_matrix4 transform);
