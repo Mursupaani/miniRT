@@ -19,6 +19,8 @@ static void	set_scene_ambient_values(t_app *app)
 	int			i;
 
 	objects = app->scene->objects;
+	if (!objects)
+		return ;
 	ambient = app->scene->light->ambient_ratio;
 	i = -1;
 	while (objects[++i])
