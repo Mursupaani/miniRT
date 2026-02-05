@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "minirt.h"
 
 static void	free_textures(mlx_texture_t *textures[6])
@@ -45,7 +44,7 @@ void	free_object_array(t_object **objs)
 	objs = NULL;
 }
 
-void	free_world(t_world *w)
+void	free_world(t_scene *w)
 {
 	if (!w)
 		return ;

@@ -81,8 +81,6 @@ void	render_pixelated(t_thread_data *data)
 		{
 			if (*data->current_pixelate_scale == data->pixelate_scale)
 				break ;
-			// if (*data->start_next_frame)
-			// 	break ;
 			if (data->app->go_wait)
 			{
 				data->frame_done = false;

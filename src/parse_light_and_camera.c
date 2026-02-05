@@ -16,7 +16,7 @@ static void	create_or_update_light(t_point pos, t_color color, t_app *app)
 {
 	if (!app->scene->light)
 	{
-		app->scene->light = point_light(pos, color);
+		app->scene->light = light(pos, color);
 		if (!app->scene->light)
 			exit_and_free_memory(ERROR_PARSING, app);
 	}

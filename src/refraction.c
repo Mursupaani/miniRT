@@ -35,7 +35,7 @@ double	schlick(t_computations comps)
 }
 
 static t_color	calculate_refracted_color(
-		t_world *w, t_computations comps, int recursions, atomic_int *err)
+		t_scene *w, t_computations comps, int recursions, atomic_int *err)
 {
 	t_refraction	r;
 	t_vector		direction;
@@ -58,7 +58,7 @@ static t_color	calculate_refracted_color(
 }
 
 t_color	refracted_color(
-		t_world *w, t_computations comps, int recursions, atomic_int *err)
+		t_scene *w, t_computations comps, int recursions, atomic_int *err)
 {
 	if (comps.object->material.transparency == 0)
 		return ((t_color){0, 0, 0});

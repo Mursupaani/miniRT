@@ -12,7 +12,6 @@
 
 #include "minirt.h"
 
-// NOTE: Not like in book but gives correct test output
 t_uv_map	cube_uv_up(t_point p)
 {
 	double	u;
