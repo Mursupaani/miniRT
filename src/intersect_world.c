@@ -72,7 +72,7 @@ static t_intersection	*add_intersection(
 }
 
 static void	intersect_world_objects(
-		t_world *w, t_ray r, t_intersections *xs, atomic_int *err)
+		t_scene *w, t_ray r, t_intersections *xs, atomic_int *err)
 {
 	t_intersections	*current;
 	int				old_xs_count;
@@ -100,7 +100,7 @@ static void	intersect_world_objects(
 	}
 }
 
-t_intersections	*intersect_world(t_world *w, t_ray r, atomic_int *err)
+t_intersections	*intersect_world(t_scene *w, t_ray r, atomic_int *err)
 {
 	t_intersections	*xs;
 

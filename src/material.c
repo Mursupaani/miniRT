@@ -26,30 +26,6 @@ static t_pattern	no_pattern(void)
 	return (empty);
 }
 
-t_material	material_change_color(t_material material, t_color color)
-{
-	t_material	ret;
-
-	ret.color = color;
-	ret.ambient = material.ambient;
-	ret.diffuse = material.diffuse;
-	ret.specular = material.specular;
-	ret.shininess = material.shininess;
-	return (ret);
-}
-
-t_material	material_with_color(t_color color)
-{
-	t_material	material;
-
-	material.color = color;
-	material.ambient = AMBIENT;
-	material.diffuse = DIFFUSE;
-	material.specular = SPECULAR;
-	material.shininess = SHININESS;
-	return (material);
-}
-
 t_material	material(void)
 {
 	t_material	material;

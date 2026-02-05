@@ -89,7 +89,7 @@ void	parse_rt_file(char **av, t_app *app)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_and_free_memory(ERROR_OPEN, app);
-	app->scene = ft_calloc(1, sizeof(t_world));
+	app->scene = ft_calloc(1, sizeof(t_scene));
 	if (!app->scene)
 		exit_and_free_memory(ERROR_WORLD, app);
 	parse_rt_file_lines(fd, app);

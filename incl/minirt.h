@@ -362,7 +362,7 @@ typedef struct s_world
 	t_light		*light;
 	t_object	**objects;
 	int			object_count;
-}	t_world;
+}	t_scene;
 
 typedef struct s_thread_data	t_thread_data;
 
@@ -390,7 +390,7 @@ typedef struct s_app
 	int				bg_img_index;
 	size_t			pixel_count;
 	size_t			img_buffer_size;
-	t_world			*scene;
+	t_scene			*scene;
 	t_thread_data	*threads;
 	atomic_int		error;
 	atomic_int		keep_rendering;
@@ -523,13 +523,9 @@ typedef struct s_specs
 // App initialize and management:
 t_app			*initialize_app(void);
 void			initialize_hooks(t_app *app);
-// void			wait_for_threads_to_be_ready(t_app *app);
-// void			signal_threads_to_go_wait(t_app *app);
 void			restart_render(t_app *app);
 void			display_finished_frame(t_app *app);
 bool			all_threads_finished_frame(t_app *app);
-bool			all_threads_started_new_frame(t_app *app);
-void			empty_image_buffer(struct mlx_image *img, size_t pixel_count);
 void			print_hud(t_app *app);
 uint64_t		get_time_ms(void);
 
@@ -546,9 +542,8 @@ bool			mouse_not_moved(t_app *app, t_look look);
 // Memory handling and exit:
 void			free_app_memory(t_app *app);
 void			exit_and_free_memory(int exit_code, t_app *app);
-void			free_world(t_world *w);
+// void			free_world(t_world *w);
 void			*memory_alloc_error(atomic_int *err);
-// void		free_intersections(t_intersections *xs);
 void			free_intersections(t_intersections **xs);
 
 // Tuples (vectors, points):
@@ -608,9 +603,6 @@ bool			doubles_are_equal(double a, double b);
 double			rad_to_deg(double rad);
 double			deg_to_rad(double deg);
 
-// Rendering utils
-bool			pixel_fits_image(double x, double y, t_app *app);
-
 // Render_routine.c
 void			*render_routine(void *arg);
 void			launch_render(t_app *app);
@@ -620,7 +612,7 @@ void			render_pixelated(t_thread_data *data);
 // Intersections:
 t_intersection	intersection(double t, t_object *object);
 t_intersections	*intersect(t_object *obj, t_ray ray, atomic_int *err);
-t_intersections	*intersect_world(t_world *w, t_ray r, atomic_int *err);
+t_intersections	*intersect_world(t_scene *w, t_ray r, atomic_int *err);
 void			quick_sort_intersections(
 					t_intersection *xs, int start, int end);
 t_intersection	hit(t_intersections *xs);
@@ -665,18 +657,18 @@ t_color			color_from_color255(t_color255 color_255);
 t_color255		color255_from_color(t_color color);
 uint32_t		color_hex_from_color255(t_color255 color255);
 uint32_t		color_hex_from_color(t_color color);
-t_color			shade_hit(t_world *w, t_computations comps,
+t_color			shade_hit(t_scene *w, t_computations comps,
 					int recursions, atomic_int *err);
-t_color			color_at(t_world *w, t_ray r, int recursions, atomic_int *err);
-bool			is_shadowed(t_world *w, t_point p, atomic_int *err);
+t_color			color_at(t_scene *w, t_ray r, int recursions, atomic_int *err);
+bool			is_shadowed(t_scene *w, t_point p, atomic_int *err);
 t_color			pixel_at(mlx_texture_t *texture, int x, int y);
 
 // Reflections:
-t_color			reflected_color(t_world *w, t_computations comps,
+t_color			reflected_color(t_scene *w, t_computations comps,
 					int reflections, atomic_int *err);
 
 // Refractions:
-t_color			refracted_color(t_world *w, t_computations comps,
+t_color			refracted_color(t_scene *w, t_computations comps,
 					int recursions, atomic_int *err);
 double			schlick(t_computations comps);
 
@@ -700,10 +692,7 @@ t_color			pattern_at_shape(t_pattern ptrn, t_object *obj, t_point p);
 // UV Patterns:
 t_pattern		texture_map(t_pattern ptrn, t_uv_map (*uv_map)(t_point));
 t_pattern		uv_image(mlx_texture_t	*texture);
-t_pattern		uv_image_cube(mlx_texture_t *textures[6]);
-t_pattern		uv_image_cube_same_texture(mlx_texture_t *texture);
 t_pattern		uv_checkers(double w, double h, t_color a, t_color b);
-t_pattern		uv_align_cube_pattern(void);
 t_pattern		uv_align_check_pattern(void);
 t_uv_map		spherical_map(t_point p);
 t_uv_map		planar_map(t_point p);
@@ -723,13 +712,11 @@ t_uv_map		cube_uv_front(t_point p);
 t_uv_map		cube_uv_back(t_point p);
 
 // Light:
-t_light			*point_light(t_point position, t_color intensity);
+t_light			*light(t_point position, t_color intensity);
 t_color			lighting(t_computations comps, t_light *light);
 
 // Material:
 t_material		material(void);
-t_material		material_with_color(t_color color);
-t_material		material_change_color(t_material material, t_color color);
 
 // Normal
 t_vector		normal_at(t_object *obj, t_point point);
@@ -741,9 +728,8 @@ t_vector		cone_normal_at(t_object *cone, t_point local_point);
 t_vector		cube_normal_at(t_object *obj, t_point world_point);
 
 // World
-t_world			*world(void);
-t_world			*default_world(void);
-t_object		**add_object_to_world(t_object *obj, t_world *w);
+t_scene			*scene(void);
+t_object		**add_object_to_scene(t_object *obj, t_scene *w);
 
 // Camera and view
 t_camera		*camera(int hsize, int vsize, double fov);

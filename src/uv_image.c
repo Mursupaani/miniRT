@@ -12,36 +12,6 @@
 
 #include "minirt.h"
 
-t_pattern	uv_image_cube_same_texture(mlx_texture_t *texture)
-{
-	t_pattern	ptrn;
-
-	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
-	ptrn.uv_pattern.type = UV_TEXTURE;
-	ptrn.uv_pattern.textures[UP] = texture;
-	ptrn.uv_pattern.textures[DOWN] = texture;
-	ptrn.uv_pattern.textures[LEFT] = texture;
-	ptrn.uv_pattern.textures[RIGHT] = texture;
-	ptrn.uv_pattern.textures[FRONT] = texture;
-	ptrn.uv_pattern.textures[BACK] = texture;
-	return (ptrn);
-}
-
-t_pattern	uv_image_cube(mlx_texture_t *textures[6])
-{
-	t_pattern	ptrn;
-
-	ptrn = create_pattern(MAP, color(-1, -1, -1), color(-1, -1, -1));
-	ptrn.uv_pattern.type = UV_TEXTURE;
-	ptrn.uv_pattern.textures[UP] = textures[UP];
-	ptrn.uv_pattern.textures[DOWN] = textures[DOWN];
-	ptrn.uv_pattern.textures[LEFT] = textures[LEFT];
-	ptrn.uv_pattern.textures[RIGHT] = textures[RIGHT];
-	ptrn.uv_pattern.textures[FRONT] = textures[FRONT];
-	ptrn.uv_pattern.textures[BACK] = textures[BACK];
-	return (ptrn);
-}
-
 t_pattern	uv_image(mlx_texture_t *image)
 {
 	t_pattern	ptrn;
