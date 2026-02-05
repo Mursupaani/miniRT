@@ -44,7 +44,7 @@ void	free_object_array(t_object **objs)
 	objs = NULL;
 }
 
-void	free_world(t_scene *w)
+void	free_scene(t_scene *w)
 {
 	if (!w)
 		return ;
@@ -85,7 +85,7 @@ void	free_app_memory(t_app *app)
 		mlx_terminate(app->mlx);
 	}
 	if (app->scene)
-		free_world(app->scene);
+		free_scene(app->scene);
 	if (app->threads)
 		free(app->threads);
 	free(app);

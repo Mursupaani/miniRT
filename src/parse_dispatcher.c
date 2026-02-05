@@ -91,7 +91,7 @@ void	parse_rt_file(char **av, t_app *app)
 		exit_and_free_memory(ERROR_OPEN, app);
 	app->scene = ft_calloc(1, sizeof(t_scene));
 	if (!app->scene)
-		exit_and_free_memory(ERROR_WORLD, app);
+		exit_and_free_memory(ERROR_SCENE, app);
 	parse_rt_file_lines(fd, app);
 	close(fd);
 	validate_scene(app);

@@ -86,7 +86,7 @@ typedef enum s_exit_value
 	ERROR_MLX_IMG_INIT,
 	ERROR_INVALID_FILE_TYPE,
 	ERROR_OPEN,
-	ERROR_WORLD,
+	ERROR_SCENE,
 	ERROR_PARSING,
 	ERROR_THREADS,
 	ERROR_UI,
@@ -354,7 +354,7 @@ typedef struct s_camera
 	double		aspect_ratio;
 }	t_camera;
 
-typedef struct s_world
+typedef struct s_scene
 {
 	t_camera	*camera;
 	t_light		*light;
@@ -540,7 +540,6 @@ bool			mouse_not_moved(t_app *app, t_look look);
 // Memory handling and exit:
 void			free_app_memory(t_app *app);
 void			exit_and_free_memory(int exit_code, t_app *app);
-// void			free_world(t_world *w);
 void			*memory_alloc_error(atomic_int *err);
 void			free_intersections(t_intersections **xs);
 
@@ -721,7 +720,7 @@ t_vector		cylinder_normal_at(t_object *cylinder, t_point local_point);
 t_vector		cone_normal_at(t_object *cone, t_point local_point);
 t_vector		cube_normal_at(t_object *obj, t_point world_point);
 
-// World
+// Scene
 t_scene			*scene(void);
 t_object		**add_object_to_scene(t_object *obj, t_scene *w);
 
@@ -774,7 +773,7 @@ void			apply_bump_map_on_normal(
 void			get_tangent_and_bitangent(t_object_type obj_type,
 					t_vector local_normal, t_bump_map *bm);
 
-// Interact world
+// Interact scene
 void			select_object_from_screen(t_app *app, atomic_int *err);
 void			move_oject_on_screen(t_app *app);
 void			resize_selected_object(t_app *app, double ydelta);
