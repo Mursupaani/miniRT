@@ -79,7 +79,7 @@ void	render_pixelated(t_thread_data *data)
 			data->new_frame_started = false;
 		while (*data->keep_rendering)
 		{
-			if (*data->current_pixelate_scale == data->pixelate_scale)
+			if ((unsigned int)*data->current_pixelate_scale == data->pixelate_scale)
 				break ;
 			if (data->app->go_wait)
 			{

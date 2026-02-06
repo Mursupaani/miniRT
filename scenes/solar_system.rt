@@ -1,10 +1,10 @@
 A 0.2 									255,255,255
 
-C 0,0,40 		0,0,-1 		70
+C 0,0,60 		0,0,-1 		70
 L -50,50,30 				0.7 		255,255,255
 
-pl 0,-50,0 		0,1,0					255,255,255	texture:Textures/milky_way.png
-sp 0,0,-80 					30.0 		255,255,100	texture:Textures/sun.png
-sp -25,5,-30 				8.0 		200,180,150	texture:Textures/2k_jupiter.png
+pl 0,-50,0 		0,1,0					255,255,255	texture:Textures/milkyway.png
+sp 0,50,-400 					200.0 		255,255,100	texture:Textures/sun.png
+sp -25,5, -20 				20.0 		200,180,150	texture:Textures/2k_jupiter.png
 sp 10,3,-15 				3.5 		200,100,80	texture:Textures/2k_mars.png
 sp -5,2,-10 				4.0 		100,150,255	texture:Textures/earthmap1k.png
