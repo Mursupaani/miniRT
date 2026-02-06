@@ -54,7 +54,7 @@ static void	parse_line(char *line, t_app *app)
 	else
 		parse_error("Unknown element type", app);
 	skip_whitespace(&line);
-	if (*line != '\0')
+	if (*line != '\0' && *line != '#')
 		parse_error("Unexpted element order or type", app);
 }
 
