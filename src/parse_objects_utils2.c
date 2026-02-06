@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 15:46:47 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/30 15:46:48 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/06 12:51:20 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,7 @@ void	validate_orientation_vector(t_vector ornt, t_app *app)
 		|| ornt.y < -1.0 || ornt.y > 1.0
 		|| ornt.z < -1.0 || ornt.z > 1.0)
 		parse_error("Camera ornt must be normalized [-1,1]", app);
+	if (doubles_are_equal(0, ornt.x) && doubles_are_equal(0, ornt.y)
+		&& doubles_are_equal(0, ornt.z))
+		parse_error("Cannot divide by zero", app);
 }
