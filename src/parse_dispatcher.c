@@ -19,6 +19,8 @@ static void	set_scene_ambient_values(t_app *app)
 	int			i;
 
 	objects = app->scene->objects;
+	if (!objects)
+		return ;
 	ambient = app->scene->light->ambient_ratio;
 	i = -1;
 	while (objects[++i])
@@ -89,9 +91,9 @@ void	parse_rt_file(char **av, t_app *app)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_and_free_memory(ERROR_OPEN, app);
-	app->scene = ft_calloc(1, sizeof(t_world));
+	app->scene = ft_calloc(1, sizeof(t_scene));
 	if (!app->scene)
-		exit_and_free_memory(ERROR_WORLD, app);
+		exit_and_free_memory(ERROR_SCENE, app);
 	parse_rt_file_lines(fd, app);
 	close(fd);
 	validate_scene(app);

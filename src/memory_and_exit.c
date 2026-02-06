@@ -30,7 +30,7 @@ void	exit_and_free_memory(int exit_code, t_app *app)
 		ft_fprintf(STDERR_FILENO, "Error\nInvalid filetype\n");
 	else if (exit_code == ERROR_OPEN)
 		ft_fprintf(STDERR_FILENO, "Error\nCan't open file\n");
-	else if (exit_code == ERROR_WORLD)
+	else if (exit_code == ERROR_SCENE)
 		ft_fprintf(STDERR_FILENO, "Error\nCan't create scene\n");
 	else if (exit_code == ERROR_PARSING)
 		ft_fprintf(STDERR_FILENO, "Error\nFailed to parse file contents\n");

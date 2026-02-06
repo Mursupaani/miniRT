@@ -10,6 +10,6 @@ sp 0,10,-20 					6		255,255,255	pattern:test
 sp 0,10,-20 					6		255,255,255	pattern:check 255,120,26
 sp 0,10,-20 					6		255,255,255	pattern:stripe 128,65,42
 #pl 0,0,0 		0,1,0					255,255,255	 pattern:ring 0,0,0  bump:Textures/bump.png
-#cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
+cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
 cu 0,0,0 	0,1,0 		4.0 4.0 	255,255,255 sh:220	texture:Textures/sky_box.png
-#co 0, 0,-40 	0,1,0 		3.0 6.0 	255,255,0 pattern:check 75,15,10
+co 0, 0,-40 	0,1,0 		3.0 6.0 	255,255,0 pattern:check 75,15,10 a:2

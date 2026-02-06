@@ -32,7 +32,7 @@ void	parse_sphere(char **line, t_app *app)
 	apply_light_behavior(s.obj, app, line);
 	apply_texture_or_pattern_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	app->scene->objects = add_object_to_world(s.obj, app->scene);
+	app->scene->objects = add_object_to_scene(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -58,7 +58,7 @@ void	parse_plane(char **line, t_app *app)
 	apply_light_behavior(s.obj, app, line);
 	apply_texture_or_pattern_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	app->scene->objects = add_object_to_world(s.obj, app->scene);
+	app->scene->objects = add_object_to_scene(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -75,7 +75,7 @@ void	parse_cylinder(char **line, t_app *app)
 	apply_light_behavior(s.obj, app, line);
 	apply_texture_or_pattern_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	app->scene->objects = add_object_to_world(s.obj, app->scene);
+	app->scene->objects = add_object_to_scene(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -92,7 +92,7 @@ void	parse_cube(char **line, t_app *app)
 	apply_light_behavior(s.obj, app, line);
 	apply_texture_or_pattern_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	app->scene->objects = add_object_to_world(s.obj, app->scene);
+	app->scene->objects = add_object_to_scene(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
@@ -109,7 +109,7 @@ void	parse_cone(char **line, t_app *app)
 	apply_light_behavior(s.obj, app, line);
 	apply_texture_or_pattern_to_object(s.obj, line, app);
 	apply_bump_map_to_object(s.obj, line, app);
-	app->scene->objects = add_object_to_world(s.obj, app->scene);
+	app->scene->objects = add_object_to_scene(s.obj, app->scene);
 	if (!app->scene->objects)
 		exit_and_free_memory(ERROR_PARSING, app);
 }
