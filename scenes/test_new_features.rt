@@ -3,13 +3,13 @@ A 0.1 									255,255,255
 C 0,1,10 		0,0,-1 		90
 L -40,50,0 					0.6 		255,255,255
 
-sp 10,10,-20 					12.6 		150,150,255	am:0.2 di:1 sp:1 re:0.5 tr:0.5 ri:1.5 texture:Textures/earthmap1k.png bump:Textures/bump.png
 sp 0,0,0 					5000		150,150,255	am:1 di:0 texture:Textures/sky_box.png
-sp -10,10,-20 					12.6 		10,0,255	am:0 di:1
-sp 0,10,-20 					6		255,255,255	pattern:test
-sp 0,10,-20 					6		255,255,255	pattern:check 255,120,26
-sp 0,10,-20 					6		255,255,255	pattern:stripe 128,65,42
-#pl 0,0,0 		0,1,0					255,255,255	 pattern:ring 0,0,0  bump:Textures/bump.png
-#cy 10,0,-20 	0,1,0 		2.0 8.0 	255,255,255 	 pattern:test
-cu 0,0,0 	0,1,0 		4.0 4.0 	255,255,255 sh:220	texture:Textures/sky_box.png
-#co 0, 0,-40 	0,1,0 		3.0 6.0 	255,255,0 pattern:check 75,15,10
+sp -20,10,-20 				12.6 		10,0,255	am:0.5 di:1 pattern:check 128,60,76
+cy 10,0,-20 	0,1,0 		2.0	8.0 	255,255,255	re:0.5 tr:0.5 pattern:test
+sp 0,6,-20					6			255,255,255	am:0.8 re:1 pattern:test
+sp 0,6,-20					12.6 		150,150,255	am:0.2 di:1 sp:1 re:0.5 tr:0.5 ri:1.5 texture:Textures/earthmap1k.png bump:Textures/bump.png
+sp 20,10,-20 				6			255,255,255	pattern:stripe 128,65,42
+pl 0,-2,0 		0,1,0					255,255,255	re:0.2 texture:Textures/sea.png bump:Textures/sea_bump.png
+cu -5,0,0		1,1,1		2.0	2.0 	255,255,255	sh:220	texture:Textures/sky_box.png
+cu 5,0,0		1,1,1		2.0	2.0 	255,255,255	sh:220	re:0.5 tr:0.3 ri:0.5 texture:Textures/minecraft.png bump:Textures/minecraft_bump.png
+co 0,-1,0	 	0,1,0		2.0	2.0 	255,0,127	re:0.8 pattern:check 0,255,50

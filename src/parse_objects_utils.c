@@ -23,11 +23,11 @@ t_object	*create_cylinder_object(t_specs s)
 	if (!cyl)
 		return (NULL);
 	cyl->material.color = s.color;
-	cyl->maximum = s.height / 2.0;
-	cyl->minimum = -s.height / 2.0;
+	cyl->maximum = s.height / 2;
+	cyl->minimum = -s.height / 2;
 	cyl->closed = true;
 	trans = translation_matrix4(s.position.x, s.position.y, s.position.z);
-	scale = scaling_matrix4(s.diameter / 2.0, 1, s.diameter / 2.0);
+	scale = scaling_matrix4(s.diameter / 2.0, s.height / 2, s.diameter / 2.0);
 	rot = rotation_matrix_from_orientation(s.axis);
 	set_transform(cyl, matrix4_multiply(trans, matrix4_multiply(rot, scale)));
 	return (cyl);
@@ -89,11 +89,12 @@ t_object	*create_cone_object(t_specs s)
 	if (!cone)
 		return (NULL);
 	cone->material.color = s.color;
-	cone->maximum = s.height / 2.0;
-	cone->minimum = -s.height / 2.0;
+	cone->maximum = s.height;
+	cone->minimum = 0;
 	cone->closed = true;
-	trans = translation_matrix4(s.position.x, s.position.y, s.position.z);
-	scale = scaling_matrix4(s.diameter / 2.0, 1, s.diameter / 2.0);
+	trans = translation_matrix4(
+		s.position.x, s.position.y - s.height / 2, s.position.z);
+	scale = scaling_matrix4(s.diameter / 2, s.height / 2, s.diameter / 2);
 	rot = rotation_matrix_from_orientation(s.axis);
 	set_transform(cone, matrix4_multiply(trans, matrix4_multiply(rot, scale)));
 	return (cone);
