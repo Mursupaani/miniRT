@@ -93,7 +93,7 @@ t_object	*create_cone_object(t_specs s)
 	cone->minimum = 0;
 	cone->closed = true;
 	trans = translation_matrix4(
-		s.position.x, s.position.y - s.height / 2, s.position.z);
+			s.position.x, s.position.y - s.height / 2, s.position.z);
 	scale = scaling_matrix4(s.diameter / 2, s.height / 2, s.diameter / 2);
 	rot = rotation_matrix_from_orientation(s.axis);
 	set_transform(cone, matrix4_multiply(trans, matrix4_multiply(rot, scale)));
