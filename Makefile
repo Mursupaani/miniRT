@@ -81,6 +81,8 @@ THREADS			= $(shell nproc 2>/dev/null || sysctl -n hw.physicalcpu || echo 4)
 
 all: $(NAME)
 
+bonus: $(NAME)
+
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	cc $(C_FLAGS) $(OBJS) $(LIBFT) $(MLX) $(INCL) $(MLX_FLAGS) -o $(NAME)
 
@@ -105,12 +107,8 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
-
-frclean: fclean
 	rm -rf $(MLX_DIR) compile_commands.json
 
 re: fclean $(NAME)
 
-fre: frclean $(NAME)
-
-phony: all clean fclean frclean re fre
+phony: all clean fclean re bonus
