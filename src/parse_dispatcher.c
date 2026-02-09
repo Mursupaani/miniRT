@@ -106,5 +106,4 @@ void	parse_rt_file(char **av, t_app *app)
 	if (app->parsing_success == false)
 		exit_and_free_memory(ERROR_PARSING, app);
 	set_scene_ambient_values(app);
-	printf("ambient %lf\n", app->scene->light->ambient_ratio);
 }

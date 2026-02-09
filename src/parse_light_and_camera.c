@@ -12,6 +12,17 @@
 
 #include "minirt.h"
 
+static void	set_camera_view(t_camera *c)
+{
+	t_matrix4	view;
+
+	c->forward = get_direction_from_angles(c->yaw, c->pitch);
+	c->left = cross(c->world_up, c->forward);
+	c->up = cross(c->forward, c->left);
+	view = view_transform(c->from, tuple_sum(c->from, c->forward), c->up, c);
+	set_camera_transform(c, view);
+}
+
 static void	create_or_update_light(t_point pos, t_color color, t_app *app)
 {
 	if (!app->scene->light)
@@ -76,8 +87,8 @@ void	parse_camera(char **line, t_app *app)
 	app->scene->camera->transform = view_transform(pos, point(pos.x + ornt.x,
 				pos.y + ornt.y, pos.z + ornt.z), vector(0, 1, 0),
 			app->scene->camera);
-	init_camera_yaw_and_pitch(app->scene->camera);
-	set_camera_transform(app->scene->camera, app->scene->camera->transform);
+	init_camera_pitch_and_yaw(app->scene->camera);
+	set_camera_view(app->scene->camera);
 }
 
 void	parse_light(char **line, t_app *app)

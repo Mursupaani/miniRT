@@ -12,10 +12,18 @@
 
 #include "minirt.h"
 
-void	init_camera_yaw_and_pitch(t_camera *c)
+void	init_camera_pitch_and_yaw(t_camera *c)
 {
 	c->yaw = atan2(c->forward.z, c->forward.x) * (180 / M_PI);
 	c->pitch = asin(c->forward.y) * (180 / M_PI);
+	if (c->pitch > 89.999)
+		c->pitch = 89.999;
+	else if (c->pitch < -89.999)
+		c->pitch = -89.999;
+	if (c->yaw > 360)
+		c->yaw -= 360;
+	else if (c->yaw < 0)
+		c->yaw += 360;
 }
 
 double	pixel_size(t_camera *camera)

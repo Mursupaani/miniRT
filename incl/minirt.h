@@ -726,11 +726,12 @@ t_object		**add_object_to_scene(t_object *obj, t_scene *w);
 
 // Camera and view
 t_camera		*camera(int hsize, int vsize, double fov);
-void			init_camera_yaw_and_pitch(t_camera *c);
+void			init_camera_pitch_and_yaw(t_camera *c);
 double			pixel_size(t_camera *camera);
 t_matrix4		view_transform(
 					t_point from, t_point to, t_vector up, t_camera *c);
 void			set_camera_transform(t_camera *camera, t_matrix4 transform);
+t_vector		get_direction_from_angles(double yaw, double pitch);
 
 // Sphere
 t_object		*sphere_new(void);
