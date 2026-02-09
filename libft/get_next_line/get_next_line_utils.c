@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:52:52 by magebreh          #+#    #+#             */
-/*   Updated: 2025/07/11 19:15:42 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 14:02:24 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 14:02:25 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

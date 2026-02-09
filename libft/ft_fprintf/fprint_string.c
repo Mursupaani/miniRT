@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fprint_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 12:45:24 by magebreh          #+#    #+#             */
-/*   Updated: 2025/09/25 16:26:51 by anpollan         ###   ########.fr       */
+/*   Created: 2026/02/09 14:01:45 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 14:01:46 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

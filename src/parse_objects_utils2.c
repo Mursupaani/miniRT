@@ -36,8 +36,8 @@ bool	is_valid_axis(t_vector v)
 	return (v.x >= -1.0 && v.x <= 1.0 && v.y >= -1.0 && v.y <= 1.0
 		&& v.z >= -1.0 && v.z <= 1.0
 		&& !(doubles_are_equal(v.x, 0)
-		&& doubles_are_equal(v.y, 0)
-		&& doubles_are_equal(v.z, 0)));
+			&& doubles_are_equal(v.y, 0)
+			&& doubles_are_equal(v.z, 0)));
 }
 
 void	validate_normal_vector(t_vector normal, t_app *app)
@@ -47,8 +47,8 @@ void	validate_normal_vector(t_vector normal, t_app *app)
 		|| normal.z < -1.0 || normal.z > 1.0)
 		parse_error("Plane normal must be normalized [-1,1]", app);
 	if ((doubles_are_equal(normal.x, 0)
-		&& doubles_are_equal(normal.y, 0)
-		&& doubles_are_equal(normal.z, 0)))
+			&& doubles_are_equal(normal.y, 0)
+			&& doubles_are_equal(normal.z, 0)))
 		parse_error("Invalid plane normal", app);
 }
 

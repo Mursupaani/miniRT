@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:11:37 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/15 12:26:35 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:59:12 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:59:13 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 11:08:01 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/26 19:17:34 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:54:42 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:54:43 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

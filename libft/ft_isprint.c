@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:23:18 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/23 11:29:00 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:58:49 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:58:51 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

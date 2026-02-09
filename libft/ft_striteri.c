@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 10:31:39 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/23 10:18:41 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:54:07 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:54:08 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

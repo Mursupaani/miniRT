@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 18:44:08 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/22 12:40:21 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:56:38 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:56:39 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fprint_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 12:45:46 by magebreh          #+#    #+#             */
-/*   Updated: 2025/09/25 16:28:39 by anpollan         ###   ########.fr       */
+/*   Created: 2026/02/09 14:02:01 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 14:02:05 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

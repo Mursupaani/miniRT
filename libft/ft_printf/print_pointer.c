@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_pointer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 12:45:27 by magebreh          #+#    #+#             */
-/*   Updated: 2025/07/11 19:17:01 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 14:00:27 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 14:00:28 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

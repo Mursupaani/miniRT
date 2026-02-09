@@ -75,9 +75,6 @@ static void	parse_rt_file_lines(int fd, t_app *app)
 		free(line);
 		line = get_next_line(fd);
 	}
-	// FIXME: This can be removed?
-	// if (app->parsing_success != true)
-		// exit_and_free_memory(ERROR_PARSING, app);
 }
 
 static void	validate_scene(t_app *app)

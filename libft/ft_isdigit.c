@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:05:51 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/22 12:25:22 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:58:55 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:58:57 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
