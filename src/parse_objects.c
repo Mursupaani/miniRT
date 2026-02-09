@@ -68,7 +68,7 @@ void	parse_cylinder(char **line, t_app *app)
 	t_specs		s;
 
 	(*line) += 2;
-	get_cylinder_data(line, &s, app);
+	get_object_data(line, &s, app);
 	s.obj = create_cylinder_object(s);
 	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
@@ -85,7 +85,7 @@ void	parse_cube(char **line, t_app *app)
 	t_specs		s;
 
 	(*line) += 2;
-	get_cylinder_data(line, &s, app);
+	get_object_data(line, &s, app);
 	s.obj = create_cube_object(s);
 	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);
@@ -102,7 +102,7 @@ void	parse_cone(char **line, t_app *app)
 	t_specs		s;
 
 	(*line) += 2;
-	get_cylinder_data(line, &s, app);
+	get_object_data(line, &s, app);
 	s.obj = create_cone_object(s);
 	if (!s.obj)
 		exit_and_free_memory(ERROR_PARSING, app);

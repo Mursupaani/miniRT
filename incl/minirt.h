@@ -810,7 +810,7 @@ t_object		*create_plane_object(
 t_object		*create_cylinder_object(t_specs s);
 t_object		*create_cube_object(t_specs s);
 t_object		*create_cone_object(t_specs s);
-void			get_cylinder_data(char **line, t_specs *s, t_app *app);
+void			get_object_data(char **line, t_specs *s, t_app *app);
 void			validate_normal_vector(t_vector normal, t_app *app);
 void			validate_orientation_vector(t_vector ornt, t_app *app);
 bool			is_valid_axis(t_vector v);

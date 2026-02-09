@@ -12,23 +12,23 @@
 
 #include "minirt.h"
 
-void	get_cylinder_data(char **line, t_specs *s, t_app *app)
+void	get_object_data(char **line, t_specs *s, t_app *app)
 {
 	skip_whitespace(line);
 	if (!parse_point(line, &s->position))
-		parse_error("Invalid cylinder or cone position", app);
+		parse_error("Invalid object position", app);
 	skip_whitespace(line);
 	if (!parse_vector(line, &s->axis) || !is_valid_axis(s->axis))
-		parse_error("Invalid cylinder or cone axis", app);
+		parse_error("Invalid object axis", app);
 	skip_whitespace(line);
 	if (!parse_double(line, &s->diameter) || s->diameter <= 0)
-		parse_error("Invalid cylinder or cone diameter", app);
+		parse_error("Invalid object diameter", app);
 	skip_whitespace(line);
 	if (!parse_double(line, &s->height) || s->height <= 0)
-		parse_error("Invalid cylinder or cone height", app);
+		parse_error("Invalid object height", app);
 	skip_whitespace(line);
 	if (!parse_color(line, &s->color))
-		parse_error("Invalid cylinder or cone color", app);
+		parse_error("Invalid object color", app);
 }
 
 bool	is_valid_axis(t_vector v)
