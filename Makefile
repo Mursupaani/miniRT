@@ -104,10 +104,12 @@ $(OBJ_DIR)%.o: $(TEST_DIR)%.c $(LIBFT_HEADER) $(MINIRT_HEADER) $(MLX)
 
 clean:
 	rm -rf $(OBJ_DIR)
+	$(MAKE) -C libft clean
 
 fclean: clean
 	rm -rf $(NAME)
 	rm -rf $(MLX_DIR) compile_commands.json
+	$(MAKE) -C libft fclean
 
 re: fclean $(NAME)
 
