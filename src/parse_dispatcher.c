@@ -26,7 +26,12 @@ static void	set_scene_ambient_values(t_app *app)
 	while (objects[++i])
 	{
 		if (objects[i]->material.ambient == -1)
-			objects[i]->material.ambient = ambient;
+		{
+			if (ambient == -1)
+				objects[i]->material.ambient = 0;
+			else
+				objects[i]->material.ambient = ambient;
+		}
 	}
 }
 
@@ -70,8 +75,9 @@ static void	parse_rt_file_lines(int fd, t_app *app)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (app->parsing_success != true)
-		exit_and_free_memory(ERROR_PARSING, app);
+	// FIXME: This can be removed?
+	// if (app->parsing_success != true)
+		// exit_and_free_memory(ERROR_PARSING, app);
 }
 
 static void	validate_scene(t_app *app)
@@ -97,5 +103,8 @@ void	parse_rt_file(char **av, t_app *app)
 	parse_rt_file_lines(fd, app);
 	close(fd);
 	validate_scene(app);
+	if (app->parsing_success == false)
+		exit_and_free_memory(ERROR_PARSING, app);
 	set_scene_ambient_values(app);
+	printf("ambient %lf\n", app->scene->light->ambient_ratio);
 }

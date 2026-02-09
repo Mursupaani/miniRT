@@ -31,7 +31,7 @@
 # endif
 
 # ifndef AMBIENT
-#  define AMBIENT 0.2
+#  define AMBIENT -1
 # endif
 
 # ifndef DIFFUSE
