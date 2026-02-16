@@ -65,9 +65,6 @@ C_FILES			= main.c initialize.c math_utils.c memory_and_exit.c \
 SRC_DIR			= ./src/
 SRCS			= $(addprefix $(SRC_DIR), $(C_FILES))
 
-TEST_DIR		= ./src/tests/
-SRCS			= $(addprefix $(TEST_DIR), $(C_FILES))
-
 # OBJ-files
 OBJ_DIR			= ./obj/
 OBJS			= $(addprefix $(OBJ_DIR), $(C_FILES:%.c=%.o))
@@ -95,10 +92,6 @@ $(MLX):
 	$(MAKE) -C $(MLX_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBFT_HEADER) $(MINIRT_HEADER) $(MLX)
-	mkdir -p $(OBJ_DIR)
-	cc $(C_FLAGS) $(INCL) -c $< -o $@
-
-$(OBJ_DIR)%.o: $(TEST_DIR)%.c $(LIBFT_HEADER) $(MINIRT_HEADER) $(MLX)
 	mkdir -p $(OBJ_DIR)
 	cc $(C_FLAGS) $(INCL) -c $< -o $@
 
