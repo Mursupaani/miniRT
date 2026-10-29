@@ -1,3 +1,5 @@
+![Screenshot](./Screenshot.png)
+
 # miniRT
 
 **My first RayTracer with MLX42**
