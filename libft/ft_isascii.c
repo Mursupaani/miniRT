@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 13:09:12 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/22 12:24:13 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:59:01 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:59:02 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 14:36:25 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/24 11:42:11 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:57:00 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:57:00 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

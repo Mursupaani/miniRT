@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 11:46:25 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/23 10:57:03 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:56:20 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:56:22 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

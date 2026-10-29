@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 19:36:19 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/22 12:44:22 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:56:30 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:56:31 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

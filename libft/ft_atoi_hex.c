@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_hex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 11:35:00 by magebreh          #+#    #+#             */
-/*   Updated: 2025/08/05 11:33:46 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:59:37 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:59:38 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

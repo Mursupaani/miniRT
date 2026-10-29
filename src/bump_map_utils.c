@@ -32,7 +32,6 @@ static void	get_plane_tangent_and_bitangent(t_bump_map *bm)
 	bm->bitangent = vector(0, 0, 1);
 }
 
-// NOTE: Cylinder caps are not yet implemented
 void	get_tangent_and_bitangent(
 		t_object_type obj_type, t_vector local_normal, t_bump_map *bm)
 {

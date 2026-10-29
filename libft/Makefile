@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+         #
+#    By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/24 11:49:18 by magebreh          #+#    #+#              #
-#    Updated: 2025/10/06 17:52:52 by anpollan         ###   ########.fr        #
+#    Created: 2026/02/09 14:03:25 by anpollan          #+#    #+#              #
+#    Updated: 2026/02/09 14:03:28 by anpollan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
