@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdatomic.h>
 
 static void	calculate_coefs(t_ray ray, double *a, double *b, double *c)
 {

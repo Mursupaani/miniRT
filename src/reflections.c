@@ -13,7 +13,7 @@
 #include "minirt.h"
 
 t_color	reflected_color(
-		t_world *w, t_computations comps, int reflections, atomic_int *err)
+		t_scene *w, t_computations comps, int reflections, atomic_int *err)
 {
 	t_ray	reflect_ray;
 	t_color	color;

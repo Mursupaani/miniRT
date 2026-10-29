@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 12:37:51 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/22 12:48:29 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:56:06 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:56:07 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

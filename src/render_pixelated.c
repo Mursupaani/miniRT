@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_pixelated.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jjaaskel <jjaaskel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 16:29:31 by anpollan          #+#    #+#             */
-/*   Updated: 2026/01/17 16:31:05 by anpollan         ###   ########.fr       */
+/*   Updated: 2026/02/06 12:56:51 by jjaaskel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	render_pixelated(t_thread_data *data)
 		{
 			if (*data->current_pixelate_scale == data->pixelate_scale)
 				break ;
-			// if (*data->start_next_frame)
-			// 	break ;
 			if (data->app->go_wait)
 			{
 				data->frame_done = false;

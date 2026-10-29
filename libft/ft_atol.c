@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 12:11:43 by magebreh          #+#    #+#             */
-/*   Updated: 2025/10/06 17:48:12 by anpollan         ###   ########.fr       */
+/*   Created: 2026/02/09 13:59:32 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:59:33 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <limits.h>
 
 static int	parse(const char *str, int *i)
 {

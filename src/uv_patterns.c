@@ -55,7 +55,7 @@ static t_color	handle_uv_checkers_texture(t_pattern ptrn, double u, double v)
 		return (ptrn.b);
 }
 
-t_color	uv_pattern_at(t_pattern ptrn, t_uv_map uv)
+static t_color	uv_pattern_at(t_pattern ptrn, t_uv_map uv)
 {
 	if (ptrn.uv_pattern.type != UV_CHECKERS)
 		return (handle_align_check(

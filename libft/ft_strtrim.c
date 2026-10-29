@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 17:51:42 by magebreh          #+#    #+#             */
-/*   Updated: 2025/04/23 10:42:06 by magebreh         ###   ########.fr       */
+/*   Created: 2026/02/09 13:52:39 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:52:42 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

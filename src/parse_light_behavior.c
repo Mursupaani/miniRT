@@ -49,14 +49,14 @@ void	apply_light_behavior(t_object *obj, t_app *app, char **line)
 	skip_whitespace(line);
 	if (!**line || **line == '#')
 		return ;
-	if (ft_strncmp(*line, "a:", 2) == 0)
+	if (ft_strncmp(*line, "am:", 3) == 0)
 	{
-		(*line) += 2;
+		(*line) += 3;
 		parse_object_ambient(line, obj, app);
 	}
-	if (ft_strncmp(*line, "d:", 2) == 0)
+	if (ft_strncmp(*line, "di:", 3) == 0)
 	{
-		(*line) += 2;
+		(*line) += 3;
 		parse_object_diffuse(line, obj, app);
 	}
 	if (ft_strncmp(*line, "sp:", 3) == 0)

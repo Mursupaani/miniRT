@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: magebreh <magebreh@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: anpollan <anpollan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 16:47:11 by magebreh          #+#    #+#             */
-/*   Updated: 2025/09/24 16:26:53 by anpollan         ###   ########.fr       */
+/*   Created: 2026/02/09 13:54:28 by anpollan          #+#    #+#             */
+/*   Updated: 2026/02/09 13:54:29 by anpollan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

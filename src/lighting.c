@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_light	*point_light(t_point position, t_color intensity)
+t_light	*light(t_point position, t_color intensity)
 {
 	t_light	*point_light;
 

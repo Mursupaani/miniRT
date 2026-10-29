@@ -71,5 +71,6 @@ void	print_hud(t_app *app)
 	i = fov_to_buffer(app->scene->camera, hud, i, 128);
 	i = ready_percent_to_buffer(app, hud, i, 128);
 	i = pixelation_and_aa_to_buffer(app, hud, i, 128);
+	hud[i] = '\0';
 	app->hud = mlx_put_string(mlx, hud, 10, 10);
 }
